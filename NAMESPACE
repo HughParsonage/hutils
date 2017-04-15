@@ -2,7 +2,9 @@
 
 export("%notin%")
 export(duplicated_rows)
+export(has_unique_key)
 export(mutate_other)
+export(set_unique_key)
 import(data.table)
 importFrom(dplyr,if_else)
 importFrom(fastmatch,"%fin%")
