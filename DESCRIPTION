@@ -1,0 +1,16 @@
+Package: hutils
+Type: Package
+Title: Miscellaneous R Functions and Aliases
+Version: 0.1.0
+Date: 2017-04-14
+Author: Hugh Parsonage
+Maintainer: Hugh Parsonage <hugh.parsonage@gmail.com>
+Description: Functions that I have found useful.
+License: GPL-3
+Imports:
+  data.table,
+  magrittr,
+  dplyr,
+  fastmatch
+Suggests: testthat
+RoxygenNote: 6.0.1
