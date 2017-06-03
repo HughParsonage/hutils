@@ -1,17 +1,26 @@
 #' Drop empty columns
 #' @description Removes columns from a \code{data.table} where all the values are missing.
 #' @param DT A \code{data.table}.
-#'
+#' @param copy Copies the \code{data.table} so the original can be retained. 
+#' Not applicable if \code{DT} is not a \code{data.table}.
+#' If \code{FALSE}, the default, \code{DT} itself will be modified, not just the value.
+#' @export
 #' 
 
-drop_empty_cols <- function(DT) {
-  is_empty <- vapply(DT, function(x) all(is.na(x)), logical(1))
-  if (is.data.table(DT)) {
+drop_empty_cols <- function(DT, copy = FALSE) {
+  if (copy) {
+    out <- copy(DT)
+  } else {
+    out <- DT
+  }
+  
+  is_empty <- vapply(out, function(x) all(is.na(x)), logical(1))
+  if (is.data.table(out)) {
     for (j in names(is_empty)[is_empty]) {
-      DT[, (j) := NULL]
+      out[, (j) := NULL]
     }
   } else {
-    DT <- select_(DT, .dots = names(is_empty)[!is_empty])
+    out <- dplyr::select_(out, .dots = names(is_empty)[!is_empty])
   }
-  DT
+  out[]
 }
