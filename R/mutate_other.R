@@ -38,7 +38,7 @@ mutate_other <- function(.data, var, n = 5, count, by = NULL, copy = TRUE, other
     n_by_var <-
       out %>%
       .[, .N, keyby = c(var, by)] %>%
-      .[, .rank := rank(-N)]
+      .[, .rank := rank(-N), by = by]
     
     out <- merge(out, n_by_var, by = c(var, by))
     
