@@ -5,7 +5,7 @@ Version: 0.1.0
 Date: 2017-07-07
 Author: Hugh Parsonage
 Maintainer: Hugh Parsonage <hugh.parsonage@gmail.com>
-Description: This function provides utility functions for, and drawing on, the data table package. The package also collates useful aliases for existing functions from other packages.
+Description: This function provides utility functions for, and drawing on, the data table package. The package also collates useful miscellaneous functions extending base R not available elsewhere. The name is a portmanteau of "utils" and the author.
 License: GPL-3
 Imports:
   data.table,
