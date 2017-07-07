@@ -1,3 +1,4 @@
+context("Mutate other")
 
 library(data.table)
 set.seed(1)
@@ -41,6 +42,22 @@ test_that("n = 5, keyed", {
   expect_equal(length(letters_in_out), 5 + 1)
   expect_true(haskey(out))
   expect_equal(key(out), "key.var")
+})
+
+test_that("n = 2", {
+  DTn2 <- copy(DT)
+  
+  expect_error(mutate_other(DTn2, "City", n = 2, copy = FALSE))
+  
+  out <- mutate_other(DTn2, "City", n = 2, other.category = "Other city")
+  
+  expect_equal(sort(unique(out[["City"]])), c("A", "C", "Other city"))
+  
+  
+})
+
+test_that("Warning if not character", {
+  expect_warning(mutate_other(DT, var = "value"))
 })
 
 

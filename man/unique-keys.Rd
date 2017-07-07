@@ -17,7 +17,7 @@ set_unique_key(DT, ...)
 }
 \value{
 \code{has_unique_key} returns \code{TRUE} if \code{DT} has a unique key, \code{FALSE} otherwise. 
-\code{setuniquekey} runs \code{setkey(DT, ...)} then checks whether the key is unique, returning the keyed 
+\code{set_unique_key} runs \code{setkey(DT, ...)} then checks whether the key is unique, returning the keyed 
 \code{data.table} if the key is unique, or an error message otherwise.
 }
 \description{

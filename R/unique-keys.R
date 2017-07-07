@@ -3,7 +3,7 @@
 #' @param DT A data.table
 #' @param ... keys to set
 #' @return \code{has_unique_key} returns \code{TRUE} if \code{DT} has a unique key, \code{FALSE} otherwise. 
-#' \code{setuniquekey} runs \code{setkey(DT, ...)} then checks whether the key is unique, returning the keyed 
+#' \code{set_unique_key} runs \code{setkey(DT, ...)} then checks whether the key is unique, returning the keyed 
 #' \code{data.table} if the key is unique, or an error message otherwise.
 #' @export has_unique_key set_unique_key
 NULL
@@ -19,6 +19,6 @@ set_unique_key <- function(DT, ...){
   if (has_unique_key(DT)){
     return(DT)
   } else {
-    stop("Key is not unique. DT's key has changed.")
+    stop("Key is not unique. Note: DT's key has changed.")
   }
 }

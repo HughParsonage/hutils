@@ -1,6 +1,7 @@
 context("Empty columns")
 
 test_that("Drops empty columns of data.tables and data.frames", {
+  library(data.table)
   DT1 <- data.table(x1 = 1:5,
                     x2 = sample(c(letters[1:5], NA), size = 5), 
                     x3 = runif(5),
