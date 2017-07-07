@@ -22,6 +22,12 @@ test_that("n = 5", {
   expect_equal(length(letters_in_out), 5 + 1)
 })
 
+test_that("count = 150", {
+  out <- mutate_other(DT, "City", count = 150)
+  outz <- out[, .N, keyby = "City"]
+  expect_true(all(outz[["City"]] > 150))
+})
+
 test_that("Order preserved", {
   expect_equal(DT[1][["City"]], "B")
   out <- mutate_other(DT, "City", n = 5)[]
