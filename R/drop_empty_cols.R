@@ -20,7 +20,7 @@ drop_empty_cols <- function(DT, copy = FALSE) {
       out[, (j) := NULL]
     }
   } else {
-    out <- dplyr::select_(out, .dots = names(is_empty)[!is_empty])
+    out <- out[, names(is_empty)[!is_empty]]
   }
   out[]
 }

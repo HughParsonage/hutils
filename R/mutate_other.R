@@ -43,9 +43,9 @@ mutate_other <- function(.data, var, n = 5, count, by = NULL, copy = TRUE, other
     out <- merge(out, n_by_var, by = c(var, by))
     
     if (missing(count)){
-      out[, (var) := if_else(.rank <= n, out[[var]], other.category)]
+      out[.rank > n, (var) := other.category]
     } else {
-      out[, (var) := if_else(N >= count, out[[var]], other.category)]
+      out[N < count, (var) := other.category]
     }
     out <- 
       out %>%
