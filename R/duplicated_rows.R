@@ -7,7 +7,8 @@
 #' @param na.rm (logical) Should \code{NA}s in \code{by} be removed before returning duplicates? (Default \code{FALSE}.)
 #' @param order (logical) Should the result be ordered so that duplicate rows are adjacent? (Default \code{TRUE}.)
 #' @param copyDT (logical) Should \code{DT} be copied prior to detecting duplicates. If \code{FALSE}, the ordering of \code{DT} will be changed by reference.
-#' @param na.last (logical) If \code{order} is TRUE, should \code{NA}s be ordered first or last?. Passed to \code{\link{data.table::setorderv}}.
+#' @param na.last (logical) If \code{order} is TRUE, should \code{NA}s be ordered first or last?. Passed to \code{data.table::setorderv}.
+#' @importFrom stats complete.cases
 #' @return Duplicate rows of \code{DT} by \code{by}. For interactive use.
 #' 
 #' @examples 

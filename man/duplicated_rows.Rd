@@ -18,7 +18,7 @@ duplicated_rows(DT, by = names(DT), na.rm = FALSE, order = TRUE,
 
 \item{copyDT}{(logical) Should \code{DT} be copied prior to detecting duplicates. If \code{FALSE}, the ordering of \code{DT} will be changed by reference.}
 
-\item{na.last}{(logical) If \code{order} is TRUE, should \code{NA}s be ordered first or last?. Passed to \code{\link{data.table::setorderv}}.}
+\item{na.last}{(logical) If \code{order} is TRUE, should \code{NA}s be ordered first or last?. Passed to \code{data.table::setorderv}.}
 }
 \value{
 Duplicate rows of \code{DT} by \code{by}. For interactive use.
