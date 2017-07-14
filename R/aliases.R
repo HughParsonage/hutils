@@ -1,25 +1,36 @@
 #' @title Aliases
+#' @description These simple aliases can be useful to avoid operator precedence ambiguity,
+#' or to make use of indents from commas within your text editor. The all-caps versions accept
+#' single-length (capable of 'short-circuits') logical conditions only.
 #' @name aliases
 #' @param x,y Logical conditions.
 NULL
 
 #' @rdname aliases
 #' @export
-AND <- `&&`
+AND <- function(x, y) .Primitive("&&")
 
 #' @rdname aliases
 #' @export
-OR <- `||`
+OR  <- function(x, y) .Primitive("||")
 
 #' @rdname aliases
-#' @export neither nor
-neither <- nor <- function(x, y) {
+#' @export
+nor <- function(x, y) {
   `&`(!x, !y)
 }
 
 #' @rdname aliases
-#' @export NEITHER NOR
-NEITHER <- NOR <- function(x, y) {
+#' @export
+neither <- function(x, y) nor(x, y)
+
+#' @rdname aliases
+#' @export 
+NOR <- function(x, y) {
   !x && !y
 }
+
+#' @rdname aliases
+#' @export 
+NEITHER <- function(x, y) NOR(x, y)
   

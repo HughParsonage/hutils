@@ -4,18 +4,29 @@
 \alias{aliases}
 \alias{AND}
 \alias{OR}
+\alias{nor}
 \alias{neither}
+\alias{NOR}
 \alias{NEITHER}
 \title{Aliases}
 \usage{
-AND()
+AND(x, y)
 
-OR()
+OR(x, y)
+
+nor(x, y)
 
 neither(x, y)
+
+NOR(x, y)
 
 NEITHER(x, y)
 }
 \arguments{
 \item{x, y}{Logical conditions.}
+}
+\description{
+These simple aliases can be useful to avoid operator precedence ambiguity,
+or to make use of indents from commas within your text editor. The all-caps versions accept
+single-length (capable of 'short-circuits') logical conditions only.
 }
