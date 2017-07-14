@@ -13,6 +13,9 @@ test_that("Cols first and last", {
   expect_equal(names(DT), c("y", "z", "x"))
   set_cols_last(DT, "z")
   expect_equal(names(DT), c("y", "x", "z"))
+  
+  set_cols_first(DT, c("x", "y"))
+  expect_equal(names(DT), c("x", "y", "z"))
 })
 
 
