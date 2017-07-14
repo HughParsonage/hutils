@@ -1,7 +1,7 @@
 #' Return duplicated rows of data.table
 #' @description This function differs from \code{duplicated} in that it returns both the duplicate row and the row which has been duplicated.
 #' This may prove useful in combination with the \code{by} argument for determining whether two observations are identical across
-#' more than just the specified rows. 
+#' more than just the specified columns. 
 #' @param DT A \code{data.table}.
 #' @param by Character vector of columns to evaluate duplicates over. 
 #' @param na.rm (logical) Should \code{NA}s in \code{by} be removed before returning duplicates? (Default \code{FALSE}.)

@@ -4,5 +4,5 @@
 \alias{hutils-package}
 \title{hutils package}
 \description{
-Miscellaneous functions found to be useful.
+Provides utility functions for, and drawing on, the 'data.table' package. The package also collates useful miscellaneous functions extending base R not available elsewhere. The name is a portmanteau of 'utils' and the author.
 }

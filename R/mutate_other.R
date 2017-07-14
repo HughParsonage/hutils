@@ -1,5 +1,5 @@
 #' @title Group infrequent entries into 'Other category'
-#' @description Useful when you want to constrain the number of unique values in a column.
+#' @description Useful when you want to constrain the number of unique values in a column by keeping only the most common values.
 #' @param .data Data containing variable.
 #' @param var Variable containing infrequent entries, to be collapsed into "Other". 
 #' @param n Threshold for total number of categories above "Other".
@@ -7,7 +7,7 @@
 #' @param by Extra variables to group by when calculating \code{n} or \code{count}.
 #' @param copy Should \code{.data} be copied? Currently only \code{TRUE} is supported.
 #' @param other.category Value that infrequent entries are to be collapsed into. Defaults to \code{"Other"}.
-#' @return \code{.data} but with \code{var} changed to be grouped into smaller categories.
+#' @return \code{.data} but with \code{var} changed so that infrequent values have the same value (\code{other.category}).
 #' @export 
 mutate_other <- function(.data, var, n = 5, count, by = NULL, copy = TRUE, other.category = "Other"){
   stopifnot(is.data.table(.data), 

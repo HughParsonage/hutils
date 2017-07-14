@@ -11,7 +11,7 @@ drop_empty_cols(DT, copy = FALSE)
 
 \item{copy}{Copies the \code{data.table} so the original can be retained. 
 Not applicable if \code{DT} is not a \code{data.table}.
-If \code{FALSE}, the default, \code{DT} itself will be modified, not just the value.}
+If \code{FALSE}, the default, \code{DT} itself will be modified.}
 }
 \description{
 Removes columns from a \code{data.table} where all the values are missing.

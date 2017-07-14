@@ -23,8 +23,8 @@ mutate_other(.data, var, n = 5, count, by = NULL, copy = TRUE,
 \item{other.category}{Value that infrequent entries are to be collapsed into. Defaults to \code{"Other"}.}
 }
 \value{
-\code{.data} but with \code{var} changed to be grouped into smaller categories.
+\code{.data} but with \code{var} changed so that infrequent values have the same value (\code{other.category}).
 }
 \description{
-Useful when you want to constrain the number of unique values in a column.
+Useful when you want to constrain the number of unique values in a column by keeping only the most common values.
 }

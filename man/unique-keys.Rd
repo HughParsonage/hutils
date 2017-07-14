@@ -21,5 +21,8 @@ set_unique_key(DT, ...)
 \code{data.table} if the key is unique, or an error message otherwise.
 }
 \description{
-Unique keys
+A \code{data.table}'s \code{key} need not be unique, but there are frequently circumstances
+where non-unique keys can wreak havoc.
+\code{has_unique_key} reports the existence of a unique key, and 
+\code{set_unique_key} both sets and ensures the uniqueness of keys.
 }

@@ -26,7 +26,7 @@ Duplicate rows of \code{DT} by \code{by}. For interactive use.
 \description{
 This function differs from \code{duplicated} in that it returns both the duplicate row and the row which has been duplicated.
 This may prove useful in combination with the \code{by} argument for determining whether two observations are identical across
-more than just the specified rows.
+more than just the specified columns.
 }
 \examples{
 

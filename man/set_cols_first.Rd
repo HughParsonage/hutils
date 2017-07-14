@@ -12,13 +12,14 @@ set_cols_last(DT, cols, intersection = TRUE)
 \arguments{
 \item{DT}{A data.table.}
 
-\item{cols}{Character vector of columns to put before (after) all others}
+\item{cols}{Character vector of columns to put before (after) all others.}
 
 \item{intersection}{Use the intersection of the names of \code{DT} and \code{cols}. If \code{FALSE} 
 any \code{cols} are not the names of \code{DT}, the function may error on behalf of \code{data.table}.}
 }
 \description{
-Put columns first or last
+Reorder columns of a \code{data.table} (via \code{setcolorder}) so that particular columns 
+appear first (or last).
 }
 \examples{
 if (requireNamespace("data.table", quietly = TRUE)) {
