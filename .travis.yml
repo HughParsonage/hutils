@@ -14,3 +14,11 @@ include:
 
 after_success:
   - Rscript -e 'covr::codecov(line_exclusions = list("R/zzz.R"))'
+  - Rscript -e 'devtools::test()'
+  - Rscript -e 'covr::codecov()'
+  - test $TRAVIS_PULL_REQUEST == "false" && 
+          test $TRAVIS_BRANCH == "master" && 
+          bash deploy.sh
+env:
+  global:
+    secure: wlo/XZXiDAmQQ305K1ZsUGemRJfCzDYYAI0sPjJ009p0oI/aqxv9RkUbZkhXG8OPoxBCS+5rHImDf174h0uP1ycb3pHMZ53iCUSFv45w8MxjJ9MH2RqoePCmJdEtWFu9qWeYoy7zw1IcHRPtrdFeDPM9R7QGtLulw2tcqLdxawRXvKlwj6aI6F7kwjUMkWPPxiNJCYzuBkahEXBGNRcVbQN5Xo0M1RnnTTxzbdIWmhvo6kojgsy1QVuOY2yl7zC6JMdiR4cFoJFy5n8jviYmdiromhaYk8LCql/7SW/q82HByeLIwDBZ69aW9179n1e5rMMOz1T8hiL+8jN5o+qFyyXN3ASNddHqo+KvSjS6assP40NFU1SX/JbYmbDjglNoEhSe/n+u0Hr00Pn6mwUoXzrQJ11MrMmn2R7YW4negneGceJdq6YUsTMvQd/QnvOm7ynDBe+eYURPQC+OU4gmMBZwru0UcjQgm/uGbujhdy3W6CHS2xeMmMVJitbt+4e+p4SGx1ks/J4WtxTncwMzRWLN0s+Vhy/M9vn7yzjr8W9m9Gw9RzhuMdhApiFx4xIHJfQNeWvv+Y8f9rZOXMjjemg5UJQbZAqMYiZCGIl/8wKdFAZ6bGlV95t8+jWpKr7TMm1IBWCSjHSKm4gr19Z9hv6U16p06pWsVi4DQKcURoo=
