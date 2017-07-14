@@ -1,26 +1,19 @@
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-
 language: R
 cache: packages
-
 packages:
-  - drat
-
+- drat
 r_github_packages:
-  - jimhester/covr
-
+- jimhester/covr
 include:
 - r: release
 - r: oldrel
 - r: devel
-
 after_success:
-  - Rscript -e 'covr::codecov(line_exclusions = list("R/zzz.R"))'
-  - Rscript -e 'devtools::test()'
-  - Rscript -e 'covr::codecov()'
-  - test $TRAVIS_PULL_REQUEST == "false" && 
-          test $TRAVIS_BRANCH == "master" && 
-          bash deploy.sh
+- Rscript -e 'covr::codecov(line_exclusions = list("R/zzz.R"))'
+- Rscript -e 'devtools::test()'
+- Rscript -e 'covr::codecov()'
+- test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && bash
+  deploy.sh
 env:
   global:
-    secure: wlo/XZXiDAmQQ305K1ZsUGemRJfCzDYYAI0sPjJ009p0oI/aqxv9RkUbZkhXG8OPoxBCS+5rHImDf174h0uP1ycb3pHMZ53iCUSFv45w8MxjJ9MH2RqoePCmJdEtWFu9qWeYoy7zw1IcHRPtrdFeDPM9R7QGtLulw2tcqLdxawRXvKlwj6aI6F7kwjUMkWPPxiNJCYzuBkahEXBGNRcVbQN5Xo0M1RnnTTxzbdIWmhvo6kojgsy1QVuOY2yl7zC6JMdiR4cFoJFy5n8jviYmdiromhaYk8LCql/7SW/q82HByeLIwDBZ69aW9179n1e5rMMOz1T8hiL+8jN5o+qFyyXN3ASNddHqo+KvSjS6assP40NFU1SX/JbYmbDjglNoEhSe/n+u0Hr00Pn6mwUoXzrQJ11MrMmn2R7YW4negneGceJdq6YUsTMvQd/QnvOm7ynDBe+eYURPQC+OU4gmMBZwru0UcjQgm/uGbujhdy3W6CHS2xeMmMVJitbt+4e+p4SGx1ks/J4WtxTncwMzRWLN0s+Vhy/M9vn7yzjr8W9m9Gw9RzhuMdhApiFx4xIHJfQNeWvv+Y8f9rZOXMjjemg5UJQbZAqMYiZCGIl/8wKdFAZ6bGlV95t8+jWpKr7TMm1IBWCSjHSKm4gr19Z9hv6U16p06pWsVi4DQKcURoo=
+  - secure: ojizdloowF9006odBbToDRs7PNztMc41TQKDgVuTqQQa5hAqkOjBhkTJFCErQNUpJD3zYE+P7Rr+JcHM8o2qQAcrgTVO2iiawsfwk52Es9iRGv08etZ9+6s/ZAtieSQKAizW1TWsyP1lYfrGYIGe6VTrkku77DYu/mCqOlZ/jp5X5oiN3ZkAZEA22/Yrwwkoe5Qya8CkmoRV2vmw1G5x+VDTtdKIX2eizmiTAKGssWf2Yvs9Cm4/6o6fihIoEDWYxx8h2VHvj/bqnUCfoaZEnlVk6+ePrzu2GCNzPeFihiDL/ZYhVSXCXR6i2F7L4uOeC0j5OejaAhq+PLQuYVkuTPUjwZDJpj0L7DnrXoiKCfS5DSi3H+eKk8Vw+QAfByEfcdpVLcrQeRa03w/l1ZhjXOc5kHx48cuIZNEgqcCYOAUwbyuCId86QTD4cXqDk2wTtTthfMOg3xHa0DMTr+egqY4x91wSImgqrY0AD3kLIQNDUjp6vNG62lJIZpcya/wab7AwGFLInoOlny5CSaEVPzRUGznK6kDsUH3TqmylU0qDJhTwEgVN3AD/0T+YcElTvvrkkUXBRB8VE9PI6rLG+0Jh4zyVrSmAcUeVSabX50bEAkIBmIU2ua6xWftS7v1g/SbSJu0ss7aGCP9eXTCVES2WY6nRkcWoMQRPsrS7ho4=
