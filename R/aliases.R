@@ -7,12 +7,14 @@
 NULL
 
 #' @rdname aliases
+#' @usage AND(x, y)
 #' @export
-AND <- function(x, y) .Primitive("&&")
+AND <- `&&`
 
 #' @rdname aliases
+#' @usage OR(x, y)
 #' @export
-OR  <- function(x, y) .Primitive("||")
+OR  <- `||`
 
 #' @rdname aliases
 #' @export
