@@ -17,7 +17,7 @@ addToDrat(){
   git fetch upstream 2>err.txt
   git checkout gh-pages
 
-  Rscript -e "drat::insertPackage('$PKG_REPO/$PKG_TARBALL', \
+  Rscript -e "if (!requireNamespace('drat', quietly = TRUE)) install.packages('drat');drat::insertPackage('$PKG_REPO/$PKG_TARBALL', \
     repodir = '.', \
     commit='Travis update $PKG_REPO: build $TRAVIS_BUILD_NUMBER')"
   git push 2>err.txt
