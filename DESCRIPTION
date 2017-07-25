@@ -13,5 +13,6 @@ Imports:
   data.table,
   magrittr,
   fastmatch
-Suggests: testthat
+Suggests: testthat,
+  datasets
 RoxygenNote: 6.0.1

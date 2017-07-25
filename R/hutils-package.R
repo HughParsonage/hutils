@@ -4,4 +4,5 @@
 #' @import data.table
 #' @importFrom magrittr %>%
 #' @importFrom fastmatch %fin%
+#' @importFrom fastmatch fmatch
 NULL
