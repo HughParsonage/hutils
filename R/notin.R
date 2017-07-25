@@ -4,5 +4,5 @@
 #' @export 
 
 `%notin%` <- function(x, y){
-  !(x %fin% y)
+  is.na(fmatch(x, y))
 }
