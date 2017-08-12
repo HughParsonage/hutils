@@ -25,6 +25,7 @@
 }
 
 #' @rdname ein
+#' @export 
 `%enotin%` <- function(x, y) {
   if (!all(y %fin% x)) {
     badys <- y[y %notin% x]
