@@ -3,29 +3,40 @@
 \name{set_cols_first}
 \alias{set_cols_first}
 \alias{set_cols_last}
+\alias{set_colsuborder}
 \title{Put columns first or last}
 \usage{
 set_cols_first(DT, cols, intersection = TRUE)
 
 set_cols_last(DT, cols, intersection = TRUE)
+
+set_colsuborder(DT, cols, intersection = TRUE)
 }
 \arguments{
 \item{DT}{A data.table.}
 
-\item{cols}{Character vector of columns to put before (after) all others.}
+\item{cols}{Character vector of columns to put before (after) all others or, in the case of \code{set_colsuborder},
+a vector of columns in the order requested.}
 
 \item{intersection}{Use the intersection of the names of \code{DT} and \code{cols}. If \code{FALSE} 
-any \code{cols} are not the names of \code{DT}, the function may error on behalf of \code{data.table}.}
+any \code{cols} are not the names of \code{DT}, the function may error on behalf of \code{data.table}.
+Not availble for \code{set_colsuborder}.}
 }
 \description{
 Reorder columns of a \code{data.table} (via \code{setcolorder}) so that particular columns 
-appear first (or last).
+appear first (or last), or in a particular order.
+}
+\details{
+In the case of \code{set_colsuborder} the group of columns \code{cols} occupy the same positions
+in \code{DT} but in a different order. See examples.
 }
 \examples{
-if (requireNamespace("data.table", quietly = TRUE)) {
-  library(data.table)
+
+library(data.table)
   
-  DT <- data.table(y = 1:5, z = 11:15, x = letters[1:5])
-  set_cols_first(DT, "x")
-}
+DT <- data.table(y = 1:5, z = 11:15, x = letters[1:5])
+set_cols_first(DT, "x")[]
+set_cols_last(DT, "x")[]
+set_colsuborder(DT, c("x", "y"))[]
+
 }
