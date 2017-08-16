@@ -25,3 +25,13 @@ test_that("Drop columns", {
   
   expect_error(drop_col(as.data.frame(DT), "x"))
 })
+
+test_that("Drop colr", {
+  library(data.table)
+  DT <- data.table(x = 1, y = 2, z = 3)
+  DT_out <- drop_cols(DT, "x")
+  expect_equal(names(DT_out), c("y", "z"))
+  
+  DF <- data.frame(x = 1, y = 1)
+  expect_error()
+})
