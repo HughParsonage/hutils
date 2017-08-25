@@ -14,3 +14,6 @@ x \%notin\% y
 \description{
 Negation of in
 }
+\details{
+If \code{y} is \code{NULL}, then \code{x} is \code{TRUE} for consistency with \code{\%in\%}.
+}

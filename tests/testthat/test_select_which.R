@@ -4,7 +4,7 @@ test_that("Returns correct columns", {
   library(data.table)
   DT <- data.table(x = 1:5,
                    y = letters[1:5],
-                   AB = c(NA, TRUE, FALSE))
+                   AB = c(NA, TRUE, FALSE, TRUE, FALSE))
   out <- select_which(DT, is.numeric)
   expect_equal(names(out), "x")
   out <- select_which(DT, anyNA, .and.dots = "y")
