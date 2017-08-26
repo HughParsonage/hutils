@@ -27,6 +27,6 @@ select_which <- function(DT, Which, .and.dots = NULL, checkDT = TRUE) {
       } else {
         names(DT)[.and.dots]
       }
-    DT[, .SD, .SDcols = union(names(DT)[vapply(DT, Which, logical(1))], .and.dots)]
+    DT[, .SD, .SDcols = union(names(DT)[vapply(DT, Which, logical(1))], sdcols_extra)]
   }
 }
