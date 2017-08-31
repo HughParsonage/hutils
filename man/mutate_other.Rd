@@ -4,8 +4,8 @@
 \alias{mutate_other}
 \title{Group infrequent entries into 'Other category'}
 \usage{
-mutate_other(.data, var, n = 5, count, by = NULL, copy = TRUE,
-  other.category = "Other")
+mutate_other(.data, var, n = 5, count, by = NULL, var.weight = NULL,
+  mass = -Inf, copy = TRUE, other.category = "Other")
 }
 \arguments{
 \item{.data}{Data containing variable.}
@@ -18,6 +18,11 @@ mutate_other(.data, var, n = 5, count, by = NULL, copy = TRUE,
 
 \item{by}{Extra variables to group by when calculating \code{n} or \code{count}.}
 
+\item{var.weight}{Variable to act as a weight: \code{var}'s where the sum of this variable exceeds 
+\code{mass} will be kept, others set to \code{other.category}.}
+
+\item{mass}{Threshold for sum of \code{var.weight}.}
+
 \item{copy}{Should \code{.data} be copied? Currently only \code{TRUE} is supported.}
 
 \item{other.category}{Value that infrequent entries are to be collapsed into. Defaults to \code{"Other"}.}
@@ -27,4 +32,16 @@ mutate_other(.data, var, n = 5, count, by = NULL, copy = TRUE,
 }
 \description{
 Useful when you want to constrain the number of unique values in a column by keeping only the most common values.
+}
+\examples{
+library(data.table)
+library(magrittr)
+
+DT <- data.table(City = c("A", "A", "B", "B", "C", "D"),
+                 value = c(1, 9, 4, 4, 5, 11))
+
+DT \%>\%
+  mutate_other("City", var.weight = "value", mass = 10) \%>\%
+  .[]
+  
 }
