@@ -48,3 +48,9 @@ test_that("error if invalid length", {
     fixed = TRUE
   )
 })
+
+test_that("Return x if nothing NA", {
+  x <- rnorm(10)
+  expect_equal(coalesce(x), x)
+  expect_equal(coalesce(x, "Doesn't matter"), x)
+})
