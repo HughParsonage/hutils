@@ -1,8 +1,8 @@
 Package: hutils
 Type: Package
 Title: Miscellaneous R Functions and Aliases
-Version: 0.7.0
-Date: 2017-09-09
+Version: 0.8.0
+Date: 2017-09-12
 Authors@R: c(person("Hugh", "Parsonage", role = c("aut", "cre"), email = "hugh.parsonage@gmail.com"))
 Maintainer: Hugh Parsonage <hugh.parsonage@gmail.com>
 Description: Provides utility functions for, and drawing on, the 'data.table' package. The package also collates useful miscellaneous functions extending base R not available elsewhere. The name is a portmanteau of 'utils' and the author.
@@ -13,7 +13,6 @@ Imports:
   data.table,
   magrittr,
   utils,
-  knitr,
   fastmatch
 Suggests: testthat,
   datasets
