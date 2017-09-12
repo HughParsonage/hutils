@@ -25,6 +25,9 @@ is replaced by \code{B[i]}, \code{C[i]} until it is no longer missing or the lis
 Lightweight version of \code{dplyr::coalesce}, with all the vices and virtues that come from such an
 approach. 
 Very similar logic (and timings to \code{dplyr::coalesce}), though no ability to use quosures etc.
+One exception is that if \code{x} does not contain any missing values, it is returned immediately,
+and ignores \code{...}. For example, \code{dplyr::coalesce(1:2, 1:3)} is an error, but 
+\code{hutils::coalesce(1:2, 1:3)} is not.
 }
 \examples{
 coalesce(c(1, NA, NA, 4), c(1, 2, NA, NA), c(3, 4, 5, NA))
