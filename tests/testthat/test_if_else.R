@@ -146,11 +146,16 @@ test_that("NA misuse", {
 
 test_that("Length-one condition", {
   expect_identical(if_else(TRUE, 1L, 2L), 1L)
+  expect_identical(if_else(NA, 1L, 2L), NA_integer_)
+  expect_identical(if_else(NA, 1L, 2L, na = 0L), 0L)
 })
 
 test_that("Length-one na", {
   expect_identical(if_else(c(TRUE, FALSE), c(1L, 2L), c(3L, 4L), na = 0L), c(1L, 4L))
-  expect_identical(if_else(c(TRUE, FALSE, NA), c(1L, 2L, 3L), c(4L, 5L, 6L), na = 0L), c(1L, 5L, 0L))
+  expect_identical(if_else(c(TRUE, FALSE, NA), 1L, 2L, na = 0L), c(1L, 2L, 0L))
+})
+
+test_that("Multi-length na", {
   expect_identical(if_else(c(TRUE, FALSE, NA), c(1L, 2L, 3L), c(4L, 5L, 6L), na = c(-1L, 0L, 1L)), c(1L, 5L, 1L))
 })
 
