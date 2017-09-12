@@ -124,3 +124,35 @@ test_that("better factor support (#2197)", {
     )
   })
 })
+
+# Additional if_else tests:
+
+test_that("Numeric condition", {
+  expect_error(if_else(c(0.0, 0.5), 1, 2),
+               regexp = "must be a logical.*currently.*double")
+})
+
+test_that("Limited yes conditions", {
+  expect_error(if_else(TRUE, 1 + 2i, 2),
+               regexp = "typeof.*complex")
+})
+
+test_that("NA misuse", {
+  expect_error(if_else(TRUE, 1L, 1, na = "missing"),
+               regexp = "All of yes, no, and na must have the same type")
+  expect_error(if_else(TRUE, 1L, 1L, na = "missing"),
+               regexp = "All of yes, no, and na must have the same type")
+})
+
+test_that("Length-one condition", {
+  expect_identical(if_else(TRUE, 1L, 2L), 1L)
+})
+
+test_that("Length-one na", {
+  expect_identical(if_else(c(TRUE, FALSE), c(1L, 2L), c(3L, 4L), na = 0L), c(1L, 4L))
+  expect_identical(if_else(c(TRUE, FALSE, NA), c(1L, 2L, 3L), c(4L, 5L, 6L), na = 0L), c(1L, 5L, 0L))
+  expect_identical(if_else(c(TRUE, FALSE, NA), c(1L, 2L, 3L), c(4L, 5L, 6L), na = c(-1L, 0L, 1L)), c(1L, 5L, 1L))
+})
+
+
+
