@@ -1,5 +1,7 @@
 language: R
 cache: packages
+latex: false
+pandoc: false
 packages:
 - drat
 r_github_packages:
