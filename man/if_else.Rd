@@ -4,7 +4,7 @@
 \alias{if_else}
 \title{Vectorized if}
 \source{
-Original code but obviously heavily inspired by \url{https://cran.r-project.org/web/packages/dplyr/index.html}.
+Original code but obviously heavily inspired by \url{https://CRAN.R-project.org/package=dplyr}.
 }
 \usage{
 if_else(condition, yes, no, na = NULL)

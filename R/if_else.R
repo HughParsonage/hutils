@@ -14,7 +14,7 @@
 #' Where \code{condition} is \code{NA}, then the corresponding value in \code{na} -- 
 #' unless \code{na} is \code{NULL} (the default) in which case the value will be \code{NA} (with the same
 #' type as \code{yes}.)
-#' @source Original code but obviously heavily inspired by \url{https://cran.r-project.org/web/packages/dplyr/index.html}. 
+#' @source Original code but obviously heavily inspired by \url{https://CRAN.R-project.org/package=dplyr}. 
 #' @export 
 
 
