@@ -102,6 +102,7 @@ test_that("NA misuse", {
 test_that("Length-one condition", {
   expect_identical(if_else(TRUE, 1L, 2L), 1L)
   expect_identical(if_else(NA, 1L, 2L), NA_integer_)
+  expect_identical(if_else(FALSE, 1L, 2L), 2L)
   expect_identical(if_else(NA, 1L, 2L, na = 0L), 0L)
 })
 
