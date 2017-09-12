@@ -22,7 +22,7 @@ if_else <- function(condition, yes, no, na = NULL) {
   na_not_used <- is.null(na)
 
   lengths <- c(length(condition), length(yes), length(no), if (na_not_used) 1L else length(na))
-  max.length <- max(lengths)
+  max.length <- lengths[1]
   if (any(lengths != 1L & lengths != max.length)) {
     stop("Only permissible vector lengths are 1 or the maximum of the inputs.")
   }
