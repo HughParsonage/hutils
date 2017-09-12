@@ -24,7 +24,7 @@ weight2rows <- function(DT, weight.var) {
   switch(typeof(weight.var.value), 
          "logical" = {
            warning("weight.var is logical. Treating as filter/subset.")
-           DT[(weight.var)]
+           DT[which(weight.var.value)]
          },
          "integer" = {
            DT %>%
