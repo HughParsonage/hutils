@@ -93,26 +93,45 @@ test_that("Limited yes conditions", {
 })
 
 test_that("NA misuse", {
-  expect_error(if_else(TRUE, 1L, 1, na = "missing"),
-               regexp = "All of yes, no, and na must have the same type")
-  expect_error(if_else(TRUE, 1L, 1L, na = "missing"),
-               regexp = "All of yes, no, and na must have the same type")
+  expect_error(if_else(TRUE, 1L, 1, missing = "missing"),
+               regexp = "All of true, false, and missing must have the same type")
+  expect_error(if_else(TRUE, 1L, 1L, missing = "missing"),
+               regexp = "All of true, false, and missing must have the same type")
 })
 
 test_that("Length-one condition", {
   expect_identical(if_else(TRUE, 1L, 2L), 1L)
   expect_identical(if_else(NA, 1L, 2L), NA_integer_)
   expect_identical(if_else(FALSE, 1L, 2L), 2L)
-  expect_identical(if_else(NA, 1L, 2L, na = 0L), 0L)
+  expect_identical(if_else(NA, 1L, 2L, missing = 0L), 0L)
 })
 
 test_that("Length-one na", {
-  expect_identical(if_else(c(TRUE, FALSE), c(1L, 2L), c(3L, 4L), na = 0L), c(1L, 4L))
-  expect_identical(if_else(c(TRUE, FALSE, NA), 1L, 2L, na = 0L), c(1L, 2L, 0L))
+  expect_identical(if_else(c(TRUE, FALSE), c(1L, 2L), c(3L, 4L), missing = 0L), c(1L, 4L))
+  expect_identical(if_else(c(TRUE, FALSE, NA), 1L, 2L, missing = 0L), c(1L, 2L, 0L))
 })
 
 test_that("Multi-length na", {
-  expect_identical(if_else(c(TRUE, FALSE, NA), c(1L, 2L, 3L), c(4L, 5L, 6L), na = c(-1L, 0L, 1L)), c(1L, 5L, 1L))
+  expect_identical(if_else(c(TRUE, FALSE, NA), c(1L, 2L, 3L), c(4L, 5L, 6L), missing = c(-1L, 0L, 1L)), c(1L, 5L, 1L))
+})
+
+test_that("Must be faster than dplyr::if_else", {
+  if (requireNamespace("dplyr", quietly = TRUE) &&
+      requireNamespace("microbenchmark", quietly = TRUE)) {
+    library(microbenchmark)
+    library(magrittr)
+    library(data.table)
+    x <- rcauchy(50e3, 2, 0)
+    out <- 
+      microbenchmark(hutils = hutils::if_else(x < 0, "a", "b"),
+                     dplyr  =  dplyr::if_else(x < 0, "a", "b"),
+                     times = 50) %>%
+      as.data.table %>%
+      .[, .(time = mean(time)), by = expr]
+    
+    expect_gt(out[expr == "dplyr"][["time"]],
+              out[expr == "hutils"][["time"]])
+  }
 })
 
 

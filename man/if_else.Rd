@@ -7,23 +7,23 @@
 Original code but obviously heavily inspired by \url{https://CRAN.R-project.org/package=dplyr}.
 }
 \usage{
-if_else(condition, yes, no, na = NULL)
+if_else(condition, true, false, missing = NULL)
 }
 \arguments{
 \item{condition}{Logical vector}
 
-\item{yes, no}{Where condition is \code{TRUE}/\code{FALSE}, use the corresponding \code{yes}/\code{no} value.
+\item{true, false}{Where condition is \code{TRUE}/\code{FALSE}, use the corresponding\code{true}/\code{no} value.
 Must have the same type as each other and be the same length as \code{condition} or length-one.}
 
-\item{na}{If condition is \code{NA}, use the corresponding \code{na} value. Like \code{yes} and \code{no}, must
+\item{missing}{If condition is \code{NA}, use the corresponding \code{na} value. Like\code{true} and\code{false}, must
 be of the same type and have the same length as condition, unless it has length one.}
 }
 \value{
-Where \code{condition} is \code{TRUE}, the corresponding value in \code{yes}; 
-where \code{condition} is \code{FALSE}, the corresponding value in \code{no}.
+Where \code{condition} is \code{TRUE}, the corresponding value in \code{true}; 
+where \code{condition} is \code{FALSE}, the corresponding value in \code{false}.
 Where \code{condition} is \code{NA}, then the corresponding value in \code{na} -- 
 unless \code{na} is \code{NULL} (the default) in which case the value will be \code{NA} (with the same
-type as \code{yes}.)
+type as \code{true}.)
 }
 \description{
 Lightweight \code{dplyr::if_else} with the virtues and vices that come from such an approach.

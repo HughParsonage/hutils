@@ -1,3 +1,7 @@
+
+# hutils 0.9.0
+* Changed `if_else` to reflect dplyr's formals so it can be a drop-in replacement.
+
 # hutils 0.8.0
 
 * Added a `NEWS.md` file to track changes to the package.

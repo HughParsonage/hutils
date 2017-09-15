@@ -5,24 +5,27 @@
 #' but will not work on lists or on factors. 
 #' Additional attributes may be dropped.
 #' @param condition Logical vector
-#' @param yes,no Where condition is \code{TRUE}/\code{FALSE}, use the corresponding \code{yes}/\code{no} value.
+#' @param true,false Where condition is \code{TRUE}/\code{FALSE}, use the corresponding\code{true}/\code{no} value.
 #' Must have the same type as each other and be the same length as \code{condition} or length-one.
-#' @param na If condition is \code{NA}, use the corresponding \code{na} value. Like \code{yes} and \code{no}, must
+#' @param missing If condition is \code{NA}, use the corresponding \code{na} value. Like\code{true} and\code{false}, must
 #' be of the same type and have the same length as condition, unless it has length one.
-#' @return Where \code{condition} is \code{TRUE}, the corresponding value in \code{yes}; 
-#' where \code{condition} is \code{FALSE}, the corresponding value in \code{no}.
+#' @return Where \code{condition} is \code{TRUE}, the corresponding value in \code{true}; 
+#' where \code{condition} is \code{FALSE}, the corresponding value in \code{false}.
 #' Where \code{condition} is \code{NA}, then the corresponding value in \code{na} -- 
 #' unless \code{na} is \code{NULL} (the default) in which case the value will be \code{NA} (with the same
-#' type as \code{yes}.)
+#' type as \code{true}.)
 #' @source Original code but obviously heavily inspired by \url{https://CRAN.R-project.org/package=dplyr}. 
 #' @export 
 
 
-if_else <- function(condition, yes, no, na = NULL) {
+if_else <- function(condition, true, false, missing = NULL) {
+  na <- missing
+  yes <- true
+  no <- false
   na_not_used <- is.null(na)
 
-  lengths <- c(length(condition), length(yes), length(no), if (na_not_used) 1L else length(na))
-  max.length <- lengths[1]
+  max.length <- length(condition)
+  lengths <- c(max.length, length(yes), length(no), if (na_not_used) 1L else length(na))
   if (any(lengths != 1L & lengths != max.length)) {
     stop("Only permissible vector lengths are 1 or the maximum of the inputs.")
   }
@@ -38,23 +41,23 @@ if_else <- function(condition, yes, no, na = NULL) {
   Type <- typeof(yes)
   
   if (!(Type %chin% c("logical", "integer", "double", "character"))) {
-    stop("typeof(yes) == ", Type, ". The only permitted types are logical, integer, double, and character.")
+    stop("typeof(true) == ", Type, ". The only permitted types are logical, integer, double, and character.")
   }
   
   if (na_not_used) {
     if (typeof(no) != Type) {
-      stop("typeof(no) == ", typeof(no), ", yet typeof(yes) == ", Type, ". ", 
-           "Both yes and no must have the same type.")
+      stop("typeof(false) == ", typeof(no), ", yet typeof(true) == ", Type, ". ", 
+           "Both true and false must have the same type.")
     }
   } else {
     if (typeof(no) != Type) {
-      stop("typeof(no) == ", typeof(no), ", yet typeof(yes) == ", Type, ". ", 
-           "All of yes, no, and na must have the same type.")
+      stop("typeof(true) == ", typeof(no), ", yet typeof(false) == ", Type, ". ", 
+           "All of true, false, and missing must have the same type.")
     }
     
     if (typeof(na) != Type) {
-      stop("typeof(na) == ", typeof(no), "yet typeof(yes) == ", Type, ". ", 
-           "All of yes, no, and na must have the same type.")
+      stop("typeof(missing) == ", typeof(no), "yet typeof(true) == ", Type, ". ", 
+           "All of true, false, and missing must have the same type.")
     }
   }
 
@@ -72,7 +75,7 @@ if_else <- function(condition, yes, no, na = NULL) {
   
   
   
-  if (lengths[1] == 1L) {
+  if (max.length == 1L) {
     if (is.na(condition)) {
       if (na_not_used) {
         out <- NA_Type_
