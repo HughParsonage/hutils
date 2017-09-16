@@ -115,13 +115,20 @@ test_that("Multi-length na", {
   expect_identical(if_else(c(TRUE, FALSE, NA), c(1L, 2L, 3L), c(4L, 5L, 6L), missing = c(-1L, 0L, 1L)), c(1L, 5L, 1L))
 })
 
+test_that("Matches dplyr::if_else for multi-length missing", {
+  expect_identical( dplyr::if_else(c(TRUE, FALSE, NA), 1, 2, missing = c(1, 2, 3)),
+                   hutils::if_else(c(TRUE, FALSE, NA), 1, 2, missing = c(1, 2, 3)))
+})
+
 test_that("Must be faster than dplyr::if_else", {
   if (requireNamespace("dplyr", quietly = TRUE) &&
       requireNamespace("microbenchmark", quietly = TRUE)) {
     library(microbenchmark)
     library(magrittr)
     library(data.table)
-    x <- rcauchy(50e3, 2, 0)
+    
+    x <- rcauchy(50e3, 2, 3) 
+    
     out <- 
       microbenchmark(hutils = hutils::if_else(x < 0, "a", "b"),
                      dplyr  =  dplyr::if_else(x < 0, "a", "b"),
@@ -133,6 +140,66 @@ test_that("Must be faster than dplyr::if_else", {
               out[expr == "hutils"][["time"]])
   }
 })
+ 
+test_that("Must be faster than dplyr::if_else in all exits", {
+  skip_on_cran()
+  if (requireNamespace("dplyr", quietly = TRUE) &&
+      requireNamespace("microbenchmark", quietly = TRUE)) {
+    library(microbenchmark)
+    library(magrittr)
+    library(data.table)   
+    compare_dplyr_hutils <- function(cond.length.one, true.length.one, false.length.one, missing.length.one, 
+                                     the.type = c("logical", "integer", "double", "character")) {
+      
+      if (cond.length.one) {
+        size <- 1
+      } else {
+        size <- ceiling(abs(rcauchy(1, scale = 10)) + 1)
+      }
+      cond <- sample(c(TRUE, FALSE, NA), size = size, replace = TRUE)
+      the.type <- match.arg(the.type)
+      
+      fetch_type <- function(the.type) {
+        switch(the.type, 
+               "logical" = sample(c(TRUE, FALSE, NA), size = size, replace = TRUE),
+               "integer" = sample(c(1:2, .Machine$integer.max), size = size, replace = TRUE),
+               "double" = sample(c(1, .Machine$double.xmax, .Machine$double.eps), size = size, replace = TRUE),
+               "character" = sample(letters, size = size, replace = TRUE))
+      }
+      
+      yes <- fetch_type(the.type)
+      
+      no <- fetch_type(the.type)
+      
+      na <- fetch_type(the.type)
+      
+      
+      out <- 
+        microbenchmark(hutils = hutils::if_else(cond, yes, no, na),
+                       dplyr  =  dplyr::if_else(cond, yes, no, na),
+                       times = 25) %>%
+        as.data.table %>%
+        .[, .(time = mean(time)), by = expr]
+      
+      expect_gt(out[expr == "dplyr"][["time"]],
+                out[expr == "hutils"][["time"]])
+      TRUE
+    }
+    
+    test_input <- 
+      CJ(A = c(TRUE, FALSE),
+         B = c(TRUE, FALSE),
+         C = c(TRUE, FALSE),
+         D = c(TRUE, FALSE), 
+         E = c("logical", "integer", "double", "character")) 
+    
+    for (i in seq_len(nrow(test_input))) {
+      test_input[i, x := compare_dplyr_hutils(A, B, C, D, E)]
+    }
+    
+  }
+})
+
 
 
 

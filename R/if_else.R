@@ -99,7 +99,11 @@ if_else <- function(condition, true, false, missing = NULL) {
         if (na_not_used) {
           out[is.na(condition)] <- NA_Type_
         } else {
-          out[is.na(condition)] <- na
+          if (lengths[4] == 1L) {
+            out[is.na(condition)] <- na
+          } else {
+            out[is.na(condition)] <- na[is.na(condition)]
+          }
         }
         
       } else {
