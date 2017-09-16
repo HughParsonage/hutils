@@ -47,8 +47,7 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 
 coalesce <- function(x, ...) {
-  anyNAx <- anyNA(x)
-  if (!anyNAx || missing(..1)) {
+  if (!anyNA(x) || missing(..1)) {
     return(x)
   } else {
     values <- list(...)
@@ -56,8 +55,7 @@ coalesce <- function(x, ...) {
     lx <- length(x)
     lengths <- c(lx, vapply(values, length, FUN.VALUE = 0L))
     lengthsn1 <- lengths != 1L
-    max.length <- max(lengths)
-    if (any(lengthsn1 & lengths != max.length)) {
+    if (any(lengthsn1 & lengths != lx)) {
       stop("Only permissible vector lengths are 1 or the maximum of the inputs.")
     }
     
