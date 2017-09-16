@@ -17,5 +17,10 @@ Imports:
 Suggests: testthat,
   datasets,
   dplyr,
-  microbenchmark
+  microbenchmark,
+  knitr,
+  rmarkdown,
+  nycflights13,
+  geosphere
 RoxygenNote: 6.0.1
+VignetteBuilder: knitr

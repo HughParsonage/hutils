@@ -1,0 +1,233 @@
+---
+title: "Hutils"
+author: "Hugh Parsonage"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# `hutils` package
+My name is Hugh. 
+I've written some miscellaneous functions that don't seem to belong in a particular package.
+I've usually put these in `R/utils.R` when I write a package.
+Thus, `hutils`.
+
+This vignette just goes through each exported function.
+
+```{r knitrOpts}
+library(knitr)
+suggested_packages <- c("geosphere", "nycflights13", "dplyr", "ggplot2", "microbenchmark")
+opts_chunk$set(eval = all(vapply(suggested_packages, requireNamespace, quietly = TRUE, FUN.VALUE = FALSE)))
+```
+
+```{r loadPackages}
+library(geosphere)
+library(nycflights13)
+library(dplyr, warn.conflicts = FALSE)
+library(ggplot2)
+library(microbenchmark)
+library(data.table, warn.conflicts = FALSE)
+library(magrittr)
+library(hutils, warn.conflicts = FALSE)
+```
+
+## Aliases
+
+These are simple additions to `magrittr`'s aliases.
+Two new features: capitalized forms of `and` and `or` that invoke `&&` and `||`, the 'long-form' logical operators, 
+and `nor` / `neither` functions.
+
+The main motivation is to make the source code easier to indent.
+I occasionally such source code easier to use.
+
+```{r aliases}
+OR(OR(TRUE,
+      stop("Never happens")),  ## short-circuits
+   AND(FALSE,
+       stop("Never happens")))  
+```
+
+`nor` (or `neither` which is identical) returns `TRUE` if and only if both arguments are `FALSE`.
+
+## `coalesce` and `if_else`
+These are near drop-in replacements for the equivalent functions from `dplyr`. 
+They are included here because they are very useful outside of the tidyverse,
+but may be required in circumstances where importing `dplyr` (with all of its dependencies) 
+would be inappropriate.
+
+They attempt to be drop-in replacements but:
+
+  1. `hutils::if_else` only works with `logical`, `integer`, `double`, and `character` type vectors.
+     Lists and factors won't work.
+  2. `hutils::coalesce` short-circuits on its first argument; if there are no `NA`s in `x`, then `x` is returned, even
+     if the other vectors are the wrong length or type.
+
+In addition, `hutils::if_else` is generally faster than `dplyr::if_else`:
+
+```{r compare_if_else}
+my_check <- function(values) {
+  all(vapply(values[-1], function(x) identical(values[[1]], x), logical(1)))
+}
+
+
+cnd <- sample(c(TRUE, FALSE, NA), size = 100e3, replace = TRUE)
+yes <- sample(letters, size = 100e3, replace = TRUE)
+no <- sample(letters, size = 100e3, replace = TRUE)
+na <- sample(letters, size = 100e3, replace = TRUE)
+
+microbenchmark(dplyr =  dplyr::if_else(cnd, yes, no, na),
+               hutils = hutils::if_else(cnd, yes, no, na),
+               check = my_check) %T>%
+  print %>%
+  autoplot
+
+cnd <- sample(c(TRUE, FALSE, NA), size = 100e3, replace = TRUE)
+yes <- sample(letters, size = 1, replace = TRUE)
+no <- sample(letters, size = 100e3, replace = TRUE)
+na <- sample(letters, size = 1, replace = TRUE)
+
+microbenchmark(dplyr =  dplyr::if_else(cnd, yes, no, na),
+               hutils = hutils::if_else(cnd, yes, no, na),
+               check = my_check) %T>%
+  print %>%
+  autoplot
+```
+
+This speed advantage also appears to be true of `coalesce`:
+
+```{r compare_coalesce}
+x <- sample(c(letters, NA), size = 100e3, replace = TRUE)
+A <- sample(c(letters, NA), size = 100e3, replace = TRUE)
+B <- sample(c(letters, NA), size = 100e3, replace = TRUE)
+C <- sample(c(letters, NA), size = 100e3, replace = TRUE)
+
+microbenchmark(dplyr =  dplyr::coalesce(x, A, B, C),
+               hutils = hutils::coalesce(x, A, B, C),
+               check = my_check) %T>%
+  print %>%
+  autoplot
+```
+
+especially during short-circuits:
+
+```{r compare_coalesce_short_circuit_x}
+x <- sample(c(letters), size = 100e3, replace = TRUE)
+
+microbenchmark(dplyr =  dplyr::coalesce(x, A, B, C),
+               hutils = hutils::coalesce(x, A, B, C),
+               check = my_check) %T>%
+  print %>%
+  autoplot
+```
+
+```{r compare_coalesce_short_circuit_A}
+x <- sample(c(letters, NA), size = 100e3, replace = TRUE)
+A <- sample(c(letters), size = 100e3, replace = TRUE)
+
+microbenchmark(dplyr =  dplyr::coalesce(x, A, B, C),
+               hutils = hutils::coalesce(x, A, B, C),
+               check = my_check) %T>%
+  print %>%
+  autoplot
+```
+
+
+## Drop columns
+To drop a column from a `data.table`, you set it to `NULL`
+
+```{r canonical_drop_DT}
+DT <- data.table(A = 1:5, B = 1:5, C = 1:5)
+DT[, A := NULL]
+```
+
+There's nothing wrong with this, but I've found the following a useful alias, especially in a `magrittr` pipe.
+
+```{r drop_col_hutils}
+DT <- data.table(A = 1:5, B = 1:5, C = 1:5)
+DT %>%
+  drop_col("A") %>%
+  drop_col("B")
+
+# or
+DT <- data.table(A = 1:5, B = 1:5, C = 1:5)
+DT %>%
+  drop_cols(c("A", "B"))
+```
+
+These functions simple invoke the canonical form, so won't be any faster.
+
+Additionally, one can drop columns by a regular expression using `drop_colr`:
+
+```{r drop_colr}
+flights <- as.data.table(flights)
+
+flights %>%
+  drop_colr("time") %>%
+  drop_colr("arr(?!_delay)", perl = TRUE)
+```
+
+## `drop_empty_cols`
+This function drops columns in which all the values are `NA`.
+ 
+```{r drop_empty_cols}
+planes %>% 
+  as.data.table %>% 
+  .[!complete.cases(.)]
+
+planes %>% 
+  as.data.table %>% 
+  .[!complete.cases(.)] %>% 
+  # drops speed
+  drop_empty_cols
+```
+
+## `duplicated_rows`
+There are many useful functions for detecting duplicates in R.
+However, in interactive use, I often want to not merely see which values are duplicated,
+but also compare them to the original.
+This is especially true when I am comparing duplicates across a *subset* of columns in a a `data.table`.
+
+```{r duplicated_rows}
+flights %>%
+  # only the 'second' of the duplicates is returned
+  .[duplicated(., by = c("origin", "dest"))]  
+
+flights %>%
+  # Both rows are returned and (by default)
+  # duplicates are presented adjacently
+  duplicated_rows(by = c("origin", "dest"))
+```
+
+## Haversine distance
+To emphasize the miscellany of this package, I now present `haversine_distance`
+which simply returns the distance between two points on the Earth,
+given their latitutde and longitude.
+
+I prefer this to other packages' implementations.
+Although the `geosphere` package can do a lot more than calculate distances between points, I find the interface for `distHaversine` unfortunate as it cannot be easily used inside a `data.frame`. In addition, I've found the arguments clearer in `hutils::haversine_distance` rather than trying to remember whether to use `byrow` inside the `matrix` function while passing to `distHaversine`.
+
+```{r haversine_distance}
+DT1 <- data.table(lat_orig = runif(1e5, -80, 80),
+                 lon_orig = runif(1e5, -179, 179),
+                 lat_dest = runif(1e5, -80, 80),
+                 lon_dest = runif(1e5, -179, 179))
+
+DT2 <- copy(DT1)
+
+microbenchmark(DT1[, distance := haversine_distance(lat_orig, lon_orig,
+                                                    lat_dest, lon_dest)],
+               
+               DT2[, distance := distHaversine(cbind(lon_orig, lat_orig),
+                                               cbind(lon_orig, lat_orig))])
+rm(DT1, DT2)
+```
+
+
+
+
+
+
+

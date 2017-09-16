@@ -1,6 +1,9 @@
 
 # hutils 0.9.0
 * Changed `if_else` to reflect dplyr's formals so it can be a drop-in replacement.
+* Fix error for multi-length `missing` value in `if_else` when length-one `condition`.
+* Add vignette
+* Minor performance improvements
 
 # hutils 0.8.0
 
