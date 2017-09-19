@@ -211,9 +211,9 @@ Although the `geosphere` package can do a lot more than calculate distances betw
 
 ```{r haversine_distance}
 DT1 <- data.table(lat_orig = runif(1e5, -80, 80),
-                 lon_orig = runif(1e5, -179, 179),
-                 lat_dest = runif(1e5, -80, 80),
-                 lon_dest = runif(1e5, -179, 179))
+                  lon_orig = runif(1e5, -179, 179),
+                  lat_dest = runif(1e5, -80, 80),
+                  lon_dest = runif(1e5, -179, 179))
 
 DT2 <- copy(DT1)
 
