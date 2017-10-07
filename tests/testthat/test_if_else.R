@@ -205,6 +205,12 @@ test_that("Must be faster than dplyr::if_else in all exits", {
   }
 })
 
+test_that("if_else coverage", {
+  out <- if_else(c(NA, FALSE, TRUE, NA), 1:4 + 0.0, 3)
+  expect_equal(out, c(NA, 3, 3, NA))
+  out <- if_else(c(NA, FALSE, TRUE, NA), 1:4 + 0.0, 3, missing = -1)
+  expect_equal(out, c(-1, 3, 3, -1))
+})
 
 
 
