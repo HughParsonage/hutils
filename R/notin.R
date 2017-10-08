@@ -6,7 +6,7 @@
 
 `%notin%` <- function(x, y){
   if (is.null(y)) {
-    rep_len(TRUE, length(y))
+    rep_len(TRUE, length(x))
   } else {
     is.na(fmatch(x, y))
   }

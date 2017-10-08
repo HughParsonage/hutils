@@ -13,7 +13,9 @@ test_that("Complement of %in%", {
 })
 
 test_that("y NULL", {
-  expect_true(all(5 %notin% NULL))
+  expect_true(isTRUE(all(5 %notin% NULL)))
+  expect_identical(c("x", "y") %notin% NULL,
+                   c(TRUE, TRUE))
 })
 
 test_that("DTs", {
