@@ -19,7 +19,7 @@ addToDrat(){
 
   Rscript -e "if (!requireNamespace('drat', quietly = TRUE)) install.packages('drat');drat::insertPackage('$PKG_REPO/$PKG_TARBALL', \
     repodir = '.', \
-    addFiles = TRUE,
+    addFiles = TRUE, \
     commit='Travis update $PKG_REPO: build $TRAVIS_BUILD_NUMBER')"
   git push 2>err.txt
 
