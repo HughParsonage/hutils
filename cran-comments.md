@@ -1,7 +1,7 @@
 ## Test environments
-* local MRAN install, R 3.4.0
+* local MRAN install, R 3.4.1
 * ubuntu 12.04 (on travis-ci), R 3.4.1
-* win-builder (devel) <https://win-builder.r-project.org/HVn5c6wP2p3M/00check.log>
+* R 3.5.0 (devel)
 
 ## R CMD check results
 

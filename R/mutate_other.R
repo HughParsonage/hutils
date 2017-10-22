@@ -58,7 +58,7 @@ mutate_other <- function(.data,
     
     # Must be names(out), not names(DT) 
     # otherwise will affect DT
-    stopifnot("nvar" %notin% names(out),
+    stopifnot(!("nvar" %in% names(out)),
               var %in% names(out))
     
     
@@ -70,7 +70,7 @@ mutate_other <- function(.data,
     
     if (!is.null(var.weight)) {
       stopifnot(var.weight %chin% names(out),
-                "wEiGhT" %notin% names(out)) 
+                !("wEiGhT" %in% names(out))) 
       setnames(out, var.weight, "wEiGhT")
       wEiGhT <- NULL
       wt_by_var <- out[, .(wEiGhT = sum(wEiGhT)), by = c(var, by)]

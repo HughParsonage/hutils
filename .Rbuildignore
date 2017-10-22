@@ -3,3 +3,4 @@
 ^\.Rproj\.user$
 ^deploy\.sh$
 ^cran-comments\.md$
+^vignettes/figure$
