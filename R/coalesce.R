@@ -56,7 +56,9 @@ coalesce <- function(x, ...) {
     lengths <- c(lx, vapply(values, length, FUN.VALUE = 0L))
     lengthsn1 <- lengths != 1L
     if (any(lengthsn1 & lengths != lx)) {
-      stop("Only permissible vector lengths are 1 or the maximum of the inputs.")
+      which_wrong_length <- which(lengthsn1 & lengths != lx)
+      stop("Argument ", which_wrong_length[1], " had length ", lengths[which_wrong_length[1]], ". ", 
+           "The only permissible vector lengths in ... are 1 or the length of `x` (", lx, ").")
     }
     
     lv <- length(values)
