@@ -6,7 +6,7 @@
 #' a vector of columns in the order requested.
 #' @param intersection Use the intersection of the names of \code{DT} and \code{cols}. If \code{FALSE} 
 #' any \code{cols} are not the names of \code{DT}, the function may error on behalf of \code{data.table}.
-#' Not availble for \code{set_colsuborder}.
+#' Not available for \code{set_colsuborder}.
 #' @details In the case of \code{set_colsuborder} the group of columns \code{cols} occupy the same positions
 #' in \code{DT} but in a different order. See examples.
 #' @examples 

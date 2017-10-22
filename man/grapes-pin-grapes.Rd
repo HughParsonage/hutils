@@ -15,7 +15,7 @@ x \%pin\% Y
 \code{TRUE} for every \code{x} for which any \code{grepl} is \code{TRUE}.
 }
 \description{
-Analog of \code{\%in\%} but indicating partial match of the left operand.
+Analogue of \code{\%in\%} but indicating partial match of the left operand.
 }
 \examples{
 x <- c("Sydney Airport", "Melbourne Airport")

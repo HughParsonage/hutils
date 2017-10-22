@@ -20,7 +20,7 @@ a vector of columns in the order requested.}
 
 \item{intersection}{Use the intersection of the names of \code{DT} and \code{cols}. If \code{FALSE} 
 any \code{cols} are not the names of \code{DT}, the function may error on behalf of \code{data.table}.
-Not availble for \code{set_colsuborder}.}
+Not available for \code{set_colsuborder}.}
 }
 \description{
 Reorder columns of a \code{data.table} (via \code{setcolorder}) so that particular columns 
