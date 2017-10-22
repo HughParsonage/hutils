@@ -24,24 +24,31 @@ opts_chunk$set(eval = all(vapply(suggested_packages, requireNamespace, quietly =
 ```
 
 ```{r loadPackages}
-library(geosphere)
-library(nycflights13)
-library(dplyr, warn.conflicts = FALSE)
-library(ggplot2)
-library(microbenchmark)
-library(data.table, warn.conflicts = FALSE)
-library(magrittr)
-library(hutils, warn.conflicts = FALSE)
+tryCatch({
+  library(geosphere)
+  library(nycflights13)
+  library(dplyr, warn.conflicts = FALSE)
+  library(ggplot2)
+  library(microbenchmark)
+  library(data.table, warn.conflicts = FALSE)
+  library(magrittr)
+  library(hutils, warn.conflicts = FALSE)
+}, 
+# requireNamespace does not detect errors like
+# package ‘dplyr’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version
+error = function(e) {
+  opts_chunk$set(eval = FALSE)
+})
 ```
 
 ## Aliases
 
-These are simple additions to `magrittr`'s aliases.
-Two new features: capitalized forms of `and` and `or` that invoke `&&` and `||`, the 'long-form' logical operators, 
+These are simple additions to `magrittr`'s aliases, including: 
+capitalized forms of `and` and `or` that invoke `&&` and `||` (the 'long-form' logical operators)
 and `nor` / `neither` functions.
 
 The main motivation is to make the source code easier to indent.
-I occasionally such source code easier to use.
+I occasionally find such source code easier to use.
 
 ```{r aliases}
 OR(OR(TRUE,
@@ -62,7 +69,7 @@ They attempt to be drop-in replacements but:
 
   1. `hutils::if_else` only works with `logical`, `integer`, `double`, and `character` type vectors.
      Lists and factors won't work.
-  2. `hutils::coalesce` short-circuits on its first argument; if there are no `NA`s in `x`, then `x` is returned, even
+  2. `hutils::coalesce` short-circuits on its first argument; if there are no `NA`s in `x` then `x` is returned, even
      if the other vectors are the wrong length or type.
 
 In addition, `hutils::if_else` is generally faster than `dplyr::if_else`:
@@ -297,7 +304,8 @@ identical(iris[grep("v", Species)],
 If the RHS has more than one element, the matching is done on alternation (*i.e.* OR):
 
 ```{r pin-multi}
-iris[Species %pin% c("ver", "vir")]
+iris[Species %pin% c("ver", "vir")] %>%
+  head
 ```
 
 There is an important qualification: if the RHS is `NULL`, then the result will be `TRUE` along the length of `x`, contrary to the behaviour of `%in%`. 
