@@ -44,7 +44,7 @@ test_that("finds non-missing values in multiple positions", {
 test_that("error if invalid length", {
   expect_error(
     coalesce(c(NA_integer_, 2), 1:3),
-    "Only permissible vector lengths are 1 or the maximum of the inputs.",
+    "only permissible vector lengths in ...",
     fixed = TRUE
   )
 })
