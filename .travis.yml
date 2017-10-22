@@ -1,4 +1,7 @@
 language: R
+r: 
+- devel
+- release
 cache: packages
 latex: false
 pandoc: false
@@ -6,10 +9,6 @@ packages:
 - drat
 r_github_packages:
 - jimhester/covr
-include:
-- r: release
-- r: oldrel
-- r: devel
 after_success:
 - Rscript -e 'covr::codecov(line_exclusions = list("./R/zzz.R"))'
 - Rscript -e 'if (!requireNamespace("drat", quietly = TRUE)) install.packages("drat")'
