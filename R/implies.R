@@ -11,6 +11,17 @@
 #' 
 #' 
 
+
+implies <- function(x, y) {
+  lx <- length(x)
+  ly <- length(y)
+  stopifnot(lx == ly, is.logical(x), is.logical(y))
+  out <- y
+  out[!x] <- TRUE
+  out
+}
+
+#' @rdname implies
 `%implies%` <- function(x, y) {
   lx <- length(x)
   ly <- length(y)
@@ -24,15 +35,6 @@
          "\n",
          "`x` and `y` must be the same length.")
   }
-  out <- y
-  out[!x] <- TRUE
-  out
-}
-
-implies <- function(x, y) {
-  lx <- length(x)
-  ly <- length(y)
-  stopifnot(lx == ly, is.logical(x), is.logical(y))
   out <- y
   out[!x] <- TRUE
   out
