@@ -29,5 +29,8 @@ test_that("Logicals", {
   expect_identical(nor(xx, yy), c(FALSE, FALSE, FALSE, TRUE))
   expect_identical(neither(xx, yy), nor(xx, yy))
   
+  expect_identical(xx %implies% yy, implies(xx, yy))
+  expect_identical(xx %implies% yy, c(TRUE, FALSE, TRUE, TRUE))
+  
   
 })
