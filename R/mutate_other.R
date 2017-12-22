@@ -66,11 +66,12 @@ mutate_other <- function(.data,
     N <- .rank <- NULL
     if ("N" %chin% names(out)) {
       if ("_temp" %chin% names(out)) {
+        `_temp` <- NULL
         new_nom <- paste0(names(out), collapse = "x")
         
         n_by_var <-
           out %>%
-          .[, setNames(list(`_temp` = .N), nm = new_nom), keyby = c(var, by)] %>%
+          .[, stats::setNames(list(`_temp` = .N), nm = new_nom), keyby = c(var, by)] %>%
           setorderv(c(by, new_nom)) %>%
           .[, .rank := seq_len(.N), by = by]
       } else {
