@@ -185,7 +185,7 @@ test_that("Mutate other weighted with mass", {
   library(nycflights13)
   set.seed(1)
   routes_pax <- 
-    as.data.table(flights) %>%
+    as.data.table(nycflights13::flights) %>%
     .[month == 1, .(origin, dest)] %>%
     # random for demonstration
     .[, pax := sample(50:300, size = .N, replace = TRUE)] %>%
@@ -214,6 +214,25 @@ test_that("Mutate other weighted with mass", {
     .[]
   
   expect_equal(uniqueN(routes_pax_othered_by[["dest"]]), 5)
+})
+
+test_that("Corner cases", {
+  library(nycflights13)
+  set.seed(1)
+  flights2 <- as.data.table(nycflights13::flights)
+  
+  setnames(flights2, "distance", "_temp")
+  out <- mutate_other(flights2, "dest")
+  expect_equal(uniqueN(out[["dest"]]), 6)
+  
+  setnames(flights2, "_temp", "wEiGhT")
+  expect_error(mutate_other(flights2, var = "tailnum", var.weight = "minute"),
+               regexp = "Rename this column (temporarily at least) to use",
+               fixed = TRUE)
+  setnames(flights2, "wEiGhT", ".rank")
+  expect_error(mutate_other(flights2, "tailnum", var.weight = "minute"),
+               regexp = "Rename this column (temporarily at least) to use", 
+               fixed = TRUE)
 })
 
 
