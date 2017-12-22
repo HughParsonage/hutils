@@ -5,7 +5,7 @@
 \title{Group infrequent entries into 'Other category'}
 \usage{
 mutate_other(.data, var, n = 5, count, by = NULL, var.weight = NULL,
-  mass = -Inf, copy = TRUE, other.category = "Other")
+  mass = NULL, copy = TRUE, other.category = "Other")
 }
 \arguments{
 \item{.data}{Data containing variable.}
@@ -21,7 +21,8 @@ mutate_other(.data, var, n = 5, count, by = NULL, var.weight = NULL,
 \item{var.weight}{Variable to act as a weight: \code{var}'s where the sum of this variable exceeds 
 \code{mass} will be kept, others set to \code{other.category}.}
 
-\item{mass}{Threshold for sum of \code{var.weight}.}
+\item{mass}{Threshold for sum of \code{var.weight}: any \code{var} where the aggregated sum of \code{var.weight} exceeds \code{mass} will be kept and other \code{var} will be set to \code{other.category}. By default (\code{mass = NULL}), 
+the value of \code{mass} is \eqn{-\infty}, with a warning. You may set it explicitly to \code{-Inf} if you really want to avoid a warning that this function will have no effect.}
 
 \item{copy}{Should \code{.data} be copied? Currently only \code{TRUE} is supported.}
 

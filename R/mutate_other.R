@@ -7,7 +7,8 @@
 #' @param by Extra variables to group by when calculating \code{n} or \code{count}.
 #' @param var.weight Variable to act as a weight: \code{var}'s where the sum of this variable exceeds 
 #' \code{mass} will be kept, others set to \code{other.category}.
-#' @param mass Threshold for sum of \code{var.weight}.
+#' @param mass Threshold for sum of \code{var.weight}: any \code{var} where the aggregated sum of \code{var.weight} exceeds \code{mass} will be kept and other \code{var} will be set to \code{other.category}. By default (\code{mass = NULL}), 
+#' the value of \code{mass} is \eqn{-\infty}, with a warning. You may set it explicitly to \code{-Inf} if you really want to avoid a warning that this function will have no effect.
 #' @param copy Should \code{.data} be copied? Currently only \code{TRUE} is supported.
 #' @param other.category Value that infrequent entries are to be collapsed into. Defaults to \code{"Other"}.
 #' @return \code{.data} but with \code{var} changed so that infrequent values have the same value (\code{other.category}).
@@ -29,7 +30,7 @@ mutate_other <- function(.data,
                          count,
                          by = NULL,
                          var.weight = NULL,
-                         mass = -Inf,
+                         mass = NULL,
                          copy = TRUE,
                          other.category = "Other"){
   stopifnot(is.data.table(.data), 
@@ -63,42 +64,93 @@ mutate_other <- function(.data,
     
     
     N <- .rank <- NULL
-    n_by_var <-
-      out %>%
-      .[, .N, keyby = c(var, by)] %>%
-      .[, .rank := rank(-N), by = by]
+    if ("N" %chin% names(out)) {
+      if ("_temp" %chin% names(out)) {
+        new_nom <- paste0(names(out), collapse = "x")
+        
+        n_by_var <-
+          out %>%
+          .[, setNames(list(`_temp` = .N), nm = new_nom), keyby = c(var, by)] %>%
+          setorderv(c(by, new_nom)) %>%
+          .[, .rank := seq_len(.N), by = by]
+      } else {
+        n_by_var <-
+          out %>%
+          .[, .(`_temp` = .N), keyby = c(var, by)] %>%
+          .[, .rank := rank(-`_temp`), by = by]
+      }
+    } else {
+      n_by_var <-
+        out %>%
+        .[, .N, keyby = c(var, by)] %>%
+        .[, .rank := rank(-N), by = by]
+    }
     
     if (!is.null(var.weight)) {
-      stopifnot(var.weight %chin% names(out),
-                !("wEiGhT" %in% names(out))) 
+      stopifnot(var.weight %chin% names(out))
+      
+      # Poor man's SE
+      if ("wEiGhT" %in% names(out)) {
+        stop("`wEiGhT` is a column of .data. This conflicts with `mutate_other`. ",
+             "Rename this column (temporarily at least) to use `mutate_other`.")
+      }
+      
+      if (".rank" %in% names(out)) {
+        stop("`.rank` is a column of .data. This conflicts with `mutate_other`. ",
+             "Rename this column (temporarily at least) to use `mutate_other`.")
+      }
+      
+      
       setnames(out, var.weight, "wEiGhT")
       wEiGhT <- NULL
-      wt_by_var <- out[, .(wEiGhT = sum(wEiGhT)), by = c(var, by)]
+      
+      wt_by_var <- out[, .(wEiGhT = sum(wEiGhT)), keyby = c(var, by)]
       setorderv(wt_by_var, "wEiGhT", order = -1L)
+      wt_by_var[, .rank := seq_len(.N), by = by]
       
-      if (is.infinite(mass)) {
-        warning("mass set to non-finite value, perhaps by default. Choose a better value.")
+      # Two choices, either by 'mass' or by .rank
+      if (!missing(mass) && !is.null(n)) {
+        warning("`mass` is provided but n is not set to NULL. ", 
+                "If you intended to use `mass` to create the other category, ", 
+                "set n = NULL. Otherwise, do not provide `mass`.")
       }
       
-      vars_to_coalesce <- wt_by_var[wEiGhT < mass][[var]]
-      
-      for (i in which(out[[var]] %fin% vars_to_coalesce)) {
-        set(out, i = i, j = var, value = other.category)
+      if (is.null(n)) {
+        if (is.null(mass)) {
+          warning("Setting mass to negative infinity. Choose a better value.")
+          mass <- -Inf
+        }
+        
+        # .rank not used, so delete. Set wEiGhT in out
+        # back to its original name to avoid i.wEiGhT
+        wt_by_var[, .rank := NULL]
+        out <- wt_by_var[out, on = c(var, by)]
+        out[wEiGhT < mass, (var) := other.category]
+        out[, wEiGhT := NULL]
+        setnames(out, "i.wEiGhT", var.weight)
+        
+      } else {
+        # wEiGhT has no bearing here, we only care about rank
+        # We delete it here to avoid i.wEiGhT in the subsequent 
+        # join. 
+        wt_by_var[, wEiGhT := NULL]
+        out <- wt_by_var[out, on = c(var, by)]
+        out[.rank > n, (var) := other.category]
+        out[, .rank := NULL]
+        setnames(out, "wEiGhT", var.weight)
       }
-      setnames(out, "wEiGhT", var.weight)
+      
+      
     } else {
+      out <- n_by_var[out, on = c(var, by)]
       
-      out <- merge(out, n_by_var, by = c(var, by))
-      
-      if (missing(count)){
+      if (missing(count) || is.null(count)) {
         out[.rank > n, (var) := other.category]
       } else {
         out[N < count, (var) := other.category]
       }
-      out <- 
-        out %>%
-        .[, N := NULL] %>%
-        .[, .rank := NULL] 
+      out[, N := NULL]
+      out[, .rank := NULL] 
     }
     
     setkeyv(out, orig_key)

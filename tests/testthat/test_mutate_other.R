@@ -75,7 +75,7 @@ test_that("Warning if not character", {
 })
 
 test_that("Warning if mass left to default", {
-  expect_warning(mutate_other(DT, var = "City", var.weight = "value"))
+  expect_warning(mutate_other(DT, var = "City", n = NULL, var.weight = "value"))
 })
 
 test_that("Mass works as expected", {
@@ -92,13 +92,122 @@ test_that("Mass works as expected", {
   
   out <-
     DT %>%
-    mutate_other("City", var.weight = "value", mass = 10) %>%
+    mutate_other("City", var.weight = "value", mass = 10, n = NULL) %>%
     .[]
   
   expect_identical(out, expected)
   
   expect_identical(DT, DT.orig)
 })
+
+test_that("var.weight works as expected", {
+  library(data.table)
+  library(magrittr)
+  library(nycflights13)
+  
+  
+  
+  DT <- as.data.table(flights)
+  
+  flights_by_dest_month <- 
+    DT[, .N, keyby = c("month", "dest")]
+  
+  result <- 
+    flights_by_dest_month %>%
+    mutate_other("dest", var.weight = "N", n = 5) %>%
+    .[]
+  
+  expect_equal(uniqueN(result[["dest"]]), 5 + 1)
+  expect_equal(unique(result[dest != "Other"][["dest"]]),
+               c("ATL", "BOS", "LAX", "MCO", "ORD"))
+  
+  flights_by_dest_month_day <- 
+    DT[, .N, keyby = c("month", "dest", "day")]
+  
+  result_by <-
+    flights_by_dest_month_day %>%
+    mutate_other("dest", var.weight = "N", by = "month")
+  
+  
+})
+
+
+test_that("Mutate other weighted", {
+  library(nycflights13)
+  set.seed(1)
+  routes_pax <- 
+    as.data.table(flights) %>%
+    .[month == 1, .(origin, dest)] %>%
+    # random for demonstration
+    .[, pax := sample(50:300, size = .N, replace = TRUE)] %>%
+    .[]
+  
+  top5_dests <- 
+    routes_pax[, .(tot_pax = sum(pax)), keyby = "dest"][order(-tot_pax)] %>%
+    .subset2("dest") %>%
+    head
+  
+  routes_pax_othered <- 
+    routes_pax %>%
+    mutate_other("dest",
+                 other.category = "ZZZ",
+                 var.weight = "pax",
+                 n = 5) %>%
+    .[]
+
+  expect_equal(sort(unique(routes_pax_othered[["dest"]]))[1:5], sort(top5_dests[1:5]))
+  expect_equal(sort(unique(routes_pax_othered[["dest"]]))[6], "ZZZ")
+  
+  
+  routes_pax_orig <- routes_pax[, .(tot_pax = sum(pax)), keyby = c("origin", "dest")]
+  setorder(routes_pax_orig, origin, -tot_pax)
+  
+  top_5_dests_JFK <- 
+    routes_pax_orig[origin == "JFK"] %>%
+    .subset2("dest") %>%
+    unique
+  
+  routes_pax_JFK_othered <- 
+    routes_pax %>%
+    mutate_other("dest",
+                 by = "origin",
+                 other.category = "ZZZ",
+                 var.weight = "pax",
+                 n = 5) %>%
+    .[origin == "JFK"]
+  
+  expect_equal(sort(unique(routes_pax_JFK_othered[["dest"]]))[1:5], sort(top_5_dests_JFK[1:5]))
+  expect_equal(sort(unique(routes_pax_JFK_othered[["dest"]]))[6], "ZZZ")
+  
+})
+
+test_that("Mutate other weighted with mass", {
+  routes_pax_othered <- 
+    routes_pax %>%
+    mutate_other("dest",
+                 other.category = "ZZZ",
+                 var.weight = "pax",
+                 n = NULL,
+                 mass = 2e5) %>%
+   .[]
+  
+  expect_equal(uniqueN(routes_pax_othered[["dest"]]), 7)
+  
+  
+  routes_pax_othered_by <- 
+    routes_pax %>%
+    mutate_other("dest",
+                 other.category = "ZZZ",
+                 by = "origin",
+                 var.weight = "pax",
+                 n = NULL,
+                 mass = 1e5) %>%
+    .[]
+  
+  expect_equal(uniqueN(routes_pax_othered_by[["dest"]]), 5)
+})
+
+
 
 
 
