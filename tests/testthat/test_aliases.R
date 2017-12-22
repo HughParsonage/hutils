@@ -31,6 +31,7 @@ test_that("Logicals", {
   
   expect_identical(xx %implies% yy, implies(xx, yy))
   expect_identical(xx %implies% yy, c(TRUE, FALSE, TRUE, TRUE))
+  expect_error(xx %implies% yy[-1], regexp = "must be the same length")
   
   
 })
