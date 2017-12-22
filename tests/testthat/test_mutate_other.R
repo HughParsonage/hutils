@@ -182,6 +182,15 @@ test_that("Mutate other weighted", {
 })
 
 test_that("Mutate other weighted with mass", {
+  library(nycflights13)
+  set.seed(1)
+  routes_pax <- 
+    as.data.table(flights) %>%
+    .[month == 1, .(origin, dest)] %>%
+    # random for demonstration
+    .[, pax := sample(50:300, size = .N, replace = TRUE)] %>%
+    .[]
+  
   routes_pax_othered <- 
     routes_pax %>%
     mutate_other("dest",
