@@ -222,10 +222,13 @@ test_that("Corner cases", {
   flights2 <- as.data.table(nycflights13::flights)
   
   setnames(flights2, "distance", "_temp")
+  setnames(flights2, "air_time", "N")
   out <- mutate_other(flights2, "dest")
   expect_equal(uniqueN(out[["dest"]]), 6)
   
-  setnames(flights2, "_temp", "wEiGhT")
+  
+  flights2 <- as.data.table(nycflights13::flights)
+  setnames(flights2, "distance", "wEiGhT")
   expect_error(mutate_other(flights2, var = "tailnum", var.weight = "minute"),
                regexp = "Rename this column (temporarily at least) to use",
                fixed = TRUE)
