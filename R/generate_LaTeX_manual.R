@@ -9,5 +9,6 @@ generate_LaTeX_manual <- function(pkg) {
   pack <- pkg
   path <- find.package(pack)
   system(paste(shQuote(file.path(R.home("bin"), "R")),
-               "CMD", "Rd2pdf", shQuote(path)))
+               "CMD", "Rd2pdf", shQuote(path)),
+         show.output.on.console = FALSE)
 }
