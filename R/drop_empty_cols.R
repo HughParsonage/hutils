@@ -8,19 +8,41 @@
 #' 
 
 drop_empty_cols <- function(DT, copy = FALSE) {
-  if (copy) {
-    out <- copy(DT)
-  } else {
-    out <- DT
-  }
-  
-  is_empty <- vapply(out, function(x) all(is.na(x)), logical(1))
-  if (is.data.table(out)) {
-    for (j in names(is_empty)[is_empty]) {
-      out[, (j) := NULL]
+  if (is.data.table(DT)) {
+    if (copy) {
+      out <- copy(DT)
+    } else {
+      out <- DT
+    }
+    
+    isEmpty <- vapply(out, function(x) all(is.na(x)), logical(1), USE.NAMES = FALSE)
+    
+    # Generally safe to delete by names, but not if
+    # the names are not distinct
+    if (any(isEmpty)) {
+      empty_cols <- which(isEmpty, useNames = FALSE)
+      out[, (empty_cols) := NULL]
     }
   } else {
-    out <- out[, names(is_empty)[!is_empty]]
+    if (!is.data.frame(DT)) {
+      stop("`DT` must be a data.frame.")
+    }
+    
+    if (NEITHER(missing(copy), copy)) {
+      warning("`copy` is FALSE, but `DT` is not a data.table, ", 
+              "so `DT` will not be modified by reference.\n\n", 
+              "Either ensure `DT` is a data.table or assert `copy = TRUE`.")
+    }
+    
+    isEmpty <- vapply(DT, function(x) all(is.na(x)), logical(1), USE.NAMES = FALSE)
+    if (any(isEmpty)) {
+      non_empty_cols <- which(!isEmpty)
+      out <- DT[, non_empty_cols, drop = FALSE]
+    } else {
+      out <- DT
+    }
+    
   }
+  
   out[]
 }
