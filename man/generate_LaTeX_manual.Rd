@@ -7,7 +7,7 @@
 \url{https://stackoverflow.com/a/30608000/1664978}
 }
 \usage{
-generate_LaTeX_manual(pkg)
+generate_LaTeX_manual(pkg, launch = TRUE)
 }
 \arguments{
 \item{pkg}{Quoted package name (must be installed).}
