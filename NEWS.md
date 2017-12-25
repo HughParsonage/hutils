@@ -1,6 +1,9 @@
 
 # hutils 0.10.0
 * New function `implies`, logical implies.
+* New function `drop_constant_cols`
+* Bug fixes:
+    - Ensure `drop_empty_cols` retains non-empty columns when duplicate names are used.
 
 # hutils 0.9.0
 * Changed `if_else` to reflect dplyr's formals so it can be a drop-in replacement.
