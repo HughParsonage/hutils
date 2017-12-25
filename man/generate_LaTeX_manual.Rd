@@ -11,6 +11,8 @@ generate_LaTeX_manual(pkg, launch = TRUE)
 }
 \arguments{
 \item{pkg}{Quoted package name (must be installed).}
+
+\item{launch}{Should the PDF created be launched using the viewer (\code{TRUE} by default)?}
 }
 \value{
 See \code{\link[base]{system}}.

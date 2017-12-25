@@ -4,14 +4,21 @@ suggested_packages <- c("geosphere", "nycflights13", "dplyr", "ggplot2", "microb
 opts_chunk$set(eval = all(vapply(suggested_packages, requireNamespace, quietly = TRUE, FUN.VALUE = FALSE)))
 
 ## ----loadPackages--------------------------------------------------------
-library(geosphere)
-library(nycflights13)
-library(dplyr, warn.conflicts = FALSE)
-library(ggplot2)
-library(microbenchmark)
-library(data.table, warn.conflicts = FALSE)
-library(magrittr)
-library(hutils, warn.conflicts = FALSE)
+tryCatch({
+  library(geosphere)
+  library(nycflights13)
+  library(dplyr, warn.conflicts = FALSE)
+  library(ggplot2)
+  library(microbenchmark)
+  library(data.table, warn.conflicts = FALSE)
+  library(magrittr)
+  library(hutils, warn.conflicts = FALSE)
+}, 
+# requireNamespace does not detect errors like
+# package ‘dplyr’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version
+error = function(e) {
+  opts_chunk$set(eval = FALSE)
+})
 
 ## ----aliases-------------------------------------------------------------
 OR(OR(TRUE,
@@ -123,9 +130,9 @@ flights %>%
 
 ## ----haversine_distance--------------------------------------------------
 DT1 <- data.table(lat_orig = runif(1e5, -80, 80),
-                 lon_orig = runif(1e5, -179, 179),
-                 lat_dest = runif(1e5, -80, 80),
-                 lon_dest = runif(1e5, -179, 179))
+                  lon_orig = runif(1e5, -179, 179),
+                  lat_dest = runif(1e5, -80, 80),
+                  lon_dest = runif(1e5, -179, 179))
 
 DT2 <- copy(DT1)
 
@@ -135,4 +142,32 @@ microbenchmark(DT1[, distance := haversine_distance(lat_orig, lon_orig,
                DT2[, distance := distHaversine(cbind(lon_orig, lat_orig),
                                                cbind(lon_orig, lat_orig))])
 rm(DT1, DT2)
+
+## ----mutate-other, results='asis'----------------------------------------
+set.seed(1)
+DT <- data.table(Fruit = sample(c("apple", "pear", "orange", "tomato", "eggplant"),
+                                size = 20,
+                                prob = c(0.45, 0.25, 0.15, 0.1, 0.05),
+                                replace = TRUE),
+                 Price = rpois(20, 10))
+
+kable(mutate_other(DT, "Fruit", n = 3)[])
+
+## ----iris-veriscolor-----------------------------------------------------
+iris <- as.data.table(iris)
+iris[Species %in% c("setosa", "versicolour")] %$%
+  mean(Sepal.Length / Sepal.Width)
+
+## ----iris-versicolor, error=TRUE-----------------------------------------
+iris <- as.data.table(iris)
+iris[Species %ein% c("setosa", "versicolour")] %$%
+  mean(Sepal.Length / Sepal.Width)
+
+## ----pin-----------------------------------------------------------------
+identical(iris[grep("v", Species)],
+          iris[Species %pin% "v"])
+
+## ----pin-multi-----------------------------------------------------------
+iris[Species %pin% c("ver", "vir")] %>%
+  head
 

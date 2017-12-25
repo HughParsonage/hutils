@@ -4,7 +4,7 @@ author: "Hugh Parsonage"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{hutils}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -24,24 +24,31 @@ opts_chunk$set(eval = all(vapply(suggested_packages, requireNamespace, quietly =
 ```
 
 ```{r loadPackages}
-library(geosphere)
-library(nycflights13)
-library(dplyr, warn.conflicts = FALSE)
-library(ggplot2)
-library(microbenchmark)
-library(data.table, warn.conflicts = FALSE)
-library(magrittr)
-library(hutils, warn.conflicts = FALSE)
+tryCatch({
+  library(geosphere)
+  library(nycflights13)
+  library(dplyr, warn.conflicts = FALSE)
+  library(ggplot2)
+  library(microbenchmark)
+  library(data.table, warn.conflicts = FALSE)
+  library(magrittr)
+  library(hutils, warn.conflicts = FALSE)
+}, 
+# requireNamespace does not detect errors like
+# package ‘dplyr’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version
+error = function(e) {
+  opts_chunk$set(eval = FALSE)
+})
 ```
 
 ## Aliases
 
-These are simple additions to `magrittr`'s aliases.
-Two new features: capitalized forms of `and` and `or` that invoke `&&` and `||`, the 'long-form' logical operators, 
+These are simple additions to `magrittr`'s aliases, including: 
+capitalized forms of `and` and `or` that invoke `&&` and `||` (the 'long-form' logical operators)
 and `nor` / `neither` functions.
 
 The main motivation is to make the source code easier to indent.
-I occasionally such source code easier to use.
+I occasionally find such source code easier to use.
 
 ```{r aliases}
 OR(OR(TRUE,
@@ -62,7 +69,7 @@ They attempt to be drop-in replacements but:
 
   1. `hutils::if_else` only works with `logical`, `integer`, `double`, and `character` type vectors.
      Lists and factors won't work.
-  2. `hutils::coalesce` short-circuits on its first argument; if there are no `NA`s in `x`, then `x` is returned, even
+  2. `hutils::coalesce` short-circuits on its first argument; if there are no `NA`s in `x` then `x` is returned, even
      if the other vectors are the wrong length or type.
 
 In addition, `hutils::if_else` is generally faster than `dplyr::if_else`:
@@ -211,9 +218,9 @@ Although the `geosphere` package can do a lot more than calculate distances betw
 
 ```{r haversine_distance}
 DT1 <- data.table(lat_orig = runif(1e5, -80, 80),
-                 lon_orig = runif(1e5, -179, 179),
-                 lat_dest = runif(1e5, -80, 80),
-                 lon_dest = runif(1e5, -179, 179))
+                  lon_orig = runif(1e5, -179, 179),
+                  lat_dest = runif(1e5, -80, 80),
+                  lon_dest = runif(1e5, -179, 179))
 
 DT2 <- copy(DT1)
 
@@ -226,7 +233,116 @@ rm(DT1, DT2)
 ```
 
 
+## `mutate_other`
 
+There may be occasions where a categorical variable in a `data.table` may need 
+to modified to reduce the number of distinct categories. For example, you may 
+want to plot a chart with a set number of facets, or ensure the smooth operation of
+`randomForest`, which accepts no more than
+32 levels in a feature.
+
+`mutate_other` keeps the *n* most common categories and changes the 
+other categories to `Other`.
+
+```{r mutate-other, results='asis'}
+set.seed(1)
+DT <- data.table(Fruit = sample(c("apple", "pear", "orange", "tomato", "eggplant"),
+                                size = 20,
+                                prob = c(0.45, 0.25, 0.15, 0.1, 0.05),
+                                replace = TRUE),
+                 Price = rpois(20, 10))
+
+kable(mutate_other(DT, "Fruit", n = 3)[])
+```
+
+## `ngrep`
+
+This is a 'dumb' negation of `grep`.
+In recent versions of R, the option `invert = FALSE` exists.
+A slight advantage of `ngrep` is that it's shorter to type. 
+But if you don't have arthritis, best use `invert = FALSE` or `!grepl`.
+
+
+## `notin` `ein` `enotin` `pin`
+
+These functions provide complementary functionality to `%in%`:
+
+### `%notin%`
+`%notin%` is the negation of `%in%`, but also uses the package `fastmatch` to increase the speed of the operation
+
+### `%ein%` and `%enotin%`
+The functions `%ein%` and `%enotin%` are motivated by a different sort of problem.
+Consider the following statement:
+
+```{r iris-veriscolor}
+iris <- as.data.table(iris)
+iris[Species %in% c("setosa", "versicolour")] %$%
+  mean(Sepal.Length / Sepal.Width)
+```
+
+On the face of it, this appears to give the average ratio of *Iris setosa* and *Iris versicolour* irises. However, it only gives the average ratio of *setosa* irises, as the correct spelling is *Iris versicolor* not *-our*. This particular error is easy to make, (in fact when I wrote this vignette, the first hit of Google for  `iris dataset` made the same spelling error), but it's easy to imagine similar mistakes, such as mistaking the capitalization of a value.
+The functions `%ein%` and `%enotin%` strive to reduce the occurence of this mistake.
+The functions operate exactly the same as `%in%` and `%enotin%` but error if any of the table of values to be matched against is not present in any of the values:
+
+```{r iris-versicolor, error=TRUE}
+iris <- as.data.table(iris)
+iris[Species %ein% c("setosa", "versicolour")] %$%
+  mean(Sepal.Length / Sepal.Width)
+```
+
+The `e` stands for 'exists'; *i.e.* they should be read as "exists and in" and "exists and not in".
+
+### `%pin%` 
+
+This performs a partial match (*i.e* `grepl`) but with a possibly more readable or intuitive syntax
+
+```{r pin}
+identical(iris[grep("v", Species)],
+          iris[Species %pin% "v"])
+```
+
+If the RHS has more than one element, the matching is done on alternation (*i.e.* OR):
+
+```{r pin-multi}
+iris[Species %pin% c("ver", "vir")] %>%
+  head
+```
+
+There is an important qualification: if the RHS is `NULL`, then the result will be `TRUE` along the length of `x`, contrary to the behaviour of `%in%`. 
+This is not entirely unexpected as `NULL` could legitimately be interpreted as \(\varepsilon\), the empty regular expression, which occurs in every string. 
+
+### `provide.dir`
+
+This is the same as `dir.create` but checks whether the target exists or not and does nothing if it does. Motivated by `\providecommand` in \LaTeX{}, which creates a macro only if it does not exist already.
+
+
+### `select_which` 
+
+This provides a similar role to `dplyr::select_if` but was originally part of `package:grattan` so has a different name. It simply returns the columns whose *values* return `TRUE` when `Which` is applied.
+Additional columns (which may or not may satisfy `Which`) may be incldued bny using `.and.dots`.
+(To remove columns, you can use `drop_col`).
+
+```r
+library(data.table)
+DT <- data.table(x = 1:5,
+                 y = letters[1:5],
+                 AB = c(NA, TRUE, FALSE))
+select_which(DT, anyNA, .and.dots = "y")
+```
+
+
+### `set_cols_first`
+
+Up to and including `data.table 1.10.4`, one could only reorder the columns by supplying all the columns. 
+You can use `set_cols_first` and `set_cols_last` to put columns first or last without supplying all the columns.
+
+### Unique keys
+
+In some circumstances, you need to know that the `key` of a `data.table` is unique. 
+For example, you may expect a join to be performed later, without specifying `mult='first'` or permitting Cartesian joins.
+`data.table` does not require a `key` to be unique and does not supply tools to check the uniqueness of keys. `hutils` supplies two simple functions: `has_unique_key` which when applied to a `data.table` returns `TRUE` if and only if the table has a key and it is unique.
+
+`set_unique_key` does the same as `setkey` but will error if the resultant key is not unique.
 
 
 

@@ -12,7 +12,7 @@
 
 <meta name="author" content="Hugh Parsonage" />
 
-<meta name="date" content="2017-09-17" />
+<meta name="date" content="2017-12-25" />
 
 <title>Hutils</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Hutils</h1>
 <h4 class="author"><em>Hugh Parsonage</em></h4>
-<h4 class="date"><em>2017-09-17</em></h4>
+<h4 class="date"><em>2017-12-25</em></h4>
 
 
 
@@ -80,19 +80,31 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>This vignette just goes through each exported function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(knitr)
 suggested_packages &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;geosphere&quot;</span>, <span class="st">&quot;nycflights13&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;microbenchmark&quot;</span>)
-opts_chunk$<span class="kw">set</span>(<span class="dt">eval =</span> <span class="kw">all</span>(<span class="kw">vapply</span>(suggested_packages, requireNamespace, <span class="dt">quietly =</span> <span class="ot">TRUE</span>, <span class="dt">FUN.VALUE =</span> <span class="ot">FALSE</span>)))</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(geosphere)
-<span class="kw">library</span>(nycflights13)
-<span class="kw">library</span>(dplyr, <span class="dt">warn.conflicts =</span> <span class="ot">FALSE</span>)
-<span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(microbenchmark)
-<span class="kw">library</span>(data.table, <span class="dt">warn.conflicts =</span> <span class="ot">FALSE</span>)
-<span class="kw">library</span>(magrittr)
-<span class="kw">library</span>(hutils, <span class="dt">warn.conflicts =</span> <span class="ot">FALSE</span>)</code></pre></div>
+opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">eval =</span> <span class="kw">all</span>(<span class="kw">vapply</span>(suggested_packages, requireNamespace, <span class="dt">quietly =</span> <span class="ot">TRUE</span>, <span class="dt">FUN.VALUE =</span> <span class="ot">FALSE</span>)))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tryCatch</span>({
+  <span class="kw">library</span>(geosphere)
+  <span class="kw">library</span>(nycflights13)
+  <span class="kw">library</span>(dplyr, <span class="dt">warn.conflicts =</span> <span class="ot">FALSE</span>)
+  <span class="kw">library</span>(ggplot2)
+  <span class="kw">library</span>(microbenchmark)
+  <span class="kw">library</span>(data.table, <span class="dt">warn.conflicts =</span> <span class="ot">FALSE</span>)
+  <span class="kw">library</span>(magrittr)
+  <span class="kw">library</span>(hutils, <span class="dt">warn.conflicts =</span> <span class="ot">FALSE</span>)
+}, 
+<span class="co"># requireNamespace does not detect errors like</span>
+<span class="co"># package ‘dplyr’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version</span>
+<span class="dt">error =</span> <span class="cf">function</span>(e) {
+  opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">eval =</span> <span class="ot">FALSE</span>)
+})</code></pre></div>
+<pre><code>## Loading required package: sp</code></pre>
+<pre><code>## data.table 1.10.5 IN DEVELOPMENT built 2017-12-08 20:14:33 UTC; travis</code></pre>
+<pre><code>##   The fastest way to learn (by data.table authors): https://www.datacamp.com/courses/data-analysis-the-data-table-way</code></pre>
+<pre><code>##   Documentation: ?data.table, example(data.table) and browseVignettes(&quot;data.table&quot;)</code></pre>
+<pre><code>##   Release notes, videos and slides: http://r-datatable.com</code></pre>
 <div id="aliases" class="section level2">
 <h2>Aliases</h2>
-<p>These are simple additions to <code>magrittr</code>‘s aliases. Two new features: capitalized forms of <code>and</code> and <code>or</code> that invoke <code>&amp;&amp;</code> and <code>||</code>, the ’long-form’ logical operators, and <code>nor</code> / <code>neither</code> functions.</p>
-<p>The main motivation is to make the source code easier to indent. I occasionally such source code easier to use.</p>
+<p>These are simple additions to <code>magrittr</code>‘s aliases, including: capitalized forms of <code>and</code> and <code>or</code> that invoke <code>&amp;&amp;</code> and <code>||</code> (the ’long-form’ logical operators) and <code>nor</code> / <code>neither</code> functions.</p>
+<p>The main motivation is to make the source code easier to indent. I occasionally find such source code easier to use.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">OR</span>(<span class="kw">OR</span>(<span class="ot">TRUE</span>,
       <span class="kw">stop</span>(<span class="st">&quot;Never happens&quot;</span>)),  ## short-circuits
    <span class="kw">AND</span>(<span class="ot">FALSE</span>,
@@ -106,11 +118,11 @@ opts_chunk$<span class="kw">set</span>(<span class="dt">eval =</span> <span clas
 <p>They attempt to be drop-in replacements but:</p>
 <ol style="list-style-type: decimal">
 <li><code>hutils::if_else</code> only works with <code>logical</code>, <code>integer</code>, <code>double</code>, and <code>character</code> type vectors. Lists and factors won’t work.</li>
-<li><code>hutils::coalesce</code> short-circuits on its first argument; if there are no <code>NA</code>s in <code>x</code>, then <code>x</code> is returned, even if the other vectors are the wrong length or type.</li>
+<li><code>hutils::coalesce</code> short-circuits on its first argument; if there are no <code>NA</code>s in <code>x</code> then <code>x</code> is returned, even if the other vectors are the wrong length or type.</li>
 </ol>
 <p>In addition, <code>hutils::if_else</code> is generally faster than <code>dplyr::if_else</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_check &lt;-<span class="st"> </span>function(values) {
-  <span class="kw">all</span>(<span class="kw">vapply</span>(values[-<span class="dv">1</span>], function(x) <span class="kw">identical</span>(values[[<span class="dv">1</span>]], x), <span class="kw">logical</span>(<span class="dv">1</span>)))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_check &lt;-<span class="st"> </span><span class="cf">function</span>(values) {
+  <span class="kw">all</span>(<span class="kw">vapply</span>(values[<span class="op">-</span><span class="dv">1</span>], <span class="cf">function</span>(x) <span class="kw">identical</span>(values[[<span class="dv">1</span>]], x), <span class="kw">logical</span>(<span class="dv">1</span>)))
 }
 
 
@@ -119,98 +131,106 @@ yes &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span 
 no &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 na &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
-<span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr::<span class="kw">if_else</span>(cnd, yes, no, na),
-               <span class="dt">hutils =</span> hutils::<span class="kw">if_else</span>(cnd, yes, no, na),
-               <span class="dt">check =</span> my_check) %T&gt;%
-<span class="st">  </span>print %&gt;%
+<span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw">if_else</span>(cnd, yes, no, na),
+               <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw">if_else</span>(cnd, yes, no, na),
+               <span class="dt">check =</span> my_check) <span class="op">%T&gt;%</span>
+<span class="st">  </span>print <span class="op">%&gt;%</span>
 <span class="st">  </span>autoplot</code></pre></div>
 <pre><code>## Unit: milliseconds
-##    expr      min       lq     mean   median       uq       max neval cld
-##   dplyr 5.620259 5.837859 8.347760 7.666302 8.069729  22.09372   100   b
-##  hutils 2.945508 3.121697 5.143086 3.851900 4.031251 101.91669   100  a</code></pre>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+##    expr      min       lq      mean    median        uq      max neval cld
+##   dplyr 7.181255 9.819111 17.300720 11.326951 13.087178 96.80569   100   b
+##  hutils 2.994900 3.705677  9.101226  6.232549  7.583176 97.75741   100  a</code></pre>
+<pre><code>## Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cnd &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 yes &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 no &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 na &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
-<span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr::<span class="kw">if_else</span>(cnd, yes, no, na),
-               <span class="dt">hutils =</span> hutils::<span class="kw">if_else</span>(cnd, yes, no, na),
-               <span class="dt">check =</span> my_check) %T&gt;%
-<span class="st">  </span>print %&gt;%
+<span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw">if_else</span>(cnd, yes, no, na),
+               <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw">if_else</span>(cnd, yes, no, na),
+               <span class="dt">check =</span> my_check) <span class="op">%T&gt;%</span>
+<span class="st">  </span>print <span class="op">%&gt;%</span>
 <span class="st">  </span>autoplot</code></pre></div>
 <pre><code>## Unit: milliseconds
-##    expr      min       lq     mean   median       uq       max neval cld
-##   dplyr 4.539335 4.641134 8.265891 6.187525 6.516561 173.61150   100   b
-##  hutils 1.836575 1.892444 2.572916 2.410318 2.615268  11.74318   100  a</code></pre>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+##    expr      min       lq      mean   median        uq      max neval cld
+##   dplyr 4.736605 8.114752 12.250057 8.827637 10.606687 156.7034   100   a
+##  hutils 1.836877 1.965028  8.745789 2.305808  5.372087 143.6594   100   a</code></pre>
+<pre><code>## Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAzFBMVEUAAAAAADoAAGYAOpAAZrYzMzM6AAA6ADo6AGY6kNtNTU1NTW5NTY5Nbo5NbqtNjshmAABmtv9uTU1uTW5uTY5ubo5ubqtujshuq6tuq+SOTU2OTW6OTY6Obk2ObquOjk2Ojm6Ojo6OyP+QOgCQkGaQtpCQ2/+rbk2rbm6rbo6rq26ryKur5Mir5P+2ZgC2///Ijk3Ijm7I5KvI/8jI///bkDrb///kq27k5Kvk///r6+v/tmb/yI7/25D/5Kv//7b//8j//9v//+T////7W+rsAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAH50lEQVR4nO3dC1vbNhQG4JQBHYZx6bpuUNptYSvdhZJtsCwlDSH+//9plm05MrF9JB1LkZLvPBSaxF9kvZHtJBBrkKI6a7DuFQi9AEQUgIgCEFEAIgpARHGBPpOlsUiIEQABiBcBEIB4EQABiBcBEIB4EQABiBcBEIB4EQABiBcBEIB4EQABiBcBEIB4EQABiBcBEIB4EQABiBcBEIB4EQABiBcBEIB4EQABiBcBEIB4EQABiBcBEIB4EQABiBcBEIB4ETdAe6Jcr7qfiAOgzEZc89wohN5aRPoHKnjSwsjlqvuJOABSr1aIQuitRcQxkCIUQm8tIq6BlkQh9NYi4h5ICoXQW4uIB6BSKITeWkR8ABVEIfTWIuIHSAiF0FuLiCegZ8+JyiWV8tNbi4g3oLSukKvUbmww2i6gkkEWJeiktxYRr0BkPSMCUBORYgSgFiJpFAnQ7PVd/VLx5QpIMYoVaOW6voEkUvPBn9Fbi4gW0I9JMsxNZq//uUiO/i5G0DRJjiqm5T32BFQhdT9VYgHtNZcx0KvzdHo8KYDuqq/55V06PpH9UHrVH1CDkqOqNdi4GsQmVu52akBvb5SFHIwgo5FjNYKqCHMENQNlIys5rIx6BirWM6KddBNQVtmW5wCoehTjAhKb1PhoCSRwHACpYzwuoHScJD9c3i2u5VFs5OAothfcL0I0gLRqeY9dQI1HjRYdF721iHgEUjaeBqSm49VWAa30XxlKbUfzbQLKKJqa736qsz1Ae3hPenmPje8Vulh1PxEfQOG8d2ERcQ+EXz13AwX19qBFxDVQWK8bLCJugUJ7B94i4gCoeo4c3gsri0j/QMu3nxyvup+ICyBPq+4nAiAA8SIAAhAvAiAA8SIAAhAvAiAA8SIAAhAvAiAA8SIAAhAvAiAA8SIAAhAvAiAA8SIAAhAvAiAA8SIAAhAvAiAA8SIAAhAvAiAA8SIAAhAvAiAA8SKBAkX1sfA1AMX1ufl1AKXBfMQsSKC9FECdJT4NE8qnOAEEIF4kRKDijO9GEYtWNCMAihUojecESwACUNet4QGVnwkGUFsBiCgAEVV97B5AzQUgogBEFICIAhBR1eljms8L11MrupHwgJTpyQDUVAAiCkBEqSc314xYtKIdARCAeJHggOrn39fLmLeiHwEQgHiRsIHMhbYOyFRo24CMh9DGA63O0qoVM2zFIBI+kI+pa7puDR2oYepDfisGkfCBzAbRpgNpzkjCbMUkEgWQwSDaMKCVOb06pnXpo7cWkbUCLaevkf3vnMWW31uLyDqB6nMZ59d0NaEltFlAK93vnnpLR2hzgZ5NJdkh5Hc6oHCAtKqaUapNaJ1Ai+th+b+VaWi9AalUFr21iEQL1CLUB1BtC9YFml8k37wbzi9/F1OHZkCjYTp789937+Qshxbr0cO02TqtGK5YsQ2bA43O02kynF8cT6b5TJnT7PL57NWwWFFy99rcQZtQ7Q5cVMuqEUBi3uJsE5tfDNPFxxsxqej7yV83yqZm+kDlD1YfQL2OoOUxwHQE5RSjYT598WiYXVp8/PP9ZL1AjqZFfPYsQhNIjqAMqBhB6fjn83StQO520vVb9YCqfdBJNXH4tzdrBQrtML+4zo9ib38qj2Lp4re7noE0dvXL3WiITxSzUqZQn31fu8VmPVZ+w0MJKS817HprEbEFGh/e1G6xWQ/jF6vs3lpEzIDay2o9Vt/u6Jwomt9bi8hagT4bvGGm+ZbihgGtTGaHt1yJwpv2RLX92kerp9qtmEQCA2qeKRq/OFxW20zRurV9QPjjhXq1TaWtWxsPhD+gogp/o0jU6gs0o9o2IL2MeSv6EQABiBcJDggfZqEKQEQBiCh8JJMoABEFIKpwYgGicGoKogBEFICIAhBRACIKJ3kjCkBU4UycRAGIKAARBSCicMJtogBEFU76TxSAiMLMLFRhbh+iAEQUps/qY9X9RAAEIF4EQADiRQAEIF4EQADiRQAEIF4EQADiRQAEIF6kLyAnxT5/To+tAIgoABEFIKKCBAqpAEQUgIgCEFEAIio4oPz8aPOL5HjiowW6odCApslRfmLCdHzioQWNhgIDGh3+kT2+4uyNDSfW7b8FjYYCAyo2gNmbiXriPXctaDQUJND02DVQ2YJGQ0ECYQR11MzxPqjWQqz7oMX1ubujmNqCRkNBAuF5UEQFIKIARBSAiAIQUQAiCkBEAYgon0BPV4Oidr+8/NC61Jf9wW79ipcfqi+j9h52buV/Pw1emGWr8j2C6E42LWGhk9aANNptKQARtR6gvMO/7g8GB9kGNTgrtr6yO2KJ2o21TUxcpQbET7FFlj+LYHb74+ngxS/ZAnL5CIH2v/o3vR+Ibzu3T1dZ5+6z/5dL1G5UgfL4l/0zGRA/H0/PUvFT/CuCO7ePpwfZ9Xk2Xz5KoLNi1cWFfGMQHU0lkHJj7evrYpjJgOx3fjn7VrtDgVsuHyNQ/tiW3+6Lo9uBXKJ2Y234fCq2KBmQu5kHMfqUe81Ho9Apl48eqNi6qiXagfK9y86tDJBA5fKxAz0oz1IooHzTkoFqExOXH+Q+p9zEpJ7YdiMHerrKHvGy051AeZ+VgNw5VzvpMvN4upvvpOXysQPlR2llULSPoIdBsaAMrBzmy6A8zMvlowGiy7orbu4VQEQFCPT8xWofFc+L1egKQEQBiCgAEQUgogBEFICI+h/YfxIGvjiH/AAAAABJRU5ErkJggg==" /><!-- --></p>
 <p>This speed advantage also appears to be true of <code>coalesce</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 B &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 C &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
-<span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr::<span class="kw">coalesce</span>(x, A, B, C),
-               <span class="dt">hutils =</span> hutils::<span class="kw">coalesce</span>(x, A, B, C),
-               <span class="dt">check =</span> my_check) %T&gt;%
-<span class="st">  </span>print %&gt;%
+<span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw">coalesce</span>(x, A, B, C),
+               <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw">coalesce</span>(x, A, B, C),
+               <span class="dt">check =</span> my_check) <span class="op">%T&gt;%</span>
+<span class="st">  </span>print <span class="op">%&gt;%</span>
 <span class="st">  </span>autoplot</code></pre></div>
-<pre><code>## Unit: microseconds
-##    expr      min       lq     mean   median       uq       max neval cld
-##   dplyr 1814.288 2026.769 7009.141 3112.511 3382.667 329595.43   100   a
-##  hutils  827.934  918.589 1540.585 1276.537 1387.070  10218.02   100   a</code></pre>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<pre><code>## Unit: milliseconds
+##    expr      min       lq     mean   median       uq      max neval cld
+##   dplyr 2.379897 5.134007 10.33806 5.744191 6.114638 151.6912   100   a
+##  hutils 1.049600 1.180613  5.37537 1.295361 4.247494 152.2893   100   a</code></pre>
+<pre><code>## Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>especially during short-circuits:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
-<span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr::<span class="kw">coalesce</span>(x, A, B, C),
-               <span class="dt">hutils =</span> hutils::<span class="kw">coalesce</span>(x, A, B, C),
-               <span class="dt">check =</span> my_check) %T&gt;%
-<span class="st">  </span>print %&gt;%
+<span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw">coalesce</span>(x, A, B, C),
+               <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw">coalesce</span>(x, A, B, C),
+               <span class="dt">check =</span> my_check) <span class="op">%T&gt;%</span>
+<span class="st">  </span>print <span class="op">%&gt;%</span>
 <span class="st">  </span>autoplot</code></pre></div>
 <pre><code>## Unit: microseconds
-##    expr      min        lq       mean   median       uq        max neval
-##   dplyr 1661.893 2251.2960 7469.65812 3017.038 3264.304 278333.348   100
-##  hutils   46.683   54.6635   73.74623   60.085   75.445    200.584   100
+##    expr      min        lq       mean    median       uq        max neval
+##   dplyr 2595.239 5818.5820 17186.0077 6255.5890 7110.479 656576.448   100
+##  hutils   47.887   62.3435   104.6861   92.9135  130.861    299.972   100
 ##  cld
 ##    b
 ##   a</code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAz1BMVEUAAAAAADoAAGYAOpAAZrYzMzM6AAA6ADo6AGY6kNtNTU1NTW5NTY5Nbo5NbqtNjshmAABmtv9uTU1uTW5uTY5ubo5ubqtujshuq6tuq+SOTU2OTW6OTY6Obk2ObquOjk2Ojm6Ojo6OyP+QOgCQkDqQkGaQtpCQ2/+rbk2rbm6rbo6rq26ryKur5Mir5P+2ZgC2///Ijk3Ijm7I5KvI/8jI///bkDrb///kq27k5Kvk///r6+v/tmb/yI7/25D/5Kv//7b//8j//9v//+T///+SuM1xAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAH/0lEQVR4nO3di1+bVhjG8bQT26Kztuu6aW23pdtqd7HNNp2zxkvD//83jXPgEAiXhwgEqL/30zkTnjeQb7gkJjlMAqqyJn0vwNALIFEAiQJIFECiABLVFOhTeVVNa7OnmxkBpAIAiQBAIgCQCAAkAgCJAEAiAJAIACQCAIkAQCIAkAgAJAIAiQBAIgCQCAAkAgCJAEAiAJAIACQCAIlAF0Ce1/lyt9XUF1BaCKBVIM8LAKoECgACqCFQWgigFSDjAxBAAMWBroCWQgAVAQUAlQFFPgAB1BQoEQKoECgASAE5IYCKgRIhgEqAAoAEUCwEEEAAdQXkdbbcbTX1CxQABBBAAIlAt0BeV8vdVlPPQAFAAAEEUHWgYyAPoEqgACCA2gLKfuys6XK31dQ/kBcvg+d5axDdH6AgBvLsZ2JqG90nIIviLd/rqEU0KqDrF6fZS9G/mkCxUfpiR/d1OEC56wTQqldH97VHoB98f2pNrl/8c+jv/h2tQXPf302Ylrd4D4GeHwTzvYsI6DT5d3t0Gpw/tfc4swlpIBUYZIlNLN7tZIBenaRCS/J7uAYVA4Vrlr+TGC1vEaDUUSzc8iSQF1Xqckf3tW8gs0md7y6BDE4NoJBmeW3tp9NjBArOff/7o9PFsTuKzWodxVLPpNd4rTEqoFq1vMWSF6trvRS7j0AtL3dbTQA17QFIBboF4o/2AAEEUHUAIBHoFIiPvwAEEEAiAJAIdAnEB8kBAqhLIA8gAdThcrfV1CcQ3zisBuJLvQA1AmJgAYDuCsTgJtVAjP5SC4gBlgACKAp0AMQwgdVAdqBJgARQ18vdVhNATXu6APrEaMAKiAG3q4E2sNwbmxFAKgCQCAAkAgCJAEAiAJAIACQCAIkAQCIAkAgAJAIAiQBAIgCQCAAkAgCJwNiAKr74CpApgKp7su8HdDijJACQCAAkAgCJAEAiMC6glXe1u5vRMjA6oHIhgACSPQCJHoBED0CiByDRA1B1z+onjDubUSoAkAgAJAIAicD4gEqFAAJI9QAkegASPQCJHoBED0DVPblvnHc1o3QAIBEYIVCZEEAAFfckXz8DqLDHA6i6Z/lmIUCFPQnQcmyrbmZUHABIBEYBFJHkho9reUbFAYBEYBxAlgSg4h4HlBvis+0ZFQdGAhSaAFTSk5xYCqDinqIzuhUKAaSA1joBVc2F+5KAwo1wbaEvFqgIovKjH3dduDWAFsfT+LfcaWg3DlQE4ZXKNVm40QLlINwIoOsJtQZ0e+h//Xp6e/S7OXVoCDSbBtcv//v2tTvLYZNlED3F5yVdhUifbnvd87bnGlKX6wLNDoK5P7093LuY2zNlzsPLB9fPp26RRHuTKrltb6UqJ4rK53OzE0DmvMXhJnZ7OA0W70/MSUXfXPx1ktrUaq4Naz2w7uEsBco85jmcmjPyVvPZ5ppAlmI2tacvnk3DS4v3f7656BMovw9KfO46o+JAPSC3BoVA0RoUnP90EPQIlFfoeSft9kFPkxOHf3MyLKB4iNS+DvOLY3sUe/VjfBQLFr+d9ghU/Ey6bEKThasLFFXqFOrX32WmNFkG0TOm12JLoPOdk8yUJssgetZ4Nb+2z5f6Woy/B/EHszWWmz+5ih7+aC96kqc3vO1T3MMbh6InD8R783x4YZ3l5vNBogcg1cNH8EQPQHV7ABI9AIkevoogegBSPXwdSvQAJHoAEj0AiR6ARA9Aogcg0cPgJqIHINEDkOgBSPUwyJvoAUj0ACR6ABI9AIkegEQPQKKHIdtVD4P+ix6ARA9Aogcg0VP1WXGATFV8VhygDpoAatoDkAoAJAIAiQBAIgCQCAAkAgCJAEAiAJAIACQCAIkAQCIAkAi0BNRydTke0d1mBJAogEQBJGpgQMMrgEQBJAogUQCJ6huoYPTT20N/7yII5r6/m5vWxYzO/ao59Qw0zy+aGTr2/Km9Q+H/up9RMJsWdsTVL9Bs5w/zwIYPpV18M2qj/RE/3AWPevszWrw/qeocxCY2O4hWFrvc1y8v3KByLa5B5TMK0Xy/fCUaApDhCBc53OmEdTDfi4Gun+9UPrYtzciMnFmxFg0CyDyGBmN1DUoN39jtjCr2Q4MAOop3Nav7ILH/3MiMhgBkB4w1B1xbi2O7o0i2tE3MyIy/WlKDAApX/dTuZvn0pO190F1m1DfQ4AsgUQCJAkgUQKIAEgWQKIBEbQbo89tJVFtXj96Vpq62J1vZKyrCtevy4Uf364fJg7VvcHNrkL63rXjkKgV0lzkAJGrTQOHPq0e/bk8mT8INavIs2vriu2ASmYnmCjN9K5z2+OcwFl8wG2Om2V3vwvZGwuk3+5MHv4QBlx8J0PZX/wZnE/PD3OWtIDgLf48TmYnhFWb6zX5otb1l7v+W/c/e1NX2M9fsQsn07aj/Zv9JeL29HZsfDdCzaHHNBbsBmDsXOKDUxOhf1G2usuHwx9XjaJVzzS6UTE/f+NkyPxYg+3jGP86io9sTl8hMdPfRdV+aNc389iHaolyzC7npyY3by6FOnB8lULR1JYl6QHbv8vCja5ZAcX6MQJepZyZFQMkmZoFM2GmEm5ZrTjaxeHpy4/Em5/JjBPr8NnyU4ztaBJTZL7sL9j6nmt312Z34o3c3+1t2J+3yYwSyR+bUirAKtDxym4w7nF9OoibXnDvMxzfiDvMuP2ggXd08UWw4B4BEDQpo9cVq2zXsF6sjLYBEASQKIFEAiQJIFECi/gdBoDs0XbNTaAAAAABJRU5ErkJggg==" /><!-- --></p>
+<pre><code>## Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
-<span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr::<span class="kw">coalesce</span>(x, A, B, C),
-               <span class="dt">hutils =</span> hutils::<span class="kw">coalesce</span>(x, A, B, C),
-               <span class="dt">check =</span> my_check) %T&gt;%
-<span class="st">  </span>print %&gt;%
+<span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw">coalesce</span>(x, A, B, C),
+               <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw">coalesce</span>(x, A, B, C),
+               <span class="dt">check =</span> my_check) <span class="op">%T&gt;%</span>
+<span class="st">  </span>print <span class="op">%&gt;%</span>
 <span class="st">  </span>autoplot</code></pre></div>
 <pre><code>## Unit: microseconds
-##    expr      min       lq      mean   median       uq        max neval cld
-##   dplyr 1769.714 2149.347 4780.9604 3054.082 3363.842 116776.445   100   b
-##  hutils  562.598  624.490  910.8519  814.382  888.622   9071.744   100  a</code></pre>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+##    expr      min        lq      mean   median       uq        max neval
+##   dplyr 2335.625 5340.1625 15593.552 5732.445 6172.012 418431.286   100
+##  hutils  536.697  675.5395  1483.623  766.495 1331.954   8507.035   100
+##  cld
+##    b
+##   a</code></pre>
+<pre><code>## Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAA0lBMVEUAAAAAADoAAGYAOpAAZrYzMzM6AAA6ADo6AGY6kNtNTU1NTW5NTY5Nbo5NbqtNjshmAABmtv9uTU1uTW5uTY5ubo5ubqtujshuq6tuq+SOTU2OTW6OTY6Obk2ObquOjk2Ojm6Ojo6OyP+QOgCQkDqQkGaQtpCQ2/+rbk2rbm6rbo6rq26ryKur5Mir5OSr5P+2ZgC2///Ijk3Ijm7I5KvI/8jI///bkDrb///kq27k5Kvk///r6+v/tmb/yI7/25D/5Kv//7b//8j//9v//+T///8WowOdAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAIaklEQVR4nO3djV/TRhwG8Oo41MAQnboV0W11m7I3tNtgHVAKNv//v7R7711yyZO0aWnk+X0QafPkevdNLml5aQY5q7YGd92BbS8CgSIQKAKBIhAoAoFaFeiypmoXdpZY08MQCCQIBBIEAgkCgQSBQIJAIEEgkCAQSBAIJAgEEgQCCQKBBIFAgkAgQSCQIBBIEAgkCAQSBAIJAoEEgUCCQCBBIJAgEEgQCCQIBBIEAgkCgQSBQIJAIEEgkCAQSBAIJAgEEgQCCQKBBIFAgkAgQSCQIBBIEAgkCAQSBAIJAoEEgUCCQCCxLiChaq09X0sjGwMSQt1piQhUAjI+UmiNPV9LIxsCcj5WiEAlIH+3nmQEKgCJ4H4lRKAYaDHBtBCBSkDRArkLESgCEoUlBAJAuSAQABKlR13H2PoL1EDongNhIbV6+OptmbH1GQgK5QpH56qC2ww0e3EW3zIfbYDy2r3jUgRPnSqCvQIq3YeBrJGvsAsifmaZJtpuoO+zbKRNZi/+Ocr2/zZ70DTL9j3TosUqoEqs8gqiUNsO9HyYTw8uDNCZ/7g9PssnT914gtE1AAoUahYXvrjbAlPMHnYioNenQajFHhRPswSSWxzmtnoPSgPJPSvb80YQqOIApNeIiNJH6T4CyZIzrxkQOM+H82nZsd05kJpSk/0FkMJpCFR7jjf9qtq7mo/tzoHySZZ9d3w2/+DOYuPGZzG+1ACvxTYytv4C8dV8PZDg94MKQAUhfkexAFT8njS/aV8E4o99IFAg1OyF5j0DCn/0TKAUkJ9k5gxPoBIQf/0FAWkh9wyRQAmgy+CVJ4FSQGvv+YYehkAgQSCQIBBIEAgkCAQSBAIJAoEEgUCCQCBBIJAgEEgQCCQIBBIEAgkCgQSBQIJAIEEgkCAQSBAIJAgEEgQCCQKBBIFAgkAgQSCQIBBIEAgkCAQSBAIJAoEEgUCCQCBBIJAgEEgQCCQIBBIEAgkCgcS2AonWbdwvoNLfuRIoLgKBBIFAQhT/2J5AcREIJAgEEgSqT4jSG34QKCoCgQSBQIJAIEEgkJBABSECRUUgkCAQSBAIJAgEEgSqTygfAtUkCAQSBAIJAoEEgUCCQCBBIJAgEEgQCCQIBBIEAgkNFAsRKCjjQ6DKBIF8iWSCQL7S7/ZKIF8EAv0iUH2//O9wEChdIn3BdQK5qgeKhAgU300gXc2Atv4ah2sFMgoESlcaSPhGhbl5z4FKw4+B9OUVugequKbXSkDzDyP7VekytCsAla/+UwDK1wOUvizcNgIVhy+CVsWluwS02ZmaDh8mRMV14ZYHuj3Kvn4zuj3+TV06VAKNR/ns1X8v37irHC7Vc+EYTMJeXDUECq4S5M95VZeKbAFk2SsTwaKmQONhPs1Gt0cHF1N9pcypvD2cPR/ZYQiweroc0OKaxnWX7vXJ8rWOW1f8uFWBsACQum6xnGK3R6N8fnKqLir69uKv02CqNdpwxfJAudls6a55RbPRTarNw5QTDqgiIdrvQZpiPNKXLx6P5K35yR9vL7oCivbsUMhvazUY77L6FEv8AlKcaA3k9iAJZPagfPLjMO8GqHiQDoR6dJB2x6Cn/sLh35x2A3RHp/m09vJA8w/6LPb6B3sWy+e/nnUCdEdPFEt/NVzVRlMgU8El1GffRkuW6rndO76glxoLoMneabRkqX6lgfhi1Zfg94Pq+0Ug0C8CgX7VA0XnmfsKJFIJAvniDw5BvwgE+kWgpfpFIJAgEEoIAtUnCAQSouRDoKgIBBIEAgkCgQSBQIJAIEEgkCAQSBAIJAgEEgRCCUGg+gSBQIJAIEEgkCAQSAi+j2J9gkAgQSCQIBBIEAgkCIQSpb81IVBcBAIJAoEEgUCi9HvwBIqLQCBBoO4TBNpEIwRqnSAQSBAIJAgEEgQCCQKBBIFAgkAgQSCQIBBIEAgkCAQSBAKJroDqSmxJGys1QiBQBAJFIFDrBPoiikCgCASKQKAIBKpToMRbmd4eZQcXeT7Nsv3SspZthG+aunQjk6xxT0x1CTQtP7Qa0uSp7rD8b6U2cjW6ZkA1jYwbEvvqEGi897vacHJT6e6pt2DUn+zmTGzVlm3MXr5pNLyaRuYnp3D1uLqfYuOh2d66X7NXF+4d4prtQTVtzE/+bDXFUo1ItKzhbmircyA1FNkledCRNZweWKDZ871m2666jcmw1TEo2Yh6m8x2e1H3QGobKYziHhS8F+NSbcj/2gFVdaTdcah7oGN7qCkegxr2q7KNidkVNtYRW2s5Bk3NWTlXJw99IPAzbYU28ran+aqOqDdbbV7dA8ldOzjcLJ5+tDgGpdtoC7RiR2zxmTQoAoEiECgCgSIQKAKBIhAoAoHaDNDndwNTO9eP3lemrncHO/EdNeHGdfXwk/vy4+BB6wY3twfh0XbiUaoAaJlHIBCoTQPJz9ePftkdDJ7ICTV4ZmafHYJKRAvVHWq5nHjXj3+SMXtDTcZoZXe/C+tG5PKbw8GDn2XA5XsCtPvVv/n5QH1SQ5YDOpdf20S0UN6hlt8cSqvdHTX+Hf1PN3W9+8yt7EJ++a5Z/+bwibxft6PzvQF6ZrqrbugJoAaXO6Bgofkwa6u7dFh+un5sdjm3sgv55WHj54t8X4D09rSfzs3Z7YlLRAvdGN3aV2pPU199NDPKrexCbrlvXN+WOjbfSyAzu3yiGZA+ujz85FaGQDbfR6Cr4JlJCshPMQ2kwk5DTi23sp9idrlv3E45l+8j0Od3civbgaaAouOyu6HHHKzs7o8P4o/e3xzu6IO0y/cRSJ+Zgx2hCLQ4c6uMO51fDcxKbuXSad424k7zLr/VQLjW80RxxUcgEKitAiq+WO26tvvFak+LQKAIBIpAoAgEikCgCATqf/iUTmY1KwzlAAAAAElFTkSuQmCC" /><!-- --></p>
 </div>
 <div id="drop-columns" class="section level2">
 <h2>Drop columns</h2>
 <p>To drop a column from a <code>data.table</code>, you set it to <code>NULL</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">A =</span> <span class="dv">1</span>:<span class="dv">5</span>, <span class="dt">B =</span> <span class="dv">1</span>:<span class="dv">5</span>, <span class="dt">C =</span> <span class="dv">1</span>:<span class="dv">5</span>)
-DT[, A :<span class="er">=</span><span class="st"> </span><span class="ot">NULL</span>]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">A =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">B =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">C =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)
+DT[, A <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="ot">NULL</span>]</code></pre></div>
 <p>There’s nothing wrong with this, but I’ve found the following a useful alias, especially in a <code>magrittr</code> pipe.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">A =</span> <span class="dv">1</span>:<span class="dv">5</span>, <span class="dt">B =</span> <span class="dv">1</span>:<span class="dv">5</span>, <span class="dt">C =</span> <span class="dv">1</span>:<span class="dv">5</span>)
-DT %&gt;%
-<span class="st">  </span><span class="kw">drop_col</span>(<span class="st">&quot;A&quot;</span>) %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">A =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">B =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">C =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)
+DT <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">drop_col</span>(<span class="st">&quot;A&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">drop_col</span>(<span class="st">&quot;B&quot;</span>)
 
 <span class="co"># or</span>
-DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">A =</span> <span class="dv">1</span>:<span class="dv">5</span>, <span class="dt">B =</span> <span class="dv">1</span>:<span class="dv">5</span>, <span class="dt">C =</span> <span class="dv">1</span>:<span class="dv">5</span>)
-DT %&gt;%
+DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">A =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">B =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">C =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)
+DT <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">drop_cols</span>(<span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>))</code></pre></div>
 <p>These functions simple invoke the canonical form, so won’t be any faster.</p>
 <p>Additionally, one can drop columns by a regular expression using <code>drop_colr</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(flights)
 
-flights %&gt;%
-<span class="st">  </span><span class="kw">drop_colr</span>(<span class="st">&quot;time&quot;</span>) %&gt;%
+flights <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">drop_colr</span>(<span class="st">&quot;time&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">drop_colr</span>(<span class="st">&quot;arr(?!_delay)&quot;</span>, <span class="dt">perl =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>##         year month day dep_delay arr_delay flight tailnum origin dest
 ##      1: 2013     1   1         2        11   1545  N14228    EWR  IAH
@@ -240,9 +260,9 @@ flights %&gt;%
 <div id="drop_empty_cols" class="section level2">
 <h2><code>drop_empty_cols</code></h2>
 <p>This function drops columns in which all the values are <code>NA</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">planes %&gt;%<span class="st"> </span>
-<span class="st">  </span>as.data.table %&gt;%<span class="st"> </span>
-<span class="st">  </span>.[!<span class="kw">complete.cases</span>(.)]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">planes <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>as.data.table <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>.[<span class="op">!</span><span class="kw">complete.cases</span>(.)]</code></pre></div>
 <pre><code>##       tailnum year                    type                  manufacturer
 ##    1:  N10156 2004 Fixed wing multi engine                       EMBRAER
 ##    2:  N102UW 1998 Fixed wing multi engine              AIRBUS INDUSTRIE
@@ -267,9 +287,9 @@ flights %&gt;%
 ## 3297:   717-200       2   100    NA Turbo-fan
 ## 3298:     MD-88       2   142    NA Turbo-jet
 ## 3299:     MD-88       2   142    NA Turbo-jet</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">planes %&gt;%<span class="st"> </span>
-<span class="st">  </span>as.data.table %&gt;%<span class="st"> </span>
-<span class="st">  </span>.[!<span class="kw">complete.cases</span>(.)] %&gt;%<span class="st"> </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">planes <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>as.data.table <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>.[<span class="op">!</span><span class="kw">complete.cases</span>(.)] <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="co"># drops speed</span>
 <span class="st">  </span>drop_empty_cols</code></pre></div>
 <pre><code>##       tailnum year                    type                  manufacturer
@@ -300,7 +320,7 @@ flights %&gt;%
 <div id="duplicated_rows" class="section level2">
 <h2><code>duplicated_rows</code></h2>
 <p>There are many useful functions for detecting duplicates in R. However, in interactive use, I often want to not merely see which values are duplicated, but also compare them to the original. This is especially true when I am comparing duplicates across a <em>subset</em> of columns in a a <code>data.table</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="co"># only the 'second' of the duplicates is returned</span>
 <span class="st">  </span>.[<span class="kw">duplicated</span>(., <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;origin&quot;</span>, <span class="st">&quot;dest&quot;</span>))]  </code></pre></div>
 <pre><code>##         year month day dep_time sched_dep_time dep_delay arr_time
@@ -339,7 +359,7 @@ flights %&gt;%
 ## 336550:       NA      764   12     10 2013-09-30 12:00:00
 ## 336551:       NA      419   11     59 2013-09-30 11:00:00
 ## 336552:       NA      431    8     40 2013-09-30 08:00:00</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="co"># Both rows are returned and (by default)</span>
 <span class="st">  </span><span class="co"># duplicates are presented adjacently</span>
 <span class="st">  </span><span class="kw">duplicated_rows</span>(<span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;origin&quot;</span>, <span class="st">&quot;dest&quot;</span>))</code></pre></div>
@@ -384,26 +404,195 @@ flights %&gt;%
 <h2>Haversine distance</h2>
 <p>To emphasize the miscellany of this package, I now present <code>haversine_distance</code> which simply returns the distance between two points on the Earth, given their latitutde and longitude.</p>
 <p>I prefer this to other packages’ implementations. Although the <code>geosphere</code> package can do a lot more than calculate distances between points, I find the interface for <code>distHaversine</code> unfortunate as it cannot be easily used inside a <code>data.frame</code>. In addition, I’ve found the arguments clearer in <code>hutils::haversine_distance</code> rather than trying to remember whether to use <code>byrow</code> inside the <code>matrix</code> function while passing to <code>distHaversine</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DT1 &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">lat_orig =</span> <span class="kw">runif</span>(<span class="fl">1e5</span>, -<span class="dv">80</span>, <span class="dv">80</span>),
-                 <span class="dt">lon_orig =</span> <span class="kw">runif</span>(<span class="fl">1e5</span>, -<span class="dv">179</span>, <span class="dv">179</span>),
-                 <span class="dt">lat_dest =</span> <span class="kw">runif</span>(<span class="fl">1e5</span>, -<span class="dv">80</span>, <span class="dv">80</span>),
-                 <span class="dt">lon_dest =</span> <span class="kw">runif</span>(<span class="fl">1e5</span>, -<span class="dv">179</span>, <span class="dv">179</span>))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DT1 &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">lat_orig =</span> <span class="kw">runif</span>(<span class="fl">1e5</span>, <span class="op">-</span><span class="dv">80</span>, <span class="dv">80</span>),
+                  <span class="dt">lon_orig =</span> <span class="kw">runif</span>(<span class="fl">1e5</span>, <span class="op">-</span><span class="dv">179</span>, <span class="dv">179</span>),
+                  <span class="dt">lat_dest =</span> <span class="kw">runif</span>(<span class="fl">1e5</span>, <span class="op">-</span><span class="dv">80</span>, <span class="dv">80</span>),
+                  <span class="dt">lon_dest =</span> <span class="kw">runif</span>(<span class="fl">1e5</span>, <span class="op">-</span><span class="dv">179</span>, <span class="dv">179</span>))
 
 DT2 &lt;-<span class="st"> </span><span class="kw">copy</span>(DT1)
 
-<span class="kw">microbenchmark</span>(DT1[, distance :<span class="er">=</span><span class="st"> </span><span class="kw">haversine_distance</span>(lat_orig, lon_orig,
+<span class="kw">microbenchmark</span>(DT1[, distance <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">haversine_distance</span>(lat_orig, lon_orig,
                                                     lat_dest, lon_dest)],
                
-               DT2[, distance :<span class="er">=</span><span class="st"> </span><span class="kw">distHaversine</span>(<span class="kw">cbind</span>(lon_orig, lat_orig),
+               DT2[, distance <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">distHaversine</span>(<span class="kw">cbind</span>(lon_orig, lat_orig),
                                                <span class="kw">cbind</span>(lon_orig, lat_orig))])</code></pre></div>
 <pre><code>## Unit: milliseconds
 ##                                                                                             expr
 ##           DT1[, `:=`(distance, haversine_distance(lat_orig, lon_orig, lat_dest,      lon_dest))]
 ##  DT2[, `:=`(distance, distHaversine(cbind(lon_orig, lat_orig),      cbind(lon_orig, lat_orig)))]
-##       min       lq     mean   median       uq      max neval cld
-##  18.02211 19.34383 21.95963 22.18648 22.52425  32.5316   100  a 
-##  47.04982 56.88595 68.97913 63.17513 68.99265 233.7077   100   b</code></pre>
+##       min       lq     mean   median       uq       max neval cld
+##  18.45339 18.72189 20.95005 19.36460 21.90262  36.40171   100  a 
+##  44.30007 50.42510 63.73136 54.23573 60.61044 215.13617   100   b</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(DT1, DT2)</code></pre></div>
+</div>
+<div id="mutate_other" class="section level2">
+<h2><code>mutate_other</code></h2>
+<p>There may be occasions where a categorical variable in a <code>data.table</code> may need to modified to reduce the number of distinct categories. For example, you may want to plot a chart with a set number of facets, or ensure the smooth operation of <code>randomForest</code>, which accepts no more than 32 levels in a feature.</p>
+<p><code>mutate_other</code> keeps the <em>n</em> most common categories and changes the other categories to <code>Other</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">Fruit =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;pear&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;tomato&quot;</span>, <span class="st">&quot;eggplant&quot;</span>),
+                                <span class="dt">size =</span> <span class="dv">20</span>,
+                                <span class="dt">prob =</span> <span class="kw">c</span>(<span class="fl">0.45</span>, <span class="fl">0.25</span>, <span class="fl">0.15</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>),
+                                <span class="dt">replace =</span> <span class="ot">TRUE</span>),
+                 <span class="dt">Price =</span> <span class="kw">rpois</span>(<span class="dv">20</span>, <span class="dv">10</span>))
+
+<span class="kw">kable</span>(<span class="kw">mutate_other</span>(DT, <span class="st">&quot;Fruit&quot;</span>, <span class="dt">n =</span> <span class="dv">3</span>)[])</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Fruit</th>
+<th align="right">Price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">apple</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">apple</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">pear</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">Other</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">apple</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">Other</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">Other</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">pear</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">pear</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">apple</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">apple</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">apple</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">pear</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">apple</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">Other</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">pear</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">Other</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">Other</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">apple</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">Other</td>
+<td align="right">9</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="ngrep" class="section level2">
+<h2><code>ngrep</code></h2>
+<p>This is a ‘dumb’ negation of <code>grep</code>. In recent versions of R, the option <code>invert = FALSE</code> exists. A slight advantage of <code>ngrep</code> is that it’s shorter to type. But if you don’t have arthritis, best use <code>invert = FALSE</code> or <code>!grepl</code>.</p>
+</div>
+<div id="notin-ein-enotin-pin" class="section level2">
+<h2><code>notin</code> <code>ein</code> <code>enotin</code> <code>pin</code></h2>
+<p>These functions provide complementary functionality to <code>%in%</code>:</p>
+<div id="notin" class="section level3">
+<h3><code>%notin%</code></h3>
+<p><code>%notin%</code> is the negation of <code>%in%</code>, but also uses the package <code>fastmatch</code> to increase the speed of the operation</p>
+</div>
+<div id="ein-and-enotin" class="section level3">
+<h3><code>%ein%</code> and <code>%enotin%</code></h3>
+<p>The functions <code>%ein%</code> and <code>%enotin%</code> are motivated by a different sort of problem. Consider the following statement:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(iris)
+iris[Species <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolour&quot;</span>)] <span class="op">%$%</span>
+<span class="st">  </span><span class="kw">mean</span>(Sepal.Length <span class="op">/</span><span class="st"> </span>Sepal.Width)</code></pre></div>
+<pre><code>## [1] 1.470188</code></pre>
+<p>On the face of it, this appears to give the average ratio of <em>Iris setosa</em> and <em>Iris versicolour</em> irises. However, it only gives the average ratio of <em>setosa</em> irises, as the correct spelling is <em>Iris versicolor</em> not <em>-our</em>. This particular error is easy to make, (in fact when I wrote this vignette, the first hit of Google for <code>iris dataset</code> made the same spelling error), but it’s easy to imagine similar mistakes, such as mistaking the capitalization of a value. The functions <code>%ein%</code> and <code>%enotin%</code> strive to reduce the occurence of this mistake. The functions operate exactly the same as <code>%in%</code> and <code>%enotin%</code> but error if any of the table of values to be matched against is not present in any of the values:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(iris)
+iris[Species <span class="op">%ein%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolour&quot;</span>)] <span class="op">%$%</span>
+<span class="st">  </span><span class="kw">mean</span>(Sepal.Length <span class="op">/</span><span class="st"> </span>Sepal.Width)</code></pre></div>
+<pre><code>## Error in Species %ein% c(&quot;setosa&quot;, &quot;versicolour&quot;): Not all y are in x, so stopping, as requested. First absent y: versicolour</code></pre>
+<p>The <code>e</code> stands for ‘exists’; <em>i.e.</em> they should be read as “exists and in” and “exists and not in”.</p>
+</div>
+<div id="pin" class="section level3">
+<h3><code>%pin%</code></h3>
+<p>This performs a partial match (<em>i.e</em> <code>grepl</code>) but with a possibly more readable or intuitive syntax</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">identical</span>(iris[<span class="kw">grep</span>(<span class="st">&quot;v&quot;</span>, Species)],
+          iris[Species <span class="op">%pin%</span><span class="st"> &quot;v&quot;</span>])</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>If the RHS has more than one element, the matching is done on alternation (<em>i.e.</em> OR):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris[Species <span class="op">%pin%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ver&quot;</span>, <span class="st">&quot;vir&quot;</span>)] <span class="op">%&gt;%</span>
+<span class="st">  </span>head</code></pre></div>
+<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 1:          7.0         3.2          4.7         1.4 versicolor
+## 2:          6.4         3.2          4.5         1.5 versicolor
+## 3:          6.9         3.1          4.9         1.5 versicolor
+## 4:          5.5         2.3          4.0         1.3 versicolor
+## 5:          6.5         2.8          4.6         1.5 versicolor
+## 6:          5.7         2.8          4.5         1.3 versicolor</code></pre>
+<p>There is an important qualification: if the RHS is <code>NULL</code>, then the result will be <code>TRUE</code> along the length of <code>x</code>, contrary to the behaviour of <code>%in%</code>. This is not entirely unexpected as <code>NULL</code> could legitimately be interpreted as <span class="math inline">\(\varepsilon\)</span>, the empty regular expression, which occurs in every string.</p>
+</div>
+<div id="provide.dir" class="section level3">
+<h3><code>provide.dir</code></h3>
+<p>This is the same as <code>dir.create</code> but checks whether the target exists or not and does nothing if it does. Motivated by <code>\providecommand</code> in , which creates a macro only if it does not exist already.</p>
+</div>
+<div id="select_which" class="section level3">
+<h3><code>select_which</code></h3>
+<p>This provides a similar role to <code>dplyr::select_if</code> but was originally part of <code>package:grattan</code> so has a different name. It simply returns the columns whose <em>values</em> return <code>TRUE</code> when <code>Which</code> is applied. Additional columns (which may or not may satisfy <code>Which</code>) may be incldued bny using <code>.and.dots</code>. (To remove columns, you can use <code>drop_col</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(data.table)
+DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,
+                 <span class="dt">y =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>],
+                 <span class="dt">AB =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>))
+<span class="kw">select_which</span>(DT, anyNA, <span class="dt">.and.dots =</span> <span class="st">&quot;y&quot;</span>)</code></pre></div>
+</div>
+<div id="set_cols_first" class="section level3">
+<h3><code>set_cols_first</code></h3>
+<p>Up to and including <code>data.table 1.10.4</code>, one could only reorder the columns by supplying all the columns. You can use <code>set_cols_first</code> and <code>set_cols_last</code> to put columns first or last without supplying all the columns.</p>
+</div>
+<div id="unique-keys" class="section level3">
+<h3>Unique keys</h3>
+<p>In some circumstances, you need to know that the <code>key</code> of a <code>data.table</code> is unique. For example, you may expect a join to be performed later, without specifying <code>mult='first'</code> or permitting Cartesian joins. <code>data.table</code> does not require a <code>key</code> to be unique and does not supply tools to check the uniqueness of keys. <code>hutils</code> supplies two simple functions: <code>has_unique_key</code> which when applied to a <code>data.table</code> returns <code>TRUE</code> if and only if the table has a key and it is unique.</p>
+<p><code>set_unique_key</code> does the same as <code>setkey</code> but will error if the resultant key is not unique.</p>
+</div>
 </div>
 </div>
 
