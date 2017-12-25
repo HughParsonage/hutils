@@ -4,7 +4,7 @@
 \alias{generate_LaTeX_manual}
 \title{Generate LaTeX manual of installed package}
 \source{
-<https://stackoverflow.com/a/30608000/1664978>
+\url{https://stackoverflow.com/a/30608000/1664978}
 }
 \usage{
 generate_LaTeX_manual(pkg)
@@ -14,7 +14,7 @@ generate_LaTeX_manual(pkg)
 }
 \value{
 See \code{\link[base]{system}}.
-Called for its side-effect: creates a PDF in the current working directory.
+Called for its side-effect: creates a PDF in the current working directory. Requires a TeX distribution.
 }
 \description{
 Generate LaTeX manual of installed package
