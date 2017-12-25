@@ -1,5 +1,5 @@
 #' Logical implies
-#' @description Returns the result of \eqn{x\implies y}.
+#' @description Returns the result of \eqn{x\Longrightarrow y}.
 #' @param x,y Logical vectors of the same length.
 #' @return \code{TRUE} along \code{y} unless \code{x} is \code{TRUE} and \code{y} is \code{FALSE}.
 #' @export %implies% implies

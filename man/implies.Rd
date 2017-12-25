@@ -16,7 +16,7 @@ x \%implies\% y
 \code{TRUE} along \code{y} unless \code{x} is \code{TRUE} and \code{y} is \code{FALSE}.
 }
 \description{
-Returns the result of \eqn{x\implies y}.
+Returns the result of \eqn{x\Longrightarrow y}.
 }
 \examples{
 
