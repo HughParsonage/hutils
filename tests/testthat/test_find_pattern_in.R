@@ -12,8 +12,10 @@ test_that("find_pattern_in", {
   out <- find_pattern_in("y", basedir = tempdir)
   expect_equal(nrow(out), 1L)
   expect_equal(out[["line_no"]], 1)
-  
+  out_null <- find_pattern_in("asifdoh", basedir = tempdir)
+  expect_identical(out_null, data.table())
   
   
   setwd(current_wd)
 })
+

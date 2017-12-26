@@ -10,7 +10,7 @@ packages:
 r_github_packages:
 - jimhester/covr
 after_success:
-- Rscript -e 'covr::codecov(line_exclusions = list("./R/zzz.R", ".R/find_pattern.R" = 21:31))'
+- if (["$TRAVIS_R_VERSION_STRING" == "release"]); then Rscript -e 'covr::codecov(line_exclusions = list("./R/zzz.R", ".R/find_pattern.R" = 21:31))'
 - Rscript -e 'if (!requireNamespace("drat", quietly = TRUE)) install.packages("drat")'
 - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && bash
   deploy.sh
