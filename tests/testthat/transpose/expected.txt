@@ -1,0 +1,3 @@
+  ABC :     1    2    3    4    5
+the_a :   abc    d   fg XXXX @the
+   ef :     0    0    .   -1    0

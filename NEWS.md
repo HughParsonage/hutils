@@ -2,6 +2,7 @@
 # hutils 0.10.0
 * New function `implies`, logical implies.
 * New function `drop_constant_cols`
+* New function `print_transpose_data_table` for glimpsing data tables by rows
 * Bug fixes:
     - Ensure `drop_empty_cols` retains non-empty columns when duplicate names are used.
 

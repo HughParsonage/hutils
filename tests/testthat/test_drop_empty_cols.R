@@ -25,3 +25,17 @@ test_that("Drops empty columns of data.tables and data.frames", {
   expect_true(all(c("x6", "x7") %in% names(DF1)))
   
 })
+
+test_that("Error handling", {
+  expect_error(drop_empty_cols("x"),
+               regexp = "must be a data\\.(frame|table)")
+  
+  expect_warning(drop_empty_cols(data.frame(x = c(1, 2)),
+                                 copy = FALSE),
+                 regexp = "copy.*is FALSE, but .* not a data\\.table.")
+})
+
+test_that("No empty cols", {
+  DFi <- data.frame(x = c(1, 2), y = c(3, 4))
+  expect_identical(drop_empty_cols(DFi), DFi)
+})
