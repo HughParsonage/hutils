@@ -5,7 +5,8 @@
 \title{Find string pattern in (text) file}
 \usage{
 find_pattern_in(file_contents, basedir = ".", reader = readLines,
-  include.comments = FALSE, file.ext = "\\\\.(R|r)(nw|md)?$")
+  include.comments = FALSE, use.OS = FALSE,
+  file_pattern = "\\\\.(R|r)(nw|md)?$", file.ext = NULL)
 }
 \arguments{
 \item{file_contents}{A perl-regular expression as a search query.}
@@ -16,8 +17,13 @@ find_pattern_in(file_contents, basedir = ".", reader = readLines,
 
 \item{include.comments}{If \code{FALSE}, the default, comments (i.e. anything after a \code{\#}) are not searched.}
 
-\item{file.ext}{A regular expression passed to \code{list.files(pattern = file.ext)}. 
-By default, \code{"\\.(R|r)(nw|md)?$"}, i.e. all R and Sweave files.}
+\item{use.OS}{Use the operating system to determine file list. Only available on Windows. If it fails, a fall-back option
+(using \code{dir}) is used.}
+
+\item{file_pattern}{A regular expression passed to \code{list.files(pattern = file.ext)}. 
+By default, \code{"\\.(R|r)(nw|md)?$"}, i.e. all R and Sweave files. (Does not have to be a file extension.)}
+
+\item{file.ext}{A file extension passed to the operating system if \code{use.OS} is used.}
 }
 \value{
 A \code{data.table}, one row per filename with a match, including the first line that matched.

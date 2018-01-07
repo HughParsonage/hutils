@@ -19,3 +19,20 @@ test_that("find_pattern_in", {
   setwd(current_wd)
 })
 
+test_that("Other file extensions", {
+  skip_on_cran()
+  current_wd <- getwd()
+  tempdir <- tempdir()
+  for (x in letters) {
+    writeLines(x, file.path(tempdir, paste0(x, ".zy")))
+  }
+  rm(x)
+  out <- find_pattern_in("[yz]",
+                         basedir = tempdir,
+                         use.OS = TRUE,
+                         file.ext = "zy")
+  expect_equal(nrow(out), 2L)
+  expect_equal(unique(out[["line_no"]]), 1)
+  setwd(current_wd)
+})
+

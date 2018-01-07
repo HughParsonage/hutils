@@ -3,37 +3,54 @@
 #' @param basedir The root of the directory tree in which files will be searched recursively.
 #' @param reader A function, akin to \code{base::readLines}, the default, that accepts a filename and returns a character vector.
 #' @param include.comments If \code{FALSE}, the default, comments (i.e. anything after a \code{\#}) are not searched.
-#' @param file.ext A regular expression passed to \code{list.files(pattern = file.ext)}. 
-#' By default, \code{"\\.(R|r)(nw|md)?$"}, i.e. all R and Sweave files.
+#' @param use.OS Use the operating system to determine file list. Only available on Windows. If it fails, a fall-back option
+#' (using \code{dir}) is used.
+#' @param file_pattern A regular expression passed to \code{list.files(pattern = file.ext)}. 
+#' By default, \code{"\\.(R|r)(nw|md)?$"}, i.e. all R and Sweave files. (Does not have to be a file extension.)
+#' @param file.ext A file extension passed to the operating system if \code{use.OS} is used. 
 #' @return A \code{data.table}, one row per filename with a match, including the first line that matched.
 #' @export
-
 
 find_pattern_in <- function(file_contents,
                             basedir = ".",
                             reader = readLines,
                             include.comments = FALSE,
-                            file.ext = "\\.(R|r)(nw|md)?$") {
+                            use.OS = FALSE,
+                            file_pattern = "\\.(R|r)(nw|md)?$",
+                            file.ext = NULL) {
   .reader <- match.fun(reader)
+  if (length(file.ext)){
+    stopifnot(length(file.ext) == 1L)
+  }
+  
+  shell_result <- 1L
   
   if (toupper(.Platform$OS.type) == "WINDOWS" && 
+      use.OS &&
+      missing(file_pattern) &&
+      !is.null(file.ext) &&
       !file.exists("find--pattern.txt")) {
     current_wd <- getwd()
     setwd(basedir)
-    tryCatch(shell("dir /b /s *.R > find--pattern.txt"),
-             error = function(e) {
-               setwd(current_wd)
-               stop(e)
-             })
     
-    R_files <- reader("find--pattern.txt")
+    if (file.create("find--pattern.txt", showWarnings = FALSE)) {
+      shell_result <- 
+        tryCatch(shell(paste0("dir /b /s *", file.ext, " > find--pattern.txt")),
+                 error = function(e) {
+                   setwd(current_wd)
+                   stop(e)
+                 })
+      
+      R_files <- .reader("find--pattern.txt")
+    }
     invisible(file.remove("find--pattern.txt"))
     setwd(current_wd)
-  } else {
-    
+  }
+  
+  if (shell_result != 0) {
     R_files <- 
       list.files(path = basedir,
-                 pattern = "\\.R(nw)?$",
+                 pattern = file_pattern,
                  full.names = TRUE,
                  recursive = TRUE)
   }

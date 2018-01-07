@@ -35,4 +35,3 @@ NOR <- function(x, y) {
 #' @rdname aliases
 #' @export 
 NEITHER <- function(x, y) NOR(x, y)
-  
