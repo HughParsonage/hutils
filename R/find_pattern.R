@@ -20,7 +20,11 @@ find_pattern_in <- function(file_contents,
                             file.ext = NULL) {
   .reader <- match.fun(reader)
   if (length(file.ext)){
-    stopifnot(length(file.ext) == 1L)
+    stopifnot(length(file.ext) == 1L,
+              is.character(file.ext))
+    if (!grepl("^[*]?[.]?[0-9A-Za-z]+$", file.ext)) {
+      stop("`file.ext` must be a string of alphanumeric characters, optionally preceded by\n\t*\n or\n\t*.")
+    }
   }
   
   shell_result <- 1L
@@ -35,7 +39,7 @@ find_pattern_in <- function(file_contents,
     
     if (file.create("find--pattern.txt", showWarnings = FALSE)) {
       shell_result <- 
-        tryCatch(shell(paste0("dir /b /s *", file.ext, " > find--pattern.txt")),
+        tryCatch(shell(paste0("dir /b /s *", sub("*", "", file.ext, fixed = TRUE), " > find--pattern.txt")),
                  error = function(e) {
                    setwd(current_wd)
                    stop(e)
@@ -48,6 +52,22 @@ find_pattern_in <- function(file_contents,
   }
   
   if (shell_result != 0) {
+    if (!is.null(file.ext)) {
+      if (missing(file_pattern)) {
+        file_pattern <- 
+          switch(substr(file.ext, 1, 1),
+                 "*" = {
+                   file_pattern <- glob2rx(file.ext)
+                 },
+                 "." = {
+                   file_pattern <- glob2rx(paste0("*", file.ext))
+                 },
+                 {
+                   file_pattern <- file.ext
+                 })
+      }
+    }
+    
     R_files <- 
       list.files(path = basedir,
                  pattern = file_pattern,

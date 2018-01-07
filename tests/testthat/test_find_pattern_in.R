@@ -33,6 +33,22 @@ test_that("Other file extensions", {
                          file.ext = "zy")
   expect_equal(nrow(out), 2L)
   expect_equal(unique(out[["line_no"]]), 1)
+  
+  
+  out <- find_pattern_in("[yz]",
+                         basedir = tempdir,
+                         use.OS = TRUE,
+                         file.ext = ".zy")
+  expect_equal(nrow(out), 2L)
+  expect_equal(unique(out[["line_no"]]), 1)
+  
+  out <- find_pattern_in("[yz]",
+                         basedir = tempdir,
+                         use.OS = TRUE,
+                         file.ext = "*.zy")
+  expect_equal(nrow(out), 2L)
+  expect_equal(unique(out[["line_no"]]), 1)
+  
   setwd(current_wd)
 })
 
