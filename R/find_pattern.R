@@ -39,7 +39,9 @@ find_pattern_in <- function(file_contents,
     
     if (file.create("find--pattern.txt", showWarnings = FALSE)) {
       shell_result <- 
-        tryCatch(shell(paste0("dir /b /s *", sub("*", "", file.ext, fixed = TRUE), " > find--pattern.txt")),
+        tryCatch(shell(paste0("dir /b /s *",
+                              sub("*", "", file.ext, fixed = TRUE),
+                              " > find--pattern.txt")),
                  error = function(e) {
                    setwd(current_wd)
                    stop(e)
@@ -57,10 +59,10 @@ find_pattern_in <- function(file_contents,
         file_pattern <- 
           switch(substr(file.ext, 1, 1),
                  "*" = {
-                   file_pattern <- glob2rx(file.ext)
+                   file_pattern <- utils::glob2rx(file.ext)
                  },
                  "." = {
-                   file_pattern <- glob2rx(paste0("*", file.ext))
+                   file_pattern <- utils::glob2rx(paste0("*", file.ext))
                  },
                  {
                    file_pattern <- file.ext
@@ -77,10 +79,13 @@ find_pattern_in <- function(file_contents,
   
   all_lines <- lapply(R_files, .reader)
   
-  has_pattern <- vapply(all_lines, function(x) any(grepl(file_contents, x, perl = TRUE)), FALSE)
+  has_pattern <-
+    vapply(all_lines, function(x) any(grepl(file_contents, x, perl = TRUE)), FALSE)
   if (any(has_pattern)) {
-    first_line_no <- vapply(all_lines[has_pattern], function(x) grep(file_contents, x, perl = TRUE)[1], integer(1))
-    lines <- vapply(all_lines[has_pattern], function(x) grep(file_contents, x, value = TRUE)[1], character(1))
+    first_line_no <-
+      vapply(all_lines[has_pattern], function(x) grep(file_contents, x, perl = TRUE)[1], integer(1))
+    lines <-
+      vapply(all_lines[has_pattern], function(x) grep(file_contents, x, value = TRUE)[1], character(1))
     data.table(file = R_files[has_pattern],
                line_no = first_line_no,
                lines = lines)
