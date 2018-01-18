@@ -35,3 +35,16 @@ test_that("Logicals", {
   
   
 })
+
+
+test_that("Implies", {
+  expect_identical(c(NA, NA, NA,
+                     FALSE, FALSE, FALSE,
+                     TRUE, TRUE, TRUE) %implies%
+                     c(NA, FALSE, TRUE,
+                       NA, FALSE, TRUE,
+                       NA, FALSE, TRUE),
+                   c(NA, NA, TRUE,
+                     TRUE, TRUE, TRUE, 
+                     NA, FALSE, TRUE))
+})

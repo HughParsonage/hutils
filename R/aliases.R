@@ -2,6 +2,9 @@
 #' @description These simple aliases can be useful to avoid operator precedence ambiguity,
 #' or to make use of indents from commas within your text editor. The all-caps versions accept
 #' single-length (capable of 'short-circuits') logical conditions only.
+#' 
+#' Neithers and nors are identical except have slightly different short-circuits.
+#'  \code{NOR} uses negation once so may be quicker if the first argument is very, very prompt.
 #' @name aliases
 #' @param x,y Logical conditions.
 NULL
@@ -19,19 +22,23 @@ OR  <- `||`
 #' @rdname aliases
 #' @export
 nor <- function(x, y) {
-  `&`(!x, !y)
+  not(x | y)
 }
 
 #' @rdname aliases
 #' @export
-neither <- function(x, y) nor(x, y)
+neither <- function(x, y) !x & !y
 
 #' @rdname aliases
 #' @export 
 NOR <- function(x, y) {
-  !x && !y
+  not(x || y)
 }
 
 #' @rdname aliases
 #' @export 
-NEITHER <- function(x, y) NOR(x, y)
+NEITHER <- function(x, y) !x && !y
+
+#' @rdname aliases
+#' @export
+pow <- `^`

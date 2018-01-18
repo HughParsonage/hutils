@@ -61,12 +61,18 @@ coalesce <- function(x, ...) {
            "The only permissible vector lengths in ... are 1 or the length of `x` (", lx, ").")
     }
     
+    typeof_x <- typeof(x)
     lv <- length(values)
     
     i <- 1L
     while (i == 1L ||  # already checked the conditions
            i <= lv && anyNA(x)) {
       vi <- values[[i]]
+      if (typeof(vi) != typeof_x) {
+        stop("Argument ", i, " had type '", typeof(vi), "' but ",
+             "typeof(x) was ", typeof_x, ". All types ",
+             "in `...` must be the same type.")
+      }
       nax <- is.na(x)
       if (lengthsn1[i + 1L]) {
         x[nax] <- vi[nax]

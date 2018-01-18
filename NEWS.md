@@ -3,6 +3,7 @@
 * New function `implies`, logical implies.
 * New function `drop_constant_cols`
 * New function `print_transpose_data_table` for glimpsing data tables by rows
+* New alias `pow` for exponentiation.
 * Bug fixes:
     - Ensure `drop_empty_cols` retains non-empty columns when duplicate names are used.
 

@@ -8,6 +8,7 @@
 \alias{neither}
 \alias{NOR}
 \alias{NEITHER}
+\alias{pow}
 \title{Aliases}
 \usage{
 AND(x, y)
@@ -21,6 +22,8 @@ neither(x, y)
 NOR(x, y)
 
 NEITHER(x, y)
+
+pow()
 }
 \arguments{
 \item{x, y}{Logical conditions.}
@@ -29,4 +32,7 @@ NEITHER(x, y)
 These simple aliases can be useful to avoid operator precedence ambiguity,
 or to make use of indents from commas within your text editor. The all-caps versions accept
 single-length (capable of 'short-circuits') logical conditions only.
+
+Neithers and nors are identical except have slightly different short-circuits.
+ \code{NOR} uses negation once so may be quicker if the first argument is very, very prompt.
 }

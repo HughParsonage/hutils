@@ -3,7 +3,7 @@
 \name{implies}
 \alias{implies}
 \alias{\%implies\%}
-\title{Logical implies}
+\title{#' Logical implies}
 \usage{
 implies(x, y)
 
@@ -19,9 +19,23 @@ x \%implies\% y
 Returns the result of \eqn{x\Longrightarrow y}.
 }
 \examples{
+ 
+library(data.table)
+CJ(x = c(TRUE,
+         FALSE),
+   y = c(TRUE,
+         FALSE))[, ` x => y` := x \%implies\% y][]
 
-c(TRUE, TRUE, FALSE, FALSE) \%implies\%
-c(TRUE, FALSE, TRUE, FALSE)
+#>        x     y  x => y
+#> 1: FALSE FALSE    TRUE
+#> 2: FALSE  TRUE    TRUE
+#> 3:  TRUE FALSE   FALSE
+#> 4:  TRUE  TRUE    TRUE
 
-
+# NA results:
+#> 5:    NA    NA      NA
+#> 6:    NA FALSE      NA
+#> 7:    NA  TRUE    TRUE
+#> 8: FALSE    NA    TRUE
+#> 9:  TRUE    NA      NA
 }

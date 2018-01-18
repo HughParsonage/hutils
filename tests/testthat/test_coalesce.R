@@ -54,3 +54,7 @@ test_that("Return x if nothing NA", {
   expect_equal(coalesce(x), x)
   expect_equal(coalesce(x, "Doesn't matter"), x)
 })
+
+test_that("Type mismatch", {
+  expect_error(coalesce(c(NA, 1:5), as.character(1:6)))
+})
