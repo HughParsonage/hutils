@@ -4,6 +4,7 @@ test_that("find_pattern_in", {
   skip_on_cran()
   current_wd <- getwd()
   tempdir <- tempdir()
+  skip_if(length(dir(tempdir, pattern = "\\.R$")))
   for (x in letters) {
     writeLines(x, file.path(tempdir, paste0(x, ".R")))
   }
@@ -23,6 +24,7 @@ test_that("Other file extensions", {
   skip_on_cran()
   current_wd <- getwd()
   tempdir <- tempdir()
+  skip_if(length(dir(tempdir, pattern = "\\.(zy|R)$")))
   for (x in letters) {
     writeLines(x, file.path(tempdir, paste0(x, ".zy")))
   }
@@ -46,6 +48,13 @@ test_that("Other file extensions", {
                          basedir = tempdir,
                          use.OS = TRUE,
                          file.ext = "*.zy")
+  expect_equal(nrow(out), 2L)
+  expect_equal(unique(out[["line_no"]]), 1)
+  
+  out <- find_pattern_in("[yz]",
+                         basedir = tempdir,
+                         use.OS = FALSE,
+                         file.ext = ".zy")
   expect_equal(nrow(out), 2L)
   expect_equal(unique(out[["line_no"]]), 1)
   
