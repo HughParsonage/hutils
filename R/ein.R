@@ -3,8 +3,8 @@
 #' @description A common blunder in R programming is to mistype one of a set of filters without realizing. 
 #' This function will error if any member of the values to be matched against is not present.
 #' 
-#' @param x Values to be matched
-#' @param y Values to be matched against.
+#' @param lhs Values to be matched
+#' @param rhs Values to be matched against.
 #' 
 #' @examples 
 #' # Incorrectly assumed to include two Species
@@ -13,23 +13,34 @@
 #' # Error:
 #' iris[iris$Species %ein% c("setosa", "versicolour"), ]
 #' }
-#' @return Same as \code{\%in\%} and \code{\%notin\%}, unless an element of \code{y} is not present in \code{x}.
+#' @return Same as \code{\%in\%} and \code{\%notin\%}, unless an element of \code{rhs} is not present in \code{lhs}, in which case, an error.
 #' @export
 
-`%ein%` <- function(x, y) {
-  if (!all(y %fin% x)) {
-    badys <- y[y %notin% x]
-    stop("Not all y are in x, so stopping, as requested. First absent y: ", badys[1])
+`%ein%` <- function(lhs, rhs) {
+  if (anyNA(fmatch(rhs, lhs))) {
+    badrhss <- rhs[rhs %notin% lhs]
+    lhs_deparsed <- deparse(substitute(lhs), control = NULL)
+    
+    report_error(faulty_input = rhs,
+                 error_condition = paste0("contained ", badrhss[1], ", ",
+                                          "but this value was not found in `lhs = ", lhs_deparsed, "`."),
+                 requirement = "All values of `rhs` must be in `lhs`.",
+                 advice = "Ensure you have specified `rhs` correctly.")
   }
-  x %fin% y
+  lhs %fin% rhs
 }
 
 #' @rdname ein
 #' @export 
-`%enotin%` <- function(x, y) {
-  if (!all(y %fin% x)) {
-    badys <- y[y %notin% x]
-    stop("Not all y are in x, so stopping, as requested. First absent y: ", badys[1])
+`%enotin%` <- function(lhs, rhs) {
+  if (!all(rhs %fin% lhs)) {
+    badrhss <- rhs[rhs %notin% lhs]
+    lhs_deparsed <- deparse(substitute(lhs), control = NULL)
+    report_error(faulty_input = rhs,
+                 error_condition = paste0("contained ", badrhss[1], ", ",
+                                          "but this value was not found in `lhs = ", lhs_deparsed, "`."),
+                 requirement = "All values of `rhs` must be in `lhs`.",
+                 advice = "Ensure you have specified `rhs` correctly.")
   }
-  x %notin% y
+  lhs %notin% rhs
 }

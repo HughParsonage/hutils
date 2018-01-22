@@ -176,6 +176,15 @@ flights %>%
   drop_colr("arr(?!_delay)", perl = TRUE)
 ```
 
+## `drop_constant_cols`
+When a table is filtered, the filtrate is often redundant. 
+
+```{r drop_constant_cols}
+flights %>%
+  .[origin == "JFK"] %>%
+  drop_constant_cols
+```
+
 ## `drop_empty_cols`
 This function drops columns in which all the values are `NA`.
  
@@ -313,7 +322,7 @@ This is not entirely unexpected as `NULL` could legitimately be interpreted as \
 
 ### `provide.dir`
 
-This is the same as `dir.create` but checks whether the target exists or not and does nothing if it does. Motivated by `\providecommand` in \LaTeX{}, which creates a macro only if it does not exist already.
+This is the same as `dir.create` but checks whether the target exists or not and does nothing if it does. Motivated by `\providecommand` in \(\rm\LaTeX{}\), which creates a macro only if it does not exist already.
 
 
 ### `select_which` 
@@ -322,11 +331,10 @@ This provides a similar role to `dplyr::select_if` but was originally part of `p
 Additional columns (which may or not may satisfy `Which`) may be incldued bny using `.and.dots`.
 (To remove columns, you can use `drop_col`).
 
-```r
-library(data.table)
+```{r}
 DT <- data.table(x = 1:5,
                  y = letters[1:5],
-                 AB = c(NA, TRUE, FALSE))
+                 AB = c(NA, TRUE, FALSE, TRUE, FALSE))
 select_which(DT, anyNA, .and.dots = "y")
 ```
 

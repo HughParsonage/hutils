@@ -11,6 +11,10 @@ test_that("Drop column", {
   
   expect_error(drop_col(as.data.frame(DT), "x"))
   expect_error(drop_col(DT, c("x", "y")))
+  
+  DT_multiple <- data.table(x = 1:2, y = 1:2, z = 1:2)
+  setnames(DT_multiple, 2, "x")
+  expect_error(drop_col(DT_multiple, "x"))
 })
 
 test_that("Drop columns", {
@@ -23,7 +27,11 @@ test_that("Drop columns", {
   DT_out2 <- drop_cols(DT, c("x", "y"), checkDT = FALSE)
   expect_equal(names(DT_out2), "z")
   
-  expect_error(drop_col(as.data.frame(DT), "x"))
+  DT_multiple <- data.table(x = 1:2, y = 1:2, z = 1:2)
+  setnames(DT_multiple, 2, "x")
+  expect_error(drop_col(DT_multiple, "x"),
+               regexp = "DT had 2 columns named 'x', but drop_col() only accepts singular columns. Either use drop_cols() to drop multiple columns or ensure `DT` has distinct column names.", 
+               fixed = TRUE)
 })
 
 test_that("Drop colr", {

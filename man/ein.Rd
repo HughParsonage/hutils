@@ -5,17 +5,17 @@
 \alias{\%enotin\%}
 \title{Exists and (not) in}
 \usage{
-x \%ein\% y
+lhs \%ein\% rhs
 
-x \%enotin\% y
+lhs \%enotin\% rhs
 }
 \arguments{
-\item{x}{Values to be matched}
+\item{lhs}{Values to be matched}
 
-\item{y}{Values to be matched against.}
+\item{rhs}{Values to be matched against.}
 }
 \value{
-Same as \code{\%in\%} and \code{\%notin\%}, unless an element of \code{y} is not present in \code{x}.
+Same as \code{\%in\%} and \code{\%notin\%}, unless an element of \code{rhs} is not present in \code{lhs}, in which case, an error.
 }
 \description{
 A common blunder in R programming is to mistype one of a set of filters without realizing. 

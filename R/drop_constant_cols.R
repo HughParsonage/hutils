@@ -40,7 +40,7 @@ drop_constant_cols <- function(DT, copy = FALSE) {
     }
   } else {
     if (!is.data.frame(DT)) {
-      stop("`DT` must be a data.frame.")
+      stop("class(`DT`) was ", class(DT), ", but `DT` must be a data.frame.")
     }
     
     if (NEITHER(missing(copy), copy)) {
@@ -49,7 +49,7 @@ drop_constant_cols <- function(DT, copy = FALSE) {
               "Either ensure `DT` is a data.table or assert `copy = TRUE`.")
     }
     
-    uniqueNs <- vapply(DT, uniqueN, integer(1))
+    uniqueNs <- vapply(DT, uniqueN, integer(1L))
     non_const_cols <- names(uniqueNs)[uniqueNs > 1L]
     out <- DT[, non_const_cols, drop = FALSE]
     

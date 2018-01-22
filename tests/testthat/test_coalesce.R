@@ -44,7 +44,7 @@ test_that("finds non-missing values in multiple positions", {
 test_that("error if invalid length", {
   expect_error(
     coalesce(c(NA_integer_, 2), 1:3),
-    "only permissible vector lengths in ...",
+    "only permissible lengths in ...",
     fixed = TRUE
   )
 })
@@ -57,4 +57,10 @@ test_that("Return x if nothing NA", {
 
 test_that("Type mismatch", {
   expect_error(coalesce(c(NA, 1:5), as.character(1:6)))
+})
+
+test_that("Factor mismatch", {
+  expect_error(coalesce(c(NA, 1:5), factor(1:6)), 
+               regexp = "Argument 2 was a factor, but `x` was not.", 
+               fixed = TRUE)
 })

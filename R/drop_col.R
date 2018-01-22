@@ -20,14 +20,23 @@ drop_col <- function(DT, var, checkDT = TRUE) {
     stopifnot(is.data.table(DT))
   }
   
-  if (length(var) != 1) {
-    stop("var must be a single column. Use drop_cols().")
+  if (length(var) != 1L) {
+    stop("`var` had length-", length(var), ", but must be length-1. ",
+         "Use drop_cols() to drop multiple columns or supply a single string to `var`.")
   }
   
-  if (var %in% names(DT)) {
+  # Is `var` duplicated? (drop_col is meant to guard against this)
+  n_names_var <- sum(names(DT) == var)
+  if (n_names_var > 1L) {
+    stop("DT had ", n_names_var, " columns named '", var, "', but drop_col() only accepts singular columns. ", 
+         "Either use drop_cols() to drop multiple columns or ensure `DT` has distinct column names.")
+  }
+  
+  if (n_names_var) {
     DT[, (var) := NULL]
   }
-  DT
+  
+  DT[]
 }
 
 
@@ -46,6 +55,6 @@ drop_cols <- function(DT, vars, checkDT = TRUE) {
     DT[, (common_vars) := NULL]
   }
   
-  DT
+  DT[]
 }
 
