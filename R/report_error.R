@@ -4,7 +4,7 @@
 #' 
 #' @param faulty_input Unquoted function argument that is the cause of the error condition.
 #' @param error_condition A sentence explaining the condition that invoked the error.
-#' @param requirements A sentence that explains what is required.
+#' @param requirement A sentence that explains what is required.
 #' @param context (Optional) A sentence that contextualizes the error
 #' @param advice Advice for the user to avoid the error.
 #' @param hint If the input can be guessed, 

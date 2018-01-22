@@ -12,6 +12,8 @@ report_error(faulty_input, error_condition, requirement, context = NULL,
 
 \item{error_condition}{A sentence explaining the condition that invoked the error.}
 
+\item{requirement}{A sentence that explains what is required.}
+
 \item{context}{(Optional) A sentence that contextualizes the error}
 
 \item{advice}{Advice for the user to avoid the error.}
@@ -19,8 +21,6 @@ report_error(faulty_input, error_condition, requirement, context = NULL,
 \item{hint}{If the input can be guessed,}
 
 \item{halt}{(logical, default: \code{TRUE}) Should the function signal an error and halt?}
-
-\item{requirements}{A sentence that explains what is required.}
 }
 \description{
 Provides a consistent style for errors and warnings.
