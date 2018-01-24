@@ -5,3 +5,4 @@
 ^cran-comments\.md$
 ^vignettes/figure$
 ^appveyor\.yml$
+^revdep$
