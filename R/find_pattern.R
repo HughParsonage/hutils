@@ -29,31 +29,17 @@ find_pattern_in <- function(file_contents,
   
   shell_result <- 1L
   
-  if (toupper(.Platform$OS.type) == "WINDOWS" && 
-      use.OS &&
-      missing(file_pattern) &&
-      !is.null(file.ext) &&
-      !file.exists("find--pattern.txt")) {
-    current_wd <- getwd()
-    setwd(basedir)
-    
-    if (file.create("find--pattern.txt", showWarnings = FALSE)) {
-      shell_result <- 
-        tryCatch(shell(paste0("dir /b /s *",
-                              sub("*", "", file.ext, fixed = TRUE),
-                              " > find--pattern.txt")),
-                 error = function(e) {
-                   setwd(current_wd)
-                   stop(e)
-                 })
-      
-      R_files <- .reader("find--pattern.txt")
-    }
-    invisible(file.remove("find--pattern.txt"))
-    setwd(current_wd)
-  }
+  Windows_Result <- 
+    if (toupper(.Platform$OS.type) == "WINDOWS" && 
+        use.OS &&
+        missing(file_pattern) &&
+        !is.null(file.ext) &&
+        !file.exists("find--pattern.txt")) find_pattern_if_windows(file.ext, basedir, .reader)
   
-  if (shell_result != 0) {
+  shell_result <- Windows_Result$shell_result
+  R_files <- Windows_Result$R_files
+  
+  if (is.null(Windows_Result) || shell_result != 0) {
     if (!is.null(file.ext)) {
       if (missing(file_pattern)) {
         file_pattern <- 
