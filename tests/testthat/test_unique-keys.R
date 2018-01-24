@@ -25,6 +25,7 @@ test_that("Set unique key", {
   
   expect_error(set_unique_key(DT, y))
   
+  expect_error()
   
   
 })

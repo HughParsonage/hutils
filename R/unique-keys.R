@@ -23,10 +23,6 @@ set_unique_key <- function(DT, ...){
   if (has_unique_key(DT)){
     return(DT)
   } else {
-    if (!haskey(DT)) {
-      stop("`DT` does not have a key.")
-    } else {
-      stop("`DT` has a key but it is not unique. Note: DT's key has changed.")
-    }
+    stop("`DT` has a key but it is not unique. Note: DT's key has changed.")
   }
 }
