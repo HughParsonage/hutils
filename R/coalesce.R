@@ -56,16 +56,10 @@ coalesce <- function(x, ...) {
     lengths <- c(lx, vapply(values, length, FUN.VALUE = 0L))
     lengthsn1 <- lengths != 1L
     if (any(lengthsn1 & lengths != lx)) {
-      which_wrong_length <- which(lengthsn1 & lengths != lx)
-      if (lengths[which_wrong_length] == 1L) {
-        stop("Argument", which_wrong_length[1], "was length-1, ",
-             "but length(x) = ", lx, ". ",
-             "The only permissible lengths in ... are 1 or the length of `x` (", lx, ").")
-      } else {
-        stop("Argument ", which_wrong_length[1], " had length ", lengths[which_wrong_length[1]], ", ",
-             "but length(x) = ", lx, ". ",
-             "The only permissible lengths in ... are 1 or the length of `x` (", lx, ").")
-      }
+      wrong_len_i <- which(lengthsn1 & lengths != lx)
+      stop("Argument ", wrong_len_i[1], " had length ", lengths[wrong_len_i[1]], ", ",
+           "but length(x) = ", lx, ". ",
+           "The only permissible lengths in ... are 1 or the length of `x` (", lx, ").")
     }
     
     typeof_x <- typeof(x)
