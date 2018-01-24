@@ -49,5 +49,4 @@ format_hint <- function(x) {
           sub("[[:punct:]][)]?$", "", perl = TRUE,
               x)))
 }
-stopifnot(identical(format_hint(c("(A parenthesis.)", "Non-parenthesis", "(A question?)", "B question?")),
-                    c("(A parenthesis?)", "(Non-parenthesis?)", "(A question?)", "(B question?)")))
+

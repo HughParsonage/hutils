@@ -217,7 +217,9 @@ test_that("Mutate other weighted with mass", {
 })
 
 test_that("Corner cases", {
+  skip_if_not_installed("nycflights13")
   library(nycflights13)
+  
   set.seed(1)
   flights2 <- as.data.table(nycflights13::flights)
   
@@ -236,6 +238,23 @@ test_that("Corner cases", {
   expect_error(mutate_other(flights2, "tailnum", var.weight = "minute"),
                regexp = "Rename this column (temporarily at least) to use", 
                fixed = TRUE)
+})
+
+test_that("Mass+Null warning", {
+  skip_if_not_installed("nycflights13")
+  library(nycflights13)
+  set.seed(1)
+  flights2 <- as.data.table(nycflights13::flights)
+  
+  expect_warning({
+  new_flights <- 
+    mutate_other(flights2, var = "dest", var.weight = "distance", mass = 10, n = 11)
+  },
+  regexp = "`mass` was provided, yet `n` was not set to NULL.",
+  fixed = TRUE)
+  
+  expect_equal(uniqueN(new_flights[["dest"]]), 12L)
+  
 })
 
 
