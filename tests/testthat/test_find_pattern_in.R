@@ -1,5 +1,11 @@
 context("find_pattern_in")
 
+test_that("Error handling", {
+  expect_error(find_pattern_in(warning("unable"), 
+                               file.ext = "abc def"),
+               regexp = "string of alphanumeric characters")
+})
+
 test_that("find_pattern_in", {
   skip_on_cran()
   current_wd <- getwd()
