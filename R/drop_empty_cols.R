@@ -25,7 +25,7 @@ drop_empty_cols <- function(DT, copy = FALSE) {
     }
   } else {
     if (!is.data.frame(DT)) {
-      stop("`DT` must be a data.frame.")
+      stop("`DT` was ", class(DT), " but must be a data.frame.")
     }
     
     if (NEITHER(missing(copy), copy)) {

@@ -31,5 +31,6 @@ test_that("Data frame", {
 
 test_that("Error when negative weight", {
   expect_error(weight2rows(data.table(x = 1:4, sdgoih = c(-1, 1, 1, 1)), "sdgoih"),
-               regexp = "Negative values")
+               regexp = "`weight.var` contains negative values.",
+               fixed = TRUE)
 })

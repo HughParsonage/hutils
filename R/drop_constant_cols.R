@@ -40,11 +40,11 @@ drop_constant_cols <- function(DT, copy = FALSE) {
     }
   } else {
     if (!is.data.frame(DT)) {
-      stop("class(`DT`) was ", class(DT), ", but `DT` must be a data.frame.")
+      stop("`DT` was a ", class(DT), ", but `DT` must be a data.frame.")
     }
     
     if (NEITHER(missing(copy), copy)) {
-      warning("`copy` is FALSE, but `DT` is not a data.table, ", 
+      warning("`copy` is FALSE, yet `DT` is not a data.table, ", 
               "so `DT` will not be modified by reference.\n\n", 
               "Either ensure `DT` is a data.table or assert `copy = TRUE`.")
     }

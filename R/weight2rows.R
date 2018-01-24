@@ -12,9 +12,16 @@
 
 weight2rows <- function(DT, weight.var) {
   weight.var.value <- DT[[weight.var]]
-  if (any(weight.var.value < 0)) {
-    stop("Negative values in weight.var. ",  
-         "These are unlikely weights and not readily convertible to extra rows.")
+  if (anyNA(weight.var.value)) {
+    warning("`weight.var` contained NAs. These have been converted to zeroes.")
+    weight.var.value <-
+      coalesce(weight.var.value,
+               if (is.integer(weight.var.value)) 0L else 0.0)
+  }
+  if (min(weight.var.value) < 0) {
+    stop("`weight.var` contains negative values. ",
+         "These are unlikely weights and not readily convertible to extra rows. ",
+         "Modify `weight.var` so that all the values are nonnegative.")
   }
   
   if (!is.data.table(DT)) {

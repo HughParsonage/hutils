@@ -6,6 +6,7 @@
 * New alias `pow` for exponentiation.
 * Bug fixes:
     - Ensure `drop_empty_cols` retains non-empty columns when duplicate names are used.
+    - `coalesce` errors if there is `...` wrongly contains factors.
 
 # hutils 0.9.0
 * Changed `if_else` to reflect dplyr's formals so it can be a drop-in replacement.

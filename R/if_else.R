@@ -27,7 +27,23 @@ if_else <- function(condition, true, false, missing = NULL) {
   max.length <- length(condition)
   lengths <- c(max.length, length(yes), length(no), if (na_not_used) 1L else length(na))
   if (any(lengths != 1L & lengths != max.length)) {
-    stop("Only permissible vector lengths are 1 or the maximum of the inputs.")
+    faulty_input <- 
+      switch(which(lengths != 1L & lengths != max.length)[1L],
+             # max.length != max.length
+             stop("Internal error. hutils::if_else:40"),
+             #
+             "true",
+             "false",
+             "missing")
+    
+    error_condition <-
+      sprintf("`%s` had length %d but `condition` had length %d. ",
+              faulty_input,
+              lengths[which(lengths != 1L & lengths != max.length)[1L]],
+              max.length)
+    
+    stop(error_condition, 
+         "The only permitted lengths in if_else() are 1 or the maximum length.")
   }
   
   if (!is.logical(condition)) {

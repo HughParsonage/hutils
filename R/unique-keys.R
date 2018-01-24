@@ -14,7 +14,7 @@ NULL
 
 #' @rdname unique-keys
 has_unique_key <- function(DT){
-  haskey(DT) && (uniqueN(DT, by = key(DT)) == length(.subset2(DT, 1)))
+  haskey(DT) && uniqueN(DT, by = key(DT)) == length(.subset2(DT, 1))
 }
 
 #' @rdname unique-keys
@@ -23,6 +23,10 @@ set_unique_key <- function(DT, ...){
   if (has_unique_key(DT)){
     return(DT)
   } else {
-    stop("Key is not unique. Note: DT's key has changed.")
+    if (!haskey(DT)) {
+      stop("`DT` does not have a key.")
+    } else {
+      stop("`DT` has a key but it is not unique. Note: DT's key has changed.")
+    }
   }
 }

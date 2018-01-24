@@ -40,12 +40,12 @@ test_that("first argument must be logical", {
 test_that("true and false must be same length as condition (or length 1)", {
   expect_error(
     if_else(1:3 < 2, 1:2, 1:3),
-    "Only permissible vector lengths are 1 or the maximum of the inputs.",
+    "`true` had length 2 but `condition` had length 3.",
     fixed = TRUE
   )
   expect_error(
     if_else(1:3 < 2, 1:3, 1:2),
-    "Only permissible vector lengths are 1 or the maximum of the inputs.",
+    "`false` had length 2 but `condition` had length 3.",
     fixed = TRUE
   )
 })

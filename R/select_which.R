@@ -14,7 +14,7 @@
 
 select_which <- function(DT, Which, .and.dots = NULL, checkDT = TRUE) {
   if (checkDT && !is.data.table(DT)) {
-    stop("DT must be a data.table.")
+    stop("`DT` was ", class(DT), "but must be a data.table.")
   }
   
   Which <- match.fun(Which)

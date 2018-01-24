@@ -41,7 +41,7 @@ mutate_other <- function(.data,
     had.key <- haskey(.data)
     
     if (!isTRUE(copy)){
-      stop("copy must be TRUE")
+      stop("`copy` was ", copy, ", but must be TRUE.")
     }
     
     out <- copy(.data)
@@ -92,12 +92,14 @@ mutate_other <- function(.data,
       
       # Poor man's SE
       if ("wEiGhT" %in% names(out)) {
-        stop("`wEiGhT` is a column of .data. This conflicts with `mutate_other`. ",
+        stop("`data` contained column `wEiGhT`, but this is not allowed ",
+             "as it conflicts with `mutate_other` internals. ",
              "Rename this column (temporarily at least) to use `mutate_other`.")
       }
       
       if (".rank" %in% names(out)) {
-        stop("`.rank` is a column of .data. This conflicts with `mutate_other`. ",
+        stop("`data` contained column `.rank`, but this is not allowed ",
+             "as it conflicts with `mutate_other` internals. ",
              "Rename this column (temporarily at least) to use `mutate_other`.")
       }
       
@@ -111,9 +113,10 @@ mutate_other <- function(.data,
       
       # Two choices, either by 'mass' or by .rank
       if (!missing(mass) && !is.null(n)) {
-        warning("`mass` is provided but n is not set to NULL. ", 
+        warning("`mass` was provided, yet `n` was not set to NULL. ", 
+                "As a result, `mass` may be misinterpreted. ",
                 "If you intended to use `mass` to create the other category, ", 
-                "set n = NULL. Otherwise, do not provide `mass`.")
+                "set `n = NULL`. Otherwise, do not provide `mass`.")
       }
       
       if (is.null(n)) {
@@ -168,7 +171,7 @@ mutate_other <- function(.data,
     out
     
   } else {
-    warning("Attempted to use by = on a non-character vector. Aborting.")
+    warning("`by` was not a character vector, so `mutate_other()` will have no effect.")
     return(.data)
   }
 }
