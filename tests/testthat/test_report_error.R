@@ -6,4 +6,12 @@ test_that("Report error", {
                                  "(A question?)",
                                  "B question?")),
             c("(A parenthesis?)", "(Non-parenthesis?)", "(A question?)", "(B question?)"))
+  
+  expect_error(report_error(x,
+                            "was not the case.",
+                            "It must be.", 
+                            advice = "It must be!",
+                            hint = "Do you believe it?"),
+               regexp = "(Do you believe it?)",
+               fixed = TRUE)
 })
