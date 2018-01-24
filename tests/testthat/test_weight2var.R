@@ -34,3 +34,9 @@ test_that("Error when negative weight", {
                regexp = "`weight.var` contains negative values.",
                fixed = TRUE)
 })
+
+test_that("Warning when NA weights", {
+  expect_warning(weight2rows(data.table(x = 1:4, w = c(NA, 100 * runif(3)))),
+                 regexp = "`weight.var` contained NAs. These have been converted to zeroes.",
+                 fixed = TRUE)
+})
