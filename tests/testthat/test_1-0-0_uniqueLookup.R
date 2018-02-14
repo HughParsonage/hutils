@@ -9,7 +9,7 @@ test_that("Example works", {
   first_time <- system.time(dt[, Date1 := as.Date(DateChar)])
   second_time <- system.time(uniqueLookup(dt, "Date2", "DateChar", as.Date))
   
-  expect_ge(first_time[3], second_time[3])
+  expect_gt(first_time[3], second_time[3])
   expect_identical(.subset2(dt, "Date2"),
                    .subset2(dt, "Date1"))
 })
