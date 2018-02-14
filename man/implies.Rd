@@ -13,7 +13,13 @@ x \%implies\% y
 \item{x, y}{Logical vectors of the same length.}
 }
 \value{
-\code{TRUE} along \code{y} unless \code{x} is \code{TRUE} and \code{y} is \code{FALSE}.
+Logical implies: \code{TRUE} unless \code{x} is \code{TRUE} and \code{y} is \code{FALSE}.
+
+\code{NA} in either \code{x} or \code{y} results in \code{NA} if and only if the result is unknown.
+In particular \code{NA \%implies\% TRUE} is \code{TRUE} and \code{FALSE \%implies\% NA} is \code{TRUE}.
+
+If \code{x} or \code{y} are length-one, the function proceeds as if the length-one vector were recycled
+to the length of the other.
 }
 \description{
 Returns the result of \eqn{x\Longrightarrow y}.
