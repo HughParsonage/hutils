@@ -45,7 +45,10 @@ test_that("Implies", {
   expect_identical(implies(c(NA, FALSE, TRUE), FALSE), c(NA, TRUE, FALSE))
   expect_identical(implies(c(NA, FALSE, TRUE), NA), c(NA, TRUE, NA))
   expect_identical(NA %implies% c(NA, TRUE, FALSE), c(NA, TRUE, NA))
-  
+  expect_identical(implies(TRUE, c(FALSE, NA, TRUE, 
+                                   TRUE, NA, FALSE)),
+                   c(FALSE, NA, TRUE, 
+                     TRUE, NA, FALSE))
   
   expect_identical(c(NA, NA, NA,
                      FALSE, FALSE, FALSE,
