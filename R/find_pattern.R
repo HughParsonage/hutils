@@ -36,17 +36,15 @@ find_pattern_in <- function(file_contents,
     }
   }
   
-  shell_result <- 1L
   
-  Windows_Result <-
-    if (toupper(.Platform$OS.type) == "WINDOWS" &&
-        use.OS &&
-        missing(file_pattern) &&
-        !is.null(file.ext) &&
-        !file.exists("find--pattern.txt")) {
-      .Deprecated("find_pattern_in_windows",
-                  package = "hutilsInteractive (not on CRAN)")
-    }
+
+  if (use.OS &&
+      missing(file_pattern) &&
+      !is.null(file.ext) &&
+      !file.exists("find--pattern.txt")) {
+    if (identical(.Platform$OS.type,
+                  "windows")) .Deprecated("find_pattern_in_windows", package = "hutilsInteractive")
+  }
   
   if (!is.null(file.ext)) {
     if (missing(file_pattern)) {
