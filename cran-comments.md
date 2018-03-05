@@ -1,6 +1,6 @@
 ## Test environments
 * local CRAN install, R 3.4.3
-* ubuntu 12.04 (on travis-ci), release and dev <https://travis-ci.org/HughParsonage/hutils>
+* ubuntu 14.04 (on travis-ci), release and dev <https://travis-ci.org/HughParsonage/hutils>
 * winbuilder (R-devel and R-release)
 
 ## R CMD check results
