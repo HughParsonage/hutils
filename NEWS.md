@@ -1,3 +1,7 @@
+# hutils 1.0.0
+* Stable release:
+  - All tests are now marked as major release.
+
 
 # hutils 0.10.0
 * New function `implies`, logical implies.
