@@ -85,6 +85,24 @@ test_that("Other file extensions", {
   setwd(current_wd)
 })
 
+test_that("Add coverage", {
+  skip_on_cran()
+  skip_if_not(identical(.Platform$OS, "windows"))
+  current_wd <- getwd()
+  tempdir <- tempdir()
+  skip_if(length(dir(tempdir, pattern = "\\.(wfy|R)$")))
+  for (x in letters) {
+    writeLines(x, file.path(tempdir, paste0(x, ".wfy")))
+  }
+  rm(x)
+  out <- find_pattern_in("[yz]",
+                         basedir = tempdir,
+                         use.OS = TRUE,
+                         file.ext = "wfy")
+  expect_equal(nrow(out), 2L)
+  
+})
+
 test_that("On Windows", {
   skip_on_cran()
   skip_if_not(identical(.Platform$OS, "windows"))
