@@ -14,7 +14,7 @@ NULL
 
 #' @rdname unique-keys
 has_unique_key <- function(DT){
-  haskey(DT) && uniqueN(DT, by = key(DT)) == length(.subset2(DT, 1))
+  haskey(DT) && uniqueN(DT, by = key(DT)) == length(.subset2(DT, 1L))
 }
 
 #' @rdname unique-keys

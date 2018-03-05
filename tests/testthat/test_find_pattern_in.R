@@ -26,44 +26,82 @@ test_that("find_pattern_in", {
   setwd(current_wd)
 })
 
-test_that("Other file extensions", {
+test_that("File extension", {
   skip_on_cran()
   current_wd <- getwd()
   tempdir <- tempdir()
-  skip_if(length(dir(tempdir, pattern = "\\.(zy|R)$")))
-  for (x in letters) {
-    writeLines(x, file.path(tempdir, paste0(x, ".zy")))
+  skip_if(length(dir(tempdir, pattern = "\\.(zzy|R)$")))
+  for (x in LETTERS) {
+    writeLines(x, file.path(tempdir, paste0(x, ".zzy")))
   }
   rm(x)
-  out <- find_pattern_in("[yz]",
-                         basedir = tempdir,
-                         use.OS = TRUE,
-                         file.ext = "zy")
+  out1 <- find_pattern_in("A", basedir = tempdir, file.ext = "*zzy")
+  out2 <- find_pattern_in("A", basedir = tempdir, file.ext = ".zzy")
+  expect_equal(nrow(out1), 1)
+  expect_equal(nrow(out2), 1)
+  setwd(current_wd)
+  
+})
+
+test_that("Other file extensions", {
+  skip_on_cran()
+  skip_if_not(identical(.Platform$OS, "windows"))
+  current_wd <- getwd()
+  tempdir <- tempdir()
+  skip_if(length(dir(tempdir, pattern = "\\.(zfy|R)$")))
+  for (x in letters) {
+    writeLines(x, file.path(tempdir, paste0(x, ".zfy")))
+  }
+  rm(x)
+  expect_warning(out <- find_pattern_in("[yz]",
+                                        basedir = tempdir,
+                                        use.OS = TRUE,
+                                        file.ext = "zfy"))
   expect_equal(nrow(out), 2L)
   expect_equal(unique(out[["line_no"]]), 1)
   
   
-  out <- find_pattern_in("[yz]",
-                         basedir = tempdir,
-                         use.OS = TRUE,
-                         file.ext = ".zy")
+  expect_warning(out <- find_pattern_in("[yz]",
+                                        basedir = tempdir,
+                                        use.OS = TRUE,
+                                        file.ext = ".zfy"))
   expect_equal(nrow(out), 2L)
   expect_equal(unique(out[["line_no"]]), 1)
   
-  out <- find_pattern_in("[yz]",
-                         basedir = tempdir,
-                         use.OS = TRUE,
-                         file.ext = "*.zy")
+  expect_warning(out <- find_pattern_in("[yz]",
+                                        basedir = tempdir,
+                                        use.OS = TRUE,
+                                        file.ext = "*.zfy"))
   expect_equal(nrow(out), 2L)
   expect_equal(unique(out[["line_no"]]), 1)
   
   out <- find_pattern_in("[yz]",
                          basedir = tempdir,
                          use.OS = FALSE,
-                         file.ext = ".zy")
+                         file.ext = ".zfy")
   expect_equal(nrow(out), 2L)
   expect_equal(unique(out[["line_no"]]), 1)
   
   setwd(current_wd)
 })
+
+test_that("On Windows", {
+  skip_on_cran()
+  skip_if_not(identical(.Platform$OS, "windows"))
+  current_wd <- getwd()
+  temp_dir <- tempfile()
+  provide.dir(temp_dir)
+  skip_if(length(dir(temp_dir, pattern = "\\.(zy|R)$")))
+  for (x in letters) {
+    writeLines(x, file.path(temp_dir, paste0(x, ".zy")))
+  }
+  rm(x)
+  expect_warning(out <- find_pattern_in("[yz]",
+                                        basedir = temp_dir,
+                                        use.OS = TRUE,
+                                        file.ext = "*.zy"))
+  expect_equal(nrow(out), 2L)
+  expect_equal(unique(out[["line_no"]]), 1)
+})
+
 

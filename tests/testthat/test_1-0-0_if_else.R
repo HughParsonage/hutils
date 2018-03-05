@@ -132,14 +132,14 @@ test_that("Must be faster than dplyr::if_else", {
     library(magrittr)
     library(data.table)
     
-    x <- rcauchy(50e3, 2, 3) 
+    x <- rcauchy(200e3, 2, 3) 
     
     out <- 
       microbenchmark(hutils = hutils::if_else(x < 0, "a", "b"),
                      dplyr  =  dplyr::if_else(x < 0, "a", "b"),
-                     times = 50) %>%
+                     times = 30) %>%
       as.data.table %>%
-      .[, .(time = mean(time)), by = expr]
+      .[, .(time = median(time)), by = expr]
     
     expect_gt(out[expr == "dplyr"][["time"]],
               out[expr == "hutils"][["time"]])
@@ -185,7 +185,7 @@ test_that("Must be faster than dplyr::if_else in all exits", {
                        dplyr  =  dplyr::if_else(cond, yes, no, na),
                        times = 25) %>%
         as.data.table %>%
-        .[, .(time = mean(time)), by = expr]
+        .[, .(time = median(time)), by = expr]
       
       if (out[expr == "dplyr"][["time"]] <
           out[expr == "hutils"][["time"]]) {

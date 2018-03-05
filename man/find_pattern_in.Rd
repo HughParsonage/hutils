@@ -4,14 +4,17 @@
 \alias{find_pattern_in}
 \title{Find string pattern in (text) file}
 \usage{
-find_pattern_in(file_contents, basedir = ".", reader = readLines,
-  include.comments = FALSE, use.OS = FALSE,
-  file_pattern = "\\\\.(R|r)(nw|md)?$", file.ext = NULL)
+find_pattern_in(file_contents, basedir = ".", dir_recursive = TRUE,
+  reader = readLines, include.comments = FALSE, use.OS = FALSE,
+  file_pattern = "\\\\.(R|r)(nw|md)?$", file_contents_perl = TRUE,
+  file_contents_fixed = FALSE, file.ext = NULL)
 }
 \arguments{
 \item{file_contents}{A perl-regular expression as a search query.}
 
 \item{basedir}{The root of the directory tree in which files will be searched recursively.}
+
+\item{dir_recursive}{(logical, default: \code{TRUE}) Search within subdirectories of \code{basedir}?}
 
 \item{reader}{A function, akin to \code{base::readLines}, the default, that accepts a filename and returns a character vector.}
 
@@ -20,13 +23,19 @@ find_pattern_in(file_contents, basedir = ".", reader = readLines,
 \item{use.OS}{Use the operating system to determine file list. Only available on Windows. If it fails, a fall-back option
 (using \code{dir}) is used.}
 
-\item{file_pattern}{A regular expression passed to \code{list.files(pattern = file.ext)}. 
+\item{file_pattern}{A regular expression passed to \code{list.files(pattern = file.ext)}.
 By default, \code{"\\.(R|r)(nw|md)?$"}, i.e. all R and Sweave files. (Does not have to be a file extension.)}
+
+\item{file_contents_perl}{(logical, default: \code{TRUE}) Should \code{file_contents} 
+be interpreted as a \code{perl} regex?}
+
+\item{file_contents_fixed}{(logical, default: \code{FALSE}) Should \code{file_contents} 
+be interpreted as a \code{fixed} regex?}
 
 \item{file.ext}{A file extension passed to the operating system if \code{use.OS} is used.}
 }
 \value{
-A \code{data.table}, one row per filename with a match, including the first line that matched.
+A \code{data.table}, one row per filename with a match, which includes the first line that matched.
 }
 \description{
 Find string pattern in (text) file
