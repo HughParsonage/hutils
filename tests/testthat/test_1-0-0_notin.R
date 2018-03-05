@@ -9,12 +9,17 @@ test_that("Complement of %in%", {
   x <- sample(letters, size = 10)
   y <- sample(letters, size = 10)
   expect_true(all(xor(x %in% y, 
+                      x %notchin% y)))
+  expect_true(all(xor(x %in% y, 
                       x %notin% y)))
+
 })
 
 test_that("y NULL", {
   expect_true(isTRUE(all(5 %notin% NULL)))
   expect_identical(c("x", "y") %notin% NULL,
+                   c(TRUE, TRUE))
+  expect_identical(c("x", "y") %notchin% NULL,
                    c(TRUE, TRUE))
 })
 
