@@ -28,6 +28,7 @@ test_that("find_pattern_in", {
 
 test_that("Other file extensions", {
   skip_on_cran()
+  skip_if_not(identical(.Platform$OS, "windows"))
   current_wd <- getwd()
   tempdir <- tempdir()
   skip_if(length(dir(tempdir, pattern = "\\.(zy|R)$")))
@@ -69,6 +70,7 @@ test_that("Other file extensions", {
 
 test_that("On Windows", {
   skip_on_cran()
+  skip_if_not(identical(.Platform$OS, "windows"))
   current_wd <- getwd()
   temp_dir <- tempfile()
   provide.dir(temp_dir)
