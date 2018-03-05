@@ -164,10 +164,6 @@ mutate_other <- function(.data,
       setkey(out, NULL)
     }
     
-    if (has_null_nom_attr && !is.null(attr(names(out), ".match.hash"))) {
-      setattr(names(out), ".match.hash", NULL)
-    }
-    
     out
     
   } else {
