@@ -94,10 +94,12 @@ test_that("Add coverage", {
     writeLines(x, file.path(tempdir, paste0(x, ".wfy")))
   }
   rm(x)
-  out <- find_pattern_in("[yz]",
-                         basedir = tempdir,
+  suppressWarnings({
+    out <- find_pattern_in("[yz]",
+                            basedir = tempdir,
                          use.OS = TRUE,
                          file.ext = "wfy")
+  })
   expect_equal(nrow(out), 2L)
   
 })

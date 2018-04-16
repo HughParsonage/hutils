@@ -1,3 +1,8 @@
+# hutils 1.1.0
+* New functions:
+    - `select_grep`: select columns matching a pattern.
+    - `dev_copy2a4`: convenience function for copying to an A4 PDF.
+
 # hutils 1.0.0
 * Stable release:
   - All tests are now marked as major release.
