@@ -14,7 +14,10 @@ test_that("Copies to pdf", {
   tempfile2 <- tempfile(fileext = ".pdf")
   plot(1:10)
   skip_if(grDevices::dev.cur() <= 1)
-  dev.copy2pdf(file = tempfile1, width = 11.69, height = 8.27)
+  tryCatch(dev.copy2pdf(file = tempfile1, width = 11.69, height = 8.27),
+           error = function(e) {
+             skip(e$m)
+           })
   dev.off()
   plot(1:10)
   dev_copy2a4(file = tempfile2)
