@@ -4,7 +4,7 @@
 \alias{dev_copy2a4}
 \title{Copy device to an A4 PDF}
 \usage{
-dev_copy2a4(filename, landscape = TRUE, ...)
+dev_copy2a4(filename, ...)
 }
 \arguments{
 \item{filename}{A string giving the name of the PDF file to write to, must end in \code{.pdf}.}

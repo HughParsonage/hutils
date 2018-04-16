@@ -5,13 +5,21 @@
 #' @return As in \code{\link[grDevices]{dev2}}.
 #' @export
 
-dev_copy2a4 <- function(filename, landscape = TRUE, ...) {
+dev_copy2a4 <- function(filename, ...) {
   if (missing(filename)) {
-    stop("`file` is missing, with no default.")
+    stop("`filename` is missing, with no default.")
   }
-  if (!endsWith(filename, ".pdf")) {
-    stop("`file` does not end with .pdf")
+  if (length(filename) != 1L) {
+    stop("`filename` had length ", length(filename), ". ", 
+         "`filename` must be a length-one character vector.")
+  }
+  if (!is.character(filename)) {
+    stop("`filename` was type ", typeof(filename), ". ", 
+         "`filename = ", deparse(substitute(filename)), "` must be a length-one character vector.")
+  }
+  if (!grepl("\\.pdf$", filename)) {
+    stop('`filename = "', filename, '"` does not end with .pdf')
   }
   
-  dev.copy2pdf(file = file, width = 11.69, height = 8.27, ...)
+  dev.copy2pdf(file = filename, width = 11.69, height = 8.27, ...)
 }

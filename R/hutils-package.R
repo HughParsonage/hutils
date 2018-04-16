@@ -6,4 +6,5 @@
 #' @importFrom magrittr not
 #' @importFrom fastmatch %fin%
 #' @importFrom fastmatch fmatch
+#' @importFrom grDevices dev.copy2pdf
 NULL
