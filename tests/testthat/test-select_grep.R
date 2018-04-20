@@ -39,3 +39,13 @@ test_that("Works for non-data.table data.frames", {
   expect_equal(names(select_grep(DT, c("1", "2"), .and = "x3")), c("x1", "x2", "x3"))
   expect_equal(names(select_grep(DT, c("1"), .and = "x3", .but.not = 3)), c("x1"))
 })
+
+test_that("Coverage", {
+  library(data.table)
+  DT <- data.table(x = 1, y = 2)
+  expect_identical(select_grep(DT, patterns = ".", .but.not = 2L), data.table(x = 1))
+  expect_identical(select_grep(DT, patterns = "x", .and = c(FALSE, TRUE, FALSE)), DT)
+  expect_identical(select_grep(DT, patterns = "x", .and = 2L), DT)
+  expect_identical(select_grep(DT, patterns = "x", .and = 2), DT)
+  expect_identical(select_grep(DT, patterns = "x", .but.not = 1), data.table())
+})

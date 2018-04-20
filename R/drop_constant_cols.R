@@ -23,24 +23,40 @@
 
 drop_constant_cols <- function(DT, copy = FALSE) {
   
+  
   if (is.data.table(DT)) {
+    if (nrow(DT) < 2L) {
+      # Rest of function won't work with [2]
+      return(data.table())
+    }
     if (copy) {
       out <- copy(DT)
     } else {
       out <- DT
     }
     
-    uniqueNs <- vapply(out, uniqueN, integer(1), USE.NAMES = FALSE)
+    constant_cols <-
+      vapply(out,
+             function(v) {
+               identical(v[1L], v[2L]) &&
+                 uniqueN(v) == 1L
+             },
+             FUN.VALUE = logical(1L),
+             USE.NAMES = FALSE)
     
     # Generally safe to delete by names, but not if
     # the names are not distinct
-    if (any(uniqueNs == 1L)) {
-      const_cols <- which(uniqueNs == 1L, useNames = FALSE)
+    if (any(constant_cols)) {
+      const_cols <- which(constant_cols, useNames = FALSE)
       out[, (const_cols) := NULL]
     }
   } else {
     if (!is.data.frame(DT)) {
       stop("`DT` was a ", class(DT), ", but `DT` must be a data.frame.")
+    }
+    if (nrow(DT) < 2L) {
+      # Rest of function won't work with [2]
+      return(data.frame())
     }
     
     if (NEITHER(missing(copy), copy)) {
@@ -49,8 +65,15 @@ drop_constant_cols <- function(DT, copy = FALSE) {
               "Either ensure `DT` is a data.table or assert `copy = TRUE`.")
     }
     
-    uniqueNs <- vapply(DT, uniqueN, integer(1L))
-    non_const_cols <- names(uniqueNs)[uniqueNs > 1L]
+    non_constant_cols <-
+      vapply(DT,
+             function(v) {
+               !identical(v[1L], v[2L]) ||
+                 uniqueN(v) > 1L
+             },
+             FUN.VALUE = logical(1L),
+             USE.NAMES = TRUE)
+    non_const_cols <- names(non_constant_cols)[non_constant_cols]
     out <- DT[, non_const_cols, drop = FALSE]
     
   }
