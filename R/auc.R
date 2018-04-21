@@ -10,29 +10,7 @@
 #' @export auc
 
 #' @author
-#' Copyright (c) 2012, Ben Hamner
-#' Author: Ben Hamner (ben@benhamner.com)
-#' All rights reserved.
-#' 
-#' Redistribution and use in source and binary forms, with or without
-#' modification, are permitted provided that the following conditions are met:
-#' 
-#'   1. Redistributions of source code must retain the above copyright notice, this
-#' list of conditions and the following disclaimer.
-#' 2. Redistributions in binary form must reproduce the above copyright notice,
-#' this list of conditions and the following disclaimer in the documentation
-#' and/or other materials provided with the distribution.
-#' 
-#' THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-#' ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-#' WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-#' DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-#' ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-#' (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-#'   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-#' ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-#' (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-#' SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 
 
 auc <- function(actual, pred) {
@@ -58,6 +36,7 @@ auc <- function(actual, pred) {
     
     if (is.integer(pred) || is.logical(pred)) {
       pred <- as.logical(pred)
+      actual <- as.logical(actual)
       if (identical(pred, actual)) {
         return(1)
       } else {
@@ -71,6 +50,10 @@ auc <- function(actual, pred) {
   
   if (length(actual) <= 1L) {
     if (length(actual) == 1L) {
+      if (pred < 0 || pred > 1) {
+        stop("`pred = ", pred, "` was not between 0 and 1. ", 
+             "pred must between 0 and 1.")
+      }
       if (actual) {
         return(pred)
       } else {
@@ -85,19 +68,6 @@ auc <- function(actual, pred) {
   if (min(pred) < 0 || max(pred) > 1) {
     stop("`range(pred) = ", range(pred), ". ", 
          "All values of `pred` must be between 0 and 1 (inclusive).")
-  }
-  
-  # Early stopping
-  if (length(pred) <= 1L) {
-    if (length(pred) == 1L) {
-      if (actual) {
-        return(pred)
-      } else {
-        return(1 - pred)
-      }
-    } else {
-      return(double(0L))
-    }
   }
   
   switch(typeof(actual),
@@ -137,7 +107,7 @@ auc <- function(actual, pred) {
            }
          },
          "character" = {
-           if (identical(toupper(unique(actual)), c("FALSE", "TRUE"))) {
+           if (identical(sort(toupper(unique(actual))), c("FALSE", "TRUE"))) {
              actual <- as.logical(actual)
            } else {
              stop("`actual` was type character: this is only allowed if actual only ",
@@ -146,6 +116,30 @@ auc <- function(actual, pred) {
          },
          stop("`actual` had type ", typeof(actual), ", which is not supported. ",
               "Supply a logical vector for actual."))
+  
+  #' Copyright (c) 2012, Ben Hamner
+  #' Author: Ben Hamner (ben@benhamner.com)
+  #' All rights reserved.
+  #' 
+  #' Redistribution and use in source and binary forms, with or without
+  #' modification, are permitted provided that the following conditions are met:
+  #' 
+  #'   1. Redistributions of source code must retain the above copyright notice, this
+  #' list of conditions and the following disclaimer.
+  #' 2. Redistributions in binary form must reproduce the above copyright notice,
+  #' this list of conditions and the following disclaimer in the documentation
+  #' and/or other materials provided with the distribution.
+  #' 
+  #' THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+  #' ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  #' WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  #' DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+  #' ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  #' (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  #'   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  #' ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  #' (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  #' SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   
   r <- frank(pred)
   actual <- as.logical(actual)
