@@ -4,7 +4,8 @@
 \alias{select_grep}
 \title{Select names matching a pattern}
 \usage{
-select_grep(DT, patterns, .and = NULL, .but.not = NULL)
+select_grep(DT, patterns, .and = NULL, .but.not = NULL, perl = TRUE,
+  fixed = FALSE, useBytes = FALSE, invert = FALSE)
 }
 \arguments{
 \item{DT}{A \code{data.frame}.}

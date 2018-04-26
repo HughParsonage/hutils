@@ -7,7 +7,9 @@
 #' @return \code{DT} with the selected names. 
 #' @export
 
-select_grep <- function(DT, patterns, .and = NULL, .but.not = NULL) {
+select_grep <- function(DT, patterns, .and = NULL, .but.not = NULL,
+                        perl = TRUE, fixed = FALSE, useBytes = FALSE,
+                        invert = FALSE) {
   if (not_DT <- !is.data.table(DT)) {
     if (!is.data.frame(DT)) {
       stop("`DT` had class ", paste(class(DT), collapse = " "), ", but must be a data.frame. ",
@@ -58,7 +60,15 @@ select_grep <- function(DT, patterns, .and = NULL, .but.not = NULL) {
     }
   }
   
-  selected_grep <- grep(pattern, noms, perl = TRUE, value = FALSE)
+  if (perl && fixed) {
+    warning("`perl = TRUE`, yet `fixed = TRUE`. Setting `perl = FALSE`. ",
+            "Choose `perl = FALSE` or and only or `fixed = TRUE`.")
+    perl <- FALSE
+  }
+  
+  selected_grep <- grep(pattern, noms, perl = TRUE, value = FALSE,
+                        fixed = FALSE, useBytes = FALSE,
+                        invert = FALSE)
   
   if (!is.null(.and)) {
     switch (typeof(.and),

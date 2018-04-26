@@ -49,3 +49,10 @@ test_that("Coverage", {
   expect_identical(select_grep(DT, patterns = "x", .and = 2), DT)
   expect_identical(select_grep(DT, patterns = "x", .but.not = 1), data.table())
 })
+
+test_that("Arguments passed to grep", {
+  library(data.table)
+  DT <- data.table(xy = 1, yz = 2, x. = 4)
+  expect_warning(select_grep(DT, "x", perl = TRUE, fixed = TRUE))
+  expect_equal(names(select_grep(DT, "x.", perl = FALSE, fixed = TRUE)), "x.")
+})
