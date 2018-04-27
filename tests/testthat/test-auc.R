@@ -38,9 +38,9 @@ test_that("pred factor", {
                auc(actual = factor(c(TRUE, FALSE, TRUE, FALSE)), pred = c(0.1, 0.2, 0.3, 0.4)))
   expect_error(auc(actual = factor(1:4), pred = c(0.1, 0.2, 0.3, 0.4)),
                regexp = "but could not be safely mapped to a logical vector as it had 4 values.")
-  expect_error(auc(actual = factor(1:2), pred = runif(3)),
+  expect_error(auc(actual = factor(1:2), pred = runif(2)),
                error = "Make actual a logical vector or impose an ordering on the two levels.")
-  expect_error(auc(actual = factor(c("Q", "q")), pred = runif(3)),
+  expect_error(auc(actual = factor(c("Q", "q")), pred = runif(2)),
                error = "`actual` was an factor with two levels but had no ordering")
   
   
