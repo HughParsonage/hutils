@@ -25,13 +25,13 @@ select_grep <- function(DT, patterns, .and = NULL, .but.not = NULL,
   TFs <- areTrueFalse(ignore.case, perl, fixed, useBytes, invert, .warn.fixed.mismatch)
   if (!all(TFs)) {
     args <- c("ignore.case", "perl", "fixed", "useBytes", "invert", ".warn.fixed.mismatch")
-    if (sum(TFs) == 1L) {
+    if (sum(!TFs) == 1L) {
       stop("`",
-           args[TFs],
+           args[!TFs],
            "` had a value other than TRUE or FALSE. Set to TRUE or FALSE.")
     } else {
       stop("The following arguments:\n\t",
-           paste0(args[TFs],
+           paste0(args[!TFs],
                   collapse = "\n\t"),
            "had a value other than TRUE or FALSE. Set to TRUE or FALSE.")
     }
@@ -181,13 +181,13 @@ select_grep <- function(DT, patterns, .and = NULL, .but.not = NULL,
               if (ignore.case) {
                 ignore.case <- FALSE
                 warning("Changing arguments `perl` and `ignore.case` to FALSE since ",
-                        "`fixed = TRUE`.\n\t", 
+                        "`fixed = TRUE`. ", 
                         cols_warning_msg, "\n",
                         "Ensure `perl = FALSE` and `ignore.case = FALSE` if `fixed = TRUE`.")
                 
               } else {
                 warning("Changing argument `perl` to FALSE since ",
-                        "`fixed = TRUE`.\n\t",
+                        "`fixed = TRUE`. ",
                         cols_warning_msg, "\n",
                         "Ensure `perl = FALSE` if `fixed = TRUE`.")
               }
@@ -195,7 +195,7 @@ select_grep <- function(DT, patterns, .and = NULL, .but.not = NULL,
               if (ignore.case) {
                 ignore.case <- FALSE
                 warning("Changing argument `ignore.case` to FALSE since ",
-                        "`fixed = TRUE`.\n\t",
+                        "`fixed = TRUE`. ",
                         cols_warning_msg, "\n",
                         "Ensure `ignore.case = FALSE` if `fixed = TRUE`.")
               }
@@ -214,50 +214,31 @@ select_grep <- function(DT, patterns, .and = NULL, .but.not = NULL,
           if (.warn.fixed.mismatch) {
             if (ignore.case && perl) {
               warning("Changing arguments `perl` and `ignore.case` to FALSE since ",
-                      "`fixed = TRUE`.\n\t", 
+                      "`fixed = TRUE`. ", 
                       "This can lead to wrong columns being selected or dropped. ",
                       "Ensure `perl = FALSE` and `ignore.case = FALSE` if `fixed = TRUE`.")
               
             } else if (perl) {
               warning("Changing `perl` to FALSE since ",
-                      "`fixed = TRUE`.\n\t", 
+                      "`fixed = TRUE`. ", 
                       "This can lead to wrong columns being selected or dropped. ",
                       "Ensure `perl = FALSE` and `ignore.case = FALSE` if `fixed = TRUE`.")
             } else if (ignore.case) {
               warning("Changing `ignore.case` to FALSE since ",
-                      "`fixed = TRUE`.\n\t", 
+                      "`fixed = TRUE`. ", 
                       "This can lead to wrong columns being selected or dropped. ",
                       "Ensure `perl = FALSE` and `ignore.case = FALSE` if `fixed = TRUE`.")
-            } else {
-              NULL
-            }
+            } else stop("Internal error: select_grep:231.")
           }
           cols_if_fixed_true
         }
       } else {
         if (length(patterns) > 1L) {
-          if (ignore.case) {
-            union({ 
-              toupper(patterns) %>%
-                vapply(grepl, x = noms, fixed = TRUE, FUN.VALUE = logical(length(noms))) %>%
-                rowSums %>%
-                is_greater_than(0L) %>%
-                which
-            },
-            {
-              tolower(patterns) %>%
-                vapply(grepl, x = noms, fixed = TRUE, FUN.VALUE = logical(length(noms))) %>%
-                rowSums %>%
-                is_greater_than(0L) %>%
-                which
-            })
-          } else {
-            vapply(patterns,
-                   grepl, x = noms, fixed = TRUE, FUN.VALUE = logical(length(noms))) %>%
-              rowSums %>%
-              is_greater_than(0L) %>%
-              which
-          }
+          vapply(patterns,
+                 grepl, x = noms, fixed = TRUE, FUN.VALUE = logical(length(noms))) %>%
+            rowSums %>%
+            is_greater_than(0L) %>%
+            which
         } else {
           grep(pattern, noms,
                perl = perl,

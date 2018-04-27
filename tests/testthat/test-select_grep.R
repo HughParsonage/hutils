@@ -48,6 +48,20 @@ test_that("Coverage", {
   expect_identical(select_grep(DT, patterns = "x", .and = 2L), DT)
   expect_identical(select_grep(DT, patterns = "x", .and = 2), DT)
   expect_identical(select_grep(DT, patterns = "x", .but.not = 1), data.table())
+  
+  expect_error(select_grep(DT, patterns = ".", perl = NA),
+               regexp = "`perl` had a value other than TRUE or FALSE")
+  expect_error(select_grep(DT, patterns = ".", perl = NA, fixed = NA),
+               regexp = "The following arguments.*had a value other than TRUE or FALSE")
+  expect_warning(select_grep(DT, patterns = ".", ignore.case = TRUE, fixed = TRUE),
+                 regexp = "Changing argument `ignore.case` to FALSE since ")
+  
+  for (k in LETTERS) {
+    DT[, (k) := NA]
+  }
+  expect_warning(select_grep(DT, patterns = ".", ignore.case = TRUE, fixed = TRUE),
+                 regexp = "(first 6 shown)",
+                 fixed = TRUE)
 })
 
 test_that("Arguments passed to grep", {
@@ -86,7 +100,13 @@ test_that("Multi-length patterns", {
                            ignore.case = FALSE, 
                            .warn.fixed.mismatch = FALSE),
                data.table(x = 1))
-  expect_equal(select_grep(DT, c("x", "y"), fixed = TRUE, ignore.case = TRUE), DT)
+  expect_warning(select_grep(DT, c("x", "y"), fixed = TRUE, ignore.case = TRUE), 
+                 regexp = "This can lead to wrong columns being selected or dropped.")
+  expect_warning(select_grep(DT, c("x", "y"), fixed = TRUE, ignore.case = TRUE, perl = TRUE), 
+                 regexp = "This can lead to wrong columns being selected or dropped.")
+  expect_equal(select_grep(DT, c("x", "y"), fixed = TRUE, ignore.case = TRUE,
+                           .warn.fixed.mismatch = FALSE),
+               DT)
 })
 
 

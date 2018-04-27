@@ -4,7 +4,9 @@
 #' @import data.table
 #' @importFrom magrittr %>%
 #' @importFrom magrittr not
+#' @importFrom magrittr is_greater_than
 #' @importFrom fastmatch %fin%
 #' @importFrom fastmatch fmatch
 #' @importFrom grDevices dev.copy2pdf
+#' @importFrom utils head
 NULL
