@@ -104,32 +104,24 @@ select_grep <- function(DT, patterns, .and = NULL, .but.not = NULL,
                invert = invert,
                ignore.case = ignore.case)
         
-        if (ignore.case) {
-          if (length(patterns) > 1L) {
-            cols_if_fixed_true <- 
-              if (ignore.case) {
-                union({ 
-                  toupper(patterns) %>%
-                    vapply(grepl, x = noms, fixed = TRUE, FUN.VALUE = logical(length(noms))) %>%
-                    rowSums %>%
-                    is_greater_than(0L) %>%
-                    which
-                },
-                {
-                  tolower(patterns) %>%
-                    vapply(grepl, x = noms, fixed = TRUE, FUN.VALUE = logical(length(noms))) %>%
-                    rowSums %>%
-                    is_greater_than(0L) %>%
-                    which
-                })
-              } else {
-                vapply(patterns,
-                       grepl, x = noms, fixed = TRUE, FUN.VALUE = logical(length(noms))) %>%
+        cols_if_fixed_true <-
+          if (ignore.case) {
+            if (length(patterns) > 1L) {
+              union({ 
+                toupper(patterns) %>%
+                  vapply(grepl, x = noms, fixed = TRUE, FUN.VALUE = logical(length(noms))) %>%
                   rowSums %>%
-                  is_greater_than(0L)
-              }
-          } else {
-            cols_if_fixed_true <- 
+                  is_greater_than(0L) %>%
+                  which
+              },
+              {
+                tolower(patterns) %>%
+                  vapply(grepl, x = noms, fixed = TRUE, FUN.VALUE = logical(length(noms))) %>%
+                  rowSums %>%
+                  is_greater_than(0L) %>%
+                  which
+              })
+            } else {
               union(grep(tolower(pattern),
                          noms,
                          perl = FALSE,
@@ -144,9 +136,8 @@ select_grep <- function(DT, patterns, .and = NULL, .but.not = NULL,
                          useBytes = useBytes,
                          invert = invert,
                          ignore.case = FALSE))
-          }
-        } else {
-          cols_if_fixed_true <-
+            }
+          } else {
             grep(pattern,
                  noms,
                  perl = FALSE,
@@ -154,7 +145,7 @@ select_grep <- function(DT, patterns, .and = NULL, .but.not = NULL,
                  useBytes = useBytes,
                  invert = invert,
                  ignore.case = FALSE)
-        }
+          }
         
         different_cols <- 
           noms[xor(seq_along(noms) %in% cols_if_fixed_false,
