@@ -40,6 +40,8 @@ test_that("pred factor", {
                regexp = "but could not be safely mapped to a logical vector as it had 4 values.")
   expect_error(auc(actual = factor(1:2), pred = runif(3)),
                error = "Make actual a logical vector or impose an ordering on the two levels.")
+  expect_error(auc(actual = factor(c("Q", "q")), pred = runif(3)),
+               error = "`actual` was an factor with two levels but had no ordering")
   
   
 })
@@ -68,6 +70,12 @@ test_that("pred character", {
   expect_error(auc(actual = as.character(c(TRUE, FALSE, TRUE, "FALSEY")),
                    pred = c(0.1, 0.2, 0.3, 0.4)),
                regexp = "type character")
+})
+
+test_that("pred other", {
+  expect_error(auc(actual = c(TRUE, FALSE), 
+                   pred = list(1, 1)), 
+               regexp = "`pred` was type .?list.? which is unsupported")
 })
 
 
