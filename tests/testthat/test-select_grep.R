@@ -55,6 +55,9 @@ test_that("Coverage", {
                regexp = "The following arguments.*had a value other than TRUE or FALSE")
   expect_warning(select_grep(DT, patterns = ".", ignore.case = TRUE, fixed = TRUE),
                  regexp = "Changing argument `ignore.case` to FALSE since ")
+  expect_equal(ncol(select_grep(DT, patterns = ".", ignore.case = TRUE, fixed = TRUE, 
+                                .warn.fixed.mismatch = FALSE)),
+               0)
   
   for (k in LETTERS) {
     DT[, (k) := NA]

@@ -154,18 +154,14 @@ select_grep <- function(DT, patterns, .and = NULL, .but.not = NULL,
         if (length(different_cols) > 0L) {
           if (.warn.fixed.mismatch) {
             cols_warning_msg <-
-              if (length(different_cols)) {
-                paste0("This may lead to the following columns being ",
-                       "selected or dropped when the opposite was intended:\n\t", 
-                       if (length(different_cols) > 10L) {
-                         paste0(paste0(head(different_cols), collapse = "\n\t"), 
-                                "(first 6 shown).")
-                       } else {
-                         paste0(different_cols, collapse = "\n\t")
-                       })
-              } else {
-                "This can lead to wrong columns being selected or dropped. "
-              }
+              paste0("This may lead to the following columns being ",
+                     "selected or dropped when the opposite was intended:\n\t", 
+                     if (length(different_cols) > 10L) {
+                       paste0(paste0(head(different_cols), collapse = "\n\t"), 
+                              "(first 6 shown).")
+                     } else {
+                       paste0(different_cols, collapse = "\n\t")
+                     })
             
             if (perl) {
               perl <- FALSE
