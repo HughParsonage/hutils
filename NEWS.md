@@ -1,5 +1,6 @@
 # hutils 1.1.0
 * New functions:
+    - `auc`: area under the curve given predicted and actual values.
     - `select_grep`: select columns matching a pattern.
     - `dev_copy2a4`: convenience function for copying to an A4 PDF.
 
