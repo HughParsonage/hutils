@@ -55,4 +55,38 @@ test_that("Arguments passed to grep", {
   DT <- data.table(xy = 1, yz = 2, x. = 4)
   expect_warning(select_grep(DT, "x", perl = TRUE, fixed = TRUE))
   expect_equal(names(select_grep(DT, "x.", perl = FALSE, fixed = TRUE)), "x.")
+  
+  DT <- data.table(xy = 1, XY = 2)
+  expect_equal(ncol(select_grep(DT, "xy", ignore.case = TRUE)), 2)
+  expect_equal(ncol(select_grep(DT, "xy", fixed = TRUE, perl = FALSE)), 1)
+  expect_equal(ncol(select_grep(DT, "xy", perl = FALSE, ignore.case = TRUE)), 2)
+  expect_equal(ncol(select_grep(DT, "xy", perl = FALSE, ignore.case = TRUE, fixed = TRUE, 
+                                .warn.fixed.mismatch = FALSE)),
+               2)
+  expect_warning(select_grep(DT, "xy", perl = FALSE, ignore.case = TRUE, fixed = TRUE),
+                 regexp = "since `fixed = TRUE`")
+  
+  DT <- data.table(xy = 1, x.y = 2, xzy = 3)
+  expect_warning(select_grep(DT, "x.y", perl = TRUE, ignore.case = TRUE, fixed = TRUE), 
+                 regexp = "since `fixed = TRUE`.*opposite was intended.*xzy")
+  expect_warning(select_grep(DT, "x.y", perl = TRUE, ignore.case = FALSE, fixed = TRUE), 
+                 regexp = "since `fixed = TRUE`.*opposite was intended.*xzy")
+  
+  
 })
+
+test_that("Multi-length patterns", {
+  library(data.table)
+  DT <- data.table(x = 1, y = 2)
+  expect_equal(select_grep(DT, c("x", "y"), fixed = TRUE), DT)
+  DT <- data.table(x = 1, Y = 2)
+  expect_equal(select_grep(DT,
+                           patterns = c("x", "y"),
+                           fixed = TRUE,
+                           ignore.case = FALSE, 
+                           .warn.fixed.mismatch = FALSE),
+               data.table(x = 1))
+  expect_equal(select_grep(DT, c("x", "y"), fixed = TRUE, ignore.case = TRUE), DT)
+})
+
+

@@ -4,8 +4,9 @@
 \alias{select_grep}
 \title{Select names matching a pattern}
 \usage{
-select_grep(DT, patterns, .and = NULL, .but.not = NULL, perl = TRUE,
-  fixed = FALSE, useBytes = FALSE, invert = FALSE)
+select_grep(DT, patterns, .and = NULL, .but.not = NULL,
+  ignore.case = FALSE, perl = TRUE, fixed = FALSE, useBytes = FALSE,
+  invert = FALSE, .warn.fixed.mismatch = TRUE)
 }
 \arguments{
 \item{DT}{A \code{data.frame}.}
@@ -15,10 +16,24 @@ select_grep(DT, patterns, .and = NULL, .but.not = NULL, perl = TRUE,
 \item{.and}{Character or integer positions of names to select, regardless of whether or not they are matched by \code{patterns}.}
 
 \item{.but.not}{Character or integer positions of names to drop, regardless of whether or not they are matched by \code{patterns} or whether they are explicitly added by \code{.and}.}
+
+\item{ignore.case, perl, fixed, useBytes, invert}{Arguments passed to \code{\link[base]{grep}}. Note that \code{perl = TRUE} by default (unlike \code{grep}) unless \code{fixed = TRUE} (and \code{perl} is missing).}
+
+\item{.warn.fixed.mismatch}{(logical, default: \code{TRUE}) If \code{TRUE}, the default, selecting \code{fixed = TRUE} with \code{perl = TRUE} or \code{ignore.case = TRUE} results in \code{perl} and \code{ignore.case} being reset to \code{FALSE} with a warning (as in \code{grep}), even if it makes no difference to the columns eventually selected. If \code{FALSE} unambiguous results are allowed; if \code{ignore.case = TRUE} and \code{fixed = TRUE}, the result is \strong{unambiguous} if \code{select_grep(DT, tolower(patterns), fixed = TRUE)} and \code{select_grep(DT, toupper(patterns), fixed = TRUE)} are identical.}
 }
 \value{
 \code{DT} with the selected names.
+
+integer vector of positions
 }
 \description{
 Select names matching a pattern
+}
+\examples{
+library(data.table)
+dt <- data.table(x1 = 1, x2 = 2, y = 0)
+select_grep(dt, "x")
+select_grep(dt, "x", .and = "y")
+select_grep(dt, "x", .and = "y", .but.not = "x2")
+
 }

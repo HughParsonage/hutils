@@ -4,12 +4,43 @@
 #' @param patterns Regular expressions to be matched against the names of \code{DT}. If \code{length(patterns) > 1} the patterns are concatenated using alternation.
 #' @param .and Character or integer positions of names to select, regardless of whether or not they are matched by \code{patterns}.
 #' @param .but.not Character or integer positions of names to drop, regardless of whether or not they are matched by \code{patterns} or whether they are explicitly added by \code{.and}.
+#' @param ignore.case,perl,fixed,useBytes,invert Arguments passed to \code{\link[base]{grep}}. Note that \code{perl = TRUE} by default (unlike \code{grep}) unless \code{fixed = TRUE} (and \code{perl} is missing).
+#' @param .warn.fixed.mismatch (logical, default: \code{TRUE}) If \code{TRUE}, the default, selecting \code{fixed = TRUE} with \code{perl = TRUE} or \code{ignore.case = TRUE} results in \code{perl} and \code{ignore.case} being reset to \code{FALSE} with a warning (as in \code{grep}), even if it makes no difference to the columns eventually selected. If \code{FALSE} unambiguous results are allowed; if \code{ignore.case = TRUE} and \code{fixed = TRUE}, the result is \strong{unambiguous} if \code{select_grep(DT, tolower(patterns), fixed = TRUE)} and \code{select_grep(DT, toupper(patterns), fixed = TRUE)} are identical.
 #' @return \code{DT} with the selected names. 
+#' 
+#' @examples
+#' library(data.table)
+#' dt <- data.table(x1 = 1, x2 = 2, y = 0)
+#' select_grep(dt, "x")
+#' select_grep(dt, "x", .and = "y")
+#' select_grep(dt, "x", .and = "y", .but.not = "x2")
+#' 
 #' @export
 
 select_grep <- function(DT, patterns, .and = NULL, .but.not = NULL,
+                        ignore.case = FALSE,
                         perl = TRUE, fixed = FALSE, useBytes = FALSE,
-                        invert = FALSE) {
+                        invert = FALSE, 
+                        .warn.fixed.mismatch = TRUE) {
+  TFs <- areTrueFalse(ignore.case, perl, fixed, useBytes, invert, .warn.fixed.mismatch)
+  if (!all(TFs)) {
+    args <- c("ignore.case", "perl", "fixed", "useBytes", "invert", ".warn.fixed.mismatch")
+    if (sum(TFs) == 1L) {
+      stop("`",
+           args[TFs],
+           "` had a value other than TRUE or FALSE. Set to TRUE or FALSE.")
+    } else {
+      stop("The following arguments:\n\t",
+           paste0(args[TFs],
+                  collapse = "\n\t"),
+           "had a value other than TRUE or FALSE. Set to TRUE or FALSE.")
+    }
+  }
+  
+  if (fixed && missing(perl)) {
+    perl <- FALSE
+  }
+  
   if (not_DT <- !is.data.table(DT)) {
     if (!is.data.frame(DT)) {
       stop("`DT` had class ", paste(class(DT), collapse = " "), ", but must be a data.frame. ",
@@ -60,15 +91,192 @@ select_grep <- function(DT, patterns, .and = NULL, .but.not = NULL,
     }
   }
   
-  if (perl && fixed) {
-    warning("`perl = TRUE`, yet `fixed = TRUE`. Setting `perl = FALSE`. ",
-            "Choose `perl = FALSE` or and only or `fixed = TRUE`.")
-    perl <- FALSE
-  }
-  
-  selected_grep <- grep(pattern, noms, perl = TRUE, value = FALSE,
-                        fixed = FALSE, useBytes = FALSE,
-                        invert = FALSE)
+  #' @return integer vector of positions
+  selected_grep <- 
+    if (fixed) {
+      if (perl || ignore.case) {
+        cols_if_fixed_false <-
+          grep(pattern,
+               noms,
+               perl = perl,
+               fixed = FALSE,
+               useBytes = useBytes,
+               invert = invert,
+               ignore.case = ignore.case)
+        
+        if (ignore.case) {
+          if (length(patterns) > 1L) {
+            cols_if_fixed_true <- 
+              if (ignore.case) {
+                union({ 
+                  toupper(patterns) %>%
+                    vapply(grepl, x = noms, fixed = TRUE, FUN.VALUE = logical(length(noms))) %>%
+                    rowSums %>%
+                    is_greater_than(0L) %>%
+                    which
+                },
+                {
+                  tolower(patterns) %>%
+                    vapply(grepl, x = noms, fixed = TRUE, FUN.VALUE = logical(length(noms))) %>%
+                    rowSums %>%
+                    is_greater_than(0L) %>%
+                    which
+                })
+              } else {
+                vapply(patterns,
+                       grepl, x = noms, fixed = TRUE, FUN.VALUE = logical(length(noms))) %>%
+                  rowSums %>%
+                  is_greater_than(0L)
+              }
+          } else {
+            cols_if_fixed_true <- 
+              union(grep(tolower(pattern),
+                         noms,
+                         perl = FALSE,
+                         fixed = TRUE,
+                         useBytes = useBytes,
+                         invert = invert,
+                         ignore.case = FALSE),
+                    grep(toupper(pattern),
+                         noms,
+                         perl = FALSE,
+                         fixed = TRUE,
+                         useBytes = useBytes,
+                         invert = invert,
+                         ignore.case = FALSE))
+          }
+        } else {
+          cols_if_fixed_true <-
+            grep(pattern,
+                 noms,
+                 perl = FALSE,
+                 fixed = TRUE,
+                 useBytes = useBytes,
+                 invert = invert,
+                 ignore.case = FALSE)
+        }
+        
+        different_cols <- 
+          noms[xor(seq_along(noms) %in% cols_if_fixed_false,
+                   seq_along(noms) %in% cols_if_fixed_true)]
+        
+        if (length(different_cols) > 0L) {
+          if (.warn.fixed.mismatch) {
+            cols_warning_msg <-
+              if (length(different_cols)) {
+                paste0("This may lead to the following columns being ",
+                       "selected or dropped when the opposite was intended:\n\t", 
+                       if (length(different_cols) > 10L) {
+                         paste0(paste0(head(different_cols), collapse = "\n\t"), 
+                                "(first 6 shown).")
+                       } else {
+                         paste0(different_cols, collapse = "\n\t")
+                       })
+              } else {
+                "This can lead to wrong columns being selected or dropped. "
+              }
+            
+            if (perl) {
+              perl <- FALSE
+              if (ignore.case) {
+                ignore.case <- FALSE
+                warning("Changing arguments `perl` and `ignore.case` to FALSE since ",
+                        "`fixed = TRUE`.\n\t", 
+                        cols_warning_msg, "\n",
+                        "Ensure `perl = FALSE` and `ignore.case = FALSE` if `fixed = TRUE`.")
+                
+              } else {
+                warning("Changing argument `perl` to FALSE since ",
+                        "`fixed = TRUE`.\n\t",
+                        cols_warning_msg, "\n",
+                        "Ensure `perl = FALSE` if `fixed = TRUE`.")
+              }
+            } else {
+              if (ignore.case) {
+                ignore.case <- FALSE
+                warning("Changing argument `ignore.case` to FALSE since ",
+                        "`fixed = TRUE`.\n\t",
+                        cols_warning_msg, "\n",
+                        "Ensure `ignore.case = FALSE` if `fixed = TRUE`.")
+              }
+            }
+          } else {
+            grep(pattern,
+                 noms,
+                 perl = FALSE,
+                 value = FALSE,
+                 fixed = TRUE,
+                 useBytes = useBytes,
+                 invert = invert,
+                 ignore.case = FALSE)
+          }
+        } else {
+          if (.warn.fixed.mismatch) {
+            if (ignore.case && perl) {
+              warning("Changing arguments `perl` and `ignore.case` to FALSE since ",
+                      "`fixed = TRUE`.\n\t", 
+                      "This can lead to wrong columns being selected or dropped. ",
+                      "Ensure `perl = FALSE` and `ignore.case = FALSE` if `fixed = TRUE`.")
+              
+            } else if (perl) {
+              warning("Changing `perl` to FALSE since ",
+                      "`fixed = TRUE`.\n\t", 
+                      "This can lead to wrong columns being selected or dropped. ",
+                      "Ensure `perl = FALSE` and `ignore.case = FALSE` if `fixed = TRUE`.")
+            } else if (ignore.case) {
+              warning("Changing `ignore.case` to FALSE since ",
+                      "`fixed = TRUE`.\n\t", 
+                      "This can lead to wrong columns being selected or dropped. ",
+                      "Ensure `perl = FALSE` and `ignore.case = FALSE` if `fixed = TRUE`.")
+            } else {
+              NULL
+            }
+          }
+          cols_if_fixed_true
+        }
+      } else {
+        if (length(patterns) > 1L) {
+          if (ignore.case) {
+            union({ 
+              toupper(patterns) %>%
+                vapply(grepl, x = noms, fixed = TRUE, FUN.VALUE = logical(length(noms))) %>%
+                rowSums %>%
+                is_greater_than(0L) %>%
+                which
+            },
+            {
+              tolower(patterns) %>%
+                vapply(grepl, x = noms, fixed = TRUE, FUN.VALUE = logical(length(noms))) %>%
+                rowSums %>%
+                is_greater_than(0L) %>%
+                which
+            })
+          } else {
+            vapply(patterns,
+                   grepl, x = noms, fixed = TRUE, FUN.VALUE = logical(length(noms))) %>%
+              rowSums %>%
+              is_greater_than(0L) %>%
+              which
+          }
+        } else {
+          grep(pattern, noms,
+               perl = perl,
+               value = FALSE,
+               fixed = fixed,
+               useBytes = useBytes,
+               invert = invert,
+               ignore.case = ignore.case)
+        }
+      }
+    } else {
+      grep(pattern, noms,
+           perl = perl,
+           value = FALSE,
+           fixed = fixed,
+           useBytes = useBytes,
+           invert = invert,
+           ignore.case = ignore.case)
+    }
   
   if (!is.null(.and)) {
     switch (typeof(.and),
@@ -98,7 +306,7 @@ select_grep <- function(DT, patterns, .and = NULL, .but.not = NULL,
   if (!length(selected)) {
     return(data.table())
   }
-    
+  
   out <- DT[, .SD, .SDcols = c(selected)]
   
   if (not_DT) {
@@ -106,3 +314,9 @@ select_grep <- function(DT, patterns, .and = NULL, .but.not = NULL,
   }
   out
 }
+
+
+
+
+
+
