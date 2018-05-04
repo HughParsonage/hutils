@@ -3,7 +3,7 @@ if (getRversion() >= "3.6") {
   if (!requireNamespace("data.table", quietly = TRUE)) {
     install.packages("data.table")
   } 
-  if (package_version("data.table") < "1.11.0") {
+  if (utils::packageVersion("data.table") < "1.11.0") {
     update.packages("data.table")
   }
   data.table::update.dev.pkg()
