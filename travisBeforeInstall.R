@@ -4,4 +4,4 @@ if (getRversion() >= "3.6") {
     install.packages("data.table")
   }
   data.table::update.dev.pkg()
-]
+}
