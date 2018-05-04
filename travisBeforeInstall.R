@@ -1,8 +1,10 @@
 if (getRversion() >= "3.6") {
   # dev changes to ALTREP mean release is broken
-  if (!requireNamespace("data.table", quietly = TRUE) && 
-      package_version("data.table") >= "1.11.0") {
+  if (!requireNamespace("data.table", quietly = TRUE)) {
     install.packages("data.table")
+  } 
+  if (package_version("data.table") < "1.11.0") {
+    update.packages("data.table")
   }
   data.table::update.dev.pkg()
 }
