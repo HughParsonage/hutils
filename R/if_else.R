@@ -108,7 +108,7 @@ if_else <- function(condition, true, false, missing = NULL) {
   } else {
     # N 1 ? ?
     if (anyNA(condition)) {
-      Yes <- condition & !is.na(condition)
+      Yes <- which(condition)
       
       if (lengths[2] == 1L) {
         out[Yes] <- yes

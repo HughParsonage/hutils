@@ -3,6 +3,8 @@
     - `auc`: area under the curve given predicted and actual values.
     - `select_grep`: select columns matching a pattern.
     - `dev_copy2a4`: convenience function for copying to an A4 PDF.
+* `if_else` should be slightly faster when the condition contains `NAs`.
+   before: 3.6 ms now 1.5 ms (for 100,000 entries -- see vignette)
 
 # hutils 1.0.0
 * Stable release:

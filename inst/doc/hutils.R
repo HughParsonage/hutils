@@ -107,6 +107,11 @@ flights %>%
   drop_colr("time") %>%
   drop_colr("arr(?!_delay)", perl = TRUE)
 
+## ----drop_constant_cols--------------------------------------------------
+flights %>%
+  .[origin == "JFK"] %>%
+  drop_constant_cols
+
 ## ----drop_empty_cols-----------------------------------------------------
 planes %>% 
   as.data.table %>% 
@@ -170,4 +175,10 @@ identical(iris[grep("v", Species)],
 ## ----pin-multi-----------------------------------------------------------
 iris[Species %pin% c("ver", "vir")] %>%
   head
+
+## ------------------------------------------------------------------------
+DT <- data.table(x = 1:5,
+                 y = letters[1:5],
+                 AB = c(NA, TRUE, FALSE, TRUE, FALSE))
+select_which(DT, anyNA, .and.dots = "y")
 
