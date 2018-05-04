@@ -6,3 +6,4 @@
 ^vignettes/figure$
 ^appveyor\.yml$
 ^revdep$
+^travisBeforeInstall\.R$
