@@ -89,6 +89,7 @@ microbenchmark(dplyr =  dplyr::if_else(cnd, yes, no, na),
                hutils = hutils::if_else(cnd, yes, no, na),
                check = my_check) %T>%
   print %>%
+  as.data.frame %>%
   autoplot
 
 cnd <- sample(c(TRUE, FALSE, NA), size = 100e3, replace = TRUE)
@@ -100,6 +101,7 @@ microbenchmark(dplyr =  dplyr::if_else(cnd, yes, no, na),
                hutils = hutils::if_else(cnd, yes, no, na),
                check = my_check) %T>%
   print %>%
+  as.data.frame %>%
   autoplot
 ```
 
@@ -115,6 +117,7 @@ microbenchmark(dplyr =  dplyr::coalesce(x, A, B, C),
                hutils = hutils::coalesce(x, A, B, C),
                check = my_check) %T>%
   print %>%
+  as.data.frame %>%
   autoplot
 ```
 
@@ -127,6 +130,7 @@ microbenchmark(dplyr =  dplyr::coalesce(x, A, B, C),
                hutils = hutils::coalesce(x, A, B, C),
                check = my_check) %T>%
   print %>%
+  as.data.frame %>%
   autoplot
 ```
 
@@ -138,6 +142,7 @@ microbenchmark(dplyr =  dplyr::coalesce(x, A, B, C),
                hutils = hutils::coalesce(x, A, B, C),
                check = my_check) %T>%
   print %>%
+  as.data.frame %>%
   autoplot
 ```
 
