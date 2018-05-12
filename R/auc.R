@@ -6,7 +6,7 @@
 #'  an ordered factor, or the unique values are \code{FALSE} and \code{TRUE} (case-insensitively).
 #'  Anything else is an error.
 #' @param pred Numeric (double) vector the same length as \code{actual} giving the predicted probability of \code{TRUE}. Must be a numeric vector the same length as \code{actual}.
-#' @source Source code based on \code{\link[Metrics]{auc}} from Ben Hamner and Michael Frasco and Erin LeDell from the Metrics package.
+#' @source Source code based on \code{Metrics::auc} from Ben Hamner and Michael Frasco and Erin LeDell from the Metrics package.
 #' @export auc
 
 #' @author
@@ -30,7 +30,8 @@ auc <- function(actual, pred) {
   if (!is.double(pred)) {
     # Switch the values
     if (is.logical(pred) && is.double(actual)) {
-      # Immeediate return
+      # Immediate return
+      message("`pred` was type logical and `actual` was type double, so interpreting as auc(pred, actual). Set to auc(actual, pred) for standard behaviour.")
       return(auc(actual = pred, pred = actual))
     }
     
