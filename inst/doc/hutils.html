@@ -12,7 +12,7 @@
 
 <meta name="author" content="Hugh Parsonage" />
 
-<meta name="date" content="2018-05-04" />
+<meta name="date" content="2018-05-12" />
 
 <title>Hutils</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Hutils</h1>
 <h4 class="author"><em>Hugh Parsonage</em></h4>
-<h4 class="date"><em>2018-05-04</em></h4>
+<h4 class="date"><em>2018-05-12</em></h4>
 
 
 
@@ -96,10 +96,6 @@ opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">
 <span class="dt">error =</span> <span class="cf">function</span>(e) {
   opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">eval =</span> <span class="ot">FALSE</span>)
 })</code></pre></div>
-<pre><code>## data.table 1.11.0</code></pre>
-<pre><code>##   The fastest way to learn (by data.table authors): https://www.datacamp.com/courses/data-analysis-the-data-table-way</code></pre>
-<pre><code>##   Documentation: ?data.table, example(data.table) and browseVignettes(&quot;data.table&quot;)</code></pre>
-<pre><code>##   Release notes, videos and slides: http://r-datatable.com</code></pre>
 <div id="aliases" class="section level2">
 <h2>Aliases</h2>
 <p>These are simple additions to <code>magrittr</code>‘s aliases, including: capitalized forms of <code>and</code> and <code>or</code> that invoke <code>&amp;&amp;</code> and <code>||</code> (the ’long-form’ logical operators) and <code>nor</code> / <code>neither</code> functions.</p>
@@ -132,14 +128,12 @@ na &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span c
 
 <span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw">if_else</span>(cnd, yes, no, na),
                <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw">if_else</span>(cnd, yes, no, na),
-               <span class="dt">check =</span> my_check) <span class="op">%T&gt;%</span>
-<span class="st">  </span>print <span class="op">%&gt;%</span>
-<span class="st">  </span>autoplot</code></pre></div>
+               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
+<span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: milliseconds
-##    expr      min       lq      mean   median        uq      max neval cld
-##   dplyr 5.741339 6.519730 10.106987 6.809764 11.375758 154.1358   100   b
-##  hutils 1.967590 2.277802  3.541882 2.332767  2.485915  59.7201   100  a</code></pre>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+##    expr      min       lq      mean   median       uq       max neval cld
+##   dplyr 5.336251 6.632064 10.313847 7.036243 12.16995 168.55931   100   b
+##  hutils 1.951324 2.073151  2.702137 2.398271  2.51332  14.38661   100  a</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cnd &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 yes &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 no &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
@@ -147,14 +141,12 @@ na &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span c
 
 <span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw">if_else</span>(cnd, yes, no, na),
                <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw">if_else</span>(cnd, yes, no, na),
-               <span class="dt">check =</span> my_check) <span class="op">%T&gt;%</span>
-<span class="st">  </span>print <span class="op">%&gt;%</span>
-<span class="st">  </span>autoplot</code></pre></div>
+               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
+<span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: milliseconds
-##    expr      min       lq     mean   median        uq       max neval cld
-##   dplyr 4.985685 5.363662 7.245224 5.404472 10.556256 15.006147   100   b
-##  hutils 1.172181 1.396708 1.874132 1.419448  1.442187  8.039921   100  a</code></pre>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+##    expr      min       lq     mean   median       uq       max neval cld
+##   dplyr 4.187562 4.960684 6.705858 5.545116 5.955771 13.898406   100   b
+##  hutils 1.167061 1.264641 1.716801 1.455437 1.513413  8.251943   100  a</code></pre>
 <p>This speed advantage also appears to be true of <code>coalesce</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
@@ -163,43 +155,40 @@ C &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">
 
 <span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw">coalesce</span>(x, A, B, C),
                <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw">coalesce</span>(x, A, B, C),
-               <span class="dt">check =</span> my_check) <span class="op">%T&gt;%</span>
-<span class="st">  </span>print <span class="op">%&gt;%</span>
-<span class="st">  </span>autoplot</code></pre></div>
-<pre><code>## Unit: milliseconds
-##    expr      min       lq     mean   median       uq       max neval cld
-##   dplyr 2.343760 2.695083 5.814904 2.726406 7.818556 148.89049   100   b
-##  hutils 1.000812 1.258770 2.092449 1.284369 1.315390  12.13834   100  a</code></pre>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
+<span class="st">  </span>print</code></pre></div>
+<pre><code>## Unit: microseconds
+##    expr      min       lq     mean   median       uq        max neval cld
+##   dplyr 1885.668 2686.046 4078.867 2770.525 6241.738   9323.229   100   a
+##  hutils  993.582 1236.481 3475.583 1275.182 1333.310 167157.033   100   a</code></pre>
 <p>especially during short-circuits:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
 <span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw">coalesce</span>(x, A, B, C),
                <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw">coalesce</span>(x, A, B, C),
-               <span class="dt">check =</span> my_check) <span class="op">%T&gt;%</span>
-<span class="st">  </span>print <span class="op">%&gt;%</span>
-<span class="st">  </span>autoplot</code></pre></div>
+               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
+<span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: microseconds
-##    expr      min        lq       mean   median        uq        max neval
-##   dplyr 2081.736 2536.0615 5728.88782 2574.914 7626.5565 149937.386   100
-##  hutils   58.730   61.2905   74.99327   67.464   83.1255    160.527   100
+##    expr      min        lq       mean    median       uq       max neval
+##   dplyr 1690.807 2386.0735 4259.60067 2578.6760 2669.481 60602.191   100
+##  hutils   58.429   60.9885   71.95122   65.8065   79.511   127.699   100
 ##  cld
 ##    b
 ##   a</code></pre>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
 <span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw">coalesce</span>(x, A, B, C),
                <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw">coalesce</span>(x, A, B, C),
-               <span class="dt">check =</span> my_check) <span class="op">%T&gt;%</span>
-<span class="st">  </span>print <span class="op">%&gt;%</span>
-<span class="st">  </span>autoplot</code></pre></div>
+               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
+<span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: microseconds
-##    expr      min       lq      mean    median       uq      max neval cld
-##   dplyr 2303.402 2681.681 4545.0994 2726.5565 7743.262 9070.248   100   b
-##  hutils  574.043  745.564  978.0727  764.9905  790.289 6912.616   100  a</code></pre>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+##    expr      min        lq     mean    median        uq        max neval
+##   dplyr 1813.386 2536.0590 3670.791 2721.5840 2813.8950   8877.487   100
+##  hutils  567.718  680.0575 2681.907  764.5375  796.7635 165714.396   100
+##  cld
+##    a
+##    a</code></pre>
 </div>
 <div id="drop-columns" class="section level2">
 <h2>Drop columns</h2>
@@ -465,9 +454,9 @@ DT2 &lt;-<span class="st"> </span><span class="kw">copy</span>(DT1)
 ##                                                                                             expr
 ##           DT1[, `:=`(distance, haversine_distance(lat_orig, lon_orig, lat_dest,      lon_dest))]
 ##  DT2[, `:=`(distance, distHaversine(cbind(lon_orig, lat_orig),      cbind(lon_orig, lat_orig)))]
-##       min       lq     mean   median       uq       max neval cld
-##  20.92458 21.06041 22.23995 21.13359 21.25361  35.10851   100  a 
-##  37.78748 38.29225 49.01212 46.64103 49.33160 199.04370   100   b</code></pre>
+##       min       lq     mean  median       uq       max neval cld
+##  21.24983 21.38235 22.75108 21.4730 21.57962  80.80091   100  a 
+##  37.65071 38.64655 48.38211 47.0524 49.93059 215.68083   100   b</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(DT1, DT2)</code></pre></div>
 </div>
 <div id="mutate_other" class="section level2">
