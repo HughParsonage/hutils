@@ -4,7 +4,7 @@
 \alias{auc}
 \title{AUC}
 \source{
-Source code based on \code{\link[Metrics]{auc}} from Ben Hamner and Michael Frasco and Erin LeDell from the Metrics package.
+Source code based on \code{Metrics::auc} from Ben Hamner and Michael Frasco and Erin LeDell from the Metrics package.
 }
 \usage{
 auc(actual, pred)
