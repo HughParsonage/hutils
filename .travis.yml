@@ -2,10 +2,11 @@ language: R
 matrix:
   include:
   - r: release
-    env: 
-    - export: HUTILS_BENCHMARK=TRUE
+    env:
+      - HUTILS_BENCHMARK=TRUE
   - r: release
-    - HUTILS_BENCHMARK=FALSE
+    env:
+      - HUTILS_BENCHMARK=FALSE
   - r: devel
 cache: packages
 latex: true
