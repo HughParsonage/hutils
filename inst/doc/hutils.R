@@ -39,9 +39,8 @@ na <- sample(letters, size = 100e3, replace = TRUE)
 
 microbenchmark(dplyr =  dplyr::if_else(cnd, yes, no, na),
                hutils = hutils::if_else(cnd, yes, no, na),
-               check = my_check) %T>%
-  print %>%
-  autoplot
+               check = my_check) %>%
+  print
 
 cnd <- sample(c(TRUE, FALSE, NA), size = 100e3, replace = TRUE)
 yes <- sample(letters, size = 1, replace = TRUE)
@@ -50,9 +49,8 @@ na <- sample(letters, size = 1, replace = TRUE)
 
 microbenchmark(dplyr =  dplyr::if_else(cnd, yes, no, na),
                hutils = hutils::if_else(cnd, yes, no, na),
-               check = my_check) %T>%
-  print %>%
-  autoplot
+               check = my_check) %>%
+  print
 
 ## ----compare_coalesce----------------------------------------------------
 x <- sample(c(letters, NA), size = 100e3, replace = TRUE)
@@ -62,18 +60,16 @@ C <- sample(c(letters, NA), size = 100e3, replace = TRUE)
 
 microbenchmark(dplyr =  dplyr::coalesce(x, A, B, C),
                hutils = hutils::coalesce(x, A, B, C),
-               check = my_check) %T>%
-  print %>%
-  autoplot
+               check = my_check) %>%
+  print
 
 ## ----compare_coalesce_short_circuit_x------------------------------------
 x <- sample(c(letters), size = 100e3, replace = TRUE)
 
 microbenchmark(dplyr =  dplyr::coalesce(x, A, B, C),
                hutils = hutils::coalesce(x, A, B, C),
-               check = my_check) %T>%
-  print %>%
-  autoplot
+               check = my_check) %>%
+  print
 
 ## ----compare_coalesce_short_circuit_A------------------------------------
 x <- sample(c(letters, NA), size = 100e3, replace = TRUE)
@@ -81,9 +77,8 @@ A <- sample(c(letters), size = 100e3, replace = TRUE)
 
 microbenchmark(dplyr =  dplyr::coalesce(x, A, B, C),
                hutils = hutils::coalesce(x, A, B, C),
-               check = my_check) %T>%
-  print %>%
-  autoplot
+               check = my_check) %>%
+  print
 
 ## ----canonical_drop_DT---------------------------------------------------
 DT <- data.table(A = 1:5, B = 1:5, C = 1:5)
