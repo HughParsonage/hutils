@@ -15,7 +15,6 @@ test_that("Benchmarks", {
     len10 <- microbenchmark(if_else(z, 1, 2), times = 10e3)
     len10 <- microbenchmark(if_else(z, 1, 2), times = 10e3)
   }
-  ifelse_median <- median(microbenchmark(ifelse(z, 1, 2))[["time"]])
   len10 <- microbenchmark(if_else(z, 1, 2))
   len10 <- microbenchmark(if_else(z, 1, 2))
   expect_lt(median(len10$time), ifelse_median)
