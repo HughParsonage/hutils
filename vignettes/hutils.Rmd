@@ -87,10 +87,8 @@ na <- sample(letters, size = 100e3, replace = TRUE)
 
 microbenchmark(dplyr =  dplyr::if_else(cnd, yes, no, na),
                hutils = hutils::if_else(cnd, yes, no, na),
-               check = my_check) %T>%
-  print %>%
-  as.data.frame %>%
-  autoplot
+               check = my_check) %>%
+  print
 
 cnd <- sample(c(TRUE, FALSE, NA), size = 100e3, replace = TRUE)
 yes <- sample(letters, size = 1, replace = TRUE)
@@ -99,10 +97,8 @@ na <- sample(letters, size = 1, replace = TRUE)
 
 microbenchmark(dplyr =  dplyr::if_else(cnd, yes, no, na),
                hutils = hutils::if_else(cnd, yes, no, na),
-               check = my_check) %T>%
-  print %>%
-  as.data.frame %>%
-  autoplot
+               check = my_check) %>%
+  print
 ```
 
 This speed advantage also appears to be true of `coalesce`:
@@ -115,10 +111,8 @@ C <- sample(c(letters, NA), size = 100e3, replace = TRUE)
 
 microbenchmark(dplyr =  dplyr::coalesce(x, A, B, C),
                hutils = hutils::coalesce(x, A, B, C),
-               check = my_check) %T>%
-  print %>%
-  as.data.frame %>%
-  autoplot
+               check = my_check) %>%
+  print
 ```
 
 especially during short-circuits:
@@ -128,10 +122,8 @@ x <- sample(c(letters), size = 100e3, replace = TRUE)
 
 microbenchmark(dplyr =  dplyr::coalesce(x, A, B, C),
                hutils = hutils::coalesce(x, A, B, C),
-               check = my_check) %T>%
-  print %>%
-  as.data.frame %>%
-  autoplot
+               check = my_check) %>%
+  print
 ```
 
 ```{r compare_coalesce_short_circuit_A}
@@ -140,10 +132,8 @@ A <- sample(c(letters), size = 100e3, replace = TRUE)
 
 microbenchmark(dplyr =  dplyr::coalesce(x, A, B, C),
                hutils = hutils::coalesce(x, A, B, C),
-               check = my_check) %T>%
-  print %>%
-  as.data.frame %>%
-  autoplot
+               check = my_check) %>%
+  print
 ```
 
 
