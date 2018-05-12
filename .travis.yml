@@ -3,7 +3,7 @@ matrix:
   include:
   - r: release
     env: 
-    - HUTILS_BENCHMARK=TRUE
+    - export: HUTILS_BENCHMARK=TRUE
   - r: release
     - HUTILS_BENCHMARK=FALSE
   - r: devel
