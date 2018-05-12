@@ -1,7 +1,11 @@
 language: R
-r: 
-- devel
-- release
+matrix:
+  include:
+  - r: release
+    env: 
+    - HUTILS_BENCHMARK=TRUE
+    - HUTILS_BENCHMARK=FALSE
+  - r: devel
 cache: packages
 latex: true
 pandoc: true

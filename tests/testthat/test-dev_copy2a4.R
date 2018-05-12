@@ -10,6 +10,7 @@ test_that("Error handling", {
 test_that("Copies to pdf", {
   skip_on_cran()
   skip_if_not_installed("tools")
+  skip_if(identical(Sys.getenv("HUTILS_BENCHMARK"), "TRUE"))
   tempfile1 <- tempfile(fileext = ".pdf")
   tempfile2 <- tempfile(fileext = ".pdf")
   plot(1:10)
