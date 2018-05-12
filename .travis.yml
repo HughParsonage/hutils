@@ -4,6 +4,7 @@ matrix:
   - r: release
     env: 
     - HUTILS_BENCHMARK=TRUE
+  - r: release
     - HUTILS_BENCHMARK=FALSE
   - r: devel
 cache: packages
