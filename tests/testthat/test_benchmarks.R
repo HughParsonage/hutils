@@ -15,7 +15,7 @@ test_that("Benchmarks", {
   z[1:1e4 %% 8 == 3] <- NA
   len1e4c <- microbenchmark(if_else(z, "a", rep_len(letters, 1e4)))
   len1e4c_ifelse <- microbenchmark(base::ifelse(z, "a", rep_len(letters, 1e4)))
-  expect_lt(median(len10$time), 2e6)
+  expect_lt(median(len1e4c$time), 2e6)
   
   
 })
