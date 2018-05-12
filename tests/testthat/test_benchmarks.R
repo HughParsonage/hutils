@@ -6,7 +6,8 @@ test_that("Benchmarks", {
   library(microbenchmark)
   invisible(gc(FALSE, reset = TRUE, full = TRUE))
   z <- as.logical(1:10 %% 3)
-  ifelse_median <- median(microbenchmark(ifelse(z, 1, 2))[["time"]], times = 10e3)
+  ifelse_median <- quantile(microbenchmark(ifelse(z, 1, 2), times = 10e3)[["time"]],
+                            probs = 0.85)
   len10 <- microbenchmark(if_else(z, 1, 2), times = 10e3)
   len10 <- microbenchmark(if_else(z, 1, 2), times = 10e3)
   if (median(len10$time) > ifelse_median) {
