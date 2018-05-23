@@ -101,6 +101,7 @@ test_that("Mass works as expected", {
 })
 
 test_that("var.weight works as expected", {
+  skip_if_not_installed("nycflights13")
   library(data.table)
   library(magrittr)
   library(nycflights13)
@@ -133,6 +134,7 @@ test_that("var.weight works as expected", {
 
 
 test_that("Mutate other weighted", {
+  skip_if_not_installed("nycflights13")
   library(nycflights13)
   set.seed(1)
   routes_pax <- 
@@ -182,6 +184,7 @@ test_that("Mutate other weighted", {
 })
 
 test_that("Mutate other weighted with mass", {
+  skip_if_not_installed("nycflights13")
   library(nycflights13)
   set.seed(1)
   routes_pax <- 

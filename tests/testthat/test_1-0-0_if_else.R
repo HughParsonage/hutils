@@ -121,6 +121,7 @@ test_that("Multi-length na", {
 })
 
 test_that("Matches dplyr::if_else for multi-length missing", {
+  skip_if_not_installed("dplyr")
   expect_identical( dplyr::if_else(c(TRUE, FALSE, NA), 1, 2, missing = c(1, 2, 3)),
                    hutils::if_else(c(TRUE, FALSE, NA), 1, 2, missing = c(1, 2, 3)))
 })
