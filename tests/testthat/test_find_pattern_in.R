@@ -124,7 +124,14 @@ test_that("On Windows", {
 })
 
 test_that("Multiples", {
-  expect_true(TRUE)
+  tempd <- tempfile()
+  skip_if(dir.exists(tempd))
+  dir.create(tempd)
+  tempf <- tempfile(fileext = ".R", tmpdir = tempd)
+  writeLines(c("afpdom", "afp", "# afp"), 
+             tempf)
+  out <- find_pattern_in("afp", tempd, which_lines = "all")
+  expect_equal(nrow(out), 2)
 })
 
 
