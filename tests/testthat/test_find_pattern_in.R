@@ -123,4 +123,52 @@ test_that("On Windows", {
   expect_equal(unique(out[["line_no"]]), 1)
 })
 
+test_that("Multiples", {
+  expect_true(TRUE)
+})
+
+
+test_that("include comments", {
+  skip_on_cran()
+  tempd <- tempfile()
+  skip_if(dir.exists(tempd))
+  dir.create(tempd)
+  temp.R <- tempfile(fileext = ".R", tmpdir = tempd)
+  writeLines(c("# This is an R script that doesn't contain fooc", 
+               "x <- 1", 
+               ""),
+             temp.R)
+  expect_equal(nrow(find_pattern_in("fooc", tempd)), 0)
+  
+  temp2.R <- tempfile(fileext = ".R", tmpdir = tempd)
+  writeLines(c("# This is an R script that does contain fooc", 
+               "fooc <- 1", 
+               ""),
+             temp2.R)
+  expect_equal(nrow(find_pattern_in("fooc", tempd)), 1)
+  
+  temp3.tex <- tempfile(fileext = ".tex", tmpdir = tempd)
+  writeLines(c("% File not containing fooc", 
+               "\\begin{document}", 
+               "food", 
+               "\\end{document}", 
+               ""), 
+             temp3.tex)
+  expect_equal(nrow(find_pattern_in("fooc", tempd, file_pattern = "(R|tex)$")), 1)
+  expect_equal(nrow(find_pattern_in("fooc",
+                                    tempd,
+                                    include.comments = TRUE,
+                                    file_pattern = "(R|tex)$")),
+               3)
+  expect_equal(nrow(find_pattern_in("fooc",
+                                    tempd,
+                                    include.comments = FALSE,
+                                    comment.char = "%", # i.e. keep R comments
+                                    file_pattern = "(R|tex)$")),
+               2)
+  
+  
+  
+})
+
 

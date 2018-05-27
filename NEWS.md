@@ -1,6 +1,10 @@
 # hutils 1.1.1
 * Change of stable test:
     - The only changes were so that the test proceeds when a required package is present. The tests would never have succeeded in cases where they now skip. Consequently the major version number has not been incremented.
+* Bug fix:
+    - `find_pattern_in` respects `include.comments`
+* Enhancement:
+    - `find_pattern_in` accepts argument `which_lines` to allow multiple lines per file, not just the first (the default).
 
 # hutils 1.1.0
 * New functions:
