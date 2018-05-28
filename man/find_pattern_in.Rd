@@ -5,9 +5,10 @@
 \title{Find string pattern in (text) file}
 \usage{
 find_pattern_in(file_contents, basedir = ".", dir_recursive = TRUE,
-  reader = readLines, include.comments = FALSE, use.OS = FALSE,
-  file_pattern = "\\\\.(R|r)(nw|md)?$", file_contents_perl = TRUE,
-  file_contents_fixed = FALSE, file.ext = NULL)
+  reader = readLines, include.comments = FALSE, comment.char = NULL,
+  use.OS = FALSE, file_pattern = "\\\\.(R|r)(nw|md)?$",
+  file_contents_perl = TRUE, file_contents_fixed = FALSE, file.ext = NULL,
+  which_lines = c("first", "all"))
 }
 \arguments{
 \item{file_contents}{A perl-regular expression as a search query.}
@@ -19,6 +20,8 @@ find_pattern_in(file_contents, basedir = ".", dir_recursive = TRUE,
 \item{reader}{A function, akin to \code{base::readLines}, the default, that accepts a filename and returns a character vector.}
 
 \item{include.comments}{If \code{FALSE}, the default, comments (i.e. anything after a \code{\#}) are not searched.}
+
+\item{comment.char}{If \code{include.comments} is \code{FALSE}, what character marks a comment character? By default, \code{NULL}, which sets the correct comment symbol for R and TeX files.}
 
 \item{use.OS}{Use the operating system to determine file list. Only available on Windows. If it fails, a fall-back option
 (using \code{dir}) is used.}
@@ -33,9 +36,11 @@ be interpreted as a \code{perl} regex?}
 be interpreted as a \code{fixed} regex?}
 
 \item{file.ext}{A file extension passed to the operating system if \code{use.OS} is used.}
+
+\item{which_lines}{One of \code{"first"} and \code{"all"}. If \code{"first"} only the first match in any file is returned in the result; if \code{"all"}, all matches are.}
 }
 \value{
-A \code{data.table}, one row per filename with a match, which includes the first line that matched.
+A \code{data.table}, showing the matches per file.
 }
 \description{
 Find string pattern in (text) file
