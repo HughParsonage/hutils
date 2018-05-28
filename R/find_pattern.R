@@ -161,7 +161,9 @@ find_pattern_in <- function(file_contents,
   }
 }
   
+#nocov start
 deprecate_windows_finder <- function() {
   if (identical(.Platform$OS.type,
-                "windows")) .Deprecated("find_pattern_in_windows", package = "hutilsInteractive")
+                "windows")) .Deprecated("hutilsInteractive::find_pattern_in_windows")
 }
+#nocov end
