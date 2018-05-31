@@ -13,7 +13,9 @@
 #' @export
 #' 
 #' @examples
-#' 
+#' \dontrun{
+#'  RQ("dplyr", "dplyr needs installing")
+#' }
 #' 
 #' 
 
