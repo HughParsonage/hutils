@@ -8,7 +8,7 @@ test_that("RQ deparse and normal", {
   expect_true(RQ(HUTILS, TRUE, FALSE))
   
   expect_error(RQ(c("hutils", "data.table")))
-  expect_null(RQ("hutils", TRUE, stop("Should never be reached")))
+  expect_null(RQ("HUTILS", TRUE, stop("Should never be reached")))
 })
 
 
