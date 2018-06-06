@@ -1,16 +1,21 @@
 #' Maximum area given x and y coordinates
-#' @param x,y Coordinates of a curve containing a rectangle. The 
+#' @param DT,x,y Coordinates of a curve containing a rectangle. 
+#' Either as a list, \code{DT}, containing columns \code{x} and \code{y}.
+#' @param minH The minimum height of the rectangles.
+#' @param minW The minimum width of the rectangles.
+#' @param maximize How the rectangle should be selected. Currently, only \code{"area"} supported.
+#' @param incl_negative Should areas below the x-axis be considered?
 #' 
-#' @return The coordinates of a rectangle, from (0, 0), (1, 0), (1, 1), (0, 1), south-west clockwise, 
+#' @return A \code{data.table}: The coordinates of a rectangle, from (0, 0), (1, 0), (1, 1), (0, 1), south-west clockwise, 
 #' that is contained within the area of the chart for positive values only.
 #' 
-#' @examples ahull(c(0, 1, 2, 1, 0), c(0, 1, 2, 0, 0))
+#' @examples ahull(, c(0, 1, 2, 1, 0), c(0, 1, 2, 0, 0))
 #' 
-#' @export
+#' @export ahull
 
 
 
-ahull <- function(x, y) {
+ahull <- function(DT, x = DT$x, y = DT$y, minH = 0, minW = 0, maximize = "area", incl_negative = FALSE) {
   dt <- data.table(x, y)
   setkey(dt, x)
   set_local_extrema(dt)
@@ -55,14 +60,44 @@ ahull <- function(x, y) {
     }
     list(ii = ii,
          h = H,
+         w = x_2 - x_1,
          xmin = x_1, 
          xmax = x_2,
          area = y[ii] * {x_2 - x_1})
   }
   
-  area_from_minima <- 
-    rbindlist(lapply(which(dt[["local_min"]]), area_from_min))
-  area_from_minima
+  area_from_minima <- rbindlist(lapply(which(dt[["local_min"]]), area_from_min))
+  setnames(area_from_minima, "ii", "x_centre")
+  if (incl_negative) {
+    negative_area_from_minima <- 
+      ahull(x = x,
+            y = -y,
+            minH = minH,
+            minW = minW,
+            maximize = maximize,
+            incl_negative = FALSE)
+    area_from_minima <- 
+      rbind(area_from_minima[, negative := FALSE], 
+            negative_area_from_minima[, negative := TRUE], 
+            use.names = TRUE, 
+            fill = TRUE)
+    
+  } else {
+    area_from_minima[, negative := FALSE]
+  }
+  
+ 
+  area_from_minima <- area_from_minima[h >= minH]
+  area_from_minima <- area_from_minima[w >= minW]
+  area_from_minima[(!negative), ymin := 0]
+  area_from_minima[(negative), ymax := 0]
+  
+  area_from_minima[(!negative), ymax := h]
+  area_from_minima[(negative), ymin := -h]
+  switch(maximize, 
+         "area" = area_from_minima[which.max(area)], 
+         area_from_minima[which.max(area)])
+         
 }
 
 set_local_extrema <- function(dt) {
