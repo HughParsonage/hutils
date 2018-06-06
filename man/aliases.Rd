@@ -9,6 +9,7 @@
 \alias{NOR}
 \alias{NEITHER}
 \alias{pow}
+\alias{XOR}
 \title{Aliases}
 \usage{
 AND(x, y)
@@ -24,6 +25,8 @@ NOR(x, y)
 NEITHER(x, y)
 
 pow()
+
+XOR(x, y)
 }
 \arguments{
 \item{x, y}{Logical conditions.}
