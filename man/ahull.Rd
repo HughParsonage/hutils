@@ -27,6 +27,6 @@ that is contained within the area of the chart for positive values only.
 Maximum area given x and y coordinates
 }
 \examples{
-ahull(, c(0, 1, 2, 1, 0), c(0, 1, 2, 0, 0))
+ahull(, c(0, 1, 2, 3, 4), c(0, 1, 2, 0, 0))
 
 }
