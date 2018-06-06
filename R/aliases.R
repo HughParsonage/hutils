@@ -42,3 +42,7 @@ NEITHER <- function(x, y) !x && !y
 #' @rdname aliases
 #' @export
 pow <- `^`
+
+#' @rdname aliases
+#' @export
+XOR <- function(x, y) if (is.na(x) || is.na(y)) NA else if (x) !y else y
