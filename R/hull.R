@@ -56,6 +56,7 @@ ahull <- function(DT, x = DT$x, y = DT$y, minH = 0, minW = 0, maximize = "area",
            xmin = xmin,
            xmax = xmax, 
            area = area)
+    setDT(area_from_minima)
   } else {
     area_from_min <- function(ii) {
       x <- .subset2(dt, "x")
