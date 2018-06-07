@@ -50,16 +50,14 @@ ahull <- function(DT, x = DT$x, y = DT$y, minH = 0, minW = 0, maximize = "area",
       }
     }
     area_from_minima <- 
-      data.table(ii = seq_along(area), 
-                 h = h, 
-                 w = w,
-                 xmin = xmin,
-                 xmax = xmax, 
-                 area = area)
+      list(ii = seq_along(area), 
+           h = h, 
+           w = w,
+           xmin = xmin,
+           xmax = xmax, 
+           area = area)
   } else {
     area_from_min <- function(ii) {
-      stopifnot(is.integer(ii), 
-                length(ii) == 1L)
       x <- .subset2(dt, "x")
       y <- .subset2(dt, "y")
       n <- length(x)
@@ -159,6 +157,8 @@ ahull <- function(DT, x = DT$x, y = DT$y, minH = 0, minW = 0, maximize = "area",
   
   area_from_minima <- area_from_minima[h >= minH]
   area_from_minima <- area_from_minima[w >= minW]
+  
+  ymin <- ymax <- NULL
   area_from_minima[(!negative), ymin := 0]
   area_from_minima[(negative), ymax := 0]
   
@@ -176,6 +176,7 @@ set_local_extrema <- function(dt) {
             haskey(dt), 
             key(dt) == "x")
   LL <- nrow(dt)
+  local_min <- local_max <- NULL
   if (LL == 1L) {
     dt[, local_min := TRUE]
     dt[, local_max := TRUE]

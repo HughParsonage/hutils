@@ -391,6 +391,17 @@ RQ("dplyr", "dplyr needs installing", "dplyr installed.")
 
 This locates the biggest rectangle beneath a curve:
 
+```{r ahull-1}
+ggplot(data.table(x = c(0, 1, 2, 3, 4), y = c(0, 1, 2, 0.1, 0))) +
+  geom_area(aes(x, y)) +
+  geom_rect(data = ahull(, c(0, 1, 2, 3, 4), c(0, 1, 2, 0.1, 0)),
+            aes(xmin = xmin,
+                xmax = xmax,
+                ymin = ymin,
+                ymax = ymax),
+            color = "red") 
+```
+
 ```{r ahull-demos, fig.width = 8, fig.height = 6}
 set.seed(101)
 ahull_dt <-
