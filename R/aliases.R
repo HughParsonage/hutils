@@ -46,3 +46,6 @@ pow <- `^`
 #' @rdname aliases
 #' @export
 XOR <- function(x, y) if (anyNA(x)) NA else if (x) !y else y
+# speed: anyNA > is.na > is.na || is.na
+
+

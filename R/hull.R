@@ -17,7 +17,8 @@
 
 ahull <- function(DT, x = DT$x, y = DT$y, minH = 0, minW = 0, maximize = "area", incl_negative = FALSE) {
   dt <- data.table(x, y)
-  setkey(dt, x)
+  setkeyv(dt, 'x')
+  local_min <- NULL
   set_local_extrema(dt)
   dt[y <= 0, local_min := FALSE]
   
@@ -82,8 +83,7 @@ ahull <- function(DT, x = DT$x, y = DT$y, minH = 0, minW = 0, maximize = "area",
             x_01 <- x[i - 1L]
             y_02 <- y[i]
             y_01 <- y[i - 1L]
-            XX <- x_01 + (H - y_01) * (x_02 - x_01) / (y_02 - y_01)
-            x_1 <- XX
+            x_1 <- x_01 + (H - y_01) * (x_02 - x_01) / (y_02 - y_01)
             x1_endpoint <- FALSE
             break
           }
@@ -109,8 +109,7 @@ ahull <- function(DT, x = DT$x, y = DT$y, minH = 0, minW = 0, maximize = "area",
             y_01 <- y[i]
             y_02 <- y[i - 1L]
             
-            XX <- x_02 - (H - y_01) * (x_02 - x_01) / (y_02 - y_01)
-            x_2 <- XX
+            x_2 <- x_02 - (H - y_01) * (x_02 - x_01) / (y_02 - y_01)
             x2_endpoint <- FALSE
             break
           }
@@ -145,6 +144,7 @@ ahull <- function(DT, x = DT$x, y = DT$y, minH = 0, minW = 0, maximize = "area",
             minW = minW,
             maximize = maximize,
             incl_negative = FALSE)
+    negative <- NULL
     area_from_minima <- 
       rbind(area_from_minima[, negative := FALSE], 
             negative_area_from_minima[, negative := TRUE], 
@@ -172,6 +172,7 @@ ahull <- function(DT, x = DT$x, y = DT$y, minH = 0, minW = 0, maximize = "area",
 }
 
 set_local_extrema <- function(dt) {
+  x <- y <- NULL
   stopifnot("x" %in% names(dt), 
             "y" %in% names(dt), 
             haskey(dt), 
