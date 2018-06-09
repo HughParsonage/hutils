@@ -45,4 +45,4 @@ pow <- `^`
 
 #' @rdname aliases
 #' @export
-XOR <- function(x, y) if (is.na(x) || is.na(y)) NA else if (x) !y else y
+XOR <- function(x, y) if (anyNA(x)) NA else if (x) !y else y
