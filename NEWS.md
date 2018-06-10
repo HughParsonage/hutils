@@ -1,6 +1,7 @@
 # hutils 1.2.0
 * New functions:
   - `RQ(p, yes, no)` short for `if (!requireNamespace("p", quietly = TRUE)) yes else no`.
+  - `isAttached` for conveniently determining whether a namespace is attached
   - `ahull` for locating rectangles in a plot, as for automatically locating a text box.
 
 # hutils 1.1.1

@@ -11,4 +11,12 @@ test_that("RQ deparse and normal", {
   expect_null(RQ("HUTILS", NULL, stop("Should never be reached")))
 })
 
+test_that("isAttached", {
+  skip_on_cran()
+  expect_true(isAttached(hutils))
+  expect_true(isAttached("hutils"))
+  expect_false(isAttached("fastmatch"))
+  expect_false(isAttached("___ gd9"))
+})
+
 
