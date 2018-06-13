@@ -22,7 +22,7 @@ selector <- function(DT, ..., cols = NULL, preserve.key = TRUE) {
   }
   
   if (is.null(dot_cols) && is.null(cols)) {
-    data.table()
+    return(data.table())
   }
   
   dt_key <- if (preserve.key) key(DT)

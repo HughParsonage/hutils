@@ -15,4 +15,10 @@ test_that("Expected results", {
   expect_equal(o5, dt[, .(z, x)])
   expect_true(haskey(o5))
   expect_equal(key(o5), "z")
+  
+  o6 <- selector(dt, cols = 1:2)
+  expect_equal(o6, dt[, .(x, y)])
+  
+  o0 <- selector(dt)
+  expect_identical(o0, data.table())
 })
