@@ -61,7 +61,9 @@ ahull <- function(DT, x = DT$x, y = DT$y, minH = 0, minW = 0, maximize = "area",
   } else {
     area_from_min <- function(ii) {
       x <- .subset2(dt, "x")
-      y <- .subset2(dt, "y")
+      # Only want the positive
+      # Negative values don't reflect the area chart
+      y <- pmax.int(.subset2(dt, "y"), 0)
       n <- length(x)
       H <- y[ii]
       if (H == 0) {
@@ -172,7 +174,7 @@ ahull <- function(DT, x = DT$x, y = DT$y, minH = 0, minW = 0, maximize = "area",
 }
 
 set_local_extrema <- function(dt) {
-  x <- y <- NULL
+  y <- NULL
   stopifnot("x" %in% names(dt), 
             "y" %in% names(dt), 
             haskey(dt), 
@@ -182,30 +184,89 @@ set_local_extrema <- function(dt) {
   if (LL == 1L) {
     dt[, local_min := TRUE]
     dt[, local_max := TRUE]
-    } else {
-      dt[, local_min := and(shift(y, fill = first(y), type = "lag") > y, 
-                            shift(y, fill = last(y), type = "lead") > y)]
-      dt[, local_max := and(shift(y, fill = first(y), type = "lag") < y, 
-                            shift(y, fill = last(y), type = "lead") < y)]
-      
-      y <- .subset2(dt, "y")
-      
-      set(dt, i = 1L, j = "local_min", value = y[1L] < y[2L])
-      set(dt, i = 1L, j = "local_max", value = y[1L] > y[2L])
-      
-      set(dt, i = LL, j = "local_min", value = y[LL] < y[LL - 1L])
-      set(dt, i = LL, j = "local_max", value = y[LL] > y[LL - 1L])
-    }
-    dt
+  } else {
+    dt[, local_min := and(shift(y, fill = first(y), type = "lag") > y, 
+                          shift(y, fill = last(y), type = "lead") > y)]
+    dt[, local_max := and(shift(y, fill = first(y), type = "lag") < y, 
+                          shift(y, fill = last(y), type = "lead") < y)]
+    
+    y <- .subset2(dt, "y")
+    
+    set(dt, i = 1L, j = "local_min", value = y[1L] < y[2L])
+    set(dt, i = 1L, j = "local_max", value = y[1L] > y[2L])
+    
+    set(dt, i = LL, j = "local_min", value = y[LL] < y[LL - 1L])
+    set(dt, i = LL, j = "local_max", value = y[LL] > y[LL - 1L])
   }
+  dt
+}
   
+#           .(x2 y2)
+#          / \
+#         /   \
+# (x1 y1)/     \
+#               \.(x3 y3)  
   
-  
-  
-  
-  
-  
-  
-  
-  
+
+A <- function(x1, y1, x2, y2, x3, y3) {
+  stopifnot(x1 < x2, x2 < x3, 
+            y1 < y2, y2 > y3, y3 <= y1, y3 >= 0)
+  w <- x3 - x2 + ((x2 - x3) * (y1 - y3)) / (y2 - y3)
+  h <- y2 - y3
+  list(w * h / 2, x2 + w)
+}
+
+areas_right_of <- function(dt, return_ind = TRUE) {
+  x <- .subset2(dt, "x")
+  y <- .subset2(dt, "y")
+  areas <- X2 <- matrix(NA_real_, 
+                        ncol = length(x),
+                        nrow = length(x))
+  max_area <- 0
+  for (i1 in seq_along(x)) {
+    for (i3 in seq_along(x)) {
+      if (i3 > i1 + 1L) {
+        y1 <- y[i1]
+        y3 <- y[i3]
+        # prev was local min
+        if (y[i3 - 2L] > y[i3 - 1L] &&
+            y[i3] > y[i3 - 1L]) {
+          break
+        }
+        
+        if (y3 <= y1 && y3 >= 0) {
+          for (i2 in seq.int(i1 + 1, i3 - 1)) {
+            y2 <- y[i2]
+            if (y2 > y1 && y2 > y3) {
+              x1 <- x[i1]
+              x2 <- x[i2]
+              x3 <- x[i3]
+              Area_X2 <- A(x1, y1, x2, y2, x3, y3)
+              if (max_area < Area_X2[[1L]]) {
+                cat(max_area, "\t", x1, "\t", x3, "\n")
+                max_area <- Area_X2[[1L]]
+                out_x <- x1
+                out_y <- x3
+              }
+              areas[i1, i3] <- Area_X2[[1L]]
+              X2[i1, i3] <- Area_X2[[2L]]
+            }
+          }
+        }
+        
+      }
+    }
+  }
+  if (return_ind) {
+    return(c(out_x, out_y))
+  }
+  list(areas, X2)
+}
+
+
+
+
+
+
+
   
