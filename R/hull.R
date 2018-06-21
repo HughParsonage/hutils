@@ -1,4 +1,5 @@
 #' Maximum area given x and y coordinates
+#' @description Present since \code{hutils 1.2.0}.
 #' @param DT,x,y Coordinates of a curve containing a rectangle. 
 #' Either as a list, \code{DT}, containing columns \code{x} and \code{y}.
 #' @param minH The minimum height of the rectangles.
@@ -137,7 +138,7 @@ ahull <- function(DT, x = DT$x, y = DT$y, minH = 0, minW = 0, maximize = "area",
     
     area_from_minima <- rbindlist(lapply(which(dt[["local_min"]]), area_from_min))
   }
-  setnames(area_from_minima, "ii", "x_centre")
+  setnames(area_from_minima, "ii", "x_stalactite")
   if (incl_negative) {
     negative_area_from_minima <- 
       ahull(x = x,
@@ -262,6 +263,28 @@ areas_right_of <- function(dt, return_ind = TRUE) {
   }
   list(areas, X2)
 }
+
+#' @noRd
+#' @param y0 A height
+#' @param x,y Coordinates of a curve
+height2x <- function(h, x, y) {
+  if (is.unsorted(x)) {
+    stop("`x` must be sorted.")
+  }
+  y_above <- y >= h
+  y_below <- y < h
+  
+  intersections <- 
+    c(which(y_above & shift(y_below, type = "lead")),
+      which(y_below & shift(y_above, type = "lead")))
+  x_1 <- x[intersections]
+  x_2 <- x[intersections + 1L]
+  y_1 <- y[intersections]
+  y_2 <- y[intersections + 1L]
+  x_1 + {x_2 - x_1} * {h - y_1} / {y_2 - y_1}
+}
+
+
 
 
 

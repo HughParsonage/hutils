@@ -13,7 +13,7 @@ test_that("Triangles ", {
 
 test_that("Hulls may be above 0 even if the next point on the curve is negative", {
   skip("Not yet considered")
-  dt_dip <- data.table(x = 1:10, y = abs(c(1, 2, 1.5, 1, -1.3, -30.5, -1, 4, 2, 1)))
+  dt_dip <- data.table(x = 1:11, y = c(1, 2, 1.5, 1.5, 1, 50.1, 50, 1, 4, 2, 1))
   out_dip <- ahull(dt_dip)
   expect_equal(out_dip[["xmin"]], 1)
   expect_equal(out_dip[["ymax"]], 0)

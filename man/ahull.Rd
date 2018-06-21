@@ -24,7 +24,7 @@ A \code{data.table}: The coordinates of a rectangle, from (0, 0), (1, 0), (1, 1)
 that is contained within the area of the chart for positive values only.
 }
 \description{
-Maximum area given x and y coordinates
+Present since \code{hutils 1.2.0}.
 }
 \examples{
 ahull(, c(0, 1, 2, 3, 4), c(0, 1, 2, 0, 0))
