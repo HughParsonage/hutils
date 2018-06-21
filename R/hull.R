@@ -23,7 +23,7 @@ ahull <- function(DT, x = DT$x, y = DT$y, minH = 0, minW = 0, maximize = "area",
   set_local_extrema(dt)
   dt[y <= 0, local_min := FALSE]
   
-  if (!any(dt$local_min)) {
+  if (!any(dt[['local_min']])) {
     # All
     n <- nrow(dt)
     area <- double(n)
