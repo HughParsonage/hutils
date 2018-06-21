@@ -15,6 +15,15 @@ test_that("warnings", {
   expect_warning(ahull(, 0, 0))
 })
 
+test_that("mini-utils", {
+  expect_identical(A(1, 1, 2, 2, 3, 0),
+                   list(0.5, 2.5))
+  
+  expect_identical(height2x(1.5, 1:5, c(1, 2, -1, 1, 2)),
+                   c(2+1/6, 1.5, 4.5))  
+  
+})
+
 test_that("Corners", {
   h0 <- ahull(, c(0:4), rep(-1, 5))
   expect_equal(h0[["h"]], 0)
