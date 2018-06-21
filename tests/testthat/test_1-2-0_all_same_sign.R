@@ -2,6 +2,7 @@ context("all_same_sign")
 
 test_that("all_same_sign", {
   expect_true(all_same_sign(1:10))
+  expect_true(all_same_sign(-1 * (1:10)))
   expect_false(all_same_sign(1:10 - 1))
   expect_true(all_same_sign(0))
   expect_true(all_same_sign(NA))

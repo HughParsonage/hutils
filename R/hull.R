@@ -247,7 +247,6 @@ areas_right_of <- function(dt, return_ind = TRUE) {
               x3 <- x[i3]
               Area_X2 <- A(x1, y1, x2, y2, x3, y3)
               if (max_area < Area_X2[[1L]]) {
-                cat(max_area, "\t", x1, "\t", x3, "\n")
                 max_area <- Area_X2[[1L]]
                 out_x <- x1
                 out_y <- x3

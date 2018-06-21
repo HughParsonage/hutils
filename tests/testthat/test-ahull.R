@@ -16,11 +16,26 @@ test_that("warnings", {
 })
 
 test_that("mini-utils", {
+  library(magrittr)
+  library(data.table)
   expect_identical(A(1, 1, 2, 2, 3, 0),
                    list(0.5, 2.5))
   
   expect_identical(height2x(1.5, 1:5, c(1, 2, -1, 1, 2)),
-                   c(2+1/6, 1.5, 4.5))  
+                   c(2+1/6, 1.5, 4.5))
+  expect_error(height2x(1.5, 5:1, c(1, 2, -1, 1, 2)), 
+               regexp = "sorted")
+  
+  dtemi <- data.table(x = 1:5,
+                      y = c(0.03, 0.49, 0, 0.65, 1))
+  expect_identical(areas_right_of(dtemi),
+                   c(1L, 3L))
+  dtemil_1nna <- 
+    areas_right_of(dtemi, return_ind = FALSE)[[1L]] %>%
+    as.double %>%
+    .[!is.na(.)]
+  expect_equal(dtemil_1nna, 0.23, tol = 0.001)
+  
   
 })
 
