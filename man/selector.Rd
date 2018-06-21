@@ -4,7 +4,7 @@
 \alias{selector}
 \title{Fasting selection of \code{data.table} columns}
 \usage{
-selector(DT, ..., cols = NULL, preserve.key = TRUE)
+selector(DT, ..., cols = NULL, preserve.key = TRUE, shallow = FALSE)
 }
 \arguments{
 \item{DT}{A \code{data.table}.}
@@ -13,11 +13,25 @@ selector(DT, ..., cols = NULL, preserve.key = TRUE)
 
 \item{cols}{Character vector of column names.}
 
-\item{preserve.key}{Whether to reapply the key, if \code{DT} has one.}
+\item{preserve.key}{(logical, default: \code{TRUE}) Reapply the key (if \code{DT} has one)?}
+
+\item{shallow}{(logical, default: \code{FALSE}) Should the result be a shallow
+\code{\link[data.table]{copy}} of 
+\code{DT}'s columns or should the columns be assigned by reference? If \code{TRUE},
+any modification to the result also modifies the selected columns in \code{DT}.}
 }
 \value{
 \code{DT} with the selected columns.
 }
 \description{
 Present since \code{hutils 1.2.0}.
+}
+\examples{
+RQ("nycflights13", no = {
+ library(nycflights13)
+ library(data.table)
+ fs <- as.data.table(flights)
+ fs1 <- selector(fs, year, month, day, arr_delay)
+ fs1[, arr_delay := NA]
+})
 }

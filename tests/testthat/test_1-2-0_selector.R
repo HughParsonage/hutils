@@ -22,3 +22,15 @@ test_that("Expected results", {
   o0 <- selector(dt)
   expect_identical(o0, data.table())
 })
+
+test_that("Copies", {
+  dt <- data.table(x = 2, y = 4:5)
+  dt2 <- selector(dt, y)
+  dt2[, y := NA]
+  expect_false(anyNA(dt[["y"]]))
+  
+  dt <- data.table(x = 2, y = 4:5)
+  dt2 <- selector(dt, y, shallow = TRUE)
+  dt2[, y := NA]
+  expect_true(anyNA(dt[["y"]]))
+})
