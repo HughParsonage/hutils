@@ -45,7 +45,7 @@ test_that("selector faster than dt[, .]", {
   dt <- dt[1:1e4]
   
   selector_0 <- microbenchmark(dt[, .(x, y)])
-  selector_1 <- microbenchmark(selector(dt, cols = c("x", "y")))
+  selector_1 <- microbenchmark(selector(dt, cols = c("x", "y"), shallow = FALSE))
   
   expect_gt(median(selector_0$time), 
             median(selector_1$time))
