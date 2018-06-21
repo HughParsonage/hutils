@@ -19,7 +19,7 @@ test_that("Benchmarks", {
   expect_lt(median(len1e4c$time), 2e6)
 })
 
-test_that("selector faster than dt[, .]", {
+test_that("selector faster than dt[, .] 10 M", {
   skip_on_cran()
   skip_if_not(identical(Sys.getenv("HUTILS_BENCHMARK"), "TRUE"))
   skip_if_not_installed("microbenchmark")
@@ -30,25 +30,31 @@ test_that("selector faster than dt[, .]", {
   
   selector_0 <- microbenchmark(dt[, .(x, y)])
   selector_1 <- microbenchmark(selector(dt, cols = c("x", "y")))
-  
+  selector_2 <- microbenchmark(selector(dt, cols = c("x", "y"), shallow = TRUE))
   expect_gt(median(selector_0$time), 
-            median(selector_1$time))
+            median(selector_2$time))
+  
+  expect_gt(1.1 * median(selector_0$time), 
+            median(selector_1$time), 
+            label = "10 M shallow")
   
   dt <- dt[1:1e5]
   
   selector_0 <- microbenchmark(dt[, .(x, y)])
-  selector_1 <- microbenchmark(selector(dt, cols = c("x", "y")))
+  selector_1 <- microbenchmark(selector(dt, cols = c("x", "y"), shallow = TRUE))
   
   expect_gt(median(selector_0$time), 
-            median(selector_1$time))
+            median(selector_1$time), 
+            label = "100,000")
   
   dt <- dt[1:1e4]
   
   selector_0 <- microbenchmark(dt[, .(x, y)])
-  selector_1 <- microbenchmark(selector(dt, cols = c("x", "y"), shallow = FALSE))
+  selector_1 <- microbenchmark(selector(dt, cols = c("x", "y"), shallow = TRUE))
   
   expect_gt(median(selector_0$time), 
-            median(selector_1$time))
+            median(selector_1$time), 
+            label = "10,000")
   
   
 })
