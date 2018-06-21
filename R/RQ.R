@@ -7,9 +7,9 @@
 #' be frequent and cloud the message.
 #' 
 #' 
-#' @param pkg Packages to test whether the package is not yet installed.
+#' @param pkg Package to test whether the package is not yet installed.
 #' @param yes Response if \code{pkg} is \strong{not} installed.
-#' @param no Response if \code{pkg} is installed.
+#' @param no (optional) Response if \code{pkg} is installed.
 #' @export
 #' 
 #' @examples

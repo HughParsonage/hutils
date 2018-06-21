@@ -7,11 +7,11 @@
 RQ(pkg, yes, no)
 }
 \arguments{
-\item{pkg}{Packages to test whether the package is not yet installed.}
+\item{pkg}{Package to test whether the package is not yet installed.}
 
 \item{yes}{Response if \code{pkg} is \strong{not} installed.}
 
-\item{no}{Response if \code{pkg} is installed.}
+\item{no}{(optional) Response if \code{pkg} is installed.}
 }
 \description{
 \code{if (!requireNamespace(pkg, quietly = TRUE))} \emph{yes} \code{else} \emph{no}.
