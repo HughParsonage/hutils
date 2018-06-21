@@ -10,6 +10,15 @@ test_that("Error handling", {
                            patterns = 1),
                regexp = "`patterns` is not a character vector.",
                fixed = TRUE)
+  expect_error(select_grep(data.table(x = 1), "x", 
+                           .but.not = sqrt),
+               regexp = "`.but.not = sqrt` was type builtin",
+               fixed = TRUE)
+  expect_error(select_grep(data.table(x = 1), "x", 
+                           .and = sqrt),
+               regexp = "`.and = sqrt` was type builtin",
+               fixed = TRUE)
+  
 })
 
 test_that("Select pattern", {
