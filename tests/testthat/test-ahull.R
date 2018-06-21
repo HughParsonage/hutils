@@ -16,6 +16,10 @@ test_that("Triangles ", {
   expect_equal(ex2$ymax, 1.5)
   expect_equal(ex3$ymin, -1.5)
   
+  ex5 <- ahull(data.table(x = 1:5, 
+                          y = c(0, 1, 0, 1, 0)))
+  expect_equal(ex5[["h"]], 0)
+  
 })
 
 test_that("warnings", {
