@@ -17,6 +17,9 @@
 
 
 ahull <- function(DT, x = DT$x, y = DT$y, minH = 0, minW = 0, maximize = "area", incl_negative = FALSE) {
+  if (length(y) == 1L || length(y) == 1L) {
+    warning("`y` or `x` is length-one. Unlikely ahull() will be useful.")
+  }
   dt <- data.table(x, y)
   setkeyv(dt, 'x')
   local_min <- NULL

@@ -11,6 +11,17 @@ test_that("Triangles ", {
   
 })
 
+test_that("warnings", {
+  expect_warning(ahull(, 0, 0))
+})
+
+test_that("Corners", {
+  h0 <- ahull(, c(0:4), rep(-1, 5))
+  expect_equal(h0[["h"]], 0)
+  hxy <- ahull(, 0:4, c(0, 1, 2, 1, 0.5))
+  expect_equal(hxy[["area"]], 1.75)
+})
+
 test_that("Hulls may be above 0 even if the next point on the curve is negative", {
   skip("Not yet considered")
 })
