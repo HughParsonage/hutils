@@ -7,7 +7,14 @@ test_that("Triangles ", {
   
   ex2 <- ahull(data.table(x = c(1:6),
                           y = c(0, 2, 1.5, 2, 0.9, -1)))
+  ex3 <- ahull(data.table(x = c(1:6),
+                          y = -c(0, 2, 1.5, 2, 0.9, -1)),
+               incl_negative = TRUE)
+  ex4 <- ahull(data.table(x = c(1:6),
+                          y = c(0, 2, 1.5, 2, 0.9, -1)),
+               maximize = "")
   expect_equal(ex2$ymax, 1.5)
+  expect_equal(ex3$ymin, -1.5)
   
 })
 
@@ -44,6 +51,8 @@ test_that("Corners", {
   expect_equal(h0[["h"]], 0)
   hxy <- ahull(, 0:4, c(0, 1, 2, 1, 0.5))
   expect_equal(hxy[["area"]], 1.75)
+  h01 <- ahull(, c(0:4), c(0, 1, 2, -1, 4))
+  expect_equal(h01[["xmax"]], 2+1/3)
 })
 
 test_that("Hulls may be above 0 even if the next point on the curve is negative", {
