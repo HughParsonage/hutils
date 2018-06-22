@@ -4,6 +4,7 @@
 #' @import data.table
 #' @importFrom magrittr %>%
 #' @importFrom magrittr not
+#' @importFrom magrittr and
 #' @importFrom magrittr is_greater_than
 #' @importFrom fastmatch %fin%
 #' @importFrom fastmatch fmatch
