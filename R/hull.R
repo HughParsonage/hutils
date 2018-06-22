@@ -63,7 +63,7 @@ ahull <- function(DT, x = DT$x, y = DT$y, minH = 0, minW = 0, maximize = "area",
            area = area)
     setDT(area_from_minima)
   } else {
-    area_from_minima <- rbindlist(lapply(which(dt[["local_min"]]), area_from_min))
+    area_from_minima <- rbindlist(lapply(which(dt[["local_min"]]), area_from_min, dt = dt))
   }
   setnames(area_from_minima, "ii", "x_stalactite")
   if (incl_negative) {
@@ -144,7 +144,7 @@ A <- function(x1, y1, x2, y2, x3, y3) {
   list(w * h / 2, x2 + w)
 }
 
-area_from_min <- function(ii) {
+area_from_min <- function(ii, dt) {
   x <- .subset2(dt, "x")
   # Only want the positive
   # Negative values don't reflect the area chart
