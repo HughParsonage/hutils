@@ -22,6 +22,9 @@ test_that("Triangles ", {
   expect_true(is.na(area_from_min(1L, data.table(x = 1:6, y = c(0, 1, 0, 1, 0, 0)))[["xmax"]]))
   expect_equal(area_from_min(1L, data.table(x = 1:6, y = c(0, 1, 0, 1, 0, 1)))[["h"]], 0)
   expect_equal(area_from_min(6L, data.table(x = 1:6, y = c(0, 1, 0, 1, 0, 0)))[["h"]], 0)
+  expect_equal(area_from_min(2L, data.table(x = 1:6, y = c(0, 1, 0, 1, 0, 0)))[["h"]], 1)
+  expect_true(is.na(area_from_min(2L, data.table(x = 1:6, y = c(0, 1, 0, 1, 0, 0)))[["w"]]))
+  expect_true(is.na(area_from_min(4L, data.table(x = 1:6, y = c(0.1, 1, 0, 1, 0.2, 0)))[["w"]]))
   
 })
 

@@ -115,7 +115,7 @@ auc <- function(actual, pred) {
                   "contains 'TRUE' and 'FALSE'.")
            }
          },
-         stop("`actual` had type ", typeof(actual), ", which is not supported. ",
+         stop("`actual` had type '", typeof(actual), "', which is not supported. ",
               "Supply a logical vector for actual."))
   
   #' Copyright (c) 2012, Ben Hamner
