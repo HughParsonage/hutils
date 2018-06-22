@@ -10,6 +10,8 @@ test_that("Error handling", {
   expect_error(auc(c(FALSE), pred = c(-1)),
                regexp = "`pred = -1` was not between 0 and 1. pred must between 0 and 1.",
                fixed = TRUE)
+  expect_error(auc(actual = raw(2), pred = c(0.1, 0.2)),
+               regexp = "actual.*Supply a logical vector")
   
 })
 
