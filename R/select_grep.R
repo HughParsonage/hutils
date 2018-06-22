@@ -215,7 +215,9 @@ select_grep <- function(DT, patterns, .and = NULL, .but.not = NULL,
                       "`fixed = TRUE`. ", 
                       "This can lead to wrong columns being selected or dropped. ",
                       "Ensure `perl = FALSE` and `ignore.case = FALSE` if `fixed = TRUE`.")
+              # nocov start
             } else stop("Internal error: select_grep:231.")
+            # nocov end
           }
           cols_if_fixed_true
         }
