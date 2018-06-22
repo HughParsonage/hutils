@@ -63,82 +63,6 @@ ahull <- function(DT, x = DT$x, y = DT$y, minH = 0, minW = 0, maximize = "area",
            area = area)
     setDT(area_from_minima)
   } else {
-    area_from_min <- function(ii) {
-      x <- .subset2(dt, "x")
-      # Only want the positive
-      # Negative values don't reflect the area chart
-      y <- pmax.int(.subset2(dt, "y"), 0)
-      n <- length(x)
-      H <- y[ii]
-      if (H == 0) {
-        return(list(ii = ii,
-                    h = H,
-                    w = NA_real_,
-                    xmin = NA_real_, 
-                    xmax = NA_real_,
-                    area = 0))
-      }
-      
-      
-      x_1 <- x[1]
-      x1_endpoint <- TRUE
-      if (ii > 1L) {
-        for (i in seq.int(ii - 1L, 2L)) {
-          if (i > 1L && y[i - 1L] < H && y[i] > H) {
-            x_02 <- x[i]
-            x_01 <- x[i - 1L]
-            y_02 <- y[i]
-            y_01 <- y[i - 1L]
-            x_1 <- x_01 + (H - y_01) * (x_02 - x_01) / (y_02 - y_01)
-            x1_endpoint <- FALSE
-            break
-          }
-        }
-      }
-      
-      if (x1_endpoint && y[1L] == 0) {
-        return(list(ii = ii,
-                    h = H,
-                    w = NA_real_,
-                    xmin = NA_real_, 
-                    xmax = NA_real_,
-                    area = 0))
-      }
-      
-      x_2 <- x[n]
-      x2_endpoint <- TRUE
-      if (ii < n) {
-        for (i in seq.int(ii + 1L, n - 1L)) {
-          if (y[i - 1L] > H && y[i] < H) {
-            x_02 <- x[i]
-            x_01 <- x[i - 1L]
-            y_01 <- y[i]
-            y_02 <- y[i - 1L]
-            
-            x_2 <- x_02 - (H - y_01) * (x_02 - x_01) / (y_02 - y_01)
-            x2_endpoint <- FALSE
-            break
-          }
-        }
-        
-        if (x2_endpoint && y[n] == 0) {
-          return(list(ii = ii,
-                      h = H,
-                      w = NA_real_,
-                      xmin = NA_real_, 
-                      xmax = NA_real_,
-                      area = 0))
-        }
-      }
-      
-      list(ii = ii,
-           h = H,
-           w = x_2 - x_1,
-           xmin = x_1, 
-           xmax = x_2,
-           area = y[ii] * {x_2 - x_1})
-    }
-    
     area_from_minima <- rbindlist(lapply(which(dt[["local_min"]]), area_from_min))
   }
   setnames(area_from_minima, "ii", "x_stalactite")
@@ -218,6 +142,82 @@ A <- function(x1, y1, x2, y2, x3, y3) {
   w <- x3 - x2 + ((x2 - x3) * (y1 - y3)) / (y2 - y3)
   h <- y2 - y3
   list(w * h / 2, x2 + w)
+}
+
+area_from_min <- function(ii) {
+  x <- .subset2(dt, "x")
+  # Only want the positive
+  # Negative values don't reflect the area chart
+  y <- pmax.int(.subset2(dt, "y"), 0)
+  n <- length(x)
+  H <- y[ii]
+  if (H == 0) {
+    return(list(ii = ii,
+                h = H,
+                w = NA_real_,
+                xmin = NA_real_, 
+                xmax = NA_real_,
+                area = 0))
+  }
+  
+  
+  x_1 <- x[1]
+  x1_endpoint <- TRUE
+  if (ii > 1L) {
+    for (i in seq.int(ii - 1L, 2L)) {
+      if (i > 1L && y[i - 1L] < H && y[i] > H) {
+        x_02 <- x[i]
+        x_01 <- x[i - 1L]
+        y_02 <- y[i]
+        y_01 <- y[i - 1L]
+        x_1 <- x_01 + (H - y_01) * (x_02 - x_01) / (y_02 - y_01)
+        x1_endpoint <- FALSE
+        break
+      }
+    }
+  }
+  
+  if (x1_endpoint && y[1L] == 0) {
+    return(list(ii = ii,
+                h = H,
+                w = NA_real_,
+                xmin = NA_real_, 
+                xmax = NA_real_,
+                area = 0))
+  }
+  
+  x_2 <- x[n]
+  x2_endpoint <- TRUE
+  if (ii < n) {
+    for (i in seq.int(ii + 1L, n - 1L)) {
+      if (y[i - 1L] > H && y[i] < H) {
+        x_02 <- x[i]
+        x_01 <- x[i - 1L]
+        y_01 <- y[i]
+        y_02 <- y[i - 1L]
+        
+        x_2 <- x_02 - (H - y_01) * (x_02 - x_01) / (y_02 - y_01)
+        x2_endpoint <- FALSE
+        break
+      }
+    }
+    
+    if (x2_endpoint && y[n] == 0) {
+      return(list(ii = ii,
+                  h = H,
+                  w = NA_real_,
+                  xmin = NA_real_, 
+                  xmax = NA_real_,
+                  area = 0))
+    }
+  }
+  
+  list(ii = ii,
+       h = H,
+       w = x_2 - x_1,
+       xmin = x_1, 
+       xmax = x_2,
+       area = y[ii] * {x_2 - x_1})
 }
 
 areas_right_of <- function(dt, return_ind = TRUE) {
