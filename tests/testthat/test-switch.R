@@ -1,0 +1,38 @@
+context("test-switch.R")
+
+test_that("Error handling", {
+  expect_error(Switch(1:5), 
+               "must be a character vector.")
+  expect_error(Switch(as.character(1:5)), 
+               "DEFAULT.*no default")
+  expect_error(Switch(as.character(1:5), DEFAULT = 1:4), 
+               "length")
+  expect_error(Switch(letters[1:2], DEFAULT = factor("b")), 
+               "factor.*not currently supported")
+  expect_error(Switch(letters[1:2], a = factor("a"), DEFAULT = "x"), 
+               "factor.*not currently supported")
+  expect_error(Switch(letters[1:2], a = 1:3, DEFAULT = 1L), 
+               "length")
+  expect_error(Switch(letters[1:2], a = 1:3, DEFAULT = 0), 
+               "type.*double")
+})
+
+test_that("examples", {
+  expect_equal(Switch(c("a", "b", "c", "a"), 
+                      DEFAULT = 0, 
+                      "a" = 1, 
+                      "b" = 2, 
+                      "c" = 3), 
+               c(1:3 + 0, 1))
+})
+
+test_that("NA", {
+  expect_equal(Switch(c(NA, "", "a"), 
+                      "a" = "q", 
+                      "b", 
+                      DEFAULT = "", 
+                      IF_NA = "A"), 
+               c("A", "b", "q"))
+})
+
+
