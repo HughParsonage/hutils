@@ -31,6 +31,15 @@ test_that("examples", {
                c(1:3 + 0, 1))
 })
 
+test_that("Multi-length res", {
+  expect_equal(Switch(c("a", "b", "c", "a"), 
+                      DEFAULT = 0, 
+                      "a" = 1, 
+                      "b" = 1:3 + 0, 
+                      "c" = 3), 
+               c(1:3 + 0, 1))
+})
+
 test_that("NA", {
   expect_equal(Switch(c(NA, "", "a"), 
                       "a" = "q", 
