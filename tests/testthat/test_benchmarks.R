@@ -34,7 +34,7 @@ test_that("selector faster than dt[, .] 10 M", {
   expect_gt(median(selector_0$time), 
             median(selector_2$time))
   
-  expect_gt(1.1 * median(selector_0$time), 
+  expect_gt(1.2 * median(selector_0$time), 
             median(selector_1$time), 
             label = "10 M shallow")
   
