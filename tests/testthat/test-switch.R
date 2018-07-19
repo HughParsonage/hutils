@@ -17,6 +17,11 @@ test_that("Error handling", {
                "type.*double")
 })
 
+test_that("length-1 switch", {
+  expect_identical(Switch("a", a = 1, b = 2), 
+                   switch("a", a = 1, b = 2))
+})
+
 test_that("examples", {
   expect_equal(Switch(c("a", "b", "c", "a"), 
                       DEFAULT = 0, 
@@ -33,6 +38,12 @@ test_that("NA", {
                       DEFAULT = "", 
                       IF_NA = "A"), 
                c("A", "b", "q"))
+  expect_equal(Switch(c(NA, "", "a", NA), 
+                      "a" = "q", 
+                      "b", 
+                      DEFAULT = "", 
+                      IF_NA = LETTERS[1:4]), 
+               c("A", "b", "q", "D"))
 })
 
 
