@@ -55,4 +55,14 @@ test_that("NA", {
                c("A", "b", "q", "D"))
 })
 
+test_that("akin to nested if_else", {
+  x <- sample(letters)
+  expect_identical(if_else(x == "a", 
+                           1:26,
+                           if_else(x == "b",
+                                   -c(1:26), 
+                                   "X"), 
+                           missing = "Q"), 
+                   Switch(x, a = 1:26, b = -c(1:26), DEFAULT = "X", IF_NA = "Q"))
+})
 

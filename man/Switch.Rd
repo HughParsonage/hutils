@@ -25,7 +25,7 @@ For every element of \code{...} whose name matches an element of \code{Expr},
 that element's value.
 }
 \description{
-Vectorized version of \code{switch}. Used to avoid or make clearer the result of 
+Present since \code{hutils 1.2.0}. Vectorized version of \code{switch}. Used to avoid or make clearer the result of 
 \code{if_else(Expr == , ..1, if_else(Expr == , ..2, ...))}
 }
 \examples{

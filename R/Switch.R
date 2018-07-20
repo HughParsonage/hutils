@@ -1,5 +1,5 @@
 #' Vectorized switch
-#' @description Vectorized version of \code{switch}. Used to avoid or make clearer the result of 
+#' @description Present since \code{hutils 1.2.0}. Vectorized version of \code{switch}. Used to avoid or make clearer the result of 
 #' \code{if_else(Expr == , ..1, if_else(Expr == , ..2, ...))}
 #' @param Expr A character vector.
 #' @param ... As in \code{\link[base]{switch}}, a list of named alternatives. If the last
