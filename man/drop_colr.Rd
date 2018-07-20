@@ -2,6 +2,7 @@
 % Please edit documentation in R/drop_colr.R
 \name{drop_colr}
 \alias{drop_colr}
+\alias{drop_grep}
 \title{Drop columns whose names match a pattern}
 \usage{
 drop_colr(DT, pattern, ..., checkDT = TRUE)

@@ -1,4 +1,6 @@
-#' Drop columns whose names match a pattern
+#' @title Drop columns whose names match a pattern
+#' @name drop_colr
+#' @aliases drop_grep
 #' @param DT A \code{data.table}.
 #' @description \code{drop_colr} present since \code{hutils 1.0.0}.
 #' 
