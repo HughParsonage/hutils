@@ -16,5 +16,14 @@ drop_colr(DT, pattern, ..., checkDT = TRUE)
 \item{checkDT}{If \code{TRUE} (the default), will error if \code{DT} is not a \code{data.table}.}
 }
 \description{
-Drop columns whose names match a pattern
+\code{drop_colr} present since \code{hutils 1.0.0}.
+
+\code{drop_grep} is identical but only present since \code{hutils 1.2.0}.
+}
+\examples{
+library(data.table)
+dt <- data.table(x1 = 1, x2 = 2, y = 3)
+drop_grep(dt, "x")
+
+
 }
