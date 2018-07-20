@@ -4,6 +4,7 @@
   - `isAttached` for conveniently determining whether a namespace is attached
   - `ahull` for locating rectangles in a plot, as for automatically locating a text box.
   - `Switch` vectorized version of `switch` to avoid nested `if_else`'s. 
+* `drop_grep` is an alias for `drop_colr`.
 
 # hutils 1.1.1
 * Change of stable test:
