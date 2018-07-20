@@ -1,5 +1,6 @@
 #' Vectorized switch
-#' @description Vectorized version of \code{switch}.
+#' @description Vectorized version of \code{switch}. Used to avoid or make clearer the result of 
+#' \code{if_else(Expr == , ..1, if_else(Expr == , ..2, ...))}
 #' @param Expr A character vector.
 #' @param ... As in \code{\link[base]{switch}}, a list of named alternatives. If the last
 #' element of \code{...} is unnamed, it becomes the default value; otherwise the first value
@@ -9,7 +10,7 @@
 #' \code{NA} values in \code{Expr} must be assigned via \code{IF_NA}.
 #' 
 #' @param DEFAULT A mandatory default value should any name of \code{...} be left unmatched.
-#' @param IF_NA Optional value to replace missing values in \code{Expr}.
+#' @param IF_NA Optional value to replace missing (\code{NA_character_}) values in \code{Expr}.
 #' @return For every element of \code{...} whose name matches an element of \code{Expr}, 
 #' that element's value.
 #' 

@@ -18,14 +18,15 @@ Unlike \code{switch}, unnamed vectors are taken to match \code{""}. Likewise,
 
 \item{DEFAULT}{A mandatory default value should any name of \code{...} be left unmatched.}
 
-\item{IF_NA}{Optional value to replace missing values in \code{Expr}.}
+\item{IF_NA}{Optional value to replace missing (\code{NA_character_}) values in \code{Expr}.}
 }
 \value{
 For every element of \code{...} whose name matches an element of \code{Expr}, 
 that element's value.
 }
 \description{
-Vectorized version of \code{switch}.
+Vectorized version of \code{switch}. Used to avoid or make clearer the result of 
+\code{if_else(Expr == , ..1, if_else(Expr == , ..2, ...))}
 }
 \examples{
 Switch(c("a", "b", "c", "a"),
