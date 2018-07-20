@@ -61,8 +61,8 @@ test_that("akin to nested if_else", {
                            1:26,
                            if_else(x == "b",
                                    -c(1:26), 
-                                   "X"), 
-                           missing = "Q"), 
-                   Switch(x, a = 1:26, b = -c(1:26), DEFAULT = "X", IF_NA = "Q"))
+                                   0L), 
+                           missing = -99L), 
+                   Switch(x, a = 1:26, b = -c(1:26), DEFAULT = 0L, IF_NA = -99L))
 })
 
