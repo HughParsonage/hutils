@@ -31,7 +31,7 @@ my_check <- function(values) {
   all(vapply(values[-1], function(x) identical(values[[1]], x), logical(1)))
 }
 
-
+set.seed(2)
 cnd <- sample(c(TRUE, FALSE, NA), size = 100e3, replace = TRUE)
 yes <- sample(letters, size = 100e3, replace = TRUE)
 no <- sample(letters, size = 100e3, replace = TRUE)
@@ -176,4 +176,73 @@ DT <- data.table(x = 1:5,
                  y = letters[1:5],
                  AB = c(NA, TRUE, FALSE, TRUE, FALSE))
 select_which(DT, anyNA, .and.dots = "y")
+
+## ------------------------------------------------------------------------
+dt <- data.table(y = !sample(0:1, size = 100, replace = TRUE), 
+                 x = runif(100))
+dt[, pred := predict(lm(y ~ x, data = .SD), newdata = .SD)]
+
+dt[, auc(y, pred)]
+
+## ----select_grep---------------------------------------------------------
+flights %>%
+  select_grep("arr")
+
+## ----select_grep-and-----------------------------------------------------
+flights %>%
+  select_grep("arr", .and = "year", .but.not = "arr_time")
+
+## ------------------------------------------------------------------------
+RQ(dplyr, "dplyr must be installed")
+RQ("dplyr", "dplyr needs installing", "dplyr installed.")
+
+## ----ahull-1-------------------------------------------------------------
+ggplot(data.table(x = c(0, 1, 2, 3, 4), y = c(0, 1, 2, 0.1, 0))) +
+  geom_area(aes(x, y)) +
+  geom_rect(data = ahull(, c(0, 1, 2, 3, 4), c(0, 1, 2, 0.1, 0)),
+            aes(xmin = xmin,
+                xmax = xmax,
+                ymin = ymin,
+                ymax = ymax),
+            color = "red") 
+
+## ----ahull-demos, fig.width = 8, fig.height = 6--------------------------
+set.seed(101)
+ahull_dt <-
+  data.table(x = c(0:100) / 100,
+             y = cumsum(rnorm(101, 0.05)))
+ggplot(ahull_dt) +
+  geom_area(aes(x, y)) + 
+  geom_rect(data = ahull(ahull_dt), 
+            aes(xmin = xmin, 
+                xmax = xmax, 
+                ymin = ymin, 
+                ymax = ymax), 
+            color = "red") + 
+  geom_rect(data = ahull(ahull_dt,
+                         incl_negative = TRUE), 
+            aes(xmin = xmin, 
+                xmax = xmax, 
+                ymin = ymin, 
+                ymax = ymax), 
+            color = "blue") + 
+  geom_rect(data = ahull(ahull_dt,
+                         incl_negative = TRUE,
+                         minH = 4), 
+            aes(xmin = xmin, 
+                xmax = xmax, 
+                ymin = ymin, 
+                ymax = ymax), 
+            color = "green") + 
+  geom_rect(data = ahull(ahull_dt,
+                         incl_negative = TRUE,
+                         minW = 0.25), 
+            aes(xmin = xmin, 
+                xmax = xmax, 
+                ymin = ymin, 
+                ymax = ymax), 
+            color = "white",
+            fill = NA)
+
+
 

@@ -79,7 +79,7 @@ my_check <- function(values) {
   all(vapply(values[-1], function(x) identical(values[[1]], x), logical(1)))
 }
 
-
+set.seed(2)
 cnd <- sample(c(TRUE, FALSE, NA), size = 100e3, replace = TRUE)
 yes <- sample(letters, size = 100e3, replace = TRUE)
 no <- sample(letters, size = 100e3, replace = TRUE)

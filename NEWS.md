@@ -6,6 +6,9 @@
   - `Switch` vectorized version of `switch` to avoid nested `if_else`'s. 
 * `drop_grep` is an alias for `drop_colr`.
 
+* Minor changes:
+  - `if_else` reports a clearer error message when `length(condition) == 1`.
+
 # hutils 1.1.1
 * Change of stable test:
     - The only changes were so that the test proceeds when a required package is present. The tests would never have succeeded in cases where they now skip. Consequently the major version number has not been incremented.
