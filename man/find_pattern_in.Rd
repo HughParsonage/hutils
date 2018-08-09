@@ -7,8 +7,8 @@
 find_pattern_in(file_contents, basedir = ".", dir_recursive = TRUE,
   reader = readLines, include.comments = FALSE, comment.char = NULL,
   use.OS = FALSE, file_pattern = "\\\\.(R|r)(nw|md)?$",
-  file_contents_perl = TRUE, file_contents_fixed = FALSE, file.ext = NULL,
-  which_lines = c("first", "all"))
+  file_contents_perl = TRUE, file_contents_fixed = FALSE,
+  file.ext = NULL, which_lines = c("first", "all"))
 }
 \arguments{
 \item{file_contents}{A perl-regular expression as a search query.}
