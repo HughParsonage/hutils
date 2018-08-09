@@ -2,7 +2,7 @@
 #' @description Shortcut for \code{any(grepl(...))}, mostly for consistency.
 #' @param x A character vector.
 #' @param pattern,perl,ignore.case,fixed As in \code{\link[base]{grep}}. 
-#' \code{invert} is simply 
+#' @param quiet (logical, default: \code{FALSE}) If \code{TRUE}, silences any messages.
 #' 
 #' @examples
 #' any_grepl(c("A_D_E", "K0j"), "[a-z]")

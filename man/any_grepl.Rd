@@ -10,8 +10,9 @@ any_grepl(x, pattern, perl = TRUE, ignore.case = FALSE,
 \arguments{
 \item{x}{A character vector.}
 
-\item{pattern, perl, ignore.case, fixed}{As in \code{\link[base]{grep}}. 
-\code{invert} is simply}
+\item{pattern, perl, ignore.case, fixed}{As in \code{\link[base]{grep}}.}
+
+\item{quiet}{(logical, default: \code{FALSE}) If \code{TRUE}, silences any messages.}
 }
 \description{
 Shortcut for \code{any(grepl(...))}, mostly for consistency.
