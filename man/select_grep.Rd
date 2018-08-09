@@ -5,8 +5,8 @@
 \title{Select names matching a pattern}
 \usage{
 select_grep(DT, patterns, .and = NULL, .but.not = NULL,
-  ignore.case = FALSE, perl = TRUE, fixed = FALSE, useBytes = FALSE,
-  invert = FALSE, .warn.fixed.mismatch = TRUE)
+  ignore.case = FALSE, perl = TRUE, fixed = FALSE,
+  useBytes = FALSE, invert = FALSE, .warn.fixed.mismatch = TRUE)
 }
 \arguments{
 \item{DT}{A \code{data.frame}.}
