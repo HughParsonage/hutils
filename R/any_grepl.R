@@ -27,8 +27,7 @@ any_grepl <- function(x,
                      pattern = tolower(pattern), 
                      perl = FALSE,
                      ignore.case = FALSE,
-                     fixed = TRUE,
-                     expected = expected))
+                     fixed = TRUE))
   }
   
   if (missing(perl) && fixed) {
