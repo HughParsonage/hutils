@@ -29,14 +29,9 @@ test_that("selector faster than dt[, .] 10 M", {
   invisible(gc(FALSE, reset = TRUE, full = TRUE))
   
   selector_0 <- microbenchmark(dt[, .(x, y)])
-  selector_1 <- microbenchmark(selector(dt, cols = c("x", "y")))
   selector_2 <- microbenchmark(selector(dt, cols = c("x", "y"), shallow = TRUE))
   expect_gt(median(selector_0$time), 
             median(selector_2$time))
-  
-  expect_gt(1.2 * median(selector_0$time), 
-            median(selector_1$time), 
-            label = "10 M shallow")
   
   dt <- dt[1:1e5]
   
