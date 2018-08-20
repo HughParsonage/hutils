@@ -103,10 +103,10 @@ if_else <- function(condition, true, false, missing = NULL) {
   } else {
     # N 1 ? ?
     if (anyNA(condition)) {
-      Yes <- which(condition)
+      
       
       if (lengths[2] == 1L) {
-        out[Yes] <- yes
+        out[which(condition)] <- yes
         if (na_not_used) {
           out[is.na(condition)] <- NA_Type_
         } else {
@@ -119,6 +119,7 @@ if_else <- function(condition, true, false, missing = NULL) {
         
       } else {
         # N N ? ?
+        Yes <- which(condition)
         out[Yes] <- yes[Yes]
         
         if (na_not_used) {
