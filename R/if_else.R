@@ -51,7 +51,7 @@ if_else <- function(condition, true, false, missing = NULL) {
 
   Type <- typeof(yes)
   
-  if (!(Type %chin% c("logical", "integer", "double", "character"))) {
+  if (Type != "logical" && Type != "integer" && Type != "double" && Type != "character") {
     stop("typeof(true) == ", Type, ". The only permitted types are logical, integer, double, and character.")
   }
   
