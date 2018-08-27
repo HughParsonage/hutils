@@ -9,5 +9,6 @@
 #' @importFrom fastmatch %fin%
 #' @importFrom fastmatch fmatch
 #' @importFrom grDevices dev.copy2pdf
+#' @importFrom stats runif
 #' @importFrom utils head
 NULL
