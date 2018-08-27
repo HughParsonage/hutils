@@ -4,12 +4,15 @@
 \alias{weight2rows}
 \title{Expand a weighted data frame to an equivalent unweighted}
 \usage{
-weight2rows(DT, weight.var)
+weight2rows(DT, weight.var, rows.out = NULL)
 }
 \arguments{
 \item{DT}{A \code{data.table}. Will be converted to one if possible.}
 
 \item{weight.var}{Variable in \code{DT} to be used as weights.}
+
+\item{rows.out}{If not \code{NULL} (the default) specifies the number of rows in the result;
+otherwise the number of rows will be \code{sum(DT[[weight.var]])}. (Due to rounding, this figures are inexact.)}
 }
 \value{
 \code{DT} but with the number of rows expanded to \code{sum(DT[[weight.var]])} to reflect the weighting.
@@ -22,5 +25,6 @@ Expand a weighted data frame to an equivalent unweighted
 library(data.table)
 DT <- data.table(x = 1:5, y = c(1, 1, 1, 1, 2))
 weight2rows(DT, "y")
+weight2rows(DT, "y", rows.out = 5)
 
 }

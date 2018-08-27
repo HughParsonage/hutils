@@ -1,3 +1,13 @@
+# hutils 1.3.0
+* Enhancements:
+  - `weight2rows` gains a `rows.out` argument to specify the number of rows in the result.
+
+* Bug fixes:
+  - `weight2rows`:
+    * no longer reorders the columns in the result
+    * no longer updates by reference the data frame to be a data.table, instead a copy is made
+  
+
 # hutils 1.2.0
 * New functions:
   - `RQ(p, yes, no)` short for `if (!requireNamespace("p", quietly = TRUE)) yes else no`.
