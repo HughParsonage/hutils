@@ -39,7 +39,8 @@ weight2rows <- function(DT, weight.var, rows.out = NULL) {
     weight.var <- names(DT)[weight.var]
   } else if (is.character(weight.var)) {
     if (weight.var %notchin% names(DT)) {
-      stop("`weight.var = ", weight.var)
+      stop("`weight.var = ", weight.var, "` but is not a column name of DT.", "\n", 
+           "`weight.var` needs to specify a valid column of DT.")
     }
   } else {
    stop("`typeof(weight.var) = '", typeof(weight.var), "'`, ",

@@ -17,6 +17,8 @@ test_that("Error handling (1.3.0)", {
   expect_error(weight2rows(dt, raw(1)),
                "`typeof(weight.var) = 'raw'", 
                fixed = TRUE)
+  expect_error(weight2rows(dt, "z"), 
+               regexp = "not a column name of DT")
 })
   
 test_that("Error handling (rows.out)", {  
