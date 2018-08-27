@@ -1,4 +1,5 @@
 #' Expand a weighted data frame to an equivalent unweighted
+#' @description Present since \code{v1.0.0}. Argument \code{rows.out} available since \code{v1.3.0}.
 #' @param DT A \code{data.table}. Will be converted to one if possible.
 #' @param weight.var Variable in \code{DT} to be used as weights.
 #' @param rows.out If not \code{NULL} (the default) specifies the number of rows in the result;
@@ -82,8 +83,8 @@ weight2rows <- function(DT, weight.var, rows.out = NULL) {
     len <- BY * N * M
     if (len < 1) {
       len <- if (runif(1) < len) 1L else 0L
-    } else {
-      len <- as.integer(len)
+    } else if (is.double(len)) {
+      len <- as.integer(round(len))
     }
     rep_len(x, len)
   }

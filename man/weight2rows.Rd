@@ -18,7 +18,7 @@ otherwise the number of rows will be \code{sum(DT[[weight.var]])}. (Due to round
 \code{DT} but with the number of rows expanded to \code{sum(DT[[weight.var]])} to reflect the weighting.
 }
 \description{
-Expand a weighted data frame to an equivalent unweighted
+Present since \code{v1.0.0}. Argument \code{rows.out} available since \code{v1.3.0}.
 }
 \examples{
 
