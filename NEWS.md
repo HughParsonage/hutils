@@ -1,6 +1,7 @@
 # hutils 1.3.0
 * Enhancements:
   - `weight2rows` gains a `rows.out` argument to specify the number of rows in the result.
+  - `drop_empty_cols` should now be faster, especially when there are few empty columns.
 
 * Bug fixes:
   - `weight2rows`:
