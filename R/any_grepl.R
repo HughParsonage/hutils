@@ -42,5 +42,18 @@ any_grepl <- function(x,
   
 }
 
+any_grepl2 <- function(pattern, x, likely = TRUE, ...) {
+  if (likely) {
+    for (xj in x) {
+      if (grepl(pattern, xj, ...)) {
+        return(TRUE)
+      }
+    }
+    return(FALSE)
+  } else {
+    any_grepl(x, pattern, ...)
+  }
+}
+
 
 
