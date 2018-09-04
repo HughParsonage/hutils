@@ -39,8 +39,8 @@ Table_Hundreds <-
   data.table(Hundreds = 1:9,
              res = paste(one_to_nine, "hundred"))
 
-CJ(Thousands = 0:999,
-   Hundreds = 0:9)
+
+devtools::use_data(one_to_nine, one_to_nineteen, Table_1100, Table_Hundreds, internal = TRUE)
 
 
 

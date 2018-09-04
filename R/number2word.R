@@ -28,39 +28,21 @@ number2word <- function(n, zero = "zero") {
   match(w, .subset2(Table_1100, "ans"), nomatch = NA_integer_)
 }
 
+.validWords2Numbers <- function(w) {
+  out <- match(w, .subset2(Table_1100, "ans"), nomatch = NA_integer_)
+  out[is.na(out)] <- w[is.na(out)]
+  out
+}
+
 word2number <- function(w) {
-  W <- strsplit(w, split = "([[:punct:][:space:]]|(and))+")
-  
-  lapply(W, function(v) {
-    u <- .word2number(v)
-    print(data.table(u, v))
-    if (anyNA(u)) {
-      u <- if_else(v == "hundred", 100L, u)
-      u <- if_else(v == "thousand", 1000L, u)
-    }
-    u
-  }) %>% 
-    lapply(function(u) {
-      if (length(u) <= 1L) {
-        return(u[[1L]])
-      }
-      for (i in seq_along(u)) {
-        out <- 0L
-        if (i == length(u)) {
-          
-        } 
-          if (u[i] < 10L && {u[i + 1L] %% 10L} == 0L) {
-            
-          }
-        }
-      }
-      
-      switch(length(u),
-             u, 
-             if (max(u) <= 99L || u[1] > u[2]) sum(u) else u[2] * u[1],
-             
-             
-    })
+  gsub(" and ", " + ",
+       gsub(paste0("(", paste0(one_to_nine, collapse = "|"), ")\\s*", "hundred"),
+            "\\1 * 100", w)) %>% 
+    gsub(x = ., pattern = "-", fixed = TRUE, replacement = " + ") %>%
+    strsplit(split = " ", perl = TRUE) %>%
+    lapply(.validWords2Numbers) %>%
+    lapply(paste0, collapse = " ") %>%
+    vapply(function(x) eval(parse(text = x)), double(1))
 }
 
 
