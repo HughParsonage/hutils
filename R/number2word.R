@@ -8,7 +8,8 @@ number2word <- function(n, zero = "zero") {
   maxn <- max(n)
   out[n == 0L] <- zero
   
-  out[n %between% c(1L, 100L)] <- .subset2(Table_1100, "ans")[n[n %between% c(1L, 100L)]]
+  out[n %between% c(1L, 100L)] <-
+    .subset2(Table_1100, "ans")[n[n %between% c(1L, 100L)]]
   
   if (maxn > 99L) {
     
@@ -17,11 +18,10 @@ number2word <- function(n, zero = "zero") {
                             zero = "")
     n_blw_99[nzchar(n_blw_99)] <- sprintf(" and %s", n_blw_99[nzchar(n_blw_99)])
     
-    out <- if_else(n >= 100L & n <= 999L,
-                   paste0(number2word(n %/% 100L),  " hundred", n_blw_99),
-                   out)
-                   
-                   
+    bw100_999 <- between(n, 100L, 999L)
+    out[bw100_999] <-
+      paste0(number2word(n[bw100_999] %/% 100L),
+             " hundred", n_blw_99[bw100_999])
   }
   out
 }
@@ -62,11 +62,16 @@ number2word <- function(n, zero = "zero") {
 }
 
 word2number <- function(w) {
-  gsub("( and ?)+", # and  and  can occur
-       " + ",
-       gsub(paste0("(", paste0(one_to_nine, collapse = "|"), ")\\s*", "hundred"),
-            "\\1 * 100", 
-            .thousands2Expr(w))) %>% 
+  gsub2 <- function(x, pattern, replacement, ...) {
+    gsub(pattern, replacement, x, ...)
+  }
+  
+  .thousands2Expr(w) %>%
+    gsub2(paste0("(", paste0(one_to_nine, collapse = "|"), ")\\s*", "hundred"),
+          "\\1 * 100") %>%
+    gsub2("( and ?)+", # and  and  can occur
+          " + ") %>% 
+    gsub2(",\\s*", " + ") %>%
     gsub(x = ., pattern = "-", fixed = TRUE, replacement = " + ") %>%
     strsplit(split = " ", perl = TRUE) %>%
     lapply(.validWords2Numbers) %>%

@@ -18,4 +18,6 @@ test_that("Basics", {
   expect_equal(word2number("one hundred and sixty"), 160)
   expect_equal(word2number("five hundred and forty-three thousand and forty-three"),
                543043)
+  expect_equal(word2number(c("five hundred and forty", "five thousand, two hundred")),
+               c(540, 5200))
 })
