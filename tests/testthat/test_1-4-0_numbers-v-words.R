@@ -14,6 +14,8 @@ test_that("Basics", {
 context("word2number")
 
 test_that("Basics", {
-  expect_wqual(word2number("five"), 5)
-  expect_wqual(word2number("one hundred and sixty"), 160)
+  expect_equal(word2number("five"), 5)
+  expect_equal(word2number("one hundred and sixty"), 160)
+  expect_equal(word2number("five hundred and forty-three thousand and forty-three"),
+               543043)
 })
