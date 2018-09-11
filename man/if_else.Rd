@@ -13,7 +13,7 @@ if_else(condition, true, false, missing = NULL)
 \item{condition}{Logical vector}
 
 \item{true, false}{Where condition is \code{TRUE}/\code{FALSE}, use the corresponding\code{true}/\code{no} value.
-Must have the same type as each other and be the same length as \code{condition} or length-one.}
+They must have the same \code{\link[base]{type}} as each other and be the same length as \code{condition} or length-one.}
 
 \item{missing}{If condition is \code{NA}, use the corresponding \code{na} value. Like\code{true} and\code{false}, must
 be of the same type and have the same length as condition, unless it has length one.}
