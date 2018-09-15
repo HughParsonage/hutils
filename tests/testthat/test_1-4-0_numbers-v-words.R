@@ -21,3 +21,9 @@ test_that("Basics", {
   expect_equal(word2number(c("five hundred and forty", "five thousand, two hundred")),
                c(540, 5200))
 })
+
+test_that("Long", {
+  expect_equal(word2number(rep_len("one thousand three hundred and sixteen", 101)),
+               rep_len(1316, 101))
+})
+

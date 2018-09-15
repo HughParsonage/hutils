@@ -62,6 +62,11 @@ number2word <- function(n, zero = "zero") {
 }
 
 word2number <- function(w) {
+  if (length(w) > 100L) {
+    DT <- setDT(list(w = w))
+    return(DT[, "res" := word2number(.BY[[1L]]), by = "w"][["res"]])
+  }
+  
   gsub2 <- function(x, pattern, replacement, ...) {
     gsub(pattern, replacement, x, ...)
   }
