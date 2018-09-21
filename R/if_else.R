@@ -14,6 +14,12 @@
 #' Where \code{condition} is \code{NA}, then the corresponding value in \code{na} -- 
 #' unless \code{na} is \code{NULL} (the default) in which case the value will be \code{NA} (with the same
 #' type as \code{true}.)
+#' 
+#' 
+#' @details
+#' If the result is expected to be a factor then the conditions for type safety
+#' are strict and may be made stricter in future.
+#' 
 #' @source Original code but obviously heavily inspired by \url{https://CRAN.R-project.org/package=dplyr}. 
 #' @export 
 
@@ -69,6 +75,7 @@ if_else <- function(condition, true, false, missing = NULL) {
         if (is.na(no)) {
           # OK
           NULL
+          no <- factor(no, levels = levels(yes))
         } else if (is.character(no)) {
           if (no %in% levels(yes)) {
             message("`true` is a factor and `false` is type character. ",

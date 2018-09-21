@@ -32,3 +32,7 @@ Attempts to replicate \code{dplyr::if_else} but written in base R for faster com
 but will not work on lists or on factors. 
 Additional attributes may be dropped.
 }
+\details{
+If the result is expected to be a factor then the conditions for type safety
+are strict and may be made stricter in future.
+}
