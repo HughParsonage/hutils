@@ -4,7 +4,8 @@
 \alias{weight2rows}
 \title{Expand a weighted data frame to an equivalent unweighted}
 \usage{
-weight2rows(DT, weight.var, rows.out = NULL)
+weight2rows(DT, weight.var, rows.out = NULL,
+  discard_weight.var = FALSE)
 }
 \arguments{
 \item{DT}{A \code{data.table}. Will be converted to one if possible.}
@@ -13,6 +14,10 @@ weight2rows(DT, weight.var, rows.out = NULL)
 
 \item{rows.out}{If not \code{NULL} (the default) specifies the number of rows in the result;
 otherwise the number of rows will be \code{sum(DT[[weight.var]])}. (Due to rounding, this figures are inexact.)}
+
+\item{discard_weight.var}{If \code{FALSE}, the default, \code{weight.var}
+in \code{DT} will be \code{1} for each row in the result or a new weight 
+if \code{rows.out} is given. Otherwise, \code{TRUE} drops the column entirely.}
 }
 \value{
 \code{DT} but with the number of rows expanded to \code{sum(DT[[weight.var]])} to reflect the weighting.
