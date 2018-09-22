@@ -103,7 +103,7 @@ weight2rows <- function(DT,
   
   
   
-  out <- 
+  
     switch(typeof(weight.var.value), 
            "logical" = {
              warning("weight.var is logical. Treating as filter/subset.")
@@ -112,7 +112,8 @@ weight2rows <- function(DT,
              M <- TRUE
            },
            "integer" = {
-             DT %>%
+             out <-  
+               DT %>%
                .[weight.var.value > 0] %>%
                .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
                  .SDcols = names(.)[names(.) != weight.var],
@@ -121,14 +122,18 @@ weight2rows <- function(DT,
              M <- as.integer(M)
            },
            "double" = {
-             DT %>%
+             
+             out <- 
+               DT %>%
                .[weight.var.value > 0] %>%
                .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
                  .SDcols = names(.)[names(.) != weight.var],
                  by = weight.var]
+             
              if (!is.null(rows.out)) {
                M <- as.double(M)
              }
+             
            }, 
            stop("Non-numeric weight.var. Aborting."))
   
