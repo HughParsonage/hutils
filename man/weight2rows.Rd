@@ -23,7 +23,9 @@ if \code{rows.out} is given. Otherwise, \code{TRUE} drops the column entirely.}
 \code{DT} but with the number of rows expanded to \code{sum(DT[[weight.var]])} to reflect the weighting.
 }
 \description{
-Present since \code{v1.0.0}. Argument \code{rows.out} available since \code{v1.3.0}.
+Present since \code{v1.0.0}.
+ Argument \code{rows.out} available since \code{v1.3.0}.
+ Argument \code{discard_weight.var} available since \code{v 1.3.0}.
 }
 \examples{
 

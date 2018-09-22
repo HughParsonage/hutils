@@ -1,5 +1,7 @@
 #' Expand a weighted data frame to an equivalent unweighted
-#' @description Present since \code{v1.0.0}. Argument \code{rows.out} available since \code{v1.3.0}.
+#' @description Present since \code{v1.0.0}.
+#'  Argument \code{rows.out} available since \code{v1.3.0}.
+#'  Argument \code{discard_weight.var} available since \code{v 1.3.0}.
 #' @param DT A \code{data.table}. Will be converted to one if possible.
 #' @param weight.var Variable in \code{DT} to be used as weights.
 #' @param rows.out If not \code{NULL} (the default) specifies the number of rows in the result;
@@ -107,7 +109,7 @@ weight2rows <- function(DT,
     switch(typeof(weight.var.value), 
            "logical" = {
              warning("weight.var is logical. Treating as filter/subset.")
-             DT[which(weight.var.value)]
+             out <- DT[which(weight.var.value)]
              
              M <- TRUE
            },
