@@ -37,24 +37,29 @@ number2word <- function(n, zero = "zero") {
 }
 
 .thousands2Expr <- function(w) {
+  
   o <- w
   jj <- paste(number2word(999:1), "thousand")
   
   for (i in seq_along(o)) {
-    if (grepl("thousand", o[i], fixed = TRUE)) {
-      for (j in jj) {
-        if (grepl(j, o[i], fixed = TRUE)) {
-          break
+    if (!nzchar(w[i])) {
+      o[i] <- 0
+    } else {
+      if (grepl("thousand", o[i], fixed = TRUE)) {
+        for (j in jj) {
+          if (grepl(j, o[i], fixed = TRUE)) {
+            break
+          }
         }
-      }
-      o[i] <- paste(1000L - match(j, jj, nomatch = NA_integer_),
-                    "* 1000")
-      if (!endsWith(w[i], "thousand")) {
-        # Currently, o[i] ends with the thousands
-        # term. Need to retain the rest.
-        o[i] <- paste(o[i],
-                      "+",
-                      sub("^.*thousand", "", w[i], perl = TRUE))
+        o[i] <- paste(1000L - match(j, jj, nomatch = NA_integer_),
+                      "* 1000")
+        if (!endsWith(w[i], "thousand")) {
+          # Currently, o[i] ends with the thousands
+          # term. Need to retain the rest.
+          o[i] <- paste(o[i],
+                        "+",
+                        sub("^.*thousand", "", w[i], perl = TRUE))
+        }
       }
     }
   }
@@ -67,11 +72,20 @@ word2number <- function(w) {
     return(DT[, "res" := word2number(.BY[[1L]]), by = "w"][["res"]])
   }
   
+  if (any_grepl(w, "million")) {
+    millions <- 
+      if_else(grepl("million", w, fixed = TRUE),
+              word2number(sub(" million.*$", "", w)),
+              0)
+  } else {
+    millions <- 0
+  }
+  
   gsub2 <- function(x, pattern, replacement, ...) {
     gsub(pattern, replacement, x, ...)
   }
-  
-  .thousands2Expr(w) %>%
+  res_minus_M <- 
+    .thousands2Expr(sub("^.*million", "", w)) %>%
     gsub2(paste0("(", paste0(one_to_nine, collapse = "|"), ")\\s*", "hundred"),
           "\\1 * 100") %>%
     gsub2("( and ?)+", # and  and  can occur
@@ -82,6 +96,8 @@ word2number <- function(w) {
     lapply(.validWords2Numbers) %>%
     lapply(paste0, collapse = " ") %>%
     vapply(function(x) eval(parse(text = x)), double(1))
+  
+  millions * 10^6 + res_minus_M
 }
 
 

@@ -27,3 +27,14 @@ test_that("Long", {
                rep_len(1316, 101))
 })
 
+test_that("millions", {
+  input <- c("three hundred and four million, two hundred and seventeen thousand and twenty-four",
+             "ninety-four",
+             "ninety-four thousand")
+  expect_equal(word2number(input),
+               c(304*1e6+217e3+24,
+                 94,
+                 94000))
+})
+
+
