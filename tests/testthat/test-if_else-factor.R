@@ -27,3 +27,41 @@ test_that("if_else factor symmetric", {
                    factor(c("a", NA), levels = c("a", "b")))
   
 })
+
+test_that("Errors when integer", {
+  expect_error(if_else(1:5 > 3, factor("a"), 1L))
+  expect_error(if_else(1:5 > 3, 1L, factor("a")))
+})
+
+test_that("Errors", {
+  expect_error(if_else(TRUE, factor("a"), factor("b")),
+               regexp = "both factors.*different levels")
+  expect_error(if_else(FALSE, factor("a"), factor("b")),
+               regexp = "both factors.*different levels")
+  expect_error(if_else(NA, factor("a"), factor("b"), factor("c")),
+               regexp = "both factors.*different levels")
+  expect_error(if_else(1:5 > 3, factor("a"), factor("b"), factor("c")),
+               regexp = "both factors.*different levels")
+  
+  expect_error(if_else(TRUE, factor("a"), "b"), regexp = "within the levels")
+  expect_error(if_else(FALSE, factor("a"), "b"), regexp = "within the levels")
+  expect_error(if_else(NA, factor("a"), "b"), regexp = "within the levels")
+  
+  expect_error(if_else(TRUE, factor("a"), "b"), regexp = "within the levels")
+  expect_error(if_else(FALSE, factor("a"), "b"), regexp = "within the levels")
+  expect_error(if_else(NA, factor("a"), "b"), regexp = "within the levels")
+  
+  expect_error(if_else(1:7 > 4, factor(letters[1:7]), letters[1:7]), 
+               regexp = "`true` is a factor, but `false` is not.",
+               fixed = TRUE)
+  expect_error(if_else(1:7 > 4, letters[1:7], factor(letters[1:7])), 
+               regexp = "`false` is a factor, but `true` is not.",
+               fixed = TRUE)
+  
+  expect_error(if_else(1:7 > 7, "a", "b", factor(letters[1:7])),
+               regexp = "`missing` was type factor, but `true` was type character. `missing` must be the same type as `yes`.",
+               fixed = TRUE)
+  
+})
+
+
