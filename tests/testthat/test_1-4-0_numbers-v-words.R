@@ -9,6 +9,7 @@ test_that("Basics", {
   expect_equal(number2word(0), "zero")
   expect_equal(number2word(0, zero = ""), "")
   expect_equal(number2word(100), "one hundred")
+  expect_equal(number2word(2590L), "two thousand, five hundred and ninety")
 })
 
 context("word2number")

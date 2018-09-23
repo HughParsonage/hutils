@@ -18,10 +18,21 @@ number2word <- function(n, zero = "zero") {
                             zero = "")
     n_blw_99[nzchar(n_blw_99)] <- sprintf(" and %s", n_blw_99[nzchar(n_blw_99)])
     
-    bw100_999 <- between(n, 100L, 999L)
-    out[bw100_999] <-
-      paste0(number2word(n[bw100_999] %/% 100L),
-             " hundred", n_blw_99[bw100_999])
+    if (max(n) <= 999L) {
+      out <- if_else(between(n, 100L, 999L),
+                     paste0(number2word(n %/% 100L),
+                            " hundred", n_blw_99),
+                     out)
+    } else {
+      out <- if_else(between(n, 100L, 999L),
+                     paste0(number2word(n %/% 100L),
+                            " hundred", n_blw_99),
+                     if_else(n > 999L,
+                             paste0(number2word(n %/% 1000L),
+                                    " thousand, ", 
+                                    number2word(n %% 1000L)),
+                             out))
+    }
   }
   out
 }
