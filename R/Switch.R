@@ -2,15 +2,14 @@
 #' @description Present since \code{hutils 1.2.0}. Vectorized version of \code{switch}. Used to avoid or make clearer the result of 
 #' \code{if_else(Expr == , ..1, if_else(Expr == , ..2, ...))}
 #' @param Expr A character vector.
-#' @param ... As in \code{\link[base]{switch}}, a list of named alternatives. If the last
-#' element of \code{...} is unnamed, it becomes the default value; otherwise the first value
-#' is taken as the default.  
-#' 
+#' @param ... As in \code{\link[base]{switch}}, a list of named alternatives.
 #' Unlike \code{switch}, unnamed vectors are taken to match \code{""}. Likewise, 
 #' \code{NA} values in \code{Expr} must be assigned via \code{IF_NA}.
 #' 
 #' @param DEFAULT A mandatory default value should any name of \code{...} be left unmatched.
 #' @param IF_NA Optional value to replace missing (\code{NA_character_}) values in \code{Expr}.
+#' @param MUST_MATCH (logical, default: \code{FALSE}) Must every value in \code{Expr} be matched by a conversion in \code{...}? 
+#' If \code{TRUE} any output equal to the value of \code{DEFAULT} is an error.
 #' @return For every element of \code{...} whose name matches an element of \code{Expr}, 
 #' that element's value.
 #' 
@@ -25,7 +24,8 @@
 #' @export
 
 
-Switch <- function(Expr, ..., DEFAULT, IF_NA = NULL) {
+Switch <- function(Expr, ..., DEFAULT, IF_NA = NULL,
+                   MUST_MATCH = FALSE) {
   if (length(Expr) == 1L) {
     return(switch(Expr, ...))
   }
@@ -43,7 +43,7 @@ Switch <- function(Expr, ..., DEFAULT, IF_NA = NULL) {
     stop("`length(DEFAULT) = ", length(DEFAULT), "` ", 
          " but `length(Expr) = ", length(Expr), ". ", 
          "Ensure `DEFAULT` has the same length as `Expr`.")
-  } 
+  }
   
   out <- rep_len(DEFAULT, length(Expr))
   
@@ -65,10 +65,16 @@ Switch <- function(Expr, ..., DEFAULT, IF_NA = NULL) {
   
   dots <- list(...)
   dot_noms <- names(dots)
+  if (MUST_MATCH) {
+    matches <- integer(length(out))
+  }
   
   for (n in seq_along(dots)) {
     w <- which(Expr == dot_noms[n])
     if (length(w)) {
+      if (MUST_MATCH) {
+        matches[w] <- matches[w] + 1L
+      }
       n_res <- switch(n, ...)
       if (is.factor(n_res)) {
         stop("Argument number ", n, " named '", dot_noms[n], "' was a factor, ",
@@ -90,6 +96,11 @@ Switch <- function(Expr, ..., DEFAULT, IF_NA = NULL) {
              length(n_res), " but `length(Expr) = ", length(Expr), "`. ")
       }
     }
+  }
+  
+  if (MUST_MATCH && min(matches) == 0L) {
+    stop("Position ", which.min(matches),
+         " uses the default value, so stopping, as required.")
   }
   
   

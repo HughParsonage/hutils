@@ -12,7 +12,7 @@
 
 <meta name="author" content="Hugh Parsonage" />
 
-<meta name="date" content="2018-07-31" />
+<meta name="date" content="2018-09-23" />
 
 <title>Hutils</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Hutils</h1>
 <h4 class="author"><em>Hugh Parsonage</em></h4>
-<h4 class="date"><em>2018-07-31</em></h4>
+<h4 class="date"><em>2018-09-23</em></h4>
 
 
 
@@ -95,12 +95,8 @@ opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">
 <span class="co"># package ‘dplyr’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version</span>
 <span class="dt">error =</span> <span class="cf">function</span>(e) {
   opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">eval =</span> <span class="ot">FALSE</span>)
-})</code></pre></div>
-<pre><code>## 
-## Attaching package: 'geosphere'</code></pre>
-<pre><code>## The following object is masked from 'package:hutils':
-## 
-##     bearing</code></pre>
+})
+<span class="kw">options</span>(<span class="dt">digits =</span> <span class="dv">4</span>)</code></pre></div>
 <div id="aliases" class="section level2">
 <h2>Aliases</h2>
 <p>These are simple additions to <code>magrittr</code>‘s aliases, including: capitalized forms of <code>and</code> and <code>or</code> that invoke <code>&amp;&amp;</code> and <code>||</code> (the ’long-form’ logical operators) and <code>nor</code> / <code>neither</code> functions.</p>
@@ -136,9 +132,9 @@ na &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span c
                <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: milliseconds
-##    expr      min       lq     mean   median       uq      max neval cld
-##   dplyr 5.207642 6.630249 7.604633 6.925401 7.105956 26.19271   100   b
-##  hutils 1.927830 2.424772 2.756048 2.492084 2.543887 19.65749   100  a</code></pre>
+##    expr   min    lq  mean median    uq   max neval cld
+##   dplyr 5.205 5.284 6.928  5.571 6.944 18.98   100   b
+##  hutils 1.915 1.998 2.560  2.082 2.484 11.98   100  a</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cnd &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 yes &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 no &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
@@ -149,9 +145,9 @@ na &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span c
                <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: milliseconds
-##    expr      min       lq     mean   median       uq        max neval cld
-##   dplyr 4.684197 5.543002 8.611270 5.685609 5.766775 188.823162   100   b
-##  hutils 1.205609 1.471699 1.497763 1.507238 1.537656   1.668517   100  a</code></pre>
+##    expr   min    lq  mean median    uq    max neval cld
+##   dplyr 4.232 4.296 6.407  5.432 5.618 23.540   100   b
+##  hutils 1.169 1.214 1.356  1.448 1.492  1.546   100  a</code></pre>
 <p>This speed advantage also appears to be true of <code>coalesce</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
@@ -162,10 +158,10 @@ C &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">
                <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw">coalesce</span>(x, A, B, C),
                <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
 <span class="st">  </span>print</code></pre></div>
-<pre><code>## Unit: milliseconds
-##    expr      min       lq     mean   median       uq      max neval cld
-##   dplyr 2.575962 2.736037 3.823278 2.780762 2.899275 32.24756   100   b
-##  hutils 1.104113 1.313883 1.702828 1.358306 1.405892 20.29417   100  a</code></pre>
+<pre><code>## Unit: microseconds
+##    expr    min   lq mean median   uq   max neval cld
+##   dplyr 1783.9 1882 3328   2661 2703 13088   100   b
+##  hutils  951.7 1066 1615   1300 1340 12545   100  a</code></pre>
 <p>especially during short-circuits:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
@@ -174,12 +170,9 @@ C &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">
                <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: microseconds
-##    expr      min       lq       mean    median       uq       max neval
-##   dplyr 2087.153 2545.091 3386.71408 2599.1525 2690.259 18412.722   100
-##  hutils   60.536   63.248   76.25195   68.8185   82.372   168.659   100
-##  cld
-##    b
-##   a</code></pre>
+##    expr     min      lq    mean  median      uq     max neval cld
+##   dplyr 1629.07 1800.28 3113.38 2525.37 2574.76 13392.4   100   b
+##  hutils   60.84   63.25   76.18   69.12   84.63   169.3   100  a</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
@@ -188,9 +181,9 @@ A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">
                <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: microseconds
-##    expr      min       lq     mean   median        uq      max neval cld
-##   dplyr 2219.369 2699.896 3540.955 2769.318 2848.9790 19938.78   100   b
-##  hutils  682.768  775.680  971.252  797.515  831.3975 17264.34   100  a</code></pre>
+##    expr    min     lq mean median     uq   max neval cld
+##   dplyr 1759.5 1852.4 3132 2630.8 2694.8 13139   100   b
+##  hutils  586.1  626.9 1043  754.4  798.6 12309   100  a</code></pre>
 </div>
 <div id="drop-columns" class="section level2">
 <h2>Drop columns</h2>
@@ -456,9 +449,9 @@ DT2 &lt;-<span class="st"> </span><span class="kw">copy</span>(DT1)
 ##                                                                                             expr
 ##           DT1[, `:=`(distance, haversine_distance(lat_orig, lon_orig, lat_dest,      lon_dest))]
 ##  DT2[, `:=`(distance, distHaversine(cbind(lon_orig, lat_orig),      cbind(lon_orig, lat_orig)))]
-##       min       lq     mean   median       uq       max neval cld
-##  21.06308 21.30161 23.31208 21.37901 21.49782  78.79528   100  a 
-##  37.34046 37.92820 48.54878 47.24841 50.41452 218.37339   100   b</code></pre>
+##    min    lq  mean median    uq max neval cld
+##  19.71 20.54 25.96  21.17 21.34 209   100  a 
+##  33.32 37.50 46.38  44.89 46.21 223   100   b</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(DT1, DT2)</code></pre></div>
 </div>
 <div id="mutate_other" class="section level2">
@@ -581,7 +574,7 @@ DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class=
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(iris)
 iris[Species <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolour&quot;</span>)] <span class="op">%$%</span>
 <span class="st">  </span><span class="kw">mean</span>(Sepal.Length <span class="op">/</span><span class="st"> </span>Sepal.Width)</code></pre></div>
-<pre><code>## [1] 1.470188</code></pre>
+<pre><code>## [1] 1.47</code></pre>
 <p>On the face of it, this appears to give the average ratio of <em>Iris setosa</em> and <em>Iris versicolour</em> irises. However, it only gives the average ratio of <em>setosa</em> irises, as the correct spelling is <em>Iris versicolor</em> not <em>-our</em>. This particular error is easy to make, (in fact when I wrote this vignette, the first hit of Google for <code>iris dataset</code> made the same spelling error), but it’s easy to imagine similar mistakes, such as mistaking the capitalization of a value. The functions <code>%ein%</code> and <code>%enotin%</code> strive to reduce the occurence of this mistake. The functions operate exactly the same as <code>%in%</code> and <code>%enotin%</code> but error if any of the table of values to be matched against is not present in any of the values:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(iris)
 iris[Species <span class="op">%ein%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;versicolour&quot;</span>)] <span class="op">%$%</span>
@@ -645,7 +638,7 @@ iris[Species <span class="op">%ein%</span><span class="st"> </span><span class="
 dt[, pred <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">predict</span>(<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> .SD), <span class="dt">newdata =</span> .SD)]
 
 dt[, <span class="kw">auc</span>(y, pred)]</code></pre></div>
-<pre><code>## [1] 0.5330132</code></pre>
+<pre><code>## [1] 0.533</code></pre>
 </div>
 <div id="select_grep" class="section level3">
 <h3><code>select_grep</code></h3>
