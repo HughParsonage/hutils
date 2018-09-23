@@ -86,5 +86,11 @@ test_that("Must match", {
                       DEFAULT = " ", 
                       IF_NA = LETTERS[1:4],
                       MUST_MATCH = FALSE))
+  expect_error(Switch(letters[1:3],
+                      a = 1,
+                      b = 2,
+                      DEFAULT = 0,
+                      MUST_MATCH = TRUE),
+               regexp = "uses the default value")
 })
 
