@@ -37,13 +37,11 @@ number2word <- function(n, zero = "zero") {
   out
 }
 
-.word2number <- function(w) {
-  match(w, .subset2(Table_1100, "ans"), nomatch = NA_integer_)
-}
-
 .validWords2Numbers <- function(w) {
   out <- match(w, .subset2(Table_1100, "ans"), nomatch = NA_integer_)
-  out[is.na(out)] <- w[is.na(out)]
+  if (anyNA(out)) {
+    out[is.na(out)] <- w[is.na(out)]
+  }
   out
 }
 
