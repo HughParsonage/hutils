@@ -45,6 +45,8 @@ Switch <- function(Expr, ..., DEFAULT, IF_NA = NULL,
          "Ensure `DEFAULT` has the same length as `Expr`.")
   }
   
+  check_TF(MUST_MATCH)
+  
   out <- rep_len(DEFAULT, length(Expr))
   
   typeof_out <- 
@@ -54,20 +56,25 @@ Switch <- function(Expr, ..., DEFAULT, IF_NA = NULL,
       typeof(out)
     }
   
+  if (MUST_MATCH) {
+    matches <- integer(length(out))
+  }
+  
   if (!is.null(IF_NA) && anyNA(Expr)) {
+    wis.na <- which(is.na(Expr))
     if (length(IF_NA) == 1L) {
-      out[is.na(Expr)] <- IF_NA
+      out[wis.na] <- IF_NA
     } else if (length(IF_NA) == length(out)) {
-      is_na <- is.na(Expr)
-      out[is_na] <- IF_NA[is_na]
+      out[wis.na] <- IF_NA[wis.na]
+    }
+    if (MUST_MATCH) {
+      matches[wis.na] <- 1L
     }
   }
   
   dots <- list(...)
   dot_noms <- names(dots)
-  if (MUST_MATCH) {
-    matches <- integer(length(out))
-  }
+  
   
   for (n in seq_along(dots)) {
     w <- which(Expr == dot_noms[n])
