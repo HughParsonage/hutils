@@ -50,6 +50,9 @@ test_that("Errors", {
   expect_error(if_else(TRUE, factor("a"), "b"), regexp = "within the levels")
   expect_error(if_else(FALSE, factor("a"), "b"), regexp = "within the levels")
   expect_error(if_else(NA, factor("a"), "b"), regexp = "within the levels")
+  expect_error(if_else(TRUE, false = factor("a"), "b"), regexp = "within the levels of `false`")
+  expect_error(if_else(FALSE, false = factor("a"), "b"), regexp = "within the levels of `false`")
+  expect_error(if_else(NA, false = factor("a"), "b"), regexp = "within the levels of `false`")
   
   expect_error(if_else(1:7 > 4, factor(letters[1:7]), letters[1:7]), 
                regexp = "`true` is a factor, but `false` is not.",
