@@ -38,5 +38,9 @@ test_that("millions", {
                  94000))
 })
 
+test_that(".thousands2Expr", {
+  expect_equal(.thousands2Expr(""), 0)
+})
+
 
 
