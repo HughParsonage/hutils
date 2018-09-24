@@ -39,8 +39,8 @@ test_that("Error handling (rows.out)", {
 test_that("Preserves colorder", {
   library(data.table)
   DT <- data.table(x = 1:5, y = c(1, 1, 1, 1, 2))
-  expect_identical(weight2rows(DT, "y"),
-                   data.table(x = c(1:5, 5L), y = c(1, 1, 1, 1, 2, 2)))
+  expect_equal(weight2rows(DT, "y"),
+               data.table(x = c(1:5, 5L), y = 1L))
 })
 
 test_that("Doesn't update original if not a data.table", {
@@ -60,5 +60,14 @@ test_that("rows.out", {
                    y = c(9.73, 9.64, 8.82, 2.42, 0.76, 2.93, 9.18, 4.77, 5.93, 8))
   res <- weight2rows(dt, 2L, rows.out = 20)
   expect_true(between(nrow(res), 18L, 22L))
+})
+
+test_that("Discarding weight.var", {
+  library(data.table)
+  dt <- data.table(x = 1:10,
+                   y = c(9.73, 9.64, 8.82, 2.42, 0.76, 2.93, 9.18, 4.77, 5.93, 8))
+  res <- weight2rows(dt, 2L, rows.out = 20, discard_weight.var = TRUE)
+  expect_true(between(nrow(res), 18L, 22L))
+  expect_equal(ncol(res), 1)
 })
 

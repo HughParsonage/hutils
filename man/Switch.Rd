@@ -4,21 +4,21 @@
 \alias{Switch}
 \title{Vectorized switch}
 \usage{
-Switch(Expr, ..., DEFAULT, IF_NA = NULL)
+Switch(Expr, ..., DEFAULT, IF_NA = NULL, MUST_MATCH = FALSE)
 }
 \arguments{
 \item{Expr}{A character vector.}
 
-\item{...}{As in \code{\link[base]{switch}}, a list of named alternatives. If the last
-element of \code{...} is unnamed, it becomes the default value; otherwise the first value
-is taken as the default.  
-
+\item{...}{As in \code{\link[base]{switch}}, a list of named alternatives.
 Unlike \code{switch}, unnamed vectors are taken to match \code{""}. Likewise, 
 \code{NA} values in \code{Expr} must be assigned via \code{IF_NA}.}
 
 \item{DEFAULT}{A mandatory default value should any name of \code{...} be left unmatched.}
 
 \item{IF_NA}{Optional value to replace missing (\code{NA_character_}) values in \code{Expr}.}
+
+\item{MUST_MATCH}{(logical, default: \code{FALSE}) Must every value in \code{Expr} be matched by a conversion in \code{...}? 
+If \code{TRUE} any output equal to the value of \code{DEFAULT} is an error.}
 }
 \value{
 For every element of \code{...} whose name matches an element of \code{Expr}, 

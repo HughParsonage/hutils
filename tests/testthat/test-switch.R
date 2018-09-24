@@ -66,3 +66,31 @@ test_that("akin to nested if_else", {
                    Switch(x, a = 1:26, b = -c(1:26), DEFAULT = 0L, IF_NA = -99L))
 })
 
+test_that("Must match", {
+  expect_error(Switch(c(NA, "", "a", NA), 
+                      "a" = "q", 
+                      "b", 
+                      DEFAULT = "", 
+                      IF_NA = LETTERS[1:4],
+                      MUST_MATCH = NA),
+               regexp = "`MUST_MATCH = NA`")
+  expect_equal(Switch(c(NA, "0", "a", NA), 
+                      "a" = "q", 
+                      "0" = "j", 
+                      DEFAULT = " ", 
+                      IF_NA = LETTERS[1:4],
+                      MUST_MATCH = TRUE),
+               Switch(c(NA, "0", "a", NA), 
+                      "a" = "q", 
+                      "0" = "j", 
+                      DEFAULT = " ", 
+                      IF_NA = LETTERS[1:4],
+                      MUST_MATCH = FALSE))
+  expect_error(Switch(letters[1:3],
+                      a = 1,
+                      b = 2,
+                      DEFAULT = 0,
+                      MUST_MATCH = TRUE),
+               regexp = "uses the default value")
+})
+

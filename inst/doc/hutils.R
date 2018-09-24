@@ -19,6 +19,7 @@ tryCatch({
 error = function(e) {
   opts_chunk$set(eval = FALSE)
 })
+options(digits = 4)
 
 ## ----aliases-------------------------------------------------------------
 OR(OR(TRUE,

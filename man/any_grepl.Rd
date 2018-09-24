@@ -17,6 +17,10 @@ any_grepl(x, pattern, perl = TRUE, ignore.case = FALSE,
 \description{
 Shortcut for \code{any(grepl(...))}, mostly for consistency.
 }
+\details{
+From version \code{v 1.4.0}, \code{any_grepl(a, bb)} will be internally
+reversed to \code{any_grepl(bb, a)} if \code{length(bb) > 1} and \code{length(a) == 1}.
+}
 \examples{
 any_grepl(c("A_D_E", "K0j"), "[a-z]")
 
