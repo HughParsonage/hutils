@@ -1,4 +1,4 @@
-#' Fasting selection of \code{data.table} columns
+#' Fast selection of \code{data.table} columns
 #' @description Present since \code{hutils 1.2.0}.
 #' 
 #' @param DT A \code{data.table}.
