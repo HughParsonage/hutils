@@ -23,6 +23,7 @@ Suggests:
   testthat,
   datasets,
   dplyr,
+  Hmisc,
   microbenchmark,
   knitr,
   rmarkdown,

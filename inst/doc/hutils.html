@@ -12,7 +12,7 @@
 
 <meta name="author" content="Hugh Parsonage" />
 
-<meta name="date" content="2018-09-23" />
+<meta name="date" content="2018-10-14" />
 
 <title>Hutils</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Hutils</h1>
 <h4 class="author"><em>Hugh Parsonage</em></h4>
-<h4 class="date"><em>2018-09-23</em></h4>
+<h4 class="date"><em>2018-10-14</em></h4>
 
 
 
@@ -95,8 +95,13 @@ opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">
 <span class="co"># package ‘dplyr’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version</span>
 <span class="dt">error =</span> <span class="cf">function</span>(e) {
   opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">eval =</span> <span class="ot">FALSE</span>)
-})
-<span class="kw">options</span>(<span class="dt">digits =</span> <span class="dv">4</span>)</code></pre></div>
+})</code></pre></div>
+<pre><code>## 
+## Attaching package: 'geosphere'</code></pre>
+<pre><code>## The following object is masked from 'package:hutils':
+## 
+##     bearing</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">digits =</span> <span class="dv">4</span>)</code></pre></div>
 <div id="aliases" class="section level2">
 <h2>Aliases</h2>
 <p>These are simple additions to <code>magrittr</code>‘s aliases, including: capitalized forms of <code>and</code> and <code>or</code> that invoke <code>&amp;&amp;</code> and <code>||</code> (the ’long-form’ logical operators) and <code>nor</code> / <code>neither</code> functions.</p>
@@ -133,8 +138,8 @@ na &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span c
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: milliseconds
 ##    expr   min    lq  mean median    uq   max neval cld
-##   dplyr 5.205 5.284 6.928  5.571 6.944 18.98   100   b
-##  hutils 1.915 1.998 2.560  2.082 2.484 11.98   100  a</code></pre>
+##   dplyr 5.201 5.305 7.349  6.822 6.950 28.05   100   b
+##  hutils 1.922 2.017 2.676  2.463 2.531 21.88   100  a</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cnd &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 yes &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 no &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
@@ -145,9 +150,9 @@ na &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span c
                <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: milliseconds
-##    expr   min    lq  mean median    uq    max neval cld
-##   dplyr 4.232 4.296 6.407  5.432 5.618 23.540   100   b
-##  hutils 1.169 1.214 1.356  1.448 1.492  1.546   100  a</code></pre>
+##    expr   min    lq  mean median    uq   max neval cld
+##   dplyr 4.224 4.292 5.324  4.340 5.374 15.28   100   b
+##  hutils 1.176 1.204 1.383  1.229 1.415 10.98   100  a</code></pre>
 <p>This speed advantage also appears to be true of <code>coalesce</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
@@ -159,9 +164,9 @@ C &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">
                <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: microseconds
-##    expr    min   lq mean median   uq   max neval cld
-##   dplyr 1783.9 1882 3328   2661 2703 13088   100   b
-##  hutils  951.7 1066 1615   1300 1340 12545   100  a</code></pre>
+##    expr    min     lq mean median   uq   max neval cld
+##   dplyr 1789.0 1827.1 2923   1876 2713 16220   100   a
+##  hutils  946.3  991.9 1910   1042 1309 60993   100   a</code></pre>
 <p>especially during short-circuits:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
@@ -171,8 +176,8 @@ C &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: microseconds
 ##    expr     min      lq    mean  median      uq     max neval cld
-##   dplyr 1629.07 1800.28 3113.38 2525.37 2574.76 13392.4   100   b
-##  hutils   60.84   63.25   76.18   69.12   84.63   169.3   100  a</code></pre>
+##   dplyr 1620.33 1660.24 2606.00 1710.99 2534.11 12584.7   100   b
+##  hutils   60.84   63.25   72.88   67.01   78.16   187.3   100  a</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
@@ -181,9 +186,9 @@ A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">
                <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: microseconds
-##    expr    min     lq mean median     uq   max neval cld
-##   dplyr 1759.5 1852.4 3132 2630.8 2694.8 13139   100   b
-##  hutils  586.1  626.9 1043  754.4  798.6 12309   100  a</code></pre>
+##    expr    min     lq   mean median     uq     max neval cld
+##   dplyr 1780.3 1821.2 2885.9 1887.0 2687.3 13508.1   100   b
+##  hutils  569.5  618.2  693.7  660.2  775.1   972.8   100  a</code></pre>
 </div>
 <div id="drop-columns" class="section level2">
 <h2>Drop columns</h2>
@@ -449,9 +454,9 @@ DT2 &lt;-<span class="st"> </span><span class="kw">copy</span>(DT1)
 ##                                                                                             expr
 ##           DT1[, `:=`(distance, haversine_distance(lat_orig, lon_orig, lat_dest,      lon_dest))]
 ##  DT2[, `:=`(distance, distHaversine(cbind(lon_orig, lat_orig),      cbind(lon_orig, lat_orig)))]
-##    min    lq  mean median    uq max neval cld
-##  19.71 20.54 25.96  21.17 21.34 209   100  a 
-##  33.32 37.50 46.38  44.89 46.21 223   100   b</code></pre>
+##    min    lq  mean median    uq    max neval cld
+##  19.80 20.29 21.52  20.40 20.74  79.54   100  a 
+##  31.39 33.40 43.50  39.49 40.50 220.81   100   b</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(DT1, DT2)</code></pre></div>
 </div>
 <div id="mutate_other" class="section level2">
@@ -732,6 +737,19 @@ ahull_dt &lt;-
             <span class="dt">color =</span> <span class="st">&quot;white&quot;</span>,
             <span class="dt">fill =</span> <span class="ot">NA</span>)</code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+</div>
+<div id="hutils-v1.3.0" class="section level2">
+<h2><code>hutils</code> v1.3.0</h2>
+<div id="weighted_quantile" class="section level3">
+<h3><code>weighted_quantile</code></h3>
+<p>Simply a version of <code>quantile</code> supporting weighted values:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>
+w &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">5</span>), <span class="kw">rep</span>(<span class="dv">2</span>, <span class="dv">5</span>))
+<span class="kw">quantile</span>(x, <span class="dt">prob =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>), <span class="dt">names =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>## [1] 3.25 7.75</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">weighted_quantile</span>(x, w, <span class="dt">p =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</code></pre></div>
+<pre><code>## [1] 4 9</code></pre>
 </div>
 </div>
 </div>

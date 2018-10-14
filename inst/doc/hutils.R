@@ -247,3 +247,10 @@ ggplot(ahull_dt) +
 
 
 
+## ----weighted_quantile-ex------------------------------------------------
+x <- 1:10
+w <- c(rep(1, 5), rep(2, 5))
+quantile(x, prob = c(0.25, 0.75), names = FALSE)
+
+weighted_quantile(x, w, p = c(0.25, 0.75))
+
