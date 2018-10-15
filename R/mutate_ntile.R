@@ -7,6 +7,8 @@
 #' @param new.col If not \code{NULL}, the name of the column to be added. 
 #' If \code{NULL} (the default) a name will be inferred from \code{n}. 
 #' (For example, \code{n = 100} will be \code{<col>Percentile}).
+#' @param character.only (logical, default: \code{FALSE}) Do not contemplate 
+#' \code{col} to be an unquoted column name.
 #' @param overwrite (logical, default: \code{TRUE}) If \code{TRUE} and
 #' \code{new.col} already exists in \code{DT}, the column will be overwritten.
 #' If \code{FALSE}, attempting to overwrite an existing column is an error.
@@ -21,6 +23,11 @@
 #' mutate_ntile(DT, "x", n = 5)
 #' mutate_ntile(DT, "x", n = 10, by = "y")
 #' mutate_ntile(DT, "x", n = 10, keyby = "y")
+#' 
+#' y <- "x"
+#' DT <- data.table(x = 1:20, y = 2:1)
+#' mutate_ntile(DT, y, n = 5)                        # Use DT$y
+#' mutate_ntile(DT, y, n = 5, character.only = TRUE) # Use DT$x
 #' 
 #' @return \code{DT} with a new integer column \code{new.col} containing the quantiles.
 #' 
