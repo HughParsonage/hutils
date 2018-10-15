@@ -13,7 +13,10 @@ test_that("Error handling", {
   expect_error(mutate_ntile(DT, n = 2.5),
                regexp = "n != as.integer(n)", 
                fixed = TRUE)
-  
+  expect_error(mutate_ntile(DT, y, n = 2),
+               regexp = "`col = y` but this was not a column of `DT`.")
+  expect_error(mutate_ntile(DT, y, n = 2),
+               regexp = "`col = y` but this was not a column of `DT`.")
   
   expect_error(mutate_ntile(DT, n = 2),
                regexp = "`col` is missing", 

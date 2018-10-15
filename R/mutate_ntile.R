@@ -1,8 +1,3 @@
-
-
-
-
-
 #' Add a column of ntiles to a data table
 #' @param DT A \code{data.table}.
 #' @param col The column name (quoted or unquoted) for which quantiles are desired.
@@ -39,6 +34,7 @@ mutate_ntile <- function(DT,
                          by = NULL,
                          keyby = NULL,
                          new.col = NULL,
+                         character.only = FALSE,
                          overwrite = TRUE,
                          check.na = FALSE) {
   if (length(n) != 1L) {
@@ -61,8 +57,72 @@ mutate_ntile <- function(DT,
   if (missing(col)) {
     stop("Argument `col` is missing, with no default.")
   }
+  if (character.only) {
+    
+    if (length(col) != 1L) {
+      stop("`col` had length ", length(col), ". ",
+           "Ensure `col` has length one.")
+    }
+    if (!is.character(col)) {
+      stop("`col = ", col, "` was a ", class(col)[1L],
+           ", but must be a length-one character.")
+    }
+    
+    if (col %notchin% names(DT)) {
+      stop("`col = ", col, "` but this is not a column in ",
+           "`DT`. Ensure `col` is a string matching a name of `DT`.", 
+           if (length(suggestion <- agrep(col, names(DT), value = TRUE)) == 1) {
+             paste0("\n\n(Did you mean `col = ", suggestion, "`?)")
+           })
+    }
+    
+    .col <- col
+    
+  } else {
+    # First see whether the unquoted name refers to an extant object
+    # e.g.
+    #  DT <- data.table(x = 1:5)
+    # 
+    #  x <- "foo"
+    #  mutate_ntile(DT, x)  -> MSG: just use the x column, even though
+    #                               'foo' might have been intended
+    #
+    #  y <- "foo"
+    #  mutate_ntile(DT, y)  -> ERR: neither 'y' not 'foo' a column
+    # 
+    #  y <- "x"
+    #  mutate_ntile(DT, y)  -> WARN: y may refer to 'y' or 'x'
+    if (is.symbol(substitute(col)) &&
+        exists(as.character(substitute(col))) &&
+        length(as.character(substitute(col))) == 1L) {
+      .col <- as.character(substitute(col))
+      if (.col %chin% names(DT)) {
+        message("Interpreting `col = ", deparse(substitute(col)), "` as ",
+                "a column, despite an extant object of the same name.")
+      } else {
+        if (col %in% names(DT)) { # WARN
+          .col <- col
+          warning("Interpreting `col = ", deparse(substitute(col)), "` as ",
+                  "`col = ", col, "`.")
+        } else {  # Not a name of the table
+          stop("`col = ", deparse(substitute(col)),
+               "` but this was not a column of `DT`. ",
+               "`col` must be a column name of `DT`.")
+        }
+      }
+    } else {
+      .col <- as.character(substitute(col))
+      if (.col %notchin% names(DT)) {
+        stop("`col = ", deparse(substitute(col)),
+             "` but this was not a column of `DT`. ",
+             "`col` must be a column name of `DT`.")
+      }
+    }
+    
+  }
   
-  .col <- as.character(substitute(col))
+  
+  
   if (is.null(new.col)) {
     suffix <- 
       switch(as.character(n), 
@@ -196,4 +256,6 @@ mutate_ntile <- function(DT,
   
   as.integer(n * {seq_along(x) - 1L} / length(x) + 1L)
 }
+
+
 
