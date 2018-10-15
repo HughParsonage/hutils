@@ -3,6 +3,9 @@ context("mutate ntile")
 test_that("Error handling", {
   skip_if_not_installed("dplyr")
   library(data.table)
+  if (exists("y")) {
+    rm(y)
+  }
   DT <- data.table(x = 1:101)
   expect_error(mutate_ntile(DT, n = 1:2),
                regexp = "length(n) = 2", 
@@ -17,6 +20,8 @@ test_that("Error handling", {
                regexp = "`col = y` but this was not a column of `DT`.")
   expect_error(mutate_ntile(DT, y, n = 2),
                regexp = "`col = y` but this was not a column of `DT`.")
+  expect_error(mutate_ntile(DT, y, n = 5, character.only = TRUE),
+               "object.*not found")
   
   expect_error(mutate_ntile(DT, n = 2),
                regexp = "`col` is missing", 
@@ -53,6 +58,15 @@ test_that("Error handling", {
                regexp = "check.na = TRUE",
                fixed = TRUE)
   
+})
+
+test_that("character.only / NSE", {
+  DT2 <- data.table(x = 1:200, y = rep(1:10, 20L))
+  y <- "x"
+  expect_identical(mutate_ntile(DT2, y, n = 5, character.only = TRUE),
+                   mutate_ntile(DT2, "x", n = 5, character.only = TRUE))
+  expect_message(mutate_ntile(DT2, y, n = 5))
+  yy <- "x"
 })
 
 test_that("tibble", {

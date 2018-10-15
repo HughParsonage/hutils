@@ -105,7 +105,8 @@ mutate_ntile <- function(DT,
       .col <- as.character(substitute(col))
       if (.col %chin% names(DT)) {
         message("Interpreting `col = ", deparse(substitute(col)), "` as ",
-                "a column, despite an extant object of the same name.")
+                "column `DT[['", .col,  "']]`",
+                ",  despite an extant object `y`.")
       } else {
         if (col %in% names(DT)) { # WARN
           .col <- col
