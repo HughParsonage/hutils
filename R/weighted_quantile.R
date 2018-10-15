@@ -37,7 +37,7 @@ weighted_quantile <- function(v,
   
   if (length(w) <= 1L) {
     message("`w` is NULL or a single value, so returning unweighted quantiles.")
-    return(quantile(v, p, names = FALSE))
+    return(stats::quantile(v, p, names = FALSE))
   }
   if (length(w) != length(v)) {
     stop("`length(v) = ", length(v), "`, yet ",

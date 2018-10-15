@@ -1,11 +1,18 @@
 # hutils 1.3.0
-* Enhancements:
-  - `weight2rows` gains a `rows.out` argument to specify the number of rows in the result.
 
 * Bug fixes:
   - `weight2rows`:
     * no longer reorders the columns in the result
-    * no longer updates by reference the data frame to be a data.table, instead a copy is made
+    * no longer updates by reference the data frame to be a data.table,
+      instead a copy is made
+
+* New functions:
+  - `weighted_quantile`, like `quantile` but for weighted data
+  - `weighted_ntile`, like `dplyr::ntile` but for weighted data
+  - `mutate_ntile` convenience function for adding new column with `ntile`s
+
+* Enhancements:
+  - `weight2rows` gains a `rows.out` argument to specify the number of rows in the result.
   
 
 # hutils 1.2.0
