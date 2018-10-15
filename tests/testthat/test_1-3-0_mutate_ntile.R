@@ -16,7 +16,7 @@ test_that("Error handling", {
   expect_error(mutate_ntile(DT, n = 2.5),
                regexp = "n != as.integer(n)", 
                fixed = TRUE)
-  expect_error(mutate_ntile(DT, y, n = 2),
+  expect_error(mutate_ntile(DT, y, n = 5),
                regexp = "`col = y` but this was not a column of `DT`.")
   expect_error(mutate_ntile(DT, y, n = 2),
                regexp = "`col = y` but this was not a column of `DT`.")
@@ -61,12 +61,20 @@ test_that("Error handling", {
 })
 
 test_that("character.only / NSE", {
+  library(data.table)
   DT2 <- data.table(x = 1:200, y = rep(1:10, 20L))
   y <- "x"
   expect_identical(mutate_ntile(DT2, y, n = 5, character.only = TRUE),
                    mutate_ntile(DT2, "x", n = 5, character.only = TRUE))
-  expect_message(mutate_ntile(DT2, y, n = 5))
-  yy <- "x"
+  y <- "y_y"
+  expect_message(mutate_ntile(DT2, y, n = 5),
+                 "extant object")
+})
+
+test_that("NSE 2", {
+  DT2 <- data.table(x = 1:200, y = rep(1:10, 20L))
+  y <- "x"
+  expect_warning(mutate_ntile(DT2, y, n = 5, debug = TRUE))
 })
 
 test_that("tibble", {
@@ -113,6 +121,14 @@ test_that("data frames", {
   expect_identical(mutate_ntile(DT, x, n = 1, new.col = "y")[["y"]], 
                    dplyr::ntile(1:59, n = 1))
   DT <- data.frame(xy = rev(1:59))
+})
+
+test_that("bys", {
+  skip_if_not_installed("nycflights13")
+  library(nycflights13)
+  flights <- as.data.table(flights)
+  
+  
 })
 
 
