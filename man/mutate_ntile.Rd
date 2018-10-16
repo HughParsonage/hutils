@@ -5,8 +5,7 @@
 \title{Add a column of ntiles to a data table}
 \usage{
 mutate_ntile(DT, col, n, by = NULL, keyby = NULL, new.col = NULL,
-  character.only = FALSE, overwrite = TRUE, check.na = FALSE,
-  debug = FALSE)
+  character.only = FALSE, overwrite = TRUE, check.na = FALSE)
 }
 \arguments{
 \item{DT}{A \code{data.table}.}

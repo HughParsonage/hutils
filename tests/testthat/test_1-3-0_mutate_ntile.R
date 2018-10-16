@@ -3,9 +3,7 @@ context("mutate ntile")
 test_that("Error handling", {
   skip_if_not_installed("dplyr")
   library(data.table)
-  if (exists("y")) {
-    rm(y)
-  }
+  skip_if(exists("y"))
   DT <- data.table(x = 1:101)
   expect_error(mutate_ntile(DT, n = 1:2),
                regexp = "length(n) = 2", 
@@ -66,6 +64,9 @@ test_that("character.only / NSE", {
   y <- "x"
   expect_identical(mutate_ntile(DT2, y, n = 5, character.only = TRUE),
                    mutate_ntile(DT2, "x", n = 5, character.only = TRUE))
+  expect_warning(mutate_ntile(DT2, y, n = 5),
+                 regexp = "DT[['x']]", 
+                 fixed = TRUE)
   y <- "y_y"
   expect_message(mutate_ntile(DT2, y, n = 5),
                  "extant object")
@@ -74,7 +75,7 @@ test_that("character.only / NSE", {
 test_that("NSE 2", {
   DT2 <- data.table(x = 1:200, y = rep(1:10, 20L))
   y <- "x"
-  expect_warning(mutate_ntile(DT2, y, n = 5, debug = TRUE))
+  expect_warning(mutate_ntile(DT2, y, n = 5))
 })
 
 test_that("tibble", {
@@ -86,7 +87,7 @@ test_that("tibble", {
   asf <- function(x) as.data.frame(x)
   TIB <- asf(tibble::tibble(hadley = 1:4))
   expect_identical(mutate_ntile(TIB, "hadley", n = 2, new.col = "hadleyTile"),
-                   asf(tibble::tibble(hadley = 1:4, hadleyTile = rep(1:2, each = 2L))))
+                   asf(tibble::tibble(hadley = 1:4, hadleyTile = rep(1:2, each = 2))))
   
 })
 
@@ -125,8 +126,32 @@ test_that("data frames", {
 
 test_that("bys", {
   skip_if_not_installed("nycflights13")
+  skip_if_not_installed("dplyr")
+  skip_if_not_installed("tibble")
+  library(tibble)
   library(nycflights13)
-  flights <- as.data.table(flights)
+  library(dplyr)
+  Flights <- select(flights, origin, dep_time)
+  Planes <- select(planes, -tailnum)
+  Res1 <- 
+    Planes %>%
+    filter(seats > 20) %>%
+    mutate_ntile(seats, n = 5, by = "manufacturer") %>%
+    group_by(manufacturer, seatsQuintile) %>%
+    summarise(seats = mean(seats)) %>%
+    filter(manufacturer == "BOEING", 
+           seatsQuintile == 5)
+  
+  expect_identical(Res1[["seats"]], 272L)
+  expect_true(is_tibble(Res1))
+  
+  ResKey <- 
+    Planes %>%
+    filter(seats > 20) %>%
+    mutate_ntile(seats, n = 5, keyby = "manufacturer")
+  
+  expect_false(is_tibble(ResKey))
+  expect_true(data.table::haskey(ResKey))
   
   
 })

@@ -43,8 +43,7 @@ mutate_ntile <- function(DT,
                          new.col = NULL,
                          character.only = FALSE,
                          overwrite = TRUE,
-                         check.na = FALSE,
-                         debug = FALSE) {
+                         check.na = FALSE) {
   if (length(n) != 1L) {
     stop("`length(n) = ", length(n), "`.", 
          "`n` must be a single positive whole number.")
@@ -100,15 +99,10 @@ mutate_ntile <- function(DT,
     # 
     #  y <- "x"
     #  mutate_ntile(DT, y)  -> WARN: y may refer to 'y' or 'x'
-    if (debug) {
-      cat("\n")
-      cat("is.symbol(substitute(col))", "\t", is.symbol(substitute(col)), "\n",
-          "exists(as.character(substitute(col)))", "\t", exists(as.character(substitute(col))), "\n",
-          "length(as.character(substitute(col)))", "\t", length(as.character(substitute(col))), "\n")
-    }
-    if (is.symbol(substitute(col)) &&
-        exists(as.character(substitute(col))) &&
-        length(as.character(substitute(col))) == 1L) {
+    
+    if (exists(deparse(substitute(col)),
+               env = parent.frame(),
+               mode = "character")) {
       .col <- as.character(substitute(col))
       if (.col %chin% names(DT)) {
         if (col %in% names(DT)) {
