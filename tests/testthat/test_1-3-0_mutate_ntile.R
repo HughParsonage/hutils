@@ -70,6 +70,13 @@ test_that("character.only = TRUE error handling", {
   expect_error(mutate_ntile(DT0, col = "sdf", n = 5L, character.only = TRUE),
                regexp = "`col = sdf` but this is not a column in `DT`",
                fixed = TRUE)
+  DT1 <- data.table(taxableIncome = 1:10)
+  expect_error(mutate_ntile(DT1,
+                            col = "TaxableIncome",
+                            n = 5,
+                            character.only = TRUE),
+               regexp = "Did you mean `col = taxableIncome`?",
+               fixed = TRUE)
   
 })
 

@@ -101,7 +101,7 @@ mutate_ntile <- function(DT,
     #  mutate_ntile(DT, y)  -> WARN: y may refer to 'y' or 'x'
     
     if (exists(deparse(substitute(col)),
-               env = parent.frame(),
+               envir = parent.frame(),
                mode = "character")) {
       .col <- as.character(substitute(col))
       if (.col %chin% names(DT)) {
