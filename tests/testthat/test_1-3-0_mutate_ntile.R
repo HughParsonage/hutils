@@ -142,7 +142,7 @@ test_that("bys", {
     filter(manufacturer == "BOEING", 
            seatsQuintile == 5)
   
-  expect_identical(Res1[["seats"]], 272L)
+  expect_identical(as.integer(Res1[["seats"]]), 272L)
   expect_true(is_tibble(Res1))
   
   ResKey <- 
