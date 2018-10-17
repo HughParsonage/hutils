@@ -220,6 +220,9 @@ test_that("Error handling (bys, definitely sorted)", {
                regexp = "`by` is NULL, yet `keyby` is NULL too.",
                fixed = TRUE)
   
+  mutate_ntile(DT, "col", keyby = "by", n = 10L)
+  expect_identical(key(DT), "by")
+  
   mutate_ntile(DT, by, keyby = "col", n = 10L)
   expect_identical(key(DT), "col")
   expect_true("byDecile" %in% names(DT))
