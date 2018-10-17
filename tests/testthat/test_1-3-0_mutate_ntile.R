@@ -98,6 +98,15 @@ test_that("NSE 2", {
   DT2 <- data.table(x = 1:200, y = rep(1:10, 20L))
   y <- "x"
   expect_warning(mutate_ntile(DT2, y, n = 5))
+  yy <- "x"
+  expect_warning(mutate_ntile(DT2, yy, n = 5),
+                 regexp = "Interpreting `col = yy` as `col = x`.",
+                 fixed = TRUE)
+  yy <- "xx"
+  expect_error(mutate_ntile(DT2, yy, n = 5),
+               regexp = "not a column of `DT`",
+               fixed = TRUE)
+  
 })
 
 test_that("tibble", {
