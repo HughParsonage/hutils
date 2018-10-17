@@ -155,6 +155,16 @@ test_that("bys", {
   library(dplyr)
   Flights <- select(flights, origin, dep_time)
   Planes <- select(planes, -tailnum)
+  
+  expect_error(mutate_ntile(Planes, 
+                            "seats", 
+                            n = 5L,
+                            by = "manufacturer",
+                            keyby = "manufacturer"),
+               regexp = "`by` is NULL, yet `keyby` is NULL too.",
+               fixed = TRUE)
+  
+  
   Res1 <- 
     Planes %>%
     filter(seats > 20) %>%
@@ -174,6 +184,19 @@ test_that("bys", {
   
   expect_false(is_tibble(ResKey))
   expect_true(data.table::haskey(ResKey))
+  
+  Res1 <- 
+    Planes %>%
+    arrange(seats) %>%
+    filter(seats > 20) %>%
+    mutate_ntile(seats, n = 5, by = "manufacturer") %>%
+    group_by(manufacturer, seatsQuintile) %>%
+    summarise(seats = mean(seats)) %>%
+    filter(manufacturer == "BOEING", 
+           seatsQuintile == 5)
+  
+  expect_identical(as.integer(Res1[["seats"]]), 272L)
+  expect_true(is_tibble(Res1))
   
   
 })
