@@ -210,5 +210,21 @@ test_that("bys", {
   
 })
 
+test_that("Error handling (bys, definitely sorted)", {
+  library(data.table)
+  DT <- setDT(list(col = sample(1:5, size = 100L, replace = TRUE),
+                   by = sample(LETTERS, size = 100, replace = TRUE),
+                   key = runif(100)))
+  setkey(DT, col)
+  expect_error(mutate_ntile(DT, col, n = 5L, by = "key", keyby = "key"),
+               regexp = "`by` is NULL, yet `keyby` is NULL too.",
+               fixed = TRUE)
+  
+  mutate_ntile(DT, by, keyby = "col", n = 10L)
+  expect_identical(key(DT), "col")
+  expect_true("byDecile" %in% names(DT))
+})
+
+
 
 
