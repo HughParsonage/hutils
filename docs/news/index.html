@@ -109,8 +109,6 @@
 <a href="#hutils-1-3-0" class="anchor"></a>hutils 1.3.0<small> Unreleased </small>
 </h1>
 <ul>
-<li>Enhancements:</li>
-<li><p><code>weight2rows</code> gains a <code>rows.out</code> argument to specify the number of rows in the result.</p></li>
 <li>Bug fixes:</li>
 <li>
 <code>weight2rows</code>:
@@ -119,6 +117,14 @@
 <li>no longer updates by reference the data frame to be a data.table, instead a copy is made</li>
 </ul>
 </li>
+<li>New functions:</li>
+<li>
+<code>weighted_quantile</code>, like <code>quantile</code> but for weighted data</li>
+<li>
+<code>weighted_ntile</code>, like <code><a href="http://dplyr.tidyverse.org/reference/ranking.html">dplyr::ntile</a></code> but for weighted data</li>
+<li><p><code>mutate_ntile</code> convenience function for adding new column with <code>ntile</code>s</p></li>
+<li>Enhancements:</li>
+<li><p><code>weight2rows</code> gains a <code>rows.out</code> argument to specify the number of rows in the result.</p></li>
 </ul>
 </div>
     <div id="hutils-1-2-0" class="section level1">

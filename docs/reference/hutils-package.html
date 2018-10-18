@@ -115,12 +115,29 @@
     </div>
 
         
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The package attempts to provide lightweight, fast, and stable functions 
+for common operations.</p>
+<p>By <strong>lightweight</strong>, I mean in terms of dependencies:
+we import <code>package:data.table</code> and <code>package:fastmatch</code> which do require
+compilation, but in C. Otherwise, all dependencies do not require compilation.</p>
+<p>By <strong>fast</strong>, I mean essentially as fast as possible without using compilation.</p>
+<p>By <strong>stable</strong>, I mean that unit tests <em>should not change</em> unless the major
+version also changes.  To make this completely transparent, tests include the version
+of their introduction and are guaranteed to not be modified (not even in the sense of
+adding extra, independent tests) while the major version is <code>1</code>. Tests that do
+not include the version in their filename may be modified from version to version 
+(though this will be avoided).</p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>

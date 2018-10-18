@@ -75,6 +75,15 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#hutils" class="anchor"></a>hutils</h1></div>
 <p>Miscellaneous R functions and aliases</p>
+<p>My name is Hugh and this is a package of functions I often put in <code>R/utils.s</code>. Hence, <code>hutils</code>.</p>
+<div id="scope" class="section level3">
+<h3 class="hasAnchor">
+<a href="#scope" class="anchor"></a>Scope</h3>
+<p>The package attempts to provide lightweight, fast, and stable functions for common operations.</p>
+<p>By <strong>lightweight</strong>, I mean in terms of dependencies: we import <code>package:data.table</code> and <code>package:fastmatch</code> which do require compilation, but in C. Since so many operations handle data frames, <code>data.table</code> seemed worthwhile – and besides its compile time is not too onerous. Otherwise, all dependencies do not require compilation. (I also try to minimize the cardinality of package imports, but it’s mostly the compile time I’m focused on.)</p>
+<p>By <strong>fast</strong>, I mean essentially as fast as possible without using compilation.</p>
+<p>By <strong>stable</strong>, I mean that unit tests should not change unless the major version also changes. To make this completely transparent, tests include the version of their introduction and are guaranteed to not be modified (not even in the sense of adding extra, independent tests) while the major version is 1. Tests that do not include the version in their filename may be modified from version to version (though this will be avoided).</p>
+</div>
 </div>
 
   </div>
@@ -110,7 +119,6 @@
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/HughParsonage/hutils"><img src="https://travis-ci.org/HughParsonage/hutils.svg?branch=master" alt="Travis-CI Build Status"></a></li>
 <li><a href="https://codecov.io/github/HughParsonage/hutils?branch=master"><img src="https://codecov.io/github/HughParsonage/hutils/coverage.svg?branch=master" alt="codecov.io"></a></li>
-<li><a href="https://ci.appveyor.com/api/projects/status/github//HughParsonage/hutils/?branch=master&amp;svg=true"><img src="https://ci.appveyor.com/HughParsonage/hutils" alt="AppVeyor Build Status"></a></li>
 </ul>
 </div>
 </div>

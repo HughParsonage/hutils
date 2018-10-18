@@ -73,7 +73,7 @@
       <h1>Hutils</h1>
                         <h4 class="author">Hugh Parsonage</h4>
             
-            <h4 class="date">2018-10-14</h4>
+            <h4 class="date">2018-10-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/hughparsonage/hutils/blob/master/vignettes/hutils.Rmd"><code>vignettes/hutils.Rmd</code></a></small>
       <div class="hidden name"><code>hutils.Rmd</code></div>
@@ -146,9 +146,9 @@ na &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span c
                <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: milliseconds
-##    expr   min    lq  mean median     uq    max neval cld
-##   dplyr 5.195 6.272 8.109  6.892 10.443 15.286   100   b
-##  hutils 1.938 2.050 2.722  2.453  2.502  8.612   100  a</code></pre>
+##    expr   min    lq  mean median    uq    max neval cld
+##   dplyr 5.149 5.323 7.040  6.740 7.912 13.729   100   b
+##  hutils 1.906 1.998 2.691  2.132 2.505  9.327   100  a</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cnd &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 yes &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 no &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
@@ -159,9 +159,9 @@ na &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span c
                <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: milliseconds
-##    expr   min    lq  mean median     uq    max neval cld
-##   dplyr 4.466 5.435 8.923  5.590 10.461 136.37   100   b
-##  hutils 1.228 1.435 2.019  1.467  1.514  11.07   100  a</code></pre>
+##    expr   min    lq  mean median    uq     max neval cld
+##   dplyr 5.061 5.500 8.730  5.644 9.982 131.856   100   b
+##  hutils 1.188 1.409 1.906  1.439 1.483   8.069   100  a</code></pre>
 <p>This speed advantage also appears to be true of <code>coalesce</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
@@ -174,8 +174,8 @@ C &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: milliseconds
 ##    expr   min    lq  mean median    uq     max neval cld
-##   dplyr 2.606 2.695 5.866  2.741 7.366 129.265   100   b
-##  hutils 1.201 1.284 2.229  1.333 1.370   8.852   100  a</code></pre>
+##   dplyr 2.603 2.672 5.419  2.708 6.755 128.573   100   b
+##  hutils 1.166 1.271 2.301  1.314 1.347   7.627   100  a</code></pre>
 <p>especially during short-circuits:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
@@ -184,9 +184,9 @@ C &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">
                <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: microseconds
-##    expr     min      lq    mean  median      uq     max neval cld
-##   dplyr 2452.19 2516.03 4439.37 2552.78 6610.54 33878.5   100   b
-##  hutils   58.43   60.54   75.89   72.28   86.89   148.5   100  a</code></pre>
+##    expr     min      lq    mean  median      uq   max neval cld
+##   dplyr 2352.49 2515.27 4022.93 2552.47 6615.64 10126   100   b
+##  hutils   58.13   61.44   72.25   69.57   79.96   153   100  a</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
@@ -196,8 +196,8 @@ A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: microseconds
 ##    expr    min     lq mean median     uq    max neval cld
-##   dplyr 2526.0 2653.8 5487 2699.2 4802.1 132504   100   b
-##  hutils  734.9  762.4 1196  786.4  836.8   8490   100  a</code></pre>
+##   dplyr 2498.6 2666.6 5131 2705.0 2849.9 129692   100   b
+##  hutils  685.2  756.4 1382  784.6  823.7   7920   100  a</code></pre>
 </div>
 <div id="drop-columns" class="section level2">
 <h2 class="hasAnchor">
@@ -472,8 +472,8 @@ DT2 &lt;-<span class="st"> </span><span class="kw">copy</span>(DT1)
 ##           DT1[, `:=`(distance, haversine_distance(lat_orig, lon_orig, lat_dest,      lon_dest))]
 ##  DT2[, `:=`(distance, distHaversine(cbind(lon_orig, lat_orig),      cbind(lon_orig, lat_orig)))]
 ##    min    lq  mean median    uq    max neval cld
-##  20.98 21.22 22.10  21.31 21.42  40.17   100  a 
-##  37.51 38.13 49.73  49.07 52.98 184.08   100   b</code></pre>
+##  20.70 21.25 22.99  21.33 21.45  38.65   100  a 
+##  37.33 38.10 47.59  46.34 50.76 180.62   100   b</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(DT1, DT2)</code></pre></div>
 </div>
 <div id="mutate_other" class="section level2">
@@ -797,6 +797,58 @@ w &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</
 <pre><code>## [1] 3.25 7.75</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/weighted_quantile.html">weighted_quantile</a></span>(x, w, <span class="dt">p =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</code></pre></div>
 <pre><code>## [1] 4 9</code></pre>
+</div>
+<div id="mutate_ntile" class="section level3">
+<h3 class="hasAnchor">
+<a href="#mutate_ntile" class="anchor"></a><code>mutate_ntile</code>
+</h3>
+<p>To add a column of ntiles (say, for later summarizing):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
+<span class="st">  </span>as.data.table <span class="op">%&gt;%</span>
+<span class="st">  </span>.[, .(year, month, day, origin, dest, distance)] <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/mutate_ntile.html">mutate_ntile</a></span>(distance, <span class="dt">n =</span> 5L)</code></pre></div>
+<pre><code>##         year month day origin dest distance distanceQuintile
+##      1: 2013     1   1    EWR  IAH     1400                4
+##      2: 2013     1   1    LGA  IAH     1416                4
+##      3: 2013     1   1    JFK  MIA     1089                4
+##      4: 2013     1   1    JFK  BQN     1576                4
+##      5: 2013     1   1    LGA  ATL      762                3
+##     ---                                                     
+## 336772: 2013     9  30    JFK  DCA      213                1
+## 336773: 2013     9  30    LGA  SYR      198                1
+## 336774: 2013     9  30    LGA  BNA      764                3
+## 336775: 2013     9  30    LGA  CLE      419                1
+## 336776: 2013     9  30    LGA  RDU      431                2</code></pre>
+<p>You can use non-standard evaluation (as above) or you can quote the <code>col</code> argument. Use <code>character.only = TRUE</code> to ensure column is only interpreted as character.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
+<span class="st">  </span>as.data.table <span class="op">%&gt;%</span>
+<span class="st">  </span>.[, .(year, month, day, origin, dest, distance)] <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/mutate_ntile.html">mutate_ntile</a></span>(distance, <span class="dt">n =</span> 5L)</code></pre></div>
+<pre><code>##         year month day origin dest distance distanceQuintile
+##      1: 2013     1   1    EWR  IAH     1400                4
+##      2: 2013     1   1    LGA  IAH     1416                4
+##      3: 2013     1   1    JFK  MIA     1089                4
+##      4: 2013     1   1    JFK  BQN     1576                4
+##      5: 2013     1   1    LGA  ATL      762                3
+##     ---                                                     
+## 336772: 2013     9  30    JFK  DCA      213                1
+## 336773: 2013     9  30    LGA  SYR      198                1
+## 336774: 2013     9  30    LGA  BNA      764                3
+## 336775: 2013     9  30    LGA  CLE      419                1
+## 336776: 2013     9  30    LGA  RDU      431                2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
+<span class="st">  </span>as.data.table <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/mutate_ntile.html">mutate_ntile</a></span>(<span class="st">"distance"</span>,
+               <span class="dt">n =</span> 5L,
+               <span class="dt">character.only =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>.[, dep_delay <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/coalesce.html">coalesce</a></span>(dep_delay, <span class="dv">0</span>)] <span class="op">%&gt;%</span>
+<span class="st">  </span>.[, .(<span class="dt">avgDelay =</span> <span class="kw">mean</span>(dep_delay)), keyby =<span class="st"> "distanceQuintile"</span>]</code></pre></div>
+<pre><code>##    distanceQuintile avgDelay
+## 1:                1    12.88
+## 2:                2    12.97
+## 3:                3    13.14
+## 4:                4    11.49
+## 5:                5    11.16</code></pre>
 </div>
 </div>
 </div>
