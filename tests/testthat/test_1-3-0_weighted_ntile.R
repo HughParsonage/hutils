@@ -79,8 +79,29 @@ test_that("weighted_ntile agrees with svyquantile", {
   
   hutils_mutate_ntile <- 
     survey_cut_twice %>%
-    mutate_ntile(val, weights = "wts", n = 10) %$%
+    mutate_ntile(val, weights = "wts", n = 10) 
+  
+  hutils_mutate_ntile %$%
     expect_identical(grattan_package_ntiles, valDecile)
+  
+  bind_rows(survey_cut_twice, 
+            survey_cut_twice,
+            survey_cut_twice,
+            .id = "ggrp") %>%
+    mutate_ntile("val", weights = "wts", n = 10, by = "ggrp") %>%
+    filter(ggrp == 2) %>%
+    select(-ggrp) %>%
+    expect_identical(hutils_mutate_ntile)
+  
+  bind_rows(survey_cut_twice, 
+            survey_cut_twice,
+            survey_cut_twice,
+            .id = "ggrp") %>%
+    mutate_ntile("val", weights = "wts", n = 10, keyby = "ggrp") %>%
+    key %>%
+    expect_identical("ggrp")
+    
+  
   
 })
 
