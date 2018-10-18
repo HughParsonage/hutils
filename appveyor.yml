@@ -17,6 +17,7 @@ install:
 
 build_script:
   - travis-tool.sh install_deps
+  - Rscript -e 'options(install.packages.compile.from.source = "never", repos = c(CRAN = "https://cran.ms.unimelb.edu.au/")); install.packages("stringi")'
 
 test_script:
   - travis-tool.sh run_tests
