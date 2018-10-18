@@ -245,12 +245,16 @@ mutate_ntile <- function(DT,
     
     if (is.null(by) && is.null(keyby)) {
       DT[, (new.col) := weighted_ntile(.SD[[.col]],
-                                       weights = if (!is.null(weights)) .SD[[weights]],
+                                       weights = if (!is.null(weights)){
+                                         .SD[[weights]]
+                                       },
                                        n = n),
          .SDcols = c(.col, weights)]
     } else if (!is.null(by)) {     
       DT[, (new.col) := weighted_ntile(.SD[[.col]],
-                                       weights = if (!is.null(weights)) .SD[[weights]],
+                                       weights = if (!is.null(weights)) {
+                                         .SD[[weights]]
+                                       },
                                        n = n),
          .SDcols = c(.col, weights),
          by = c(by)]
