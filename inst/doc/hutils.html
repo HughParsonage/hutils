@@ -12,7 +12,7 @@
 
 <meta name="author" content="Hugh Parsonage" />
 
-<meta name="date" content="2018-10-14" />
+<meta name="date" content="2018-10-18" />
 
 <title>Hutils</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Hutils</h1>
 <h4 class="author"><em>Hugh Parsonage</em></h4>
-<h4 class="date"><em>2018-10-14</em></h4>
+<h4 class="date"><em>2018-10-18</em></h4>
 
 
 
@@ -95,13 +95,8 @@ opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">
 <span class="co"># package ‘dplyr’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version</span>
 <span class="dt">error =</span> <span class="cf">function</span>(e) {
   opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">eval =</span> <span class="ot">FALSE</span>)
-})</code></pre></div>
-<pre><code>## 
-## Attaching package: 'geosphere'</code></pre>
-<pre><code>## The following object is masked from 'package:hutils':
-## 
-##     bearing</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">digits =</span> <span class="dv">4</span>)</code></pre></div>
+})
+<span class="kw">options</span>(<span class="dt">digits =</span> <span class="dv">4</span>)</code></pre></div>
 <div id="aliases" class="section level2">
 <h2>Aliases</h2>
 <p>These are simple additions to <code>magrittr</code>‘s aliases, including: capitalized forms of <code>and</code> and <code>or</code> that invoke <code>&amp;&amp;</code> and <code>||</code> (the ’long-form’ logical operators) and <code>nor</code> / <code>neither</code> functions.</p>
@@ -138,8 +133,8 @@ na &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span c
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: milliseconds
 ##    expr   min    lq  mean median    uq   max neval cld
-##   dplyr 5.201 5.305 7.349  6.822 6.950 28.05   100   b
-##  hutils 1.922 2.017 2.676  2.463 2.531 21.88   100  a</code></pre>
+##   dplyr 5.125 5.274 7.331  6.803 6.970 23.55   100   b
+##  hutils 1.858 2.001 2.550  2.449 2.508 18.81   100  a</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cnd &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 yes &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 no &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
@@ -151,8 +146,8 @@ na &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span c
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: milliseconds
 ##    expr   min    lq  mean median    uq   max neval cld
-##   dplyr 4.224 4.292 5.324  4.340 5.374 15.28   100   b
-##  hutils 1.176 1.204 1.383  1.229 1.415 10.98   100  a</code></pre>
+##   dplyr 4.196 4.262 5.181  4.293 5.569 15.31   100   b
+##  hutils 1.176 1.208 1.482  1.228 1.454 12.44   100  a</code></pre>
 <p>This speed advantage also appears to be true of <code>coalesce</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
@@ -165,8 +160,8 @@ C &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: microseconds
 ##    expr    min     lq mean median   uq   max neval cld
-##   dplyr 1789.0 1827.1 2923   1876 2713 16220   100   a
-##  hutils  946.3  991.9 1910   1042 1309 60993   100   a</code></pre>
+##   dplyr 1777.8 1821.8 2490   1839 2221 10654   100   b
+##  hutils  960.1  993.1 1232   1014 1080  9128   100  a</code></pre>
 <p>especially during short-circuits:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
@@ -176,8 +171,8 @@ C &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: microseconds
 ##    expr     min      lq    mean  median      uq     max neval cld
-##   dplyr 1620.33 1660.24 2606.00 1710.99 2534.11 12584.7   100   b
-##  hutils   60.84   63.25   72.88   67.01   78.16   187.3   100  a</code></pre>
+##   dplyr 1618.22 1662.34 2876.79 1691.56 1839.13 61716.8   100   b
+##  hutils   61.14   64.15   74.44   72.58   80.56   132.2   100  a</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
@@ -186,9 +181,9 @@ A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">
                <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: microseconds
-##    expr    min     lq   mean median     uq     max neval cld
-##   dplyr 1780.3 1821.2 2885.9 1887.0 2687.3 13508.1   100   b
-##  hutils  569.5  618.2  693.7  660.2  775.1   972.8   100  a</code></pre>
+##    expr    min     lq   mean median     uq   max neval cld
+##   dplyr 1770.3 1797.0 2368.7 1818.5 1985.7 10354   100   b
+##  hutils  566.5  595.9  795.4  617.7  651.9  8872   100  a</code></pre>
 </div>
 <div id="drop-columns" class="section level2">
 <h2>Drop columns</h2>
@@ -454,9 +449,9 @@ DT2 &lt;-<span class="st"> </span><span class="kw">copy</span>(DT1)
 ##                                                                                             expr
 ##           DT1[, `:=`(distance, haversine_distance(lat_orig, lon_orig, lat_dest,      lon_dest))]
 ##  DT2[, `:=`(distance, distHaversine(cbind(lon_orig, lat_orig),      cbind(lon_orig, lat_orig)))]
-##    min    lq  mean median    uq    max neval cld
-##  19.80 20.29 21.52  20.40 20.74  79.54   100  a 
-##  31.39 33.40 43.50  39.49 40.50 220.81   100   b</code></pre>
+##    min    lq  mean median    uq   max neval cld
+##  19.73 20.28 23.61  20.39 21.15 209.1   100  a 
+##  30.87 32.34 39.16  37.16 42.30 221.0   100   b</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(DT1, DT2)</code></pre></div>
 </div>
 <div id="mutate_other" class="section level2">
@@ -750,6 +745,56 @@ w &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</
 <pre><code>## [1] 3.25 7.75</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">weighted_quantile</span>(x, w, <span class="dt">p =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</code></pre></div>
 <pre><code>## [1] 4 9</code></pre>
+</div>
+<div id="mutate_ntile" class="section level3">
+<h3><code>mutate_ntile</code></h3>
+<p>To add a column of ntiles (say, for later summarizing):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
+<span class="st">  </span>as.data.table <span class="op">%&gt;%</span>
+<span class="st">  </span>.[, .(year, month, day, origin, dest, distance)] <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate_ntile</span>(distance, <span class="dt">n =</span> 5L)</code></pre></div>
+<pre><code>##         year month day origin dest distance distanceQuintile
+##      1: 2013     1   1    EWR  IAH     1400                4
+##      2: 2013     1   1    LGA  IAH     1416                4
+##      3: 2013     1   1    JFK  MIA     1089                4
+##      4: 2013     1   1    JFK  BQN     1576                4
+##      5: 2013     1   1    LGA  ATL      762                3
+##     ---                                                     
+## 336772: 2013     9  30    JFK  DCA      213                1
+## 336773: 2013     9  30    LGA  SYR      198                1
+## 336774: 2013     9  30    LGA  BNA      764                3
+## 336775: 2013     9  30    LGA  CLE      419                1
+## 336776: 2013     9  30    LGA  RDU      431                2</code></pre>
+<p>You can use non-standard evaluation (as above) or you can quote the <code>col</code> argument. Use <code>character.only = TRUE</code> to ensure column is only interpreted as character.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
+<span class="st">  </span>as.data.table <span class="op">%&gt;%</span>
+<span class="st">  </span>.[, .(year, month, day, origin, dest, distance)] <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate_ntile</span>(distance, <span class="dt">n =</span> 5L)</code></pre></div>
+<pre><code>##         year month day origin dest distance distanceQuintile
+##      1: 2013     1   1    EWR  IAH     1400                4
+##      2: 2013     1   1    LGA  IAH     1416                4
+##      3: 2013     1   1    JFK  MIA     1089                4
+##      4: 2013     1   1    JFK  BQN     1576                4
+##      5: 2013     1   1    LGA  ATL      762                3
+##     ---                                                     
+## 336772: 2013     9  30    JFK  DCA      213                1
+## 336773: 2013     9  30    LGA  SYR      198                1
+## 336774: 2013     9  30    LGA  BNA      764                3
+## 336775: 2013     9  30    LGA  CLE      419                1
+## 336776: 2013     9  30    LGA  RDU      431                2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
+<span class="st">  </span>as.data.table <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate_ntile</span>(<span class="st">&quot;distance&quot;</span>,
+               <span class="dt">n =</span> 5L,
+               <span class="dt">character.only =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>.[, dep_delay <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">coalesce</span>(dep_delay, <span class="dv">0</span>)] <span class="op">%&gt;%</span>
+<span class="st">  </span>.[, .(<span class="dt">avgDelay =</span> <span class="kw">mean</span>(dep_delay)), keyby =<span class="st"> &quot;distanceQuintile&quot;</span>]</code></pre></div>
+<pre><code>##    distanceQuintile avgDelay
+## 1:                1    12.88
+## 2:                2    12.97
+## 3:                3    13.14
+## 4:                4    11.49
+## 5:                5    11.16</code></pre>
 </div>
 </div>
 </div>

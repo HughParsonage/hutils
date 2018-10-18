@@ -254,3 +254,26 @@ quantile(x, prob = c(0.25, 0.75), names = FALSE)
 
 weighted_quantile(x, w, p = c(0.25, 0.75))
 
+## ----mutate_ntile-ex-----------------------------------------------------
+flights %>%
+  as.data.table %>%
+  .[, .(year, month, day, origin, dest, distance)] %>%
+  mutate_ntile(distance, n = 5L)
+
+
+## ----mutate_ntile-ex-charonly--------------------------------------------
+flights %>%
+  as.data.table %>%
+  .[, .(year, month, day, origin, dest, distance)] %>%
+  mutate_ntile(distance, n = 5L)
+
+## ----mutate_ntile-ex-2---------------------------------------------------
+flights %>%
+  as.data.table %>%
+  mutate_ntile("distance",
+               n = 5L,
+               character.only = TRUE) %>%
+  .[, dep_delay := coalesce(dep_delay, 0)] %>%
+  .[, .(avgDelay = mean(dep_delay)), keyby = "distanceQuintile"]
+
+
