@@ -23,11 +23,15 @@ Suggests:
   testthat,
   datasets,
   dplyr,
+  Hmisc,
   microbenchmark,
   knitr,
   rmarkdown,
   nycflights13,
   geosphere,
-  ggplot2
+  ggplot2,
+  survey,
+  tibble,
 RoxygenNote: 6.1.0
+Encoding: UTF-8
 VignetteBuilder: knitr
