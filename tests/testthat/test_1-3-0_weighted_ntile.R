@@ -32,6 +32,7 @@ test_that("weighted_ntile agrees with svyquantile", {
   library(survey)
   library(dplyr)
   library(tibble)
+  library(magrittr)
   
   set.seed(13)
   N <- as.integer(runif(1, 1e3, 1e4))
@@ -74,5 +75,12 @@ test_that("weighted_ntile agrees with svyquantile", {
   # that our function performs at least as well as 
   # package:survey's quantiles.
   expect_lte(sd(grattan_package_cut$ww), sd(survey_package_cut$ww))
+  
+  
+  hutils_mutate_ntile <- 
+    survey_cut_twice %>%
+    mutate_ntile(val, weights = "wts", n = 10) %$%
+    expect_identical(grattan_package_ntiles, valDecile)
+  
 })
 

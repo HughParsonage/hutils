@@ -4,8 +4,9 @@
 \alias{mutate_ntile}
 \title{Add a column of ntiles to a data table}
 \usage{
-mutate_ntile(DT, col, n, by = NULL, keyby = NULL, new.col = NULL,
-  character.only = FALSE, overwrite = TRUE, check.na = FALSE)
+mutate_ntile(DT, col, n, weights = NULL, by = NULL, keyby = NULL,
+  new.col = NULL, character.only = FALSE, overwrite = TRUE,
+  check.na = FALSE)
 }
 \arguments{
 \item{DT}{A \code{data.table}.}
@@ -13,6 +14,10 @@ mutate_ntile(DT, col, n, by = NULL, keyby = NULL, new.col = NULL,
 \item{col}{The column name (quoted or unquoted) for which quantiles are desired.}
 
 \item{n}{A positive integer, the number of groups to split \code{col}.}
+
+\item{weights}{If \code{NULL}, the default, use unweighted quantiles.
+Otherwise, a string designating the column that is passed to 
+\code{\link{weighted_ntile}}.}
 
 \item{by, keyby}{Produce a grouped quantile column, as in \code{\link[data.table]{data.table}}.
 \code{keyby} will set a key on the result (\emph{i.e.} order by \code{keyby}).}
@@ -33,7 +38,9 @@ in \code{DT[[col]]} will throw an error. If \code{NA}'s are present, the
 corresponding n-tile may take any value.}
 }
 \value{
-\code{DT} with a new integer column \code{new.col} containing the quantiles.
+\code{DT} with a new integer column \code{new.col} containing the
+quantiles. If \code{DT} is not a \code{data.table} its class may be preserved
+unless \code{keyby} is used, where it will always be a \code{data.table}.
 }
 \description{
 Add a column of ntiles to a data table

@@ -2,6 +2,9 @@
 #' @param DT A \code{data.table}.
 #' @param col The column name (quoted or unquoted) for which quantiles are desired.
 #' @param n A positive integer, the number of groups to split \code{col}.
+#' @param weights If \code{NULL}, the default, use unweighted quantiles.
+#'   Otherwise, a string designating the column that is passed to 
+#'   \code{\link{weighted_ntile}}.
 #' @param by,keyby Produce a grouped quantile column, as in \code{\link[data.table]{data.table}}.
 #'   \code{keyby} will set a key on the result (\emph{i.e.} order by \code{keyby}).
 #' @param new.col If not \code{NULL}, the name of the column to be added. 
@@ -29,7 +32,9 @@
 #' mutate_ntile(DT, y, n = 5)                        # Use DT$y
 #' mutate_ntile(DT, y, n = 5, character.only = TRUE) # Use DT$x
 #' 
-#' @return \code{DT} with a new integer column \code{new.col} containing the quantiles.
+#' @return \code{DT} with a new integer column \code{new.col} containing the
+#' quantiles. If \code{DT} is not a \code{data.table} its class may be preserved
+#' unless \code{keyby} is used, where it will always be a \code{data.table}.
 #' 
 #' @export mutate_ntile
 
@@ -38,6 +43,7 @@
 mutate_ntile <- function(DT,
                          col,
                          n,
+                         weights = NULL,
                          by = NULL,
                          keyby = NULL,
                          new.col = NULL,
@@ -65,7 +71,6 @@ mutate_ntile <- function(DT,
     stop("Argument `col` is missing, with no default.")
   }
   if (character.only) {
-    
     if (length(col) != 1L) {
       stop("`col` had length ", length(col), ". ",
            "Ensure `col` has length one.")
@@ -208,17 +213,18 @@ mutate_ntile <- function(DT,
   }
   
   
-  if (definitely_sorted(DT, .col, check.na)) {
+  if (is.null(weights) &&  # .ntile can't use weights
+      definitely_sorted(DT, .col, check.na)) {
     if (is.null(by) && is.null(keyby)) {
       DT[, (new.col) := .ntile(.SD[[1L]], n, check.na = check.na),
          .SDcols = c(.col)]
     }
-    if (!is.null(by)) {
-      if (!is.null(keyby)) {
-        stop("`by` is NULL, yet `keyby` is NULL too. ", 
-             "Only one of `by` and `keyby` may be provided.")
-      }
-      
+    if (!is.null(by) && !is.null(keyby)) {
+      stop("`by` is NULL, yet `keyby` is NULL too. ", 
+           "Only one of `by` and `keyby` may be provided.")
+    }
+
+    if (!is.null(by)) {      
       DT[, (new.col) := .ntile(.SD[[.col]], n, check.na = check.na),
          .SDcols = c(.col),
          by = c(by)]
@@ -227,27 +233,32 @@ mutate_ntile <- function(DT,
       DT[, (new.col) := .ntile(.SD[[.col]], n, check.na = check.na),
          .SDcols = c(.col),
          keyby = c(keyby)]
-      setkeyv(DT, keyby)
+      return(setkeyv(DT, keyby))
     }
     
   } else {
+    if (!is.null(by) && !is.null(keyby)) {
+      stop("`by` is NULL, yet `keyby` is NULL too. ", 
+           "Only one of `by` and `keyby` may be provided.")
+    }
+    
+    
     if (is.null(by) && is.null(keyby)) {
-      DT[, (new.col) := weighted_ntile(.SD[[.col]], n = n),
-         .SDcols = c(.col)]
-    }
-    if (!is.null(by)) {
-      if (!is.null(keyby)) {
-        stop("`by` is NULL, yet `keyby` is NULL too. ", 
-             "Only one of `by` and `keyby` may be provided.")
-      }
-      
-      DT[, (new.col) := weighted_ntile(.SD[[.col]], n = n),
-         .SDcols = c(.col),
+      DT[, (new.col) := weighted_ntile(.SD[[.col]],
+                                       weights = if (!is.null(weights)) .SD[[weights]],
+                                       n = n),
+         .SDcols = c(.col, weights)]
+    } else if (!is.null(by)) {     
+      DT[, (new.col) := weighted_ntile(.SD[[.col]],
+                                       weights = if (!is.null(weights)) .SD[[weights]],
+                                       n = n),
+         .SDcols = c(.col, weights),
          by = c(by)]
-    }
-    if (!is.null(keyby)) {
-      DT[, (new.col) := weighted_ntile(.SD[[.col]], n = n),
-         .SDcols = c(.col),
+    } else if (!is.null(keyby)) {
+      DT[, (new.col) := weighted_ntile(.SD[[.col]],
+                                       weights = if (!is.null(weights)) .SD[[weights]],
+                                       n = n),
+         .SDcols = c(.col, weights),
          keyby = c(keyby)]
       return(setkeyv(DT, keyby)[])
     }

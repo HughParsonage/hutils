@@ -33,6 +33,32 @@ test_that("character.only / NSE", {
 
 
 
+test_that("Corresponds to dplyr::ntile", {
+  skip_if_not_installed("dplyr")
+  library(data.table)
+  DT <- data.table(x = 1:101)
+  expect_identical(mutate_ntile(DT, x, n = 5)[["xQuintile"]], 
+                   dplyr::ntile(1:101, n = 5))
+  setkey(DT, x)
+  expect_identical(mutate_ntile(DT, x, n = 10)[["xDecile"]], 
+                   dplyr::ntile(1:101, n = 10))
+  # make uneven
+  DT[5L, x := 0L]
+  expect_identical(mutate_ntile(DT, x, n = 4)[["xQuartile"]], 
+                   dplyr::ntile(1:101, n = 4))
+})
+
+test_that("data frames", {
+  DT <- data.frame(x = 1:59)
+  expect_identical(mutate_ntile(DT, x, n = 10)[["xDecile"]], 
+                   dplyr::ntile(1:59, n = 10))
+  expect_identical(mutate_ntile(DT, x, n = 1, new.col = "y")[["y"]], 
+                   dplyr::ntile(1:59, n = 1))
+  DT <- data.frame(xy = rev(1:59))
+})
+
+
+
 
 
 
