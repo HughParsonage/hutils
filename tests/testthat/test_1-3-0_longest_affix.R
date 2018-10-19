@@ -13,6 +13,9 @@ test_that("trimming", {
   y <- paste(LETTERS, 1:26)
   expect_equal(trim_common_affixes(paste0("QQQ**", y, "(BBB)")),
                y)
+  z <- c("jVDib", "zj7V0", "LrKTN", "q1RJF", "sxEXP", "xS4iF", 
+         "RYLlr", "zwH5i", "nMINH", "bbTfK", NA)
+  expect_equal(trim_common_affixes(z), z)
 
 })
 
