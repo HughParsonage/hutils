@@ -1,4 +1,5 @@
 #' Longest common prefix/suffix
+#' @name longest_affix
 #' @param x A character vector.
 #' @param .x If \code{NULL}, the default, ignored. May be used if \code{x} is
 #' known to be free of \code{NA}s.
@@ -26,6 +27,7 @@ trim_common_affixes <- function(x, .x = NULL) {
 }
 
 
+#' @rdname longest_affix
 longest_suffix <- function(x, .x = NULL) {
   if (is.null(.x)) {
     if (anyNA(x)) {
@@ -59,6 +61,7 @@ longest_suffix <- function(x, .x = NULL) {
   ""
 }
 
+#' @rdname longest_affix
 longest_prefix <- function(x, .x = NULL) {
   if (is.null(.x)) {
     if (anyNA(x)) {
@@ -92,5 +95,4 @@ longest_prefix <- function(x, .x = NULL) {
     }
   }
   ""
-
 }
