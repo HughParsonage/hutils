@@ -10,6 +10,7 @@
   - `weighted_quantile`, like `quantile` but for weighted data
   - `weighted_ntile`, like `dplyr::ntile` but for weighted data
   - `mutate_ntile` convenience function for adding new column with `ntile`s
+  - `trim_common_affixes`, and associated helpers `longest_prefix` and `longest_suffix`.
 
 * Enhancements:
   - `weight2rows` gains a `rows.out` argument to specify the number of rows in the result.
