@@ -13,17 +13,24 @@
 
 trim_common_affixes <- function(x, .x = NULL) {
   if (is.null(.x)) {
-    if (anyNA(x)) {
-      x <- unique(x[complete.cases(x)])
-    } else {
-      x <- unique(x)
+    if (is.null(x)) {
+      return("")
     }
-  } else {
-    x <- .x
+    if (anyNA(x)) {
+      .x <- unique(x[complete.cases(x)])
+    } else {
+      .x <- unique(x)
+    }
   }
-  Prefix <- longest_prefix(.x = x)
-  Suffix <- longest_suffix(.x = x)
-  substr(x, nchar(Prefix) + 1L, nchar(x) - nchar(Suffix))
+  Prefix <- longest_prefix(.x = .x)
+  Suffix <- longest_suffix(.x = .x)
+  
+  # Need to iterate over BY[[1L]] since substr is not vectorized.
+  o1 <- setDT(list(v = x))
+  o1[, ncharv := nchar(v)]
+  o1[, res := substr(v, nchar(Prefix) + 1L, .BY[[1L]] - nchar(Suffix)), 
+     by = "ncharv"]
+  .subset2(o1, "res")
 }
 
 

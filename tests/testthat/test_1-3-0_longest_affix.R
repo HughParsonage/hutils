@@ -16,6 +16,14 @@ test_that("trimming", {
   z <- c("jVDib", "zj7V0", "LrKTN", "q1RJF", "sxEXP", "xS4iF", 
          "RYLlr", "zwH5i", "nMINH", "bbTfK", NA)
   expect_equal(trim_common_affixes(z), z)
+  expect_equal(trim_common_affixes(paste0("foo", letters, "babba")), 
+               letters)
 
+})
+
+test_that("Corner cases", {
+  expect_identical(trim_common_affixes(NULL), "")
+  expect_warning(c("", "a", "b"), 
+                 regexp = "No common")
 })
 
