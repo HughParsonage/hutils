@@ -27,5 +27,7 @@ test_that("Corner cases", {
                    c(character(0), "bb", "cc"))
   expect_warning(trim_common_affixes(c("", "a", "b")), 
                  regexp = "No common")
+  expect_identical(trim_common_affixes(c(NA, NA, NA_character_)), 
+                   c(NA, NA, NA_character_))
 })
 

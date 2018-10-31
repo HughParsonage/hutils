@@ -24,6 +24,10 @@ trim_common_affixes <- function(x, .x = NULL) {
   }
   Prefix <- longest_prefix(.x = .x)
   Suffix <- longest_suffix(.x = .x)
+  if (length(Prefix) == 0L &&
+      length(Suffix) == 0L) {
+    return(x)
+  }
   
   # Need to iterate over BY[[1L]] since substr is not vectorized.
   o1 <- setDT(list(v = x, ncharv = nchar(x)))
@@ -80,7 +84,7 @@ longest_prefix <- function(x, .x = NULL) {
     x <- .x
   }
   if (!length(x)) {
-    return("")
+    return(character(0L))
   }
   x1 <- x[1]
   nchar1 <- nchar(x1)
@@ -89,12 +93,12 @@ longest_prefix <- function(x, .x = NULL) {
     return("")
   }
   for (k in 1:nchar1) {
-    prefix <- substr(x1, 1, k)
+    prefix <- substr(x1, 1L, k)
     for (i in seq_along(x)) {
       if (startsWith(x[i], prefix)) {
         next
       } else {
-        return(substr(x1, 1, k - 1))
+        return(substr(x1, 1L, k - 1L))
       }
       if (i == length(x)) {
         return(prefix)
