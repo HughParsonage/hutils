@@ -1,5 +1,18 @@
 context("test-longest_affix")
 
+test_that("Error handling", {
+  expect_error(longest_suffix(c(NA, "a"), na.rm = ""),
+               regexp = "`na.rm` was type character")
+  expect_error(longest_prefix(c(NA, "a"), na.rm = ""),
+               regexp = "`na.rm` was type character")
+  expect_error(longest_suffix(c(NA, "a"), na.rm = c(TRUE, FALSE)),
+               regexp = "`na.rm` was length-2, but must be length-one.",
+               fixed = TRUE)
+  expect_error(longest_prefix(c(NA, "a"), na.rm = c(TRUE, FALSE)),
+               regexp = "`na.rm` was length-2, but must be length-one.",
+               fixed = TRUE)
+})
+
 test_that("longest prefix", {
   x <- c("aab", "aac", "aad")
   expect_equal(longest_prefix(x), "aa")
@@ -27,8 +40,14 @@ test_that("trimming", {
   z <- c("jVDib", "zj7V0", "LrKTN", "q1RJF", "sxEXP", "xS4iF", 
          "RYLlr", "zwH5i", "nMINH", "bbTfK", NA)
   expect_equal(trim_common_affixes(z), z)
-  expect_equal(trim_common_affixes(paste0("foo", letters, "babba")), 
+  expect_equal(trim_common_affixes(paste0("foo", letters, "babba")),
                letters)
+  expect_equal(trim_common_affixes(paste0("foo", letters, "babba"),
+                                   prefixes = FALSE),
+               paste0("foo", letters))
+  expect_equal(trim_common_affixes(paste0("foo", letters, "babba"),
+                                   suffixes = FALSE),
+               paste0(letters, "babba"))
 
 })
 

@@ -9,12 +9,16 @@
 #' 
 #' If \code{anyNA(x) == FALSE} \code{na.rm} has no effect.
 #' 
+#' @param prefixes (logical, default: \code{TRUE}) If \code{TRUE}, trim prefixes.
+#' @param suffixes (logical, default: \code{TRUE}) If \code{TRUE}, trim suffixes.
+#' 
 #' @param warn_if_no_prefix,warn_if_no_suffix (logical, default: \code{TRUE})
 #' If \code{FALSE}, if \code{x} has no common affixes the warning is suppressed.
 #' (If no common prefix/suffix then the common affix returned will be \code{""}
 #' (the empty string).)
 #' 
-#' @return The longest common substring in \code{x} either at the start or end of each string.
+#' @return 
+#' The longest common substring in \code{x} either at the start or end of each string.
 #' For \code{trim_common_affixes} \code{x} with common prefix and common suffix
 #' removed.
 #' 
@@ -25,6 +29,8 @@
 #' @export longest_suffix longest_prefix trim_common_affixes
 
 trim_common_affixes <- function(x, .x = NULL, na.rm = TRUE,
+                                prefixes = TRUE,
+                                suffixes = TRUE,
                                 warn_if_no_prefix = TRUE,
                                 warn_if_no_suffix = TRUE) {
   if (is.null(.x)) {
@@ -37,8 +43,18 @@ trim_common_affixes <- function(x, .x = NULL, na.rm = TRUE,
       .x <- unique(x)
     }
   }
-  Prefix <- longest_prefix(.x = .x, na.rm = na.rm, warn_if_no_prefix = warn_if_no_prefix)
-  Suffix <- longest_suffix(.x = .x, na.rm = na.rm, warn_if_no_suffix = warn_if_no_suffix)
+  Prefix <- 
+    if (prefixes) {
+      longest_prefix(.x = .x, na.rm = na.rm, warn_if_no_prefix = warn_if_no_prefix)
+    } else {
+      ""
+    }
+  Suffix <-
+    if (suffixes) {
+      longest_suffix(.x = .x, na.rm = na.rm, warn_if_no_suffix = warn_if_no_suffix)
+    } else {
+      ""
+    }
   if (length(Prefix) == 0L &&
       length(Suffix) == 0L) {
     return(x)

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Determine whether a vector is all of the same sign — all_same_sign • hutils</title>
+<title>Longest common prefix/suffix — longest_affix • hutils</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Determine whether a vector is all of the same sign — all_same_sign" />
+<meta property="og:title" content="Longest common prefix/suffix — longest_affix" />
 
-<meta property="og:description" content="Present since hutils 1.2.0." />
+<meta property="og:description" content="Longest common prefix/suffix" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -103,51 +103,70 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Determine whether a vector is all of the same sign</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hughparsonage/hutils/blob/master/R/all_same_sign.R'><code>R/all_same_sign.R</code></a></small>
-    <div class="hidden name"><code>all_same_sign.Rd</code></div>
+    <h1>Longest common prefix/suffix</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hughparsonage/hutils/blob/master/R/longest_affix.R'><code>R/longest_affix.R</code></a></small>
+    <div class="hidden name"><code>longest_affix.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Present since <code>hutils 1.2.0</code>.</p>
+    <p>Longest common prefix/suffix</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>all_same_sign</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>trim_common_affixes</span>(<span class='no'>x</span>, <span class='kw'>.x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>prefixes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>suffixes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>warn_if_no_prefix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>warn_if_no_suffix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='fu'>longest_suffix</span>(<span class='no'>x</span>, <span class='kw'>.x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>warn_if_no_suffix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='fu'>longest_prefix</span>(<span class='no'>x</span>, <span class='kw'>.x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>warn_if_no_prefix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A numeric vector.</p></td>
+      <td><p>A character vector.</p></td>
+    </tr>
+    <tr>
+      <th>.x</th>
+      <td><p>If <code>NULL</code>, the default, ignored. May be used if <code>x</code> is
+known to be free of <code>NA</code>s.</p></td>
+    </tr>
+    <tr>
+      <th>na.rm</th>
+      <td><p>(logical, default: <code>TRUE</code>) If <code>FALSE</code>, an <code>NA</code> in 
+<code>x</code> means <code>""</code> is the only common affix. If <code>NA</code>, the longest 
+prefix/suffix is <code>NA_character_</code> (provided <code>anyNA(x)</code>).</p>
+<p>If <code>anyNA(x) == FALSE</code> <code>na.rm</code> has no effect.</p></td>
+    </tr>
+    <tr>
+      <th>prefixes</th>
+      <td><p>(logical, default: <code>TRUE</code>) If <code>TRUE</code>, trim prefixes.</p></td>
+    </tr>
+    <tr>
+      <th>suffixes</th>
+      <td><p>(logical, default: <code>TRUE</code>) If <code>TRUE</code>, trim suffixes.</p></td>
+    </tr>
+    <tr>
+      <th>warn_if_no_prefix, warn_if_no_suffix</th>
+      <td><p>(logical, default: <code>TRUE</code>)
+If <code>FALSE</code>, if <code>x</code> has no common affixes the warning is suppressed.
+(If no common prefix/suffix then the common affix returned will be <code>""</code>
+(the empty string).)</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>TRUE</code> if all elements of <code>x</code> have the same sign. Zero is a separate sign from positive and negative. All vectors of length-1 or length-0 return <code>TRUE</code>, even if <code>x</code> = <code>NA</code>, (since although the value is unknown, it must have a unique sign), and non-numeric <code>x</code>.</p>
+    <p>The longest common substring in <code>x</code> either at the start or end of each string.
+For <code>trim_common_affixes</code> <code>x</code> with common prefix and common suffix
+removed.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>all_same_sign</span>(<span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>all_same_sign</span>(<span class='fl'>1</span>:<span class='fl'>10</span> - <span class='fl'>1</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>all_same_sign</span>(<span class='fl'>0</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>all_same_sign</span>(<span class='fl'>NA</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>all_same_sign</span>(<span class='fu'>c</span>(<span class='fl'>NA</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; [1] NA</div><div class='input'><span class='fu'>all_same_sign</span>(<span class='st'>"surprise?"</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>all_same_sign</span>(<span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0.1</span> + <span class='fl'>0.2</span> - <span class='fl'>0.3</span>))</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
-<span class='kw'>if</span> (<span class='fu'>requireNamespace</span>(<span class='st'>"microbenchmark"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) {
-  <span class='fu'>library</span>(<span class='no'>microbenchmark</span>)
-  <span class='fu'><a href='http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark'>microbenchmark</a></span>(<span class='kw'>base</span> <span class='kw'>=</span> <span class='fu'>length</span>(<span class='fu'>unique</span>(<span class='fu'>sign</span>(<span class='fl'>1</span>:<span class='fl'>1e5</span>), <span class='kw'>nmax</span> <span class='kw'>=</span> <span class='fl'>3</span>)) <span class='kw'>==</span> <span class='fl'>1L</span>,
-                 <span class='fu'>all_same_sign</span>(<span class='fl'>1</span>:<span class='fl'>1e5</span>))
-}</div><div class='output co'>#&gt; Unit: microseconds
-#&gt;                    expr      min       lq       mean   median        uq
-#&gt;                    base 2160.337 2205.512 2921.22212 2217.712 2239.8470
-#&gt;  all_same_sign(1:1e+05)   84.028   87.040   93.29851   89.449  101.0445
-#&gt;        max neval cld
-#&gt;  26134.259   100   b
-#&gt;    126.796   100  a </div><div class='input'># Unit: microseconds
-#                   expr  min   lq mean median   uq  max neval cld
-#                   base 2012 2040 2322   2047 2063 9324   100   b
-# all_same_sign(1:1e+05)   86   86   94     89   93  290   100  a 
-
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>longest_prefix</span>(<span class='fu'>c</span>(<span class='st'>"totalx"</span>, <span class='st'>"totaly"</span>, <span class='st'>"totalz"</span>))</div><div class='output co'>#&gt; [1] "total"</div><div class='input'><span class='fu'>longest_suffix</span>(<span class='fu'>c</span>(<span class='st'>"ztotal"</span>, <span class='st'>"ytotal"</span>, <span class='st'>"xtotal"</span>))</div><div class='output co'>#&gt; [1] "total"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

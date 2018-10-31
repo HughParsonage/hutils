@@ -7,8 +7,9 @@
 \alias{longest_prefix}
 \title{Longest common prefix/suffix}
 \usage{
-trim_common_affixes(x, .x = NULL, na.rm = TRUE,
-  warn_if_no_prefix = TRUE, warn_if_no_suffix = TRUE)
+trim_common_affixes(x, .x = NULL, na.rm = TRUE, prefixes = TRUE,
+  suffixes = TRUE, warn_if_no_prefix = TRUE,
+  warn_if_no_suffix = TRUE)
 
 longest_suffix(x, .x = NULL, na.rm = TRUE, warn_if_no_suffix = TRUE)
 
@@ -25,6 +26,10 @@ known to be free of \code{NA}s.}
 prefix/suffix is \code{NA_character_} (provided \code{anyNA(x)}).
 
 If \code{anyNA(x) == FALSE} \code{na.rm} has no effect.}
+
+\item{prefixes}{(logical, default: \code{TRUE}) If \code{TRUE}, trim prefixes.}
+
+\item{suffixes}{(logical, default: \code{TRUE}) If \code{TRUE}, trim suffixes.}
 
 \item{warn_if_no_prefix, warn_if_no_suffix}{(logical, default: \code{TRUE})
 If \code{FALSE}, if \code{x} has no common affixes the warning is suppressed.
