@@ -27,7 +27,7 @@ trim_common_affixes <- function(x, .x = NULL) {
   
   # Need to iterate over BY[[1L]] since substr is not vectorized.
   o1 <- setDT(list(v = x, ncharv = nchar(x)))
-  res <- NULL
+  res <- v <- NULL
   o1[, "res" := substr(v, nchar(Prefix) + 1L, .BY[[1L]] - nchar(Suffix)), 
      by = "ncharv"]
   .subset2(o1, "res")
