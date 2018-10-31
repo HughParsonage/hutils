@@ -494,7 +494,14 @@ flights %>%
 
 ```
 
+### `longest_affix`
 
+Trim common affixes can be useful during data cleaning:
+
+```{r longest-affix}
+trim_common_affixes(c("CurrentHousingCosts(weekly)",
+                      "CurrentFuelCosts(weekly)"))
+```
 
 
 
