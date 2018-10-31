@@ -3,18 +3,33 @@
 #' @param x A character vector.
 #' @param .x If \code{NULL}, the default, ignored. May be used if \code{x} is
 #' known to be free of \code{NA}s.
+#' @param na.rm (logical, default: \code{TRUE}) If \code{FALSE}, an \code{NA} in 
+#' \code{x} means \code{""} is the only common affix. If \code{NA}, the longest 
+#' prefix/suffix is \code{NA_character_} (provided \code{anyNA(x)}).
+#' 
+#' If \code{anyNA(x) == FALSE} \code{na.rm} has no effect.
+#' 
+#' @param warn_if_no_prefix,warn_if_no_suffix (logical, default: \code{TRUE})
+#' If \code{FALSE}, if \code{x} has no common affixes the warning is suppressed.
+#' (If no common prefix/suffix then the common affix returned will be \code{""}
+#' (the empty string).)
+#' 
 #' @return The longest common substring in \code{x} either at the start or end of each string.
 #' For \code{trim_common_affixes} \code{x} with common prefix and common suffix
 #' removed.
+#' 
+#' 
 #' @examples
 #' longest_prefix(c("totalx", "totaly", "totalz"))
 #' longest_suffix(c("ztotal", "ytotal", "xtotal"))
 #' @export longest_suffix longest_prefix trim_common_affixes
 
-trim_common_affixes <- function(x, .x = NULL) {
+trim_common_affixes <- function(x, .x = NULL, na.rm = TRUE,
+                                warn_if_no_prefix = TRUE,
+                                warn_if_no_suffix = TRUE) {
   if (is.null(.x)) {
     if (is.null(x)) {
-      return(character(0))
+      return(character(0L))
     }
     if (anyNA(x)) {
       .x <- unique(x[complete.cases(x)])
@@ -22,8 +37,8 @@ trim_common_affixes <- function(x, .x = NULL) {
       .x <- unique(x)
     }
   }
-  Prefix <- longest_prefix(.x = .x)
-  Suffix <- longest_suffix(.x = .x)
+  Prefix <- longest_prefix(.x = .x, na.rm = na.rm, warn_if_no_prefix = warn_if_no_prefix)
+  Suffix <- longest_suffix(.x = .x, na.rm = na.rm, warn_if_no_suffix = warn_if_no_suffix)
   if (length(Prefix) == 0L &&
       length(Suffix) == 0L) {
     return(x)
@@ -39,10 +54,26 @@ trim_common_affixes <- function(x, .x = NULL) {
 
 
 #' @rdname longest_affix
-longest_suffix <- function(x, .x = NULL) {
+longest_suffix <- function(x, .x = NULL, na.rm = TRUE,
+                           warn_if_no_suffix = TRUE) {
   if (is.null(.x)) {
     if (anyNA(x)) {
-      x <- unique(x[complete.cases(x)])
+      if (!is.logical(na.rm)) {
+        stop("`na.rm` was type ", class(na.rm), ", but must be logical. ",
+             "`na.rm` must be NA, FALSE, or TRUE.")
+      }
+      if (length(na.rm) != 1L) {
+        stop("`na.rm` was length-", length(na.rm), ", but must be length-one. ",
+             "`na.rm` must be NA, FALSE, or TRUE.")
+      }
+      
+      if (anyNA(na.rm)) {
+        return(NA_character_)
+      } else if (na.rm) {
+        x <- unique(x[complete.cases(x)])
+      } else {
+        return("")
+      }
     } else {
       x <- unique(x)
     }
@@ -54,8 +85,10 @@ longest_suffix <- function(x, .x = NULL) {
   }
   x1 <- x[1]
   nchar1 <- nchar(x1)
-  if (nchar1 <= 1) {
-    warning("No common suffix.")
+  if (nchar1 <= 1L) {
+    if (warn_if_no_suffix) {
+      warning("No common suffix.")
+    }
     return("")
   }
   for (k in 1:nchar1) {
@@ -73,10 +106,26 @@ longest_suffix <- function(x, .x = NULL) {
 }
 
 #' @rdname longest_affix
-longest_prefix <- function(x, .x = NULL) {
+longest_prefix <- function(x, .x = NULL, na.rm = TRUE,
+                           warn_if_no_prefix = TRUE) {
   if (is.null(.x)) {
     if (anyNA(x)) {
-      x <- unique(x[complete.cases(x)])
+      if (!is.logical(na.rm)) {
+        stop("`na.rm` was type ", class(na.rm), ", but must be logical. ",
+             "`na.rm` must be NA, FALSE, or TRUE.")
+      }
+      if (length(na.rm) != 1L) {
+        stop("`na.rm` was length-", length(na.rm), ", but must be length-one. ",
+             "`na.rm` must be NA, FALSE, or TRUE.")
+      }
+      
+      if (anyNA(na.rm)) {
+        return(NA_character_)
+      } else if (na.rm) {
+        x <- unique(x[complete.cases(x)])
+      } else {
+        return("")
+      }
     } else {
       x <- unique(x)
     }
@@ -86,23 +135,18 @@ longest_prefix <- function(x, .x = NULL) {
   if (!length(x)) {
     return(character(0L))
   }
-  x1 <- x[1]
+  x1 <- x[1L]
   nchar1 <- nchar(x1)
-  if (nchar1 <= 1) {
-    warning("No common suffix.")
+  if (nchar1 <= 1L) {
+    if (warn_if_no_prefix) {
+      warning("No common prefix.")
+    }
     return("")
   }
-  for (k in 1:nchar1) {
+  for (k in nchar1:1) {
     prefix <- substr(x1, 1L, k)
-    for (i in seq_along(x)) {
-      if (startsWith(x[i], prefix)) {
-        next
-      } else {
-        return(substr(x1, 1L, k - 1L))
-      }
-      if (i == length(x)) {
-        return(prefix)
-      }
+    if (all(startsWith(x, prefix))) {
+      return(prefix)
     }
   }
   ""

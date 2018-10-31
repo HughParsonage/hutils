@@ -3,10 +3,21 @@ context("test-longest_affix")
 test_that("longest prefix", {
   x <- c("aab", "aac", "aad")
   expect_equal(longest_prefix(x), "aa")
+  expect_equal(longest_prefix(c(NA, "a", "b"), warn_if_no_prefix = FALSE),
+               "")
+  expect_warning(longest_prefix(c(NA, "a", "b"), warn_if_no_prefix = TRUE), 
+                 regexp = "No common prefix")
+  expect_equal(longest_prefix(c(NA, "aba", "aca")), "a")
+  expect_equal(longest_prefix(rep("aaa", 4)), "aaa")
 })
 
 test_that("longest suffix", {
   expect_equal(longest_suffix(paste0(letters, "total")), "total")
+  expect_equal(longest_suffix(c(NA, "a", "b"), warn_if_no_suffix = FALSE), "")
+  expect_warning(longest_suffix(c(NA, "a", "b"), warn_if_no_suffix = TRUE),
+                 regexp = "No common suffix")
+  expect_equal(longest_suffix(c(NA, "aba", "aca")), "a")
+  expect_equal(longest_suffix(rep("aaa", 4)), "aaa")
 })
 
 test_that("trimming", {
@@ -19,6 +30,13 @@ test_that("trimming", {
   expect_equal(trim_common_affixes(paste0("foo", letters, "babba")), 
                letters)
 
+})
+
+test_that("na.rm", {
+  expect_equal(longest_prefix(c(NA, "aba", "aca"), na.rm = FALSE), "")
+  expect_equal(longest_prefix(c(NA, "aba", "aca"), na.rm = NA), NA_character_)
+  expect_equal(longest_suffix(c(NA, "aba", "aca"), na.rm = FALSE), "")
+  expect_equal(longest_suffix(c(NA, "aba", "aca"), na.rm = NA), NA_character_)
 })
 
 test_that("Corner cases", {

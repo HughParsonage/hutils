@@ -7,17 +7,29 @@
 \alias{longest_prefix}
 \title{Longest common prefix/suffix}
 \usage{
-trim_common_affixes(x, .x = NULL)
+trim_common_affixes(x, .x = NULL, na.rm = TRUE,
+  warn_if_no_prefix = TRUE, warn_if_no_suffix = TRUE)
 
-longest_suffix(x, .x = NULL)
+longest_suffix(x, .x = NULL, na.rm = TRUE, warn_if_no_suffix = TRUE)
 
-longest_prefix(x, .x = NULL)
+longest_prefix(x, .x = NULL, na.rm = TRUE, warn_if_no_prefix = TRUE)
 }
 \arguments{
 \item{x}{A character vector.}
 
 \item{.x}{If \code{NULL}, the default, ignored. May be used if \code{x} is
 known to be free of \code{NA}s.}
+
+\item{na.rm}{(logical, default: \code{TRUE}) If \code{FALSE}, an \code{NA} in 
+\code{x} means \code{""} is the only common affix. If \code{NA}, the longest 
+prefix/suffix is \code{NA_character_} (provided \code{anyNA(x)}).
+
+If \code{anyNA(x) == FALSE} \code{na.rm} has no effect.}
+
+\item{warn_if_no_prefix, warn_if_no_suffix}{(logical, default: \code{TRUE})
+If \code{FALSE}, if \code{x} has no common affixes the warning is suppressed.
+(If no common prefix/suffix then the common affix returned will be \code{""}
+(the empty string).)}
 }
 \value{
 The longest common substring in \code{x} either at the start or end of each string.
