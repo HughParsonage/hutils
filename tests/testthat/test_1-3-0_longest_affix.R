@@ -22,8 +22,10 @@ test_that("trimming", {
 })
 
 test_that("Corner cases", {
-  expect_identical(trim_common_affixes(NULL), "")
-  expect_warning(c("", "a", "b"), 
+  expect_identical(trim_common_affixes(NULL), character(0))
+  expect_identical(trim_common_affixes(c(NULL, "aabbaa", "aaccaa")),
+                   c(character(0), "bb", "cc"))
+  expect_warning(trim_common_affixes(c("", "a", "b")), 
                  regexp = "No common")
 })
 

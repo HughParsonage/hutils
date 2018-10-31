@@ -14,7 +14,7 @@
 trim_common_affixes <- function(x, .x = NULL) {
   if (is.null(.x)) {
     if (is.null(x)) {
-      return("")
+      return(character(0))
     }
     if (anyNA(x)) {
       .x <- unique(x[complete.cases(x)])
@@ -27,7 +27,8 @@ trim_common_affixes <- function(x, .x = NULL) {
   
   # Need to iterate over BY[[1L]] since substr is not vectorized.
   o1 <- setDT(list(v = x, ncharv = nchar(x)))
-  o1[, res := substr(v, nchar(Prefix) + 1L, .BY[[1L]] - nchar(Suffix)), 
+  res <- NULL
+  o1[, "res" := substr(v, nchar(Prefix) + 1L, .BY[[1L]] - nchar(Suffix)), 
      by = "ncharv"]
   .subset2(o1, "res")
 }
@@ -45,7 +46,7 @@ longest_suffix <- function(x, .x = NULL) {
     x <- .x
   }
   if (!length(x)) {
-    return("")
+    return(character(0L))
   }
   x1 <- x[1]
   nchar1 <- nchar(x1)
