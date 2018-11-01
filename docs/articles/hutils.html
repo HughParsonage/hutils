@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hutils</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.3.0</span>
       </span>
     </div>
 
@@ -73,7 +73,7 @@
       <h1>Hutils</h1>
                         <h4 class="author">Hugh Parsonage</h4>
             
-            <h4 class="date">2018-11-01</h4>
+            <h4 class="date">2018-11-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/hughparsonage/hutils/blob/master/vignettes/hutils.Rmd"><code>vignettes/hutils.Rmd</code></a></small>
       <div class="hidden name"><code>hutils.Rmd</code></div>
@@ -147,8 +147,8 @@ na &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span c
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: milliseconds
 ##    expr   min    lq  mean median    uq   max neval cld
-##   dplyr 5.139 5.306 8.456  7.585 8.421 29.49   100   b
-##  hutils 1.916 1.985 3.009  2.079 2.896 18.89   100  a</code></pre>
+##   dplyr 5.123 5.316 8.464  7.570 8.405 29.05   100   b
+##  hutils 1.921 1.987 3.051  2.098 2.863 19.43   100  a</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cnd &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 yes &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 no &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
@@ -159,9 +159,9 @@ na &lt;-<span class="st"> </span><span class="kw">sample</span>(letters, <span c
                <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: milliseconds
-##    expr   min    lq   mean median     uq   max neval cld
-##   dplyr 5.825 6.402 12.726  6.564 16.988 141.9   100   b
-##  hutils 1.283 1.582  2.535  1.617  1.667  17.0   100  a</code></pre>
+##    expr   min    lq   mean median     uq    max neval cld
+##   dplyr 5.843 6.382 12.540  6.586 17.100 140.15   100   b
+##  hutils 1.244 1.582  2.582  1.623  1.698  17.17   100  a</code></pre>
 <p>This speed advantage also appears to be true of <code>coalesce</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
@@ -174,8 +174,8 @@ C &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: milliseconds
 ##    expr   min    lq  mean median     uq    max neval cld
-##   dplyr 3.138 3.233 6.529  3.287 11.236  19.36   100   a
-##  hutils 1.148 1.469 4.903  1.510  1.565 134.89   100   a</code></pre>
+##   dplyr 3.159 3.283 6.636  3.358 11.333  19.27   100   a
+##  hutils 1.366 1.486 4.984  1.528  1.639 135.41   100   a</code></pre>
 <p>especially during short-circuits:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
@@ -184,9 +184,9 @@ C &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">
                <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: microseconds
-##    expr     min      lq   mean  median       uq     max neval cld
-##   dplyr 2638.30 3079.53 6836.0 3130.58 11244.26 25491.2   100   b
-##  hutils   54.81   57.22   67.1   62.04    72.58   107.8   100  a</code></pre>
+##    expr     min      lq    mean  median       uq     max neval cld
+##   dplyr 2837.68 3154.67 6967.38 3214.00 10946.10 25461.4   100   b
+##  hutils   58.43   60.84   75.35   70.47    85.69   117.2   100  a</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 
@@ -195,9 +195,9 @@ A &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">
                <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span>
 <span class="st">  </span>print</code></pre></div>
 <pre><code>## Unit: microseconds
-##    expr    min     lq mean median     uq   max neval cld
-##   dplyr 2849.7 3303.6 6497 3342.6 3432.8 24363   100   b
-##  hutils  646.9  875.8 2203  899.5  941.3 18262   100  a</code></pre>
+##    expr    min   lq mean median     uq   max neval cld
+##   dplyr 3062.4 3271 6589 3334.0 3576.8 33629   100   b
+##  hutils  755.7  862 2185  901.7  958.5 18068   100  a</code></pre>
 </div>
 <div id="drop-columns" class="section level2">
 <h2 class="hasAnchor">
@@ -453,7 +453,7 @@ flights <span class="op">%&gt;%</span>
 <div id="haversine-distance" class="section level2">
 <h2 class="hasAnchor">
 <a href="#haversine-distance" class="anchor"></a>Haversine distance</h2>
-<p>To emphasize the miscellany of this package, I now present <code>haversine_distance</code> which simply returns the distance between two points on the Earth, given their latitutde and longitude.</p>
+<p>To emphasize the miscellany of this package, I now present <code>haversine_distance</code> which simply returns the distance between two points on the Earth, given their latitude and longitude.</p>
 <p>I prefer this to other packages’ implementations. Although the <code>geosphere</code> package can do a lot more than calculate distances between points, I find the interface for <code>distHaversine</code> unfortunate as it cannot be easily used inside a <code>data.frame</code>. In addition, I’ve found the arguments clearer in <code><a href="../reference/haversine_distance.html">hutils::haversine_distance</a></code> rather than trying to remember whether to use <code>byrow</code> inside the <code>matrix</code> function while passing to <code>distHaversine</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DT1 &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">lat_orig =</span> <span class="kw">runif</span>(<span class="fl">1e5</span>, <span class="op">-</span><span class="dv">80</span>, <span class="dv">80</span>),
                   <span class="dt">lon_orig =</span> <span class="kw">runif</span>(<span class="fl">1e5</span>, <span class="op">-</span><span class="dv">179</span>, <span class="dv">179</span>),
@@ -471,9 +471,9 @@ DT2 &lt;-<span class="st"> </span><span class="kw">copy</span>(DT1)
 ##                                                                                             expr
 ##           DT1[, `:=`(distance, haversine_distance(lat_orig, lon_orig, lat_dest,      lon_dest))]
 ##  DT2[, `:=`(distance, distHaversine(cbind(lon_orig, lat_orig),      cbind(lon_orig, lat_orig)))]
-##    min    lq  mean median    uq    max neval cld
-##  21.27 21.88 25.06  22.00 22.11  77.46   100  a 
-##  41.30 42.65 68.81  68.94 83.56 220.29   100   b</code></pre>
+##    min    lq  mean median    uq   max neval cld
+##  21.46 21.87 25.00  22.00 22.18  73.5   100  a 
+##  41.19 42.63 67.96  69.16 81.02 219.0   100   b</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(DT1, DT2)</code></pre></div>
 </div>
 <div id="mutate_other" class="section level2">
@@ -605,7 +605,7 @@ DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class=
 iris[Species <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"setosa"</span>, <span class="st">"versicolour"</span>)] <span class="op">%$%</span>
 <span class="st">  </span><span class="kw">mean</span>(Sepal.Length <span class="op">/</span><span class="st"> </span>Sepal.Width)</code></pre></div>
 <pre><code>## [1] 1.47</code></pre>
-<p>On the face of it, this appears to give the average ratio of <em>Iris setosa</em> and <em>Iris versicolour</em> irises. However, it only gives the average ratio of <em>setosa</em> irises, as the correct spelling is <em>Iris versicolor</em> not <em>-our</em>. This particular error is easy to make, (in fact when I wrote this vignette, the first hit of Google for <code>iris dataset</code> made the same spelling error), but it’s easy to imagine similar mistakes, such as mistaking the capitalization of a value. The functions <code>%ein%</code> and <code>%enotin%</code> strive to reduce the occurence of this mistake. The functions operate exactly the same as <code>%in%</code> and <code>%enotin%</code> but error if any of the table of values to be matched against is not present in any of the values:</p>
+<p>On the face of it, this appears to give the average ratio of <em>Iris setosa</em> and <em>Iris versicolour</em> irises. However, it only gives the average ratio of <em>setosa</em> irises, as the correct spelling is <em>Iris versicolor</em> not <em>-our</em>. This particular error is easy to make, (in fact when I wrote this vignette, the first hit of Google for <code>iris dataset</code> made the same spelling error), but it’s easy to imagine similar mistakes, such as mistaking the capitalization of a value. The functions <code>%ein%</code> and <code>%enotin%</code> strive to reduce the occurrence of this mistake. The functions operate exactly the same as <code>%in%</code> and <code>%enotin%</code> but error if any of the table of values to be matched against is not present in any of the values:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(iris)
 iris[Species <span class="op">%ein%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"setosa"</span>, <span class="st">"versicolour"</span>)] <span class="op">%$%</span>
 <span class="st">  </span><span class="kw">mean</span>(Sepal.Length <span class="op">/</span><span class="st"> </span>Sepal.Width)</code></pre></div>
@@ -642,7 +642,7 @@ iris[Species <span class="op">%ein%</span><span class="st"> </span><span class="
 <h3 class="hasAnchor">
 <a href="#select_which" class="anchor"></a><code>select_which</code>
 </h3>
-<p>This provides a similar role to <code><a href="http://dplyr.tidyverse.org/reference/select_all.html">dplyr::select_if</a></code> but was originally part of <code>package:grattan</code> so has a different name. It simply returns the columns whose <em>values</em> return <code>TRUE</code> when <code>Which</code> is applied. Additional columns (which may or not may satisfy <code>Which</code>) may be incldued bny using <code>.and.dots</code>. (To remove columns, you can use <code>drop_col</code>).</p>
+<p>This provides a similar role to <code><a href="http://dplyr.tidyverse.org/reference/select_all.html">dplyr::select_if</a></code> but was originally part of <code>package:grattan</code> so has a different name. It simply returns the columns whose <em>values</em> return <code>TRUE</code> when <code>Which</code> is applied. Additional columns (which may or not may satisfy <code>Which</code>) may be included by using <code>.and.dots</code>. (To remove columns, you can use <code>drop_col</code>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,
                  <span class="dt">y =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>],
                  <span class="dt">AB =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>))
