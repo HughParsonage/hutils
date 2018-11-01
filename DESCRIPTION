@@ -1,8 +1,8 @@
 Package: hutils
 Type: Package
 Title: Miscellaneous R Functions and Aliases
-Version: 1.2.0
-Date: 2018-08-20
+Version: 1.3.0
+Date: 2018-11-01
 Authors@R: c(person("Hugh", "Parsonage", role = c("aut", "cre"), email = "hugh.parsonage@gmail.com"),
              person("Michael", "Frasco", role = "ctb"),
              person("Ben", "Hamner", role = "ctb"))
