@@ -30,6 +30,7 @@ Suggests:
   nycflights13,
   geosphere,
   ggplot2,
+  rcheology,
   survey,
   tibble,
 RoxygenNote: 6.1.0
