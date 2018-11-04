@@ -16,18 +16,16 @@ check_pkg_dependencies <- function(pkg_root = NULL,
   if (is.null(pkg_root)) {
     if (file.exists("DESCRIPTION")) {
       pkg_root <- "."
-    } else if (file.exists("../DESCRIPTION")) {
-      pkg_root <- ".."
-    } else if (file.exists("../../DESCRIPTION")) {
-      pkg_root <- "../.."
     } else {
-      stop("`pkg_root = NULL` but unable to locate package root. ", 
-           "Current working directory:\n\t",
-           normalizePath(getwd(), winslash = "/"), "\n")
+      
     }
   } else {
     if (length(pkg_root) > 1L) {
-      return(sapply(pkg_root, check_pkg_dependencies, on_success = on_success, on_fail = on_fail, reader = reader))
+      return(sapply(pkg_root,
+                    check_pkg_dependencies,
+                    on_success = on_success, 
+                    on_fail = on_fail,
+                    reader = reader))
     }
     
     if (!file.exists(file.path(pkg_root, "DESCRIPTION"))) {
@@ -61,33 +59,18 @@ check_pkg_dependencies <- function(pkg_root = NULL,
     }) %>%
     unlist %>% 
     unique
-    
   
-  rFunsUsed <- 
-    lapply(dir(file.path(pkg_root, "R"),
-               pattern = "\\.R",
+  RfunsUsed <- 
+    lapply(dir(file.path(pkg_root, "R"), 
+               pattern = "\\.R$",
                full.names = TRUE),
-           reader) %>%
-    lapply(trimws) %>%
-    lapply(function(x) x[!startsWith(x, "#")]) %>%
-    lapply(strSplitter) %>%
-    .[!vapply(., is.null, FALSE)] %>%
-    lapply(function(x) x[endsWith(x, "(")]) %>%
-    
-    # . is a \b
-    lapply(function(x) gsub(".", "DOTDOT", x, fixed = TRUE)) %>%
-    lapply(function(x) {
-      gsub("^.*\\b([A-Za-z0-9\\._]+)\\(",
-           "\\1",
-           grep("\\b([A-Za-z0-9\\._]+)\\(", x, value = TRUE, perl = TRUE),
-           perl = TRUE)
-    }) %>%
-    lapply(function(x) gsub("DOTDOT", ".", x, fixed = TRUE)) %>%
+           function(x) {
+             setdiff(all.names(parse(x)),
+                     all.vars(parse(x)))
+           }) %>%
     unlist %>%
-    unique %>%
-    setdiff(rFunsDefined) %>%
-    intersect(ls(envir = asNamespace("base"), all.names = TRUE)) %>%
-    sort
+    unique
+
   
   stated_R_dep <- 
     desc::desc_get_deps(file = pkg_root) %>%
@@ -111,15 +94,13 @@ check_pkg_dependencies <- function(pkg_root = NULL,
 
   
   Rversion <- NULL
-  all_base_funs <- 
+  
+  base_funs_used_by_version_introduced <- 
     rcheology::rcheology %>%
     as.data.table %>%
     .[package == "base"] %>%
-    .[, .(Rversion = min(Rversion)), keyby = "name"]
-  
-  base_funs_used_by_version_introduced <- 
-    data.table(base_funs = rFunsUsed) %>%
-    .[all_base_funs, on = "base_funs==name", nomatch=0L] %>%
+    unique(by = "name") %>%
+    .[name %chin% RfunsUsed] %>%
     setkey(Rversion)
   
   
