@@ -1,3 +1,9 @@
+# hutils 1.4.0
+
+* Enhancements
+  - `weight2rows` supports `rows.out < 1` to produce a sample.
+
+
 # hutils 1.3.0
 
 * Bug fixes:
