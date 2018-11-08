@@ -11,6 +11,7 @@
 #' if \code{rows.out} is given. Otherwise, \code{TRUE} drops the column entirely.
 #' 
 #' 
+
 #' @return \code{DT} but with the number of rows expanded to \code{sum(DT[[weight.var]])} to reflect the weighting.
 #' @examples 
 #' 
@@ -21,10 +22,12 @@
 #' 
 #' @export 
 
+
 weight2rows <- function(DT,
                         weight.var,
                         rows.out = NULL,
                         discard_weight.var = FALSE) {
+
   if (!is.data.table(DT)) {
     if (!is.data.frame(DT)) {
       stop("`DT` was a ", class(DT)[1L], ". ",
@@ -32,6 +35,7 @@ weight2rows <- function(DT,
     }
     DT <- as.data.table(DT)
   }
+
   check_TF(discard_weight.var)
   
   
@@ -105,42 +109,41 @@ weight2rows <- function(DT,
   
   
   
-  
-    switch(typeof(weight.var.value), 
-           "logical" = {
-             warning("weight.var is logical. Treating as filter/subset.")
-             out <- DT[which(weight.var.value)]
-             
-             M <- TRUE
-           },
-           "integer" = {
-             out <-  
-               DT %>%
-               .[weight.var.value > 0] %>%
-               .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
-                 .SDcols = names(.)[names(.) != weight.var],
-                 by = weight.var]
-             
-             M <- as.integer(M)
-           },
-           "double" = {
-             
-             out <- 
-               DT %>%
-               .[weight.var.value > 0] %>%
-               .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
-                 .SDcols = names(.)[names(.) != weight.var],
-                 by = weight.var]
-             
-             if (!is.null(rows.out)) {
-               M <- as.double(M)
-             }
-             
-           }, 
-           stop("Non-numeric weight.var. Aborting."))
+   
+  switch(typeof(weight.var.value), 
+         "logical" = {
+           warning("weight.var is logical. Treating as filter/subset.")
+           out <- DT[which(weight.var.value)]
+         },
+         "integer" = {
+           out <- 
+             DT %>%
+             .[weight.var.value > 0] %>%
+             .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
+               .SDcols = names(.)[names(.) != weight.var],
+               by = weight.var]
+           
+           M <- as.integer(M)
+         },
+         "double" = {
+           
+           out <- 
+             DT %>%
+             .[weight.var.value > 0] %>%
+             .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
+               .SDcols = names(.)[names(.) != weight.var],
+               by = weight.var]
+           
+           if (!is.null(rows.out)) {
+             M <- as.double(M)
+           }
+           
+         }, 
+         stop("Non-numeric weight.var. Aborting."))
   
   # by will fix things first
   setcolorder(out, the_colorder)
+  
   
   if (discard_weight.var) {
     out[, (weight.var) := NULL]
