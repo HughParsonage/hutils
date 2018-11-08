@@ -109,41 +109,41 @@ weight2rows <- function(DT,
   
   
   
-  out <- 
-    switch(typeof(weight.var.value), 
-           "logical" = {
-             warning("weight.var is logical. Treating as filter/subset.")
-             DT[which(weight.var.value)]
-           },
-           "integer" = {
+   
+  switch(typeof(weight.var.value), 
+         "logical" = {
+           warning("weight.var is logical. Treating as filter/subset.")
+           out <- DT[which(weight.var.value)]
+         },
+         "integer" = {
+           out <- 
              DT %>%
-
-               .[weight.var.value > 0] %>%
-               .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
-                 .SDcols = names(.)[names(.) != weight.var],
-                 by = weight.var]
-             
-             M <- as.integer(M)
-           },
-           "double" = {
-             
-             out <- 
-               DT %>%
-               .[weight.var.value > 0] %>%
-               .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
-                 .SDcols = names(.)[names(.) != weight.var],
-                 by = weight.var]
-             
-             if (!is.null(rows.out)) {
-               M <- as.double(M)
-             }
-             
-           }, 
-           stop("Non-numeric weight.var. Aborting."))
+             .[weight.var.value > 0] %>%
+             .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
+               .SDcols = names(.)[names(.) != weight.var],
+               by = weight.var]
+           
+           M <- as.integer(M)
+         },
+         "double" = {
+           
+           out <- 
+             DT %>%
+             .[weight.var.value > 0] %>%
+             .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
+               .SDcols = names(.)[names(.) != weight.var],
+               by = weight.var]
+           
+           if (!is.null(rows.out)) {
+             M <- as.double(M)
+           }
+           
+         }, 
+         stop("Non-numeric weight.var. Aborting."))
   
   # by will fix things first
   setcolorder(out, the_colorder)
-
+  
   
   if (discard_weight.var) {
     out[, (weight.var) := NULL]
