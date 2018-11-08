@@ -6,7 +6,6 @@
 * Bug fixes:
   - `weight2rows`:
     * no longer reorders the columns in the result
-    * no longer updates by reference the data frame to be a data.table, instead a copy is made
     * no longer updates by reference the data frame to be a data.table,
       instead a copy is made
 
