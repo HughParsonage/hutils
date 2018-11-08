@@ -20,7 +20,7 @@ test_that("Error handling (1.3.0)", {
   expect_error(weight2rows(dt, "z"), 
                regexp = "not a column name of DT")
 })
-
+  
 test_that("Error handling (rows.out)", {  
   library(data.table)
   dt <- data.table(x = 1:10,
