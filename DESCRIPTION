@@ -22,6 +22,7 @@ Imports:
 Suggests:
   testthat,
   datasets,
+  desc,
   dplyr,
   Hmisc,
   microbenchmark,
@@ -30,6 +31,7 @@ Suggests:
   nycflights13,
   geosphere,
   ggplot2,
+  rcheology,
   survey,
   tibble,
 RoxygenNote: 6.1.0

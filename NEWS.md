@@ -1,5 +1,7 @@
 # hutils 1.4.0
-* Enhancements:
+
+* Enhancements
+  - `weight2rows` supports `rows.out < 1` to produce a sample.
   - `drop_empty_cols` should now be faster, especially when there are few empty columns.
 
 # hutils 1.3.0
