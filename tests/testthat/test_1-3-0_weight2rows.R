@@ -20,7 +20,7 @@ test_that("Error handling (1.3.0)", {
   expect_error(weight2rows(dt, "z"), 
                regexp = "not a column name of DT")
 })
-  
+
 test_that("Error handling (rows.out)", {  
   library(data.table)
   dt <- data.table(x = 1:10,
@@ -39,8 +39,8 @@ test_that("Error handling (rows.out)", {
 test_that("Preserves colorder", {
   library(data.table)
   DT <- data.table(x = 1:5, y = c(1, 1, 1, 1, 2))
-  expect_identical(weight2rows(DT, "y"),
-                   data.table(x = c(1:5, 5L), y = c(1, 1, 1, 1, 2, 2)))
+  expect_equal(weight2rows(DT, "y"),
+               data.table(x = c(1:5, 5L), y = 1L))
 })
 
 test_that("Doesn't update original if not a data.table", {
@@ -62,7 +62,6 @@ test_that("rows.out", {
   expect_true(between(nrow(res), 18L, 22L))
 })
 
-
 test_that("Discarding weight.var", {
   library(data.table)
   dt <- data.table(x = 1:10,
@@ -71,4 +70,3 @@ test_that("Discarding weight.var", {
   expect_true(between(nrow(res), 18L, 22L))
   expect_equal(ncol(res), 1)
 })
-
