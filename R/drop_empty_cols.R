@@ -15,7 +15,16 @@ drop_empty_cols <- function(DT, copy = FALSE) {
       out <- DT
     }
     
-    isEmpty <- vapply(out, function(x) anyNA(x) && all(is.na(x)), logical(1L), USE.NAMES = FALSE)
+    empty <- function(x) {
+      anyNA(x) &&
+        if (is.logical(x)) {
+          all(x, na.rm = TRUE) && !any(x, na.rm = TRUE)
+        } else {
+          all(is.na(x), na.rm = TRUE)
+        }
+    }
+    
+    isEmpty <- vapply(out, empty, logical(1), USE.NAMES = FALSE)
     
     # Generally safe to delete by names, but not if
     # the names are not distinct
