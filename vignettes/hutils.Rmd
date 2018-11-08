@@ -39,6 +39,7 @@ tryCatch({
 error = function(e) {
   opts_chunk$set(eval = FALSE)
 })
+options(digits = 4)
 ```
 
 ## Aliases
@@ -215,7 +216,7 @@ flights %>%
 ## Haversine distance
 To emphasize the miscellany of this package, I now present `haversine_distance`
 which simply returns the distance between two points on the Earth,
-given their latitutde and longitude.
+given their latitude and longitude.
 
 I prefer this to other packages' implementations.
 Although the `geosphere` package can do a lot more than calculate distances between points, I find the interface for `distHaversine` unfortunate as it cannot be easily used inside a `data.frame`. In addition, I've found the arguments clearer in `hutils::haversine_distance` rather than trying to remember whether to use `byrow` inside the `matrix` function while passing to `distHaversine`.
@@ -285,7 +286,7 @@ iris[Species %in% c("setosa", "versicolour")] %$%
 ```
 
 On the face of it, this appears to give the average ratio of *Iris setosa* and *Iris versicolour* irises. However, it only gives the average ratio of *setosa* irises, as the correct spelling is *Iris versicolor* not *-our*. This particular error is easy to make, (in fact when I wrote this vignette, the first hit of Google for  `iris dataset` made the same spelling error), but it's easy to imagine similar mistakes, such as mistaking the capitalization of a value.
-The functions `%ein%` and `%enotin%` strive to reduce the occurence of this mistake.
+The functions `%ein%` and `%enotin%` strive to reduce the occurrence of this mistake.
 The functions operate exactly the same as `%in%` and `%enotin%` but error if any of the table of values to be matched against is not present in any of the values:
 
 ```{r iris-versicolor, error=TRUE}
@@ -323,7 +324,7 @@ This is the same as `dir.create` but checks whether the target exists or not and
 ### `select_which` 
 
 This provides a similar role to `dplyr::select_if` but was originally part of `package:grattan` so has a different name. It simply returns the columns whose *values* return `TRUE` when `Which` is applied.
-Additional columns (which may or not may satisfy `Which`) may be incldued bny using `.and.dots`.
+Additional columns (which may or not may satisfy `Which`) may be included by using `.and.dots`.
 (To remove columns, you can use `drop_col`).
 
 ```{r}
@@ -444,8 +445,63 @@ ggplot(ahull_dt) +
 ```
 
 
+## `hutils` v1.3.0
+
+### `weighted_quantile`
+
+Simply a version of `quantile` supporting weighted values:
+
+```{r weighted_quantile-ex}
+x <- 1:10
+w <- c(rep(1, 5), rep(2, 5))
+quantile(x, prob = c(0.25, 0.75), names = FALSE)
+
+weighted_quantile(x, w, p = c(0.25, 0.75))
+```
 
 
+### `mutate_ntile`
+
+To add a column of ntiles (say, for later summarizing):
+
+```{r mutate_ntile-ex}
+flights %>%
+  as.data.table %>%
+  .[, .(year, month, day, origin, dest, distance)] %>%
+  mutate_ntile(distance, n = 5L)
+
+```
+
+You can use non-standard evaluation (as above) or you can quote the `col` 
+argument.  Use `character.only = TRUE` to ensure column is only interpreted
+as character.
+
+```{r mutate_ntile-ex-charonly}
+flights %>%
+  as.data.table %>%
+  .[, .(year, month, day, origin, dest, distance)] %>%
+  mutate_ntile(distance, n = 5L)
+```
+
+```{r mutate_ntile-ex-2}
+flights %>%
+  as.data.table %>%
+  mutate_ntile("distance",
+               n = 5L,
+               character.only = TRUE) %>%
+  .[, dep_delay := coalesce(dep_delay, 0)] %>%
+  .[, .(avgDelay = mean(dep_delay)), keyby = "distanceQuintile"]
+
+```
+
+### `longest_affix`
+
+Trim common affixes can be useful during data cleaning:
+
+```{r longest-affix}
+trim_common_affixes(c("CurrentHousingCosts(weekly)",
+                      "CurrentFuelCosts(weekly)"))
+```
 
 
 

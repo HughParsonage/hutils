@@ -1,17 +1,17 @@
 Package: hutils
 Type: Package
 Title: Miscellaneous R Functions and Aliases
-Version: 1.2.0
-Date: 2018-08-20
+Version: 1.3.1
+Date: 2018-11-01
 Authors@R: c(person("Hugh", "Parsonage", role = c("aut", "cre"), email = "hugh.parsonage@gmail.com"),
              person("Michael", "Frasco", role = "ctb"),
              person("Ben", "Hamner", role = "ctb"))
 Maintainer: Hugh Parsonage <hugh.parsonage@gmail.com>
 Description: Provides utility functions for, and drawing on, the 'data.table' package. The package also collates useful miscellaneous functions extending base R not available elsewhere. The name is a portmanteau of 'utils' and the author.
 BugReports: https://github.com/hughparsonage/hutils/issues
-URL: https://github.com/hughparsonage/hutils
+URL: https://github.com/hughparsonage/hutils, https://hughparsonage.github.io/hutils/
 License: GPL-3
-Depends: R (>= 3.1.0)
+Depends: R (>= 3.3.0)
 Imports:
   data.table (< 2.0.0),
   magrittr (< 2.0.0),
@@ -23,11 +23,15 @@ Suggests:
   testthat,
   datasets,
   dplyr,
+  Hmisc,
   microbenchmark,
   knitr,
   rmarkdown,
   nycflights13,
   geosphere,
-  ggplot2
+  ggplot2,
+  survey,
+  tibble,
 RoxygenNote: 6.1.0
+Encoding: UTF-8
 VignetteBuilder: knitr

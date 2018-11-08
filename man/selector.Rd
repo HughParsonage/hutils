@@ -2,7 +2,7 @@
 % Please edit documentation in R/selector.R
 \name{selector}
 \alias{selector}
-\title{Fasting selection of \code{data.table} columns}
+\title{Fast selection of \code{data.table} columns}
 \usage{
 selector(DT, ..., cols = NULL, preserve.key = TRUE, shallow = FALSE)
 }

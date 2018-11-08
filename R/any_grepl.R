@@ -4,6 +4,9 @@
 #' @param pattern,perl,ignore.case,fixed As in \code{\link[base]{grep}}. 
 #' @param quiet (logical, default: \code{FALSE}) If \code{TRUE}, silences any messages.
 #' 
+#' @details From version \code{v 1.4.0}, \code{any_grepl(a, bb)} will be internally
+#' reversed to \code{any_grepl(bb, a)} if \code{length(bb) > 1} and \code{length(a) == 1}.
+#' 
 #' @examples
 #' any_grepl(c("A_D_E", "K0j"), "[a-z]")
 #' 
@@ -16,6 +19,11 @@ any_grepl <- function(x,
                       ignore.case = FALSE,
                       fixed = FALSE, 
                       quiet = FALSE) {
+  if (length(x) == 1L && length(pattern) > 1L) {
+    message("Reversing any_grepl")
+    return(any_grepl(x = pattern, pattern = x, perl, ignore.case, fixed, quiet))
+  }
+  
   if (fixed && ignore.case) {
     if (!quiet) {
       message("`fixed` and `ignore.case` both TRUE, ",

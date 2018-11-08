@@ -1,9 +1,17 @@
 #' Expand a weighted data frame to an equivalent unweighted
-#' @description Present since \code{v1.0.0}. Argument \code{rows.out} available since \code{v1.3.0}.
+#' @description Present since \code{v1.0.0}.
+#'  Argument \code{rows.out} available since \code{v1.3.0}.
+#'  Argument \code{discard_weight.var} available since \code{v 1.3.0}.
 #' @param DT A \code{data.table}. Will be converted to one if possible.
 #' @param weight.var Variable in \code{DT} to be used as weights.
 #' @param rows.out If not \code{NULL} (the default) specifies the number of rows in the result;
 #' otherwise the number of rows will be \code{sum(DT[[weight.var]])}. (Due to rounding, this figures are inexact.)
+#' @param discard_weight.var If \code{FALSE}, the default, \code{weight.var}
+#' in \code{DT} will be \code{1} for each row in the result or a new weight 
+#' if \code{rows.out} is given. Otherwise, \code{TRUE} drops the column entirely.
+#' 
+#' 
+
 #' @return \code{DT} but with the number of rows expanded to \code{sum(DT[[weight.var]])} to reflect the weighting.
 #' @examples 
 #' 
@@ -14,7 +22,12 @@
 #' 
 #' @export 
 
-weight2rows <- function(DT, weight.var, rows.out = NULL) {
+
+weight2rows <- function(DT,
+                        weight.var,
+                        rows.out = NULL,
+                        discard_weight.var = FALSE) {
+
   if (!is.data.table(DT)) {
     if (!is.data.frame(DT)) {
       stop("`DT` was a ", class(DT)[1L], ". ",
@@ -22,6 +35,10 @@ weight2rows <- function(DT, weight.var, rows.out = NULL) {
     }
     DT <- as.data.table(DT)
   }
+
+  check_TF(discard_weight.var)
+  
+  
   
   the_colorder <- copy(names(DT))
   
@@ -100,22 +117,40 @@ weight2rows <- function(DT, weight.var, rows.out = NULL) {
            },
            "integer" = {
              DT %>%
+
                .[weight.var.value > 0] %>%
                .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
                  .SDcols = names(.)[names(.) != weight.var],
                  by = weight.var]
+             
+             M <- as.integer(M)
            },
            "double" = {
-             DT %>%
+             
+             out <- 
+               DT %>%
                .[weight.var.value > 0] %>%
                .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
                  .SDcols = names(.)[names(.) != weight.var],
                  by = weight.var]
+             
+             if (!is.null(rows.out)) {
+               M <- as.double(M)
+             }
+             
            }, 
            stop("Non-numeric weight.var. Aborting."))
   
   # by will fix things first
   setcolorder(out, the_colorder)
+
+  
+  if (discard_weight.var) {
+    out[, (weight.var) := NULL]
+  } else {
+    out[, (weight.var) := M]
+  }
+  
   out[]
   
 }

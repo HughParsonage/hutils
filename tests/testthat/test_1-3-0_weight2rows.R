@@ -62,3 +62,13 @@ test_that("rows.out", {
   expect_true(between(nrow(res), 18L, 22L))
 })
 
+
+test_that("Discarding weight.var", {
+  library(data.table)
+  dt <- data.table(x = 1:10,
+                   y = c(9.73, 9.64, 8.82, 2.42, 0.76, 2.93, 9.18, 4.77, 5.93, 8))
+  res <- weight2rows(dt, 2L, rows.out = 20, discard_weight.var = TRUE)
+  expect_true(between(nrow(res), 18L, 22L))
+  expect_equal(ncol(res), 1)
+})
+
