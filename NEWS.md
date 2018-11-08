@@ -18,7 +18,6 @@
 * Enhancements:
   - `weight2rows` gains a `rows.out` argument to specify the number of rows in the result.
 
-  
 
 # hutils 1.2.0
 * New functions:
