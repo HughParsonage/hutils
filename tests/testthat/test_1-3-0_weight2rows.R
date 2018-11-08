@@ -70,3 +70,4 @@ test_that("Discarding weight.var", {
   expect_true(between(nrow(res), 18L, 22L))
   expect_equal(ncol(res), 1)
 })
+
