@@ -31,4 +31,13 @@ test_that("Value", {
   res <- samp(5, size = 10)
   # double and just 5's
   expect_identical(res, rep(5, 10))
+  res <- samp(1:5, size = 10)
+  expect_equal(length(res), 10)
 })
+
+test_that("samp length-0", {
+  expect_identical(samp(integer(0)), integer(0))
+  expect_message(samp(integer(0)))
+})
+
+

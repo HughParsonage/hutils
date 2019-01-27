@@ -16,3 +16,12 @@ test_that("Mode works", {
   # Multimodal 
   expect_true(any(c(5, 6) %in% Mode(c(5, 5, 6, 6)), na.rm = TRUE))
 })
+
+test_that("Mode length-0", {
+  expect_identical(Mode(integer(0)), integer(0))
+})
+
+test_that("Other", {
+  expect_identical(Mode(raw(5)), raw(5)[1])
+})
+
