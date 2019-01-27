@@ -10,6 +10,8 @@ samp(x, size = length(x), replace = size > length(x), loud = TRUE,
 \arguments{
 \item{x}{A vector.}
 
+\item{size}{A non-negative integer, the number of items to return.}
+
 \item{replace}{Should the sampling be done with replacement? Defaults to \code{TRUE} if 
 \code{size > length(x)}, with a message.}
 
@@ -17,8 +19,6 @@ samp(x, size = length(x), replace = size > length(x), loud = TRUE,
 \code{\link[base]{sample}} is flagged with a message.}
 
 \item{prob}{As in \code{\link[base]{sample}}.}
-
-\item{\code{size}}{A non-negative integer, the number of items to return.}
 }
 \description{
 Present since \code{hutils v1.4.0}. 

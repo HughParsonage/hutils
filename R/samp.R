@@ -3,7 +3,7 @@
 #' Same as \code{\link[base]{sample}}, but avoiding the behaviour when 
 #' \code{length(x) == 1L}.
 #' @param x A vector.
-#' @param \code{size} A non-negative integer, the number of items to return.
+#' @param size A non-negative integer, the number of items to return.
 #' @param replace Should the sampling be done with replacement? Defaults to \code{TRUE} if 
 #' \code{size > length(x)}, with a message.
 #' @param loud If \code{TRUE}, the default, any behaviour known to be different from 
