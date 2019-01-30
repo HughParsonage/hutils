@@ -186,6 +186,7 @@ test_that("definitely sorted", {
   setkey(DT, x)
   expect_true(definitely_sorted(DT, "x", check_na = FALSE))
   setkey(DT, x, y)
+  expect_true(definitely_sorted(DT, "x", check_na = FALSE))
   expect_true(definitely_sorted(DT, "y", keyby = "x", check_na = FALSE))
 })
 
