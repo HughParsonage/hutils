@@ -16,6 +16,11 @@ test_that("1.0.0", {
     print(vapply(dir(pattern = "test.1.0.0.*\\.R$"),
                  tools::md5sum,
                  ""))
+    print(lapply(dir(pattern = "test.1.0.0.*\\.R$")[1:4],
+                 readLines,
+                 ""))
+    print(lapply(dir(pattern = "test.1.0.0.*\\.R$")[1:4],
+                 readLines))
     print(all.equal(tests_1.0.0,
                     "fd5fc75ff8d63189c75fd05404b830fe66af5b718ee8e3c1b4d63dd8e2916ae51e594fd973e37590d3aa2113ed2bb276972144faa7f0"))
   }
