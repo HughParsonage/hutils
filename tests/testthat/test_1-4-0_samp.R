@@ -19,8 +19,8 @@ test_that("Error handling", {
 })
 
 test_that("loud", {
-  expect_message(samp(5), 
-                 regexp ="Using `replace = FALSE`.",
+  expect_message(samp(1:5, size = 10), 
+                 regexp ="Using `replace = TRUE`.",
                  fixed = TRUE)
   expect_message(samp(5, replace = TRUE), 
                  regexp = "`length(x) = 1`, so returning `rep.int(x, 1)`.",

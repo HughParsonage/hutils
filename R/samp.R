@@ -60,7 +60,7 @@ samp <- function(x,
            "Ensure `size` is a non-negative integer.")
     }
   }
-  if (loud && missing(replace)) {
+  if (loud && missing(replace) && replace) {
     message("Using `replace = ", replace, "`.")
   }
   if (length(x) == 1L) {
