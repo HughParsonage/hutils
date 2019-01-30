@@ -32,6 +32,7 @@ Suggests:
   nycflights13,
   geosphere,
   ggplot2,
+  readr,
   rcheology,
   survey,
   tibble,
