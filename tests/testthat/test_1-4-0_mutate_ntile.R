@@ -18,7 +18,16 @@ test_that("trailing key", {
   })
 })
 
-for (RR in dir(path = "R", pattern = "\\.R$")) {
-  dir.create(paste0("timings/", tools::file_path_sans_ext(RR)))
-}
+# for (RR in dir(path = "R", pattern = "\\.R$")) {
+#   dir.create(paste0("timings/", tools::file_path_sans_ext(RR)))
+# }
+
+test_that("!is.null(by) coverage", {
+  library(data.table)
+  DT <- data.table(x = rep(1:4, each = 8),
+                   y = c(1:8, 1:8 + 100, 1:8 - 100, 1:8 + 200))
+  res <- mutate_ntile(DT, "y", by = "x", n = 4, new.col = "Above")
+  expect_equal(res[["Above"]],
+               rep(c(1, 1, 2, 2, 3, 3, 4, 4), 4))
+})
 
