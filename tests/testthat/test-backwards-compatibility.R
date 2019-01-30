@@ -24,9 +24,9 @@ test_that("1.0.0", {
     }
     print(DT[, "DigestSha1" := DigestSha1(.BY[["File"]]), by = "File"])
     
-    
+   expect_true(TRUE)
   }
-    
+  expect_false(FALSE)
 })
 
 test_that("1.1.0", {
