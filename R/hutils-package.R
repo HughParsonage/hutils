@@ -27,4 +27,5 @@
 #' @importFrom grDevices dev.copy2pdf
 #' @importFrom stats runif
 #' @importFrom utils head
+#' @importFrom utils tail
 NULL
