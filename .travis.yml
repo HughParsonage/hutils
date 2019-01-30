@@ -22,6 +22,7 @@ after_success:
 - Rscript -e 'if (!requireNamespace("drat", quietly = TRUE)) install.packages("drat")'
 - test $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_R_VERSION_STRING == "releasze" && test $TRAVIS_BRANCH == "master" && bash
   deploy.sh
+- test $TRAVIS_PULL_REQUEST != "false" && Rscript timings/test_timing_dir.R
 env:
   global:
   - secure: ojizdloowF9006odBbToDRs7PNztMc41TQKDgVuTqQQa5hAqkOjBhkTJFCErQNUpJD3zYE+P7Rr+JcHM8o2qQAcrgTVO2iiawsfwk52Es9iRGv08etZ9+6s/ZAtieSQKAizW1TWsyP1lYfrGYIGe6VTrkku77DYu/mCqOlZ/jp5X5oiN3ZkAZEA22/Yrwwkoe5Qya8CkmoRV2vmw1G5x+VDTtdKIX2eizmiTAKGssWf2Yvs9Cm4/6o6fihIoEDWYxx8h2VHvj/bqnUCfoaZEnlVk6+ePrzu2GCNzPeFihiDL/ZYhVSXCXR6i2F7L4uOeC0j5OejaAhq+PLQuYVkuTPUjwZDJpj0L7DnrXoiKCfS5DSi3H+eKk8Vw+QAfByEfcdpVLcrQeRa03w/l1ZhjXOc5kHx48cuIZNEgqcCYOAUwbyuCId86QTD4cXqDk2wTtTthfMOg3xHa0DMTr+egqY4x91wSImgqrY0AD3kLIQNDUjp6vNG62lJIZpcya/wab7AwGFLInoOlny5CSaEVPzRUGznK6kDsUH3TqmylU0qDJhTwEgVN3AD/0T+YcElTvvrkkUXBRB8VE9PI6rLG+0Jh4zyVrSmAcUeVSabX50bEAkIBmIU2ua6xWftS7v1g/SbSJu0ss7aGCP9eXTCVES2WY6nRkcWoMQRPsrS7ho4=
