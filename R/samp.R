@@ -72,7 +72,7 @@ samp <- function(x,
   x[sample.int(size, replace = replace, prob = prob)]
 }
 
-# Don't yet worth it
+# Don't -- not yet worth it
 # samp.data.table <- function(DT, size, replace = nrow(DT) < size) {
 #   if (length(size) != 1L) {
 #     stop("wrong size value")

@@ -3,7 +3,7 @@
 #' @param x A vector for which the mode is desired.
 #' @return The most common element of \code{x}.
 #' 
-#' If the mode is not unique, only one of these values are returned, for simplicity.
+#' If the mode is not unique, only one of these values is returned, for simplicity.
 #' 
 #' If \code{x} has length zero, \code{Mode(x) = x}.
 #' 
