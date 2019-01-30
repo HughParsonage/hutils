@@ -212,7 +212,7 @@ mutate_ntile <- function(DT,
            "Only one of `by` and `keyby` may be provided.")
     }
 
-    if (!is.null(by)) {      
+    if (!is.null(by)) {
       DT[, (new.col) := .ntile(.SD[[.col]], n, check.na = check.na),
          .SDcols = c(.col),
          by = c(by)]
