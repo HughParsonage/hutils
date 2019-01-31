@@ -1,0 +1,10 @@
+DigestSha1	File
+4a25eae4	test-1-2-0_any_grepl.R
+1a41ea38	test-1-2-0_drop_grep.R
+f869e310	test_1-2-0-weight2rows.R
+db2b536e	test_1-2-0_aliases.R
+e189c017	test_1-2-0_all_same_sign.R
+611b8f8e	test_1-2-0_if_else.R
+c8cad1e6	test_1-2-0_mean_na.R
+237669e1	test_1-2-0_RQ.R
+260bfcbd	test_1-2-0_selector.R
