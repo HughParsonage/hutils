@@ -65,6 +65,10 @@ weight2rows <- function(DT,
   }
   
   weight.var.value <- DT[[weight.var]]
+  if (!is.numeric(weight.var.value) && !is.logical(weight.var.value)) {
+    stop("Non-numeric weight.var. Aborting.")
+  }
+  
   if (anyNA(weight.var.value)) {
     warning("`weight.var` contained NAs. These have been converted to zeroes.")
     weight.var.value <-
@@ -79,7 +83,24 @@ weight2rows <- function(DT,
   
   
   
+  
   if (is.null(rows.out)) {
+    
+    if (!is.logical(weight.var.value)) {
+      # Similar to tidyr::uncount logic, which is faster than original/below logic
+      # Credit to Hadley Wickham and RStudio (MIT License 2017-2018)
+      seqN <- seq_len(length(weight.var.value))
+      # rely on rep(x, times = y) behaviour for length(x) == length(y), 
+      # namely == c(rep(x[1], y[1]), rep(x[2], y[2]), ...)
+      ii <- rep(seqN, times = weight.var.value)
+      out <- DT[ii, .SD, .SDcols = names(DT)[names(DT) != weight.var]]
+      if (discard_weight.var) {
+        # out[, (weight.var) := NULL] # already discarded
+      } else {
+        out[, (weight.var) := 1L]
+      }
+      return(out)
+    }
     M <- 1L
   } else {
     if (!is.numeric(rows.out)) {

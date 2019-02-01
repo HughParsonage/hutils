@@ -1,6 +1,8 @@
 # hutils 1.4.0
 * Enhancements:
   - `drop_empty_cols` should now be faster, especially when there are few empty columns.
+  - `weight2rows` is now faster for default arguments, by using the `rep(x, w)` trick
+    used in `tidyr::uncount`.
 
 # hutils 1.3.0
 * Bug fixes:
