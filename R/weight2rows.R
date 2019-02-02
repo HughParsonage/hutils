@@ -17,6 +17,7 @@
 #' if \code{rows.out} is given. Otherwise, \code{TRUE} drops the column entirely.
 #' 
 #' 
+
 #' @return \code{DT} but with the number of rows expanded to \code{sum(DT[[weight.var]])} to reflect the weighting.
 #' @examples 
 #' 
@@ -27,10 +28,12 @@
 #' 
 #' @export 
 
+
 weight2rows <- function(DT,
                         weight.var,
                         rows.out = NULL,
                         discard_weight.var = FALSE) {
+
   if (!is.data.table(DT)) {
     if (!is.data.frame(DT)) {
       stop("`DT` was a ", class(DT)[1L], ". ",
@@ -38,6 +41,7 @@ weight2rows <- function(DT,
     }
     DT <- as.data.table(DT)
   }
+
   check_TF(discard_weight.var)
   
   
@@ -67,18 +71,31 @@ weight2rows <- function(DT,
   }
   
   weight.var.value <- DT[[weight.var]]
+  DT_nrow <- length(weight.var.value)
+  if (!is.numeric(weight.var.value) && !is.logical(weight.var.value)) {
+    stop("Non-numeric weight.var. Aborting.")
+  }
+  
   if (anyNA(weight.var.value)) {
     warning("`weight.var` contained NAs. These have been converted to zeroes.")
     weight.var.value <-
       coalesce(weight.var.value,
                if (is.integer(weight.var.value)) 0L else 0.0)
   }
-  minWeight <- min(weight.var.value)
-  if (minWeight < 0) {
+
+  min_wt <- min(weight.var.value)
+  if (min_wt < 0) {
     stop("`weight.var` contains negative values. ",
          "These are unlikely weights and not readily convertible to extra rows. ",
          "Modify `weight.var` so that all the values are nonnegative.")
   }
+  if (min_wt < 1 && is.double(weight.var.value)) {
+    wle1 <- which(weight.var.value < 1)
+    # sample.int(1L, ...) - 1 === sample(c(0, 1), ...)
+    weight.var.value[wle1] <- sample.int(1L, size = length(wle1), replace = TRUE) - 1
+  }
+  
+  
   
   
   
@@ -105,71 +122,45 @@ weight2rows <- function(DT,
     
   }
   
-  rep_out <- function(x, BY, N, M) {
-    len <- BY * N * M
-    if (len < 1) {
-      len <- if (runif(1) < len) 1L else 0L
-    } else if (is.double(len)) {
-      len <- as.integer(round(len))
+  
+  if (is.logical(weight.var.value)) {
+    warning("weight.var is logical. Treating as filter/subset.")
+    if (is.null(rows.out)) {
+      out <- DT[which(weight.var.value)]
+    } else {
+      out <- DT[samp(which(weight.var.value), size = rows.out)]
     }
-    rep_len(x, len)
+    if (discard_weight.var) {
+      out[, (weight.var) := NULL]
+    }
+  } else {
+    # Similar to tidyr::uncount logic, which is faster than original/below logic
+    # Credit to Hadley Wickham and RStudio (MIT License 2017-2018)
+    seqN <- seq_len(DT_nrow)
+    # rely on rep(x, times = y) behaviour for length(x) == length(y), 
+    # namely == c(rep(x[1], y[1]), rep(x[2], y[2]), ...)
+    if (M == 1L) {
+      ii <- rep(seqN, times = weight.var.value)
+    } else {
+      # need to round this value to avoid undershooting rows.out
+      ii <- rep(seqN, times = round(weight.var.value * M))
+    }
+    out <- DT[ii, .SD, .SDcols = names(DT)[names(DT) != weight.var]]
   }
+
   
   
   namesDT <- names(DT)
   
-  switch(typeof(weight.var.value), 
-         "logical" = {
-           warning("weight.var is logical. Treating as filter/subset.")
-           out <- DT[which(weight.var.value)]
-           
-           M <- TRUE
-         },
-         "integer" = {
-           if (minWeight == 0L) {
-             out <-  
-               DT %>%
-               .[weight.var.value > 0L] %>%
-               .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
-                 .SDcols = namesDT[namesDT != weight.var],
-                 by = weight.var]
-           } else {
-             out <- DT[, lapply(.SD, rep_out, .BY[[1]], .N, M),
-                       .SDcols = namesDT[namesDT != weight.var],
-                       by = weight.var]
-           }
-           
-           M <- as.integer(M)
-         },
-         "double" = {
-           if (minWeight == 0) {
-             out <-  
-               DT[weight.var.value > 0] %>%
-               .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
-                 .SDcols = namesDT[namesDT != weight.var],
-                 by = weight.var]
-           } else {
-             out <-
-               DT[, lapply(.SD, rep_out, .BY[[1]], .N, M),
-                  .SDcols = namesDT[namesDT != weight.var],
-                  by = weight.var]
-           }
-           
-           if (!is.null(rows.out)) {
-             M <- as.double(M)
-           }
-           
-         }, 
-         stop("Non-numeric weight.var. Aborting."))
-  
-  # by will fix things first
-  setcolorder(out, the_colorder)
   
   if (discard_weight.var) {
-    out[, (weight.var) := NULL]
+    setcolorder(out, the_colorder[the_colorder != weight.var])
   } else {
     out[, (weight.var) := M]
+    # by will fix things first
+    setcolorder(out, the_colorder)
   }
+  
   
   out[]
   

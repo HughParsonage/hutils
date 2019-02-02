@@ -54,4 +54,28 @@ test_that("selector faster than dt[, .] 10 M", {
   
 })
 
+test_that("weight2rows not too much slower than tidyr::uncount", {
+  skip_if_not_installed("tidyr")
+  skip_if_not_installed("tibble")
+  skip_on_cran()
+  skip_if_not(identical(Sys.getenv("HUTILS_BENCHMARK"), "TRUE"))
+  skip_if_not_installed("microbenchmark")
+  library(data.table)
+  library(tidyr)
+  library(microbenchmark)
+  library(hutils)
+  DT <- data.table(x = rep_len(sample(500), 2e6))
+  DT[, z := rlnorm(.N, 2, 1)]
+  DF <- tibble::as_tibble(DT)
+  Hutils <- microbenchmark(weight2rows(DT, "z", discard_weight.var = TRUE),
+                           times = 20L)
+  Tidyr <- microbenchmark(tidyr::uncount(DF, z),
+                          times = 20L)
+  expect_lt(median(Hutils$time), 
+            median(Tidyr$time) * 2,
+            label = "weight2rows twice as slow as tidyr::uncount")
+  
+  
+})
+
 
