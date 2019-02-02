@@ -196,25 +196,13 @@ mutate_ntile <- function(DT,
     }
     DT <- as.data.table(DT)
   }
+  keyddt <- key(DT)
   
-  definitely_sorted <- function(ddt, nom, check_na) {
-    if (haskey(ddt) && key(ddt)[1] == nom) {
-      return(TRUE)
-    }
-    x <- .subset2(ddt, nom)
-    if (anyNA(x)) {
-      if (check_na) {
-        stop("`check.na = TRUE` yet `DT[['", nom, "']]` ", 
-             "so stopping, as requested.")
-      }
-      return(FALSE)
-    }
-    !is.unsorted(x)
-  }
+  
   
   
   if (is.null(weights) &&  # .ntile can't use weights
-      definitely_sorted(DT, .col, check.na)) {
+      definitely_sorted(DT, .col, check.na, keyby = keyby)) {
     if (is.null(by) && is.null(keyby)) {
       DT[, (new.col) := .ntile(.SD[[1L]], n, check.na = check.na),
          .SDcols = c(.col)]
@@ -224,7 +212,7 @@ mutate_ntile <- function(DT,
            "Only one of `by` and `keyby` may be provided.")
     }
 
-    if (!is.null(by)) {      
+    if (!is.null(by)) {
       DT[, (new.col) := .ntile(.SD[[.col]], n, check.na = check.na),
          .SDcols = c(.col),
          by = c(by)]
@@ -288,5 +276,25 @@ mutate_ntile <- function(DT,
   as.integer(n * {seq_along(x) - 1L} / length(x) + 1L)
 }
 
+definitely_sorted <- function(ddt, nom, check_na, keyddt = key(ddt), keyby = NULL) {
+  #  TRUE if and only if column 'nom' in ddt is definitely sorted (ascending)
+  # FALSE does not imply unsortedness: designed to support short circuits
+  if (haskey(ddt)) {
+    if (length(keyddt) == 1L) {
+      return(keyddt == nom)
+    }
+    if (keyddt[1L] == nom) {
+      return(TRUE)
+    }
+    if (length(keyddt) == length(keyby) + 1L) {
+      return(tail(keyddt, 1L) == nom)
+    }
+  }
+  if (check_na && anyNA(.subset2(ddt, nom))) {
+    stop("`check.na = TRUE` yet `DT[['", nom, "']]` ", 
+         "so stopping, as requested.")
+  }
+  FALSE
+}
 
 

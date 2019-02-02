@@ -1,8 +1,13 @@
 # hutils 1.4.0
 
+* New functions:
+  - `Mode`, statistical mode.
+  - `samp`, a 'safe' version of `sample`.
+
 * Enhancements
   - `weight2rows` supports `rows.out < 1` to produce a sample.
   - `drop_empty_cols` should now be faster, especially when there are few empty columns.
+  - `mutate_ntile` now works for a variable with `DT` 
 
 # hutils 1.3.0
 * Bug fixes:
