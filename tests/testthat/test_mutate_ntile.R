@@ -181,3 +181,12 @@ test_that("Error handling (bys, definitely sorted)", {
   expect_true("byDecile" %in% names(DT))
 })
 
+test_that("definitely sorted", {
+  DT <- data.table(x = 1:100, y = rep(1:10, 10), z = rep(1:10, each = 10))
+  setkey(DT, x)
+  expect_true(definitely_sorted(DT, "x", check_na = FALSE))
+  setkey(DT, x, y)
+  expect_true(definitely_sorted(DT, "x", check_na = FALSE))
+  expect_true(definitely_sorted(DT, "y", keyby = "x", check_na = FALSE))
+})
+

@@ -13,7 +13,11 @@ weight2rows(DT, weight.var, rows.out = NULL,
 \item{weight.var}{Variable in \code{DT} to be used as weights.}
 
 \item{rows.out}{If not \code{NULL} (the default) specifies the number of rows in the result;
-otherwise the number of rows will be \code{sum(DT[[weight.var]])}. (Due to rounding, this figures are inexact.)}
+otherwise the number of rows will be \code{sum(DT[[weight.var]])}.
+(Due to rounding, this figures are inexact.)
+
+Since \code{v1.4.0}, if \code{0 < rows.out < 1} then taken to be a sample of
+the unweighted table. (So \code{rows.out = 0.1} would give a 10\% sample.)}
 
 \item{discard_weight.var}{If \code{FALSE}, the default, \code{weight.var}
 in \code{DT} will be \code{1} for each row in the result or a new weight 
@@ -24,8 +28,9 @@ if \code{rows.out} is given. Otherwise, \code{TRUE} drops the column entirely.}
 }
 \description{
 Present since \code{v1.0.0}.
- Argument \code{rows.out} available since \code{v1.3.0}.
- Argument \code{discard_weight.var} available since \code{v 1.3.0}.
+ Argument \code{rows.out} available since \code{v1.3.0}; 
+ \code{rows.out < 1} supported since \code{v 1.4.0}.
+ Argument \code{discard_weight.var} available since \code{v1.3.0}.
 }
 \examples{
 
