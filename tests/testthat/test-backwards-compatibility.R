@@ -18,6 +18,7 @@ createDigestSha1Tbl <- function(version = c("1.0.0", "1.1.0", "1.2.0", "1.3.0"),
   Files <- dir(pattern = paste0("^test.", version, ".+\\.R$"))
   DT <- data.table(File = Files)
   DT[, "DigestSha1" := DigestSha1(.BY[["File"]]), by = "File"]
+  setorderv(DT, "File")
   setcolorder(DT, c("DigestSha1", "File"))
   if (return_DT) {
     return(DT[])
@@ -26,6 +27,8 @@ createDigestSha1Tbl <- function(version = c("1.0.0", "1.1.0", "1.2.0", "1.3.0"),
                         pattern = version,
                         full.names = TRUE)[1],
                     sep = "\t")
+  setorderv(expected, "File")
+  setcolorder(expected, c("DigestSha1", "File"))
   if (!isTRUE(unequal <- all.equal(DT, expected))) {
     print(unequal)
     print(DT)
