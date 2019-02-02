@@ -1,11 +1,17 @@
 #' Expand a weighted data frame to an equivalent unweighted
 #' @description Present since \code{v1.0.0}.
-#'  Argument \code{rows.out} available since \code{v1.3.0}.
-#'  Argument \code{discard_weight.var} available since \code{v 1.3.0}.
+#'  Argument \code{rows.out} available since \code{v1.3.0}; 
+#'  \code{rows.out < 1} supported since \code{v 1.4.0}.
+#'  Argument \code{discard_weight.var} available since \code{v1.3.0}.
 #' @param DT A \code{data.table}. Will be converted to one if possible.
 #' @param weight.var Variable in \code{DT} to be used as weights.
 #' @param rows.out If not \code{NULL} (the default) specifies the number of rows in the result;
-#' otherwise the number of rows will be \code{sum(DT[[weight.var]])}. (Due to rounding, this figures are inexact.)
+#' otherwise the number of rows will be \code{sum(DT[[weight.var]])}.
+#' (Due to rounding, this figures are inexact.)
+#' 
+#' Since \code{v1.4.0}, if \code{0 < rows.out < 1} then taken to be a sample of
+#' the unweighted table. (So \code{rows.out = 0.1} would give a 10\% sample.)
+#' 
 #' @param discard_weight.var If \code{FALSE}, the default, \code{weight.var}
 #' in \code{DT} will be \code{1} for each row in the result or a new weight 
 #' if \code{rows.out} is given. Otherwise, \code{TRUE} drops the column entirely.
@@ -60,8 +66,8 @@ weight2rows <- function(DT,
            "`weight.var` needs to specify a valid column of DT.")
     }
   } else {
-   stop("`typeof(weight.var) = '", typeof(weight.var), "'`, ",
-        "but must be numeric or character.") 
+    stop("`typeof(weight.var) = '", typeof(weight.var), "'`, ",
+         "but must be numeric or character.") 
   }
   
   weight.var.value <- DT[[weight.var]]
@@ -76,6 +82,7 @@ weight2rows <- function(DT,
       coalesce(weight.var.value,
                if (is.integer(weight.var.value)) 0L else 0.0)
   }
+
   min_wt <- min(weight.var.value)
   if (min_wt < 0) {
     stop("`weight.var` contains negative values. ",
@@ -107,7 +114,12 @@ weight2rows <- function(DT,
       stop("`rows.out = NA` but NA is not permitted.\n", 
            "`rows.out`, if used, must be a single number.")
     }
+    if (rows.out < 1) {
+      rows.out <- rows.out * sum(weight.var.value)
+    }
+    
     M <- rows.out / sum(weight.var.value)
+    
   }
   
   
@@ -138,6 +150,7 @@ weight2rows <- function(DT,
 
   
   
+  namesDT <- names(DT)
   
   
   if (discard_weight.var) {

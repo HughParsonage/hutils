@@ -18,6 +18,7 @@ r_github_packages:
 - hughparsonage/formalCoverage
 after_success:
 - Rscript -e 'formalCoverage::formalPackageCoverage(halt = TRUE)'
+- Rscript -e 'devtools::test()'
 - test $TRAVIS_R_VERSION_STRING = 'devel' && Rscript -e 'covr::codecov(line_exclusions = list("./R/zzz.R"), function_exclusions = "find_pattern_in_windows")'
 - Rscript -e 'if (!requireNamespace("drat", quietly = TRUE)) install.packages("drat")'
 - test $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_R_VERSION_STRING == "releasze" && test $TRAVIS_BRANCH == "master" && bash
