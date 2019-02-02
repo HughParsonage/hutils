@@ -65,6 +65,7 @@ weight2rows <- function(DT,
   }
   
   weight.var.value <- DT[[weight.var]]
+  DT_nrow <- length(weight.var.value)
   if (!is.numeric(weight.var.value) && !is.logical(weight.var.value)) {
     stop("Non-numeric weight.var. Aborting.")
   }
@@ -75,32 +76,23 @@ weight2rows <- function(DT,
       coalesce(weight.var.value,
                if (is.integer(weight.var.value)) 0L else 0.0)
   }
-  if (min(weight.var.value) < 0) {
+  min_wt <- min(weight.var.value)
+  if (min_wt < 0) {
     stop("`weight.var` contains negative values. ",
          "These are unlikely weights and not readily convertible to extra rows. ",
          "Modify `weight.var` so that all the values are nonnegative.")
+  }
+  if (min_wt < 1 && is.double(weight.var.value)) {
+    wle1 <- which(weight.var.value < 1)
+    # sample.int(1L, ...) - 1 === sample(c(0, 1), ...)
+    weight.var.value[wle1] <- sample.int(1L, size = length(wle1), replace = TRUE) - 1
   }
   
   
   
   
+  
   if (is.null(rows.out)) {
-    
-    if (!is.logical(weight.var.value)) {
-      # Similar to tidyr::uncount logic, which is faster than original/below logic
-      # Credit to Hadley Wickham and RStudio (MIT License 2017-2018)
-      seqN <- seq_len(length(weight.var.value))
-      # rely on rep(x, times = y) behaviour for length(x) == length(y), 
-      # namely == c(rep(x[1], y[1]), rep(x[2], y[2]), ...)
-      ii <- rep(seqN, times = weight.var.value)
-      out <- DT[ii, .SD, .SDcols = names(DT)[names(DT) != weight.var]]
-      if (discard_weight.var) {
-        # out[, (weight.var) := NULL] # already discarded
-      } else {
-        out[, (weight.var) := 1L]
-      }
-      return(out)
-    }
     M <- 1L
   } else {
     if (!is.numeric(rows.out)) {
@@ -118,59 +110,44 @@ weight2rows <- function(DT,
     M <- rows.out / sum(weight.var.value)
   }
   
-  rep_out <- function(x, BY, N, M) {
-    len <- BY * N * M
-    if (len < 1) {
-      len <- if (runif(1) < len) 1L else 0L
-    } else if (is.double(len)) {
-      len <- as.integer(round(len))
+  
+  if (is.logical(weight.var.value)) {
+    warning("weight.var is logical. Treating as filter/subset.")
+    if (is.null(rows.out)) {
+      out <- DT[which(weight.var.value)]
+    } else {
+      out <- DT[samp(which(weight.var.value), size = rows.out)]
     }
-    rep_len(x, len)
+    if (discard_weight.var) {
+      out[, (weight.var) := NULL]
+    }
+  } else {
+    # Similar to tidyr::uncount logic, which is faster than original/below logic
+    # Credit to Hadley Wickham and RStudio (MIT License 2017-2018)
+    seqN <- seq_len(DT_nrow)
+    # rely on rep(x, times = y) behaviour for length(x) == length(y), 
+    # namely == c(rep(x[1], y[1]), rep(x[2], y[2]), ...)
+    if (M == 1L) {
+      ii <- rep(seqN, times = weight.var.value)
+    } else {
+      # need to round this value to avoid undershooting rows.out
+      ii <- rep(seqN, times = round(weight.var.value * M))
+    }
+    out <- DT[ii, .SD, .SDcols = names(DT)[names(DT) != weight.var]]
   }
+
   
   
-  
-   
-  switch(typeof(weight.var.value), 
-         "logical" = {
-           warning("weight.var is logical. Treating as filter/subset.")
-           out <- DT[which(weight.var.value)]
-         },
-         "integer" = {
-           out <- 
-             DT %>%
-             .[weight.var.value > 0] %>%
-             .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
-               .SDcols = names(.)[names(.) != weight.var],
-               by = weight.var]
-           
-           M <- as.integer(M)
-         },
-         "double" = {
-           
-           out <- 
-             DT %>%
-             .[weight.var.value > 0] %>%
-             .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
-               .SDcols = names(.)[names(.) != weight.var],
-               by = weight.var]
-           
-           if (!is.null(rows.out)) {
-             M <- as.double(M)
-           }
-           
-         }, 
-         stop("Non-numeric weight.var. Aborting."))
-  
-  # by will fix things first
-  setcolorder(out, the_colorder)
   
   
   if (discard_weight.var) {
-    out[, (weight.var) := NULL]
+    setcolorder(out, the_colorder[the_colorder != weight.var])
   } else {
     out[, (weight.var) := M]
+    # by will fix things first
+    setcolorder(out, the_colorder)
   }
+  
   
   out[]
   
