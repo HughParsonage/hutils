@@ -24,7 +24,7 @@ dir2 <- function(path = ".",
   if (!identical(.Platform$OS.type, "windows") || .dont_use) {
     stop("Only useful on Windows.")
   }
-  
+  old <- "."
   if (!identical(path, ".")) {
     if (!is.character(path)) {
       stop("`path` was a ", paste(class(path), collapse = " "),
@@ -94,6 +94,7 @@ dir2 <- function(path = ".",
                 ignore.case = ignore.case, 
                 invert = invert)
   }
+  setwd(old)
   out
 }
 

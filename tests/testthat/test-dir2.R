@@ -44,4 +44,5 @@ test_that("dir2 works", {
 
 test_that("Nil files", {
   z <- dir2(file_ext = "*.qqq")
+  expect_equal(length(z), 0L)
 })
