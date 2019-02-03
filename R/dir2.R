@@ -50,19 +50,30 @@ dir2 <- function(path = ".",
     file_ext <- paste0("*", file_ext)
   }
   
-  
-  shell(paste("dir /b ",
-              if (is.null(file_ext)) "*.*" else file_ext,
-              if (recursive) {
-                "/S"
-              }, 
-              ">",
-              temp.txt))
-  out <- fread(temp.txt, sep = NULL, header = FALSE)
-  if (length(out)) {
-    out <- out[[1L]]
+  shell_res <- 
+    shell(paste("dir /b ",
+                if (is.null(file_ext)) "*.*" else file_ext,
+                if (recursive) {
+                  "/S"
+                }, 
+                ">",
+                temp.txt),
+          # no warning on failure
+          mustWork = NA)
+  if (shell_res) {
+    out <- character(0)  # typical case: no files found
+    if (file.size(temp.txt) != 0) { # nocov start
+      warning("Exited with status ", shell_res, ", but file was non-empty.") 
+      out <- readLines(temp.txt)
+    } # nocov end
   } else {
-    out <- character(0L)  # null.data.table
+    # fread will return a warning if file is empty
+    out <- fread(temp.txt, sep = NULL, header = FALSE)
+    if (length(out)) {
+      out <- out[[1L]]
+    } else {
+      out <- character(0L)  # null.data.table
+    }
   }
   file.remove(temp.txt)
   if (!is.null(pattern)) {
@@ -76,7 +87,7 @@ dir2 <- function(path = ".",
     }
     
     out <- grep(pattern, 
-                x = out,
+                x = basename(out),
                 value = TRUE,
                 perl = perl,
                 fixed = fixed, 
