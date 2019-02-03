@@ -1,6 +1,7 @@
 context("test-dir2")
 
 test_that("Error handling", {
+  skip_if_not(identical(.Platform$OS.type, "windows"))
   library(data.table)
   expect_error(dir2(.dont_use = TRUE),
                regexp = "Windows")
@@ -43,6 +44,7 @@ test_that("dir2 works", {
 })
 
 test_that("Nil files", {
+  skip_if_not(identical(.Platform$OS.type, "windows"))
   z <- dir2(file_ext = "*.qqq")
   expect_equal(length(z), 0L)
 })

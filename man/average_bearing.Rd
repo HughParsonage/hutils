@@ -29,8 +29,10 @@ average_bearing(c(0, 90))
 average_bearing(c(0, 270))
 average_bearing(c(90, 180))
 
-average_bearing(c(0, 180))
-average_bearing(c(0, 180, average_of_opposite = 3))
-average_bearing(c(0, 180, average_of_opposite = "left"))
+average_bearing(0, 180)
+average_bearing(0, 180, average_of_opposite = 3)
+average_bearing(0, 180, average_of_opposite = "left")
+
+average_bearing_n(1:179)
 
 }

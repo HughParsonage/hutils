@@ -15,9 +15,11 @@
 #' average_bearing(c(0, 270))
 #' average_bearing(c(90, 180))
 #' 
-#' average_bearing(c(0, 180))
-#' average_bearing(c(0, 180, average_of_opposite = 3))
-#' average_bearing(c(0, 180, average_of_opposite = "left"))
+#' average_bearing(0, 180)
+#' average_bearing(0, 180, average_of_opposite = 3)
+#' average_bearing(0, 180, average_of_opposite = "left")
+#' 
+#' average_bearing_n(1:179)
 #' 
 #' @export average_bearing average_bearing_n
 #' 
@@ -50,6 +52,6 @@ average_bearing_n <- function(thetas) {
   Sin <- function(x) sinpi(x / 180)
   Cos <- function(x) cospi(x / 180)
   
-  {atan2(sum(Sin(x)), sum(Cos(x))) * 180 / pi} %% 360
+  {atan2(sum(Sin(thetas)), sum(Cos(thetas))) * 180 / pi} %% 360
 }
 
