@@ -19,7 +19,8 @@ with that extension.}
 
 \item{recursive}{\code{TRUE} by default.}
 
-\item{perl, ignore.case, fixed, invert}{As in \code{grep} but with different defaults.}
+\item{pattern, perl, ignore.case, fixed, invert}{As in \code{grep} but with different defaults.
+Used to filter files with extension \code{file_ext}.}
 
 \item{.dont_use}{Only used for tests to simulate non-Windows systems.}
 }

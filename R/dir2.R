@@ -5,7 +5,8 @@
 #' with that extension.
 #' @param full.names \code{TRUE} by default.
 #' @param recursive \code{TRUE} by default.
-#' @param perl,ignore.case,fixed,invert As in \code{grep} but with different defaults.
+#' @param pattern,perl,ignore.case,fixed,invert As in \code{grep} but with different defaults.
+#' Used to filter files with extension \code{file_ext}.
 #' @param .dont_use Only used for tests to simulate non-Windows systems.
 #' 
 #' 

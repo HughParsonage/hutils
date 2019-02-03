@@ -2,9 +2,12 @@
 % Please edit documentation in R/average_bearing.R
 \name{average_bearing}
 \alias{average_bearing}
+\alias{average_bearing_n}
 \title{Average of bearings}
 \usage{
 average_bearing(theta1, theta2, average_of_opposite = NULL)
+
+average_bearing_n(thetas)
 }
 \arguments{
 \item{theta1, theta2}{Bearings, expressed in degrees.}
@@ -16,7 +19,7 @@ undefined; if \code{"right"}, returns
 a single numeric to provide a specific value when the vectors point in opposite 
 directions.}
 
-\item{theta}{A vector of bearings.}
+\item{thetas}{A vector of bearings.}
 }
 \value{
 The bearing bisecting the two bearings.
@@ -25,9 +28,9 @@ The bearing bisecting the two bearings.
 Average of bearings
 }
 \examples{
-average_bearing(c(0, 90))
-average_bearing(c(0, 270))
-average_bearing(c(90, 180))
+average_bearing(0, 90)
+average_bearing(0, 270)
+average_bearing(90, 180)
 
 average_bearing(0, 180)
 average_bearing(0, 180, average_of_opposite = 3)
