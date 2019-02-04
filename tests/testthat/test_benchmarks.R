@@ -58,6 +58,7 @@ test_that("weight2rows not too much slower than tidyr::uncount", {
   skip_if_not_installed("tidyr")
   skip_if_not_installed("tibble")
   skip_on_cran()
+  skip_if_not(packageVersion("hutils") >= "1.4.0")
   skip_if_not(identical(Sys.getenv("HUTILS_BENCHMARK"), "TRUE"))
   skip_if_not_installed("microbenchmark")
   library(data.table)
@@ -67,7 +68,9 @@ test_that("weight2rows not too much slower than tidyr::uncount", {
   DT <- data.table(x = rep_len(sample(500), 2e6))
   DT[, z := rlnorm(.N, 2, 1)]
   DF <- tibble::as_tibble(DT)
-  Hutils <- microbenchmark(weight2rows(DT, "z", discard_weight.var = TRUE),
+  Hutils <- microbenchmark(weight2rows(DT, "z", discard_weight.var = TRUE,
+                                       # quick = TRUE not the default
+                                       quick = TRUE),
                            times = 20L)
   Tidyr <- microbenchmark(tidyr::uncount(DF, z),
                           times = 20L)
