@@ -23,8 +23,20 @@ test_that("Logical weight still works", {
                    ww = as.logical(1:10 %% 3L))
   DT4 <- suppressWarnings(weight2rows(DT, "ww", rows.out = 4L))
   expect_equal(nrow(DT4), 4L)
-  DT4_no_w <- suppressWarnings(weight2rows(DT, "ww", rows.out = 4L, discard_weight.var = TRUE))
+  DT4_no_w <- suppressWarnings(weight2rows(DT,
+                                           "ww", 
+                                           rows.out = 4L,
+                                           discard_weight.var = TRUE))
   expect_false("ww" %in% names(DT4_no_w))
+})
+
+test_that("Should sum to the total", {
+  skip_if_not(file.exists("weight2rows-csv/14986471.csv"))
+  library(data.table)
+  out <- fread("weight2rows-csv/14986471.csv")
+  total <- out[, sum(WEIGHT)]
+  unweighted <- weight2rows(out, "WEIGHT")
+  expect_true(abs(total - nrow(unweighted)) <= 2L)
 })
 
 

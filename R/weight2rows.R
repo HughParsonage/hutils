@@ -16,6 +16,8 @@
 #' in \code{DT} will be \code{1} for each row in the result or a new weight 
 #' if \code{rows.out} is given. Otherwise, \code{TRUE} drops the column entirely.
 #' 
+#' @param quick (logical, default: \code{FALSE}) If \code{TRUE}, use a slightly
+#' faster algorithm but one which is less likely to return the corret number of rows.
 #' 
 
 #' @return \code{DT} but with the number of rows expanded to \code{sum(DT[[weight.var]])} to reflect the weighting.
@@ -32,7 +34,8 @@
 weight2rows <- function(DT,
                         weight.var,
                         rows.out = NULL,
-                        discard_weight.var = FALSE) {
+                        discard_weight.var = FALSE,
+                        quick = FALSE) {
 
   if (!is.data.table(DT)) {
     if (!is.data.frame(DT)) {
@@ -44,10 +47,7 @@ weight2rows <- function(DT,
 
   check_TF(discard_weight.var)
   
-  
-  
   the_colorder <- copy(names(DT))
-  
   
   if (length(weight.var) != 1L) {
     stop("`weight.var` had length ", length(weight.var), ". ",
@@ -119,9 +119,7 @@ weight2rows <- function(DT,
     }
     
     M <- rows.out / sum(weight.var.value)
-    
   }
-  
   
   if (is.logical(weight.var.value)) {
     warning("weight.var is logical. Treating as filter/subset.")
@@ -133,27 +131,72 @@ weight2rows <- function(DT,
     if (discard_weight.var) {
       out[, (weight.var) := NULL]
     }
-  } else {
+    return(out)
+  }
+  
+  if (quick) {
     # Similar to tidyr::uncount logic, which is faster than original/below logic
     # Credit to Hadley Wickham and RStudio (MIT License 2017-2018)
     seqN <- seq_len(DT_nrow)
     # rely on rep(x, times = y) behaviour for length(x) == length(y), 
     # namely == c(rep(x[1], y[1]), rep(x[2], y[2]), ...)
-    if (M == 1L) {
-      ii <- rep(seqN, times = weight.var.value)
-    } else {
-      # need to round this value to avoid undershooting rows.out
-      ii <- rep(seqN, times = round(weight.var.value * M))
-    }
+    
+    # but we need to round this value to avoid undershooting rows.out
+    ii <- rep(seqN, times = round(weight.var.value * M))
+    
     out <- DT[ii, .SD, .SDcols = names(DT)[names(DT) != weight.var]]
+    return(out)
   }
-
+  
+  rep_out <- function(x, BY, N, M) {
+    len <- BY * N * M
+    if (len < 1) {
+      len <- if (runif(1) < len) 1L else 0L
+    } else if (is.double(len)) {
+      len <- as.integer(round(len))
+    }
+    rep_len(x, len)
+  }
+  
   
   
   namesDT <- names(DT)
   
+  switch(typeof(weight.var.value), 
+         "logical" = {
+           warning("weight.var is logical. Treating as filter/subset.")
+           out <- DT[which(weight.var.value)]
+           
+           M <- TRUE
+         },
+         "integer" = {
+           out <-  
+             DT %>%
+             .[weight.var.value > 0] %>%
+             .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
+               .SDcols = names(.)[names(.) != weight.var],
+               by = weight.var]
+           
+           M <- as.integer(M)
+         },
+         "double" = {
+           
+           out <- 
+             DT %>%
+             .[weight.var.value > 0] %>%
+             .[, lapply(.SD, rep_out, .BY[[1]], .N, M),
+               .SDcols = names(.)[names(.) != weight.var],
+               by = weight.var]
+           
+           if (!is.null(rows.out)) {
+             M <- as.double(M)
+           }
+           
+         }, 
+         stop("Non-numeric weight.var. Aborting."))
   
   if (discard_weight.var) {
+    out[, (weight.var) := NULL]
     setcolorder(out, the_colorder[the_colorder != weight.var])
   } else {
     out[, (weight.var) := M]
@@ -161,7 +204,5 @@ weight2rows <- function(DT,
     setcolorder(out, the_colorder)
   }
   
-  
   out[]
-  
 }

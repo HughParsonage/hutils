@@ -5,7 +5,7 @@
 \title{Expand a weighted data frame to an equivalent unweighted}
 \usage{
 weight2rows(DT, weight.var, rows.out = NULL,
-  discard_weight.var = FALSE)
+  discard_weight.var = FALSE, quick = FALSE)
 }
 \arguments{
 \item{DT}{A \code{data.table}. Will be converted to one if possible.}
@@ -22,6 +22,9 @@ the unweighted table. (So \code{rows.out = 0.1} would give a 10\% sample.)}
 \item{discard_weight.var}{If \code{FALSE}, the default, \code{weight.var}
 in \code{DT} will be \code{1} for each row in the result or a new weight 
 if \code{rows.out} is given. Otherwise, \code{TRUE} drops the column entirely.}
+
+\item{quick}{(logical, default: \code{FALSE}) If \code{TRUE}, use a slightly
+faster algorithm but one which is less likely to return the corret number of rows.}
 }
 \value{
 \code{DT} but with the number of rows expanded to \code{sum(DT[[weight.var]])} to reflect the weighting.
