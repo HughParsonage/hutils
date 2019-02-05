@@ -70,11 +70,18 @@ dir2 <- function(path = ".",
   } else {
     # fread will return a warning if file is empty
     out <- fread(temp.txt, sep = NULL, header = FALSE)
+    
+    ## I'm confident I've handled the length(out) == 0
+    ## case with the other branch above; however, it
+    ## may be possible to get a null data table for 
+    ## some other reason.
+    # nocov start
     if (length(out)) {
       out <- out[[1L]]
     } else {
       out <- character(0L)  # null.data.table
     }
+    # nocov end
   }
   file.remove(temp.txt)
   if (!is.null(pattern)) {
@@ -83,8 +90,11 @@ dir2 <- function(path = ".",
     check_TF(fixed)
     
     # Else fixed and perl warning when both TRUE
-    if (is.null(perl) && missing(fixed)) {
-      perl <- TRUE
+    if (missing(perl) && fixed) {
+      perl <- FALSE
+    }
+    if (missing(fixed) && perl) {
+      fixed <- FALSE
     }
     
     out <- grep(pattern, 

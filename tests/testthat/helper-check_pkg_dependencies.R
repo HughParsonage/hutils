@@ -122,3 +122,14 @@ check_pkg_dependencies <- function(pkg_root = NULL,
   }
   on_success
 }
+
+skip_only_on_cran <- function() {
+  if (identical(Sys.getenv("NOT_CRAN"), "true") ||
+      identical(Sys.getenv("TRAVIS"), "true") ||
+      identical(Sys.getenv("APPVEYOR"), "True") ||
+      nzchar(Sys.getenv("CODECOV_TOKEN"))) {
+    return(invisible(TRUE))
+  }
+  testthat::skip("On CRAN")
+}
+

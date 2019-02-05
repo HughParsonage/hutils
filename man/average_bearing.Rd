@@ -22,7 +22,9 @@ directions.}
 \item{thetas}{A vector of bearings.}
 }
 \value{
-The bearing bisecting the two bearings.
+For `average_bearing`, the bearing bisecting the two bearings.
+
+For `average_bearing_n`, the average bearing of the bearing.
 }
 \description{
 Average of bearings

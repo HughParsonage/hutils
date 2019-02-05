@@ -31,7 +31,7 @@ test_that("Error handling (non-Windows)", {
 
 test_that("dir2 works", {
   skip_if_not(identical(.Platform$OS.type, "windows"))
-  skip_on_cran()
+  skip_only_on_cran()
   tempd <- tempdir()
   file.create(file.path(tempd, "abc.csv"))
   file.create(file.path(tempd, "def.csv"))
@@ -41,10 +41,21 @@ test_that("dir2 works", {
   expect_equal(length(z), 2L)
   z1 <- dir2(path = tempd, file_ext = "*.csv", pattern = "^a")
   expect_equal(length(z1), 1L)
+  zp <- dir2(path = tempd, file_ext = "*.csv", pattern = "^a", perl = TRUE)
+  expect_equal(length(zp), 1L)
+  zp <- dir2(path = tempd, file_ext = "*.csv", pattern = "^a", perl = FALSE)
+  expect_equal(length(zp), 1L)
+  zfx <- dir2(path = tempd, file_ext = ".csv", pattern = "^a", fixed = TRUE)
+  expect_equal(length(zfx), 0L)
+  zic <- dir2(path = tempd, file_ext = ".csv", pattern = "^A", ignore.case = TRUE)
+  expect_equal(length(zic), 1L)
 })
 
 test_that("Nil files", {
   skip_if_not(identical(.Platform$OS.type, "windows"))
   z <- dir2(file_ext = "*.qqq")
   expect_equal(length(z), 0L)
+  z <- dir2(file_ext = ".qqq")
+  
 })
+
