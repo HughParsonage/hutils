@@ -1,4 +1,9 @@
 #' List many files
+#' @description (Windows only) Same as \code{\link[base]{list.files}} but much faster.
+#' 
+#' Present since \code{v1.4.0.}
+#' 
+#'  
 #' 
 #' @param path A string representing the trunk path to search within.
 #' @param file_ext A string like `*.txt` or `.csv` to limit the result to files 
@@ -9,7 +14,11 @@
 #' Used to filter files with extension \code{file_ext}.
 #' @param .dont_use Only used for tests to simulate non-Windows systems.
 #' 
+#' @return The same as \code{\link[base]{list.files}}, a character vector of files sought.
 #' 
+#' 
+#' 
+#' @export
 
 
 dir2 <- function(path = ".", 
@@ -55,6 +64,12 @@ dir2 <- function(path = ".",
   }
   temp.txt <- tempfile("dir2")
   
+   
+  if (is.null(file_ext)) {
+    file_ext <- "*.*"
+  }
+      
+  
   stopifnot(is.character(file_ext),
             length(file_ext) == 1L,
             startsWith(file_ext, "*.") || startsWith(file_ext, "."))
@@ -65,7 +80,7 @@ dir2 <- function(path = ".",
   
   shell_res <- 
     shell(paste("dir /b ",
-                if (is.null(file_ext)) "*.*" else file_ext,
+                file_ext,
                 if (recursive) {
                   "/S"
                 }, 

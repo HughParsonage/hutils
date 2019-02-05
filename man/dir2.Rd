@@ -24,6 +24,11 @@ Used to filter files with extension \code{file_ext}.}
 
 \item{.dont_use}{Only used for tests to simulate non-Windows systems.}
 }
+\value{
+The same as \code{\link[base]{list.files}}, a character vector of files sought.
+}
 \description{
-List many files
+(Windows only) Same as \code{\link[base]{list.files}} but much faster.
+
+Present since \code{v1.4.0.}
 }
