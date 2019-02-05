@@ -23,8 +23,20 @@ dir2 <- function(path = ".",
                  invert = FALSE,
                  .dont_use = FALSE) {
   if (!identical(.Platform$OS.type, "windows") || .dont_use) {
-    stop("Only useful on Windows.")
+    stop("Only useful on Windows with access to the 'dir' command.")
   }
+  # nocov start
+  # The shell command on Windows uses Sys.getenv('COMSPEC') so we 
+  # also require its presence. It's difficult to obtain a test environment
+  # with Windows but without this variable, so we only emit a message
+  # in case the test reaches this point untrapped.
+  if (Sys.getenv("COMSPEC") == "") {
+    message("On Windows but 'cmd.exe' appears to be absent. ",
+            "To continue would risk unexpected behaviour, so returning NULL.")
+    return(NULL)
+  }
+  # nocov end
+
   old <- "."
   if (!identical(path, ".")) {
     if (!is.character(path)) {
