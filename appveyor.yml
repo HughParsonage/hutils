@@ -22,6 +22,7 @@ test_script:
   - travis-tool.sh run_tests
 
 on_success:
+  - Rscript -e install.packages(deparse(substitute(covr)))
   - Rscript -e covr::codecov()
 
 on_failure:
