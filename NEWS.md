@@ -1,5 +1,7 @@
 # hutils 1.4.0
 * New functions:
+  - `average_bearing`, the bearing bisecting two vectors
+  - `dir2`, (Windows only) a much faster version of `dir()`
   - `Mode`, statistical mode.
   - `samp`, a 'safe' version of `sample`.
 
