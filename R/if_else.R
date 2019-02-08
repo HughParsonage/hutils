@@ -4,9 +4,9 @@
 #' \code{hutils::if_else} should be faster than \code{dplyr::if_else} \dots{} when it works, 
 #' but will not work on lists or on factors. 
 #' Additional attributes may be dropped.
-#' @param condition Logical vector
+#' @param condition Logical vector.
 #' @param true,false Where condition is \code{TRUE}/\code{FALSE}, use the corresponding\code{true}/\code{no} value.
-#' They must have the same \code{\link[base]{type}} as each other and be the same length as \code{condition} or length-one.
+#' They must have the same \code{\link[base]{typeof}} as each other and be the same length as \code{condition} or length-one.
 #' @param missing If condition is \code{NA}, use the corresponding \code{na} value. Like\code{true} and\code{false}, must
 #' be of the same type and have the same length as condition, unless it has length one.
 #' @return Where \code{condition} is \code{TRUE}, the corresponding value in \code{true}; 
