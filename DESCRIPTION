@@ -11,14 +11,15 @@ Description: Provides utility functions for, and drawing on, the 'data.table' pa
 BugReports: https://github.com/hughparsonage/hutils/issues
 URL: https://github.com/hughparsonage/hutils, https://hughparsonage.github.io/hutils/
 License: GPL-3
-Depends: R (>= 3.3.0)
+Depends: R (>= 3.2.0)
 Imports:
   data.table (< 2.0.0),
   magrittr (< 2.0.0),
   stats (< 4.0.0),
   utils (< 4.0.0),
   fastmatch (< 2.0.0),
-  grDevices (< 4.0.0)
+  grDevices (< 4.0.0),
+  backports
 Suggests:
   testthat,
   datasets,
