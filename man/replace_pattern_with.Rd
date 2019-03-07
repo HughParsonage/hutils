@@ -20,6 +20,8 @@ given character vector. Passed to \code{pattern} in \code{\link[base]{gsub}}.}
 
 \item{dir_recursive}{(logical, default: \code{TRUE}) Search within subdirectories of \code{basedir}?}
 
+\item{reader}{A function, akin to \code{base::readLines}, the default, that accepts a filename and returns a character vector.}
+
 \item{file_pattern}{A regular expression passed to \code{list.files(pattern = file.ext)}.
 By default, \code{"\\.(R|r)(nw|md)?$"}, i.e. all R and Sweave files. (Does not have to be a file extension.)}
 
@@ -29,7 +31,7 @@ be interpreted as a \code{perl} regex?}
 \item{file_contents_fixed}{(logical, default: \code{FALSE}) Should \code{file_contents} 
 be interpreted as a \code{fixed} regex?}
 
-\item{file_contents_ignore_case}{(logical, default: \code{FALSE}) As in \link{\code[base]{grep}}.}
+\item{file_contents_ignore_case}{(logical, default: \code{FALSE}) As in \code{\link[base]{grep}}.}
 
 \item{writer}{A function that will rewrite the file from the character vector read in.}
 }

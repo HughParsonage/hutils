@@ -4,13 +4,14 @@
 #' @param replace The replacement, passed to \code{replacement} in \code{\link[base]{gsub}}.
 #' @param basedir The root of the directory tree in which files will be searched recursively.
 #' @param dir_recursive (logical, default: \code{TRUE}) Search within subdirectories of \code{basedir}?
+#' @param reader A function, akin to \code{base::readLines}, the default, that accepts a filename and returns a character vector.
 #' @param file_pattern A regular expression passed to \code{list.files(pattern = file.ext)}.
 #' By default, \code{"\\.(R|r)(nw|md)?$"}, i.e. all R and Sweave files. (Does not have to be a file extension.)
 #' @param file_contents_perl (logical, default: \code{TRUE}) Should \code{file_contents} 
 #' be interpreted as a \code{perl} regex? 
 #' @param file_contents_fixed (logical, default: \code{FALSE}) Should \code{file_contents} 
 #' be interpreted as a \code{fixed} regex?
-#' @param file_contents_ignore_case (logical, default: \code{FALSE}) As in \link{\code[base]{grep}}.
+#' @param file_contents_ignore_case (logical, default: \code{FALSE}) As in \code{\link[base]{grep}}.
 #' @param writer A function that will rewrite the file from the character vector read in.
 #' @export replace_pattern_with
 replace_pattern_with <- function(file_contents,
