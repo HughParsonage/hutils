@@ -13,6 +13,7 @@
 #' be interpreted as a \code{perl} regex? 
 #' @param file_contents_fixed (logical, default: \code{FALSE}) Should \code{file_contents} 
 #' be interpreted as a \code{fixed} regex?
+#' @param file_contents_ignore_case (logical, default: \code{FALSE}) As in \link{\code[base]{grep}}.
 #' @param file.ext A file extension passed to the operating system if \code{use.OS} is used.
 #' @param which_lines One of \code{"first"} and \code{"all"}. If \code{"first"} only the first match in any file is returned in the result; if \code{"all"}, all matches are.
 #' @return A \code{data.table}, showing the matches per file.
@@ -178,3 +179,7 @@ deprecate_windows_finder <- function() {
                 "windows")) .Deprecated("hutilsInteractive::find_pattern_in_windows")
 }
 #nocov end
+
+
+
+

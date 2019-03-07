@@ -36,6 +36,8 @@ be interpreted as a \code{perl} regex?}
 \item{file_contents_fixed}{(logical, default: \code{FALSE}) Should \code{file_contents} 
 be interpreted as a \code{fixed} regex?}
 
+\item{file_contents_ignore_case}{(logical, default: \code{FALSE}) As in \link{\code[base]{grep}}.}
+
 \item{file.ext}{A file extension passed to the operating system if \code{use.OS} is used.}
 
 \item{which_lines}{One of \code{"first"} and \code{"all"}. If \code{"first"} only the first match in any file is returned in the result; if \code{"all"}, all matches are.}
