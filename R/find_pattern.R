@@ -28,8 +28,15 @@ find_pattern_in <- function(file_contents,
                             file_pattern = "\\.(R|r)(nw|md)?$",
                             file_contents_perl = TRUE,
                             file_contents_fixed = FALSE,
+                            file_contents_ignore_case = FALSE,
                             file.ext = NULL, 
                             which_lines = c("first", "all")) {
+  # Harmonize perl,fixed,ignore_case
+  if (file_contents_fixed && missing(file_contents_perl)) {
+    file_contents_perl <- FALSE
+  }
+
+  
   ..reader <- match.fun(reader)
   .reader <- function(x) {
     out <- ..reader(x)
@@ -109,12 +116,14 @@ find_pattern_in <- function(file_contents,
              grep(.pattern,
                   x = x,
                   perl = file_contents_perl,
+                  ignore.case = file_contents_ignore_case,
                   fixed = file_contents_fixed)[1L]
            }, 
            "all" = {
              grep(.pattern,
                   x = x,
                   perl = file_contents_perl,
+                  ignore.case = file_contents_ignore_case,
                   fixed = file_contents_fixed)
            })
   }
@@ -126,6 +135,7 @@ find_pattern_in <- function(file_contents,
                   x = x,
                   value = TRUE,
                   perl = file_contents_perl,
+                  ignore.case = file_contents_ignore_case,
                   fixed = file_contents_fixed)[1L]
            }, 
            "all" = {
@@ -133,6 +143,7 @@ find_pattern_in <- function(file_contents,
                   x = x,
                   value = TRUE,
                   perl = file_contents_perl,
+                  ignore.case = file_contents_ignore_case,
                   fixed = file_contents_fixed)
            })
   }

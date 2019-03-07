@@ -11,6 +11,7 @@
   - `weight2rows` is now faster for default arguments, by using the `rep(x, w)` trick
     used in `tidyr::uncount`.
   - `mutate_ntile` now works for a variable with `DT` 
+  - `find_pattern_in` now accepts `file_contents_ignore_case`.
 
 # hutils 1.3.0
 * Bug fixes:

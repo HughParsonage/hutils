@@ -178,4 +178,27 @@ test_that("include comments", {
   
 })
 
+test_that("ignore_case", {
+  temp_dir <- tempfile("ignore-case")
+  provide.dir(temp_dir)
+  writeLines(c("qwerty", "Qwerty"), file.path(temp_dir, "a.R"))
+  oic <- find_pattern_in("qwerty",
+                         temp_dir, 
+                         file_contents_ignore_case = TRUE,
+                         which = "all")
+  expect_equal(nrow(oic), 2)
+})
+
+test_that("perl+fixed", {
+  temp_dir <- tempfile("ignore-case")
+  provide.dir(temp_dir)
+  writeLines(c("qwerty", "Qwerty"), file.path(temp_dir, "a.R"))
+  # now warning
+  oic <- find_pattern_in("qwerty",
+                         temp_dir, 
+                         file_contents_fixed = TRUE,
+                         which = "all")
+  expect_equal(nrow(oic), 1)
+})
+
 
