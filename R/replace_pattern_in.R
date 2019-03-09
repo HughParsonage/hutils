@@ -13,17 +13,17 @@
 #' be interpreted as a \code{fixed} regex?
 #' @param file_contents_ignore_case (logical, default: \code{FALSE}) As in \code{\link[base]{grep}}.
 #' @param writer A function that will rewrite the file from the character vector read in.
-#' @export replace_pattern_with
-replace_pattern_with <- function(file_contents,
-                                 replace, 
-                                 basedir = ".",
-                                 dir_recursive = TRUE,
-                                 reader = readLines,
-                                 file_pattern = "\\.(R|r)(nw|md)?$",
-                                 file_contents_perl = TRUE,
-                                 file_contents_fixed = FALSE,
-                                 file_contents_ignore_case = FALSE,
-                                 writer = writeLines) {
+#' @export replace_pattern_in
+replace_pattern_in <- function(file_contents,
+                               replace, 
+                               basedir = ".",
+                               dir_recursive = TRUE,
+                               reader = readLines,
+                               file_pattern = "\\.(R|r)(nw|md)?$",
+                               file_contents_perl = TRUE,
+                               file_contents_fixed = FALSE,
+                               file_contents_ignore_case = FALSE,
+                               writer = writeLines) {
   if (file_contents_fixed && missing(file_contents_perl)) {
     file_contents_perl <- FALSE
   }
