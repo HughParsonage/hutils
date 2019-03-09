@@ -1,5 +1,9 @@
 #' Swap assignment
 #' 
+#' @description
+#' Swap values simultaneously. Present since \code{hutils 1.4.0}.
+#' 
+#' 
 #' @name swap
 #' @param x,value Objects whose values are to be reassigned by swapping.
 #' @return \code{NULL} invisibly. Called for its side-effect: the values
@@ -10,6 +14,14 @@
 #' x <- value
 #' value <- temp
 #' rm(temp)}
+#' 
+#' 
+#' @examples
+#' a <- 1
+#' b <- 2
+#' a %<->% b
+#' a
+#' b
 #' 
 #' @export
 
