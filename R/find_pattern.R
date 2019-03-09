@@ -17,6 +17,8 @@
 #' @param file.ext A file extension passed to the operating system if \code{use.OS} is used.
 #' @param which_lines One of \code{"first"} and \code{"all"}. If \code{"first"} only the first match in any file is returned in the result; if \code{"all"}, all matches are.
 #' @return A \code{data.table}, showing the matches per file.
+#' @details For convenience, if \code{file_contents} appears to be a directory
+#' and \code{basedir} does not, the arguments are swapped, but with a warning.
 #' @export
 
 find_pattern_in <- function(file_contents,
@@ -35,6 +37,15 @@ find_pattern_in <- function(file_contents,
   # Harmonize perl,fixed,ignore_case
   if (file_contents_fixed && missing(file_contents_perl)) {
     file_contents_perl <- FALSE
+  }
+  
+  # Invert arguments if likely
+  if (!dir.exists(basedir) && dir.exists(file_contents)) {
+    warning("`basedir = ", basedir, "` and `file_contents = ", file_contents, "`. ",
+            "Since `basedir` is not a directory but `file_contents` is a directory, ",
+            "interpreting as the arguments reversed. ",
+            "Do not rely on this behaviour as it may change without notice.")
+    file_contents %<->% basedir
   }
 
   

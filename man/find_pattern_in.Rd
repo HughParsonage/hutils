@@ -48,3 +48,7 @@ A \code{data.table}, showing the matches per file.
 \description{
 Find string pattern in (text) file
 }
+\details{
+For convenience, if \code{file_contents} appears to be a directory
+and \code{basedir} does not, the arguments are swapped, but with a warning.
+}

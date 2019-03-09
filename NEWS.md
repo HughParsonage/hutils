@@ -1,10 +1,12 @@
 # hutils 1.4.0
 * New functions:
+  - `%<->%` To swap values between objects
   - `average_bearing`, the bearing bisecting two vectors
   - `dir2`, (Windows only) a much faster version of `dir()`
-  - `Mode`, statistical mode.
-  - `samp`, a 'safe' version of `sample`.
+  - `Mode`, statistical mode
   - `replace_pattern_in` to find-and-replace on a pattern in all files in a directory
+  - `samp`, a 'safe' version of `sample`.
+  
 
 * Enhancements
   - `drop_empty_cols` should now be faster, especially when there are few empty columns.
@@ -13,6 +15,7 @@
     used in `tidyr::uncount`.
   - `mutate_ntile` now works for a variable with `DT` 
   - `find_pattern_in` now accepts `file_contents_ignore_case`.
+  - `find_pattern_in` may 
 
 # hutils 1.3.0
 * Bug fixes:

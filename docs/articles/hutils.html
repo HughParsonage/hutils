@@ -74,7 +74,7 @@
       <h1>Hutils</h1>
                         <h4 class="author">Hugh Parsonage</h4>
             
-            <h4 class="date">2019-03-09</h4>
+            <h4 class="date">2019-03-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/hughparsonage/hutils/blob/master/vignettes/hutils.Rmd"><code>vignettes/hutils.Rmd</code></a></small>
       <div class="hidden name"><code>hutils.Rmd</code></div>
@@ -147,9 +147,9 @@
 <a class="sourceLine" id="cb5-13" title="13">               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb5-14" title="14"><span class="st">  </span>print</a></code></pre></div>
 <pre><code>## Unit: milliseconds
-##    expr   min    lq  mean median    uq   max neval cld
-##   dplyr 5.088 5.321 7.646  6.691 8.793 18.04   100   b
-##  hutils 1.840 1.974 2.772  2.092 2.633 11.37   100  a</code></pre>
+##    expr   min    lq  mean median     uq   max neval cld
+##   dplyr 5.230 5.983 8.821  7.439 10.402 25.34   100   b
+##  hutils 1.871 1.993 3.038  2.562  2.663 11.52   100  a</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">cnd &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb7-2" title="2">yes &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(letters, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb7-3" title="3">no &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
@@ -160,9 +160,9 @@
 <a class="sourceLine" id="cb7-8" title="8">               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb7-9" title="9"><span class="st">  </span>print</a></code></pre></div>
 <pre><code>## Unit: milliseconds
-##    expr   min    lq  mean median    uq    max neval cld
-##   dplyr 4.740 5.913 8.529  6.162 12.08  17.71   100   b
-##  hutils 1.158 1.486 3.561  1.537  1.58 130.28   100  a</code></pre>
+##    expr   min    lq  mean median     uq    max neval cld
+##   dplyr 4.563 5.891 8.681  6.204 11.971  16.88   100   b
+##  hutils 1.177 1.475 3.700  1.529  1.587 134.43   100  a</code></pre>
 <p>This speed advantage also appears to be true of <code>coalesce</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb9-2" title="2">A &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
@@ -175,8 +175,8 @@
 <a class="sourceLine" id="cb9-9" title="9"><span class="st">  </span>print</a></code></pre></div>
 <pre><code>## Unit: milliseconds
 ##    expr   min    lq  mean median    uq   max neval cld
-##   dplyr 2.298 2.973 4.993  3.016 8.850 14.33   100   b
-##  hutils 1.053 1.379 2.563  1.418 1.466 14.44   100  a</code></pre>
+##   dplyr 2.381 2.966 5.035  3.011 8.738 13.42   100   b
+##  hutils 1.034 1.379 2.552  1.417 1.483 12.41   100  a</code></pre>
 <p>especially during short-circuits:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb11-2" title="2"></a>
@@ -186,8 +186,8 @@
 <a class="sourceLine" id="cb11-6" title="6"><span class="st">  </span>print</a></code></pre></div>
 <pre><code>## Unit: microseconds
 ##    expr    min     lq    mean  median      uq     max neval cld
-##   dplyr 2150.7 2791.2 4917.59 2841.00 8494.45 13565.5   100   b
-##  hutils   56.6   60.3   70.81   64.85   75.75   111.6   100  a</code></pre>
+##   dplyr 2251.3 2797.9 5743.19 2890.50 9274.85 38926.7   100   b
+##  hutils   58.7   61.6   77.17   70.85   84.15   183.6   100  a</code></pre>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb13-2" title="2">A &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb13-3" title="3"></a>
@@ -197,8 +197,8 @@
 <a class="sourceLine" id="cb13-7" title="7"><span class="st">  </span>print</a></code></pre></div>
 <pre><code>## Unit: microseconds
 ##    expr    min     lq mean median     uq    max neval cld
-##   dplyr 2289.0 2954.6 4892 2991.2 3329.6  14190   100   a
-##  hutils  567.8  803.6 2786  833.8  870.3 133035   100   a</code></pre>
+##   dplyr 2407.7 2933.8 4957 2976.6 3423.5  14218   100   a
+##  hutils  555.4  807.8 2871  824.2  882.7 134429   100   a</code></pre>
 </div>
 <div id="drop-columns" class="section level2">
 <h2 class="hasAnchor">
@@ -472,9 +472,9 @@
 ##                                                                                             expr
 ##           DT1[, `:=`(distance, haversine_distance(lat_orig, lon_orig, lat_dest,      lon_dest))]
 ##  DT2[, `:=`(distance, distHaversine(cbind(lon_orig, lat_orig),      cbind(lon_orig, lat_orig)))]
-##    min    lq  mean median    uq    max neval cld
-##  20.86 21.55 23.72  21.71 21.96  48.76   100  a 
-##  38.17 40.14 54.23  53.20 60.97 193.51   100   b</code></pre>
+##    min    lq  mean median    uq   max neval cld
+##  21.16 21.58 24.69  21.74 22.21  50.4   100  a 
+##  39.25 40.12 55.55  54.23 63.26 209.8   100   b</code></pre>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rm">rm</a></span>(DT1, DT2)</a></code></pre></div>
 </div>
 <div id="mutate_other" class="section level2">
@@ -861,6 +861,79 @@
 <pre><code>## [1] "Housing" "Fuel"</code></pre>
 </div>
 </div>
+<div id="hutils-1-4-0" class="section level2">
+<h2 class="hasAnchor">
+<a href="#hutils-1-4-0" class="anchor"></a><code>hutils 1.4.0</code>
+</h2>
+<div id="section" class="section level3">
+<h3 class="hasAnchor">
+<a href="#section" class="anchor"></a><code>%&lt;-&gt;%</code>
+</h3>
+<p>Referred to as <code>swap</code> in the documentation. Used to swap values between object names</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">a &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb68-2" title="2">b &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb68-3" title="3">a <span class="op">%&lt;-&gt;%</span><span class="st"> </span>b</a>
+<a class="sourceLine" id="cb68-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/identical">identical</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(a, b), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="average_bearing" class="section level3">
+<h3 class="hasAnchor">
+<a href="#average_bearing" class="anchor"></a><code>average_bearing</code>
+</h3>
+<p>Determine the average bearing of vectors. Slightly more difficult than simply the average modulo 360 since its the most acute sector is desired.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1"><span class="kw"><a href="../reference/average_bearing.html">average_bearing</a></span>(<span class="dv">0</span>, <span class="dv">270</span>)  <span class="co"># NW</span></a></code></pre></div>
+<pre><code>## [1] 315</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">270</span>))          <span class="co"># SE (i.e. wrong)</span></a></code></pre></div>
+<pre><code>## [1] 135</code></pre>
+</div>
+<div id="dir2" class="section level3">
+<h3 class="hasAnchor">
+<a href="#dir2" class="anchor"></a><code>dir2</code>
+</h3>
+<p>This is a faster version of <code>list.files</code> for Windows only, utilizing the <code>dir</code> command on the command prompt.</p>
+</div>
+<div id="mode" class="section level3">
+<h3 class="hasAnchor">
+<a href="#mode" class="anchor"></a><code>Mode</code>
+</h3>
+<p>The statistical mode; the most common element.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1"><span class="kw"><a href="../reference/Mode.html">Mode</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</a></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+</div>
+<div id="replace_pattern_in" class="section level3">
+<h3 class="hasAnchor">
+<a href="#replace_pattern_in" class="anchor"></a><code>replace_pattern_in</code>
+</h3>
+<p>A cousin of <code>find_pattern_in</code>, but instead of collecting the results, it replaces the contents sought with the replacement provided.</p>
+</div>
+<div id="samp" class="section level3">
+<h3 class="hasAnchor">
+<a href="#samp" class="anchor"></a><code>samp</code>
+</h3>
+<p>A safer version of <code>sample</code>. I use it because I found the following behaviour of sample surprising.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb76-2" title="2">                 <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb76-3" title="3">DT[, .(<span class="dt">Base =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(.BY[[<span class="st">"x"</span>]]<span class="op">:</span>.BY[[<span class="st">"y"</span>]])), keyby =<span class="st"> </span>.(x, y)]</a></code></pre></div>
+<pre><code>##    x y Base
+## 1: 2 3    2
+## 2: 2 3    3
+## 3: 3 4    4
+## 4: 3 4    3
+## 5: 5 5    5
+## 6: 5 5    1
+## 7: 5 5    3
+## 8: 5 5    4
+## 9: 5 5    2</code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1">DT[, .(<span class="dt">Base =</span> <span class="kw"><a href="../reference/samp.html">samp</a></span>(.BY[[<span class="st">"x"</span>]]<span class="op">:</span>.BY[[<span class="st">"y"</span>]])), keyby =<span class="st"> </span>.(x, y)]</a></code></pre></div>
+<pre><code>## `length(x) = 1`, so returning `rep.int(x, 1)`.</code></pre>
+<pre><code>##    x y Base
+## 1: 2 3    3
+## 2: 2 3    2
+## 3: 3 4    3
+## 4: 3 4    4
+## 5: 5 5    5</code></pre>
+</div>
+</div>
 </div>
   </div>
 
@@ -884,6 +957,7 @@
       <li><a href="#hutils-v1-1-0"><code>hutils</code> v1.1.0</a></li>
       <li><a href="#hutils-v1-2-0"><code>hutils</code> v1.2.0</a></li>
       <li><a href="#hutils-v1-3-0"><code>hutils</code> v1.3.0</a></li>
+      <li><a href="#hutils-1-4-0"><code>hutils 1.4.0</code></a></li>
       </ul>
 </li>
       </ul>
