@@ -201,4 +201,8 @@ test_that("perl+fixed", {
   expect_equal(nrow(oic), 1)
 })
 
+test_that("swapped arguments", {
+  expect_warning(find_pattern_in(".", "x.*y"))
+})
+
 
