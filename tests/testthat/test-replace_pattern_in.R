@@ -18,5 +18,4 @@ test_that("replace_pattern_in works", {
   result <- readLines(file.path(tempf, "replace-pattern-in-test.R"))
   expect_equal(result[1:2], c("bbb", "bb"))
   file.remove(file.path(tempf, "replace-pattern-in-test.R"))
-  
 })

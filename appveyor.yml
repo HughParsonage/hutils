@@ -23,7 +23,7 @@ test_script:
 
 on_success:
   - Rscript -e "install.packages('covr', repos='https://cran.rstudio.com')"
-  - Rscript -e covr::codecov()
+  - Rscript -e "covr::codecov(line_exclusions = list('./R/zzz.R'), function_exclusions = 'find_pattern_in_windows')"
 
 on_failure:
   - 7z a failure.zip *.Rcheck\*
