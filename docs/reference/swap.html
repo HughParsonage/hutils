@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Determine whether a vector is all of the same sign — all_same_sign • hutils</title>
+<title>Swap assignment — swap • hutils</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Determine whether a vector is all of the same sign — all_same_sign" />
+<meta property="og:title" content="Swap assignment — swap" />
 
-<meta property="og:description" content="Present since hutils 1.2.0." />
+<meta property="og:description" content="Swap values simultaneously. Present since hutils 1.4.0." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -105,50 +105,43 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Determine whether a vector is all of the same sign</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hughparsonage/hutils/blob/master/R/all_same_sign.R'><code>R/all_same_sign.R</code></a></small>
-    <div class="hidden name"><code>all_same_sign.Rd</code></div>
+    <h1>Swap assignment</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hughparsonage/hutils/blob/master/R/swap.R'><code>R/swap.R</code></a></small>
+    <div class="hidden name"><code>swap.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Present since <code>hutils 1.2.0</code>.</p>
+    <p>Swap values simultaneously. Present since <code>hutils 1.4.0</code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>all_same_sign</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='no'>x</span> <span class='kw'>%&lt;-&gt;%</span> <span class='no'>value</span></pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A numeric vector.</p></td>
+      <th>x, value</th>
+      <td><p>Objects whose values are to be reassigned by swapping.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>TRUE</code> if all elements of <code>x</code> have the same sign. Zero is a separate sign from positive and negative. All vectors of length-1 or length-0 return <code>TRUE</code>, even if <code>x</code> = <code>NA</code>, (since although the value is unknown, it must have a unique sign), and non-numeric <code>x</code>.</p>
+    <p><code>NULL</code> invisibly. Called for its side-effect: the values
+of <code>x</code> and <code>value</code> are swapped. So</p><pre>x %&lt;-&gt;% value</pre><p>is equivalent to</p><pre>temp &lt;- x
+x &lt;- value
+value &lt;- temp
+rm(temp)</pre>
+
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>all_same_sign</span>(<span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>all_same_sign</span>(<span class='fl'>1</span>:<span class='fl'>10</span> - <span class='fl'>1</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>all_same_sign</span>(<span class='fl'>0</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>all_same_sign</span>(<span class='fl'>NA</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>all_same_sign</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>NA</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; [1] NA</div><div class='input'><span class='fu'>all_same_sign</span>(<span class='st'>"surprise?"</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>all_same_sign</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0.1</span> + <span class='fl'>0.2</span> - <span class='fl'>0.3</span>))</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
-<span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ns-load'>requireNamespace</a></span>(<span class='st'>"microbenchmark"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) {
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>microbenchmark</span>)
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark'>microbenchmark</a></span>(<span class='kw'>base</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unique'>unique</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sign'>sign</a></span>(<span class='fl'>1</span>:<span class='fl'>1e5</span>), <span class='kw'>nmax</span> <span class='kw'>=</span> <span class='fl'>3</span>)) <span class='kw'>==</span> <span class='fl'>1L</span>,
-                 <span class='fu'>all_same_sign</span>(<span class='fl'>1</span>:<span class='fl'>1e5</span>))
-}</div><div class='output co'>#&gt; Unit: microseconds
-#&gt;                    expr    min     lq     mean  median      uq     max neval
-#&gt;                    base 2078.8 2105.8 2532.721 2117.35 2156.30 15499.9   100
-#&gt;  all_same_sign(1:1e+05)   85.8   87.2   94.078   89.35   95.05   160.9   100
-#&gt;  cld
-#&gt;    b
-#&gt;   a </div><div class='input'># Unit: microseconds
-#                   expr  min   lq mean median   uq  max neval cld
-#                   base 2012 2040 2322   2047 2063 9324   100   b
-# all_same_sign(1:1e+05)   86   86   94     89   93  290   100  a 
-
+    <pre class="examples"><div class='input'><span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>
+<span class='no'>a</span> <span class='kw'>%&lt;-&gt;%</span> <span class='no'>b</span>
+<span class='no'>a</span></div><div class='output co'>#&gt; [1] 2</div><div class='input'><span class='no'>b</span></div><div class='output co'>#&gt; [1] 1</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
