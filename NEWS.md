@@ -4,6 +4,7 @@
   - `dir2`, (Windows only) a much faster version of `dir()`
   - `Mode`, statistical mode.
   - `samp`, a 'safe' version of `sample`.
+  - `replace_pattern_in` to find-and-replace on a pattern in all files in a directory
 
 * Enhancements
   - `drop_empty_cols` should now be faster, especially when there are few empty columns.

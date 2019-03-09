@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Vectorized if — if_else • hutils</title>
+<title>Statistical mode — Mode • hutils</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,13 +30,9 @@
 
 
 
-<meta property="og:title" content="Vectorized if — if_else" />
+<meta property="og:title" content="Statistical mode — Mode" />
 
-<meta property="og:description" content="Lightweight dplyr::if_else with the virtues and vices that come from such an approach.
-Attempts to replicate dplyr::if_else but written in base R for faster compile time.
-hutils::if_else should be faster than dplyr::if_else &amp;#8230; when it works, 
-but will not work on lists or on factors. 
-Additional attributes may be dropped." />
+<meta property="og:description" content="Present since hutils 1.4.0. The most common element." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -109,58 +105,33 @@ Additional attributes may be dropped." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Vectorized if</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hughparsonage/hutils/blob/master/R/if_else.R'><code>R/if_else.R</code></a></small>
-    <div class="hidden name"><code>if_else.Rd</code></div>
+    <h1>Statistical mode</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hughparsonage/hutils/blob/master/R/Mode.R'><code>R/Mode.R</code></a></small>
+    <div class="hidden name"><code>Mode.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Lightweight <code><a href='https://dplyr.tidyverse.org/reference/if_else.html'>dplyr::if_else</a></code> with the virtues and vices that come from such an approach.
-Attempts to replicate <code><a href='https://dplyr.tidyverse.org/reference/if_else.html'>dplyr::if_else</a></code> but written in base R for faster compile time.
-<code>hutils::if_else</code> should be faster than <code><a href='https://dplyr.tidyverse.org/reference/if_else.html'>dplyr::if_else</a></code> &#8230; when it works, 
-but will not work on lists or on factors. 
-Additional attributes may be dropped.</p>
+    <p>Present since <code>hutils 1.4.0</code>. The most common element.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>if_else</span>(<span class='no'>condition</span>, <span class='no'>true</span>, <span class='no'>false</span>, <span class='kw'>missing</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>Mode</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>condition</th>
-      <td><p>Logical vector.</p></td>
-    </tr>
-    <tr>
-      <th>true, false</th>
-      <td><p>Where condition is <code>TRUE</code>/<code>FALSE</code>, use the corresponding<code>true</code>/<code>no</code> value.
-They must have the same <code><a href='https://www.rdocumentation.org/packages/base/topics/typeof'>typeof</a></code> as each other and be the same length as <code>condition</code> or length-one.</p></td>
-    </tr>
-    <tr>
-      <th>missing</th>
-      <td><p>If condition is <code>NA</code>, use the corresponding <code>na</code> value. Like<code>true</code> and<code>false</code>, must
-be of the same type and have the same length as condition, unless it has length one.</p></td>
+      <th>x</th>
+      <td><p>A vector for which the mode is desired.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p>Original code but obviously heavily inspired by <a href='https://CRAN.R-project.org/package=dplyr'>https://CRAN.R-project.org/package=dplyr</a>.</p>
-    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Where <code>condition</code> is <code>TRUE</code>, the corresponding value in <code>true</code>; 
-where <code>condition</code> is <code>FALSE</code>, the corresponding value in <code>false</code>.
-Where <code>condition</code> is <code>NA</code>, then the corresponding value in <code>na</code> -- 
-unless <code>na</code> is <code>NULL</code> (the default) in which case the value will be <code>NA</code> (with the same
-type as <code>true</code>.)</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>If the result is expected to be a factor then the conditions for type safety
-are strict and may be made stricter in future.</p>
+    <p>The most common element of <code>x</code>.</p>
+<p>If the mode is not unique, only one of these values is returned, for simplicity.</p>
+<p>If <code>x</code> has length zero, <code>Mode(x) = x</code>.</p>
     
 
   </div>
@@ -169,11 +140,7 @@ are strict and may be made stricter in future.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#source">Source</a></li>
-
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
           </ul>
 
   </div>

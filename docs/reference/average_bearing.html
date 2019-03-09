@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Vectorized if — if_else • hutils</title>
+<title>Average of bearings — average_bearing • hutils</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,13 +30,9 @@
 
 
 
-<meta property="og:title" content="Vectorized if — if_else" />
+<meta property="og:title" content="Average of bearings — average_bearing" />
 
-<meta property="og:description" content="Lightweight dplyr::if_else with the virtues and vices that come from such an approach.
-Attempts to replicate dplyr::if_else but written in base R for faster compile time.
-hutils::if_else should be faster than dplyr::if_else &amp;#8230; when it works, 
-but will not work on lists or on factors. 
-Additional attributes may be dropped." />
+<meta property="og:description" content="Average of bearings" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -109,72 +105,64 @@ Additional attributes may be dropped." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Vectorized if</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hughparsonage/hutils/blob/master/R/if_else.R'><code>R/if_else.R</code></a></small>
-    <div class="hidden name"><code>if_else.Rd</code></div>
+    <h1>Average of bearings</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hughparsonage/hutils/blob/master/R/average_bearing.R'><code>R/average_bearing.R</code></a></small>
+    <div class="hidden name"><code>average_bearing.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Lightweight <code><a href='https://dplyr.tidyverse.org/reference/if_else.html'>dplyr::if_else</a></code> with the virtues and vices that come from such an approach.
-Attempts to replicate <code><a href='https://dplyr.tidyverse.org/reference/if_else.html'>dplyr::if_else</a></code> but written in base R for faster compile time.
-<code>hutils::if_else</code> should be faster than <code><a href='https://dplyr.tidyverse.org/reference/if_else.html'>dplyr::if_else</a></code> &#8230; when it works, 
-but will not work on lists or on factors. 
-Additional attributes may be dropped.</p>
+    <p>Average of bearings</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>if_else</span>(<span class='no'>condition</span>, <span class='no'>true</span>, <span class='no'>false</span>, <span class='kw'>missing</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>average_bearing</span>(<span class='no'>theta1</span>, <span class='no'>theta2</span>, <span class='kw'>average_of_opposite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>average_bearing_n</span>(<span class='no'>thetas</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>condition</th>
-      <td><p>Logical vector.</p></td>
+      <th>theta1, theta2</th>
+      <td><p>Bearings, expressed in degrees.</p></td>
     </tr>
     <tr>
-      <th>true, false</th>
-      <td><p>Where condition is <code>TRUE</code>/<code>FALSE</code>, use the corresponding<code>true</code>/<code>no</code> value.
-They must have the same <code><a href='https://www.rdocumentation.org/packages/base/topics/typeof'>typeof</a></code> as each other and be the same length as <code>condition</code> or length-one.</p></td>
+      <th>average_of_opposite</th>
+      <td><p>The average of opposing bearings (e.g. average of north
+and south) is not well-defined. If <code>NULL</code>, the result for opposing vectors is 
+undefined; if <code>"right"</code>, returns 
+<code>theta1 + 90</code>; if <code>"left"</code> then <code>theta2 + 90</code>. Can also be 
+a single numeric to provide a specific value when the vectors point in opposite 
+directions.</p></td>
     </tr>
     <tr>
-      <th>missing</th>
-      <td><p>If condition is <code>NA</code>, use the corresponding <code>na</code> value. Like<code>true</code> and<code>false</code>, must
-be of the same type and have the same length as condition, unless it has length one.</p></td>
+      <th>thetas</th>
+      <td><p>A vector of bearings.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p>Original code but obviously heavily inspired by <a href='https://CRAN.R-project.org/package=dplyr'>https://CRAN.R-project.org/package=dplyr</a>.</p>
-    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Where <code>condition</code> is <code>TRUE</code>, the corresponding value in <code>true</code>; 
-where <code>condition</code> is <code>FALSE</code>, the corresponding value in <code>false</code>.
-Where <code>condition</code> is <code>NA</code>, then the corresponding value in <code>na</code> -- 
-unless <code>na</code> is <code>NULL</code> (the default) in which case the value will be <code>NA</code> (with the same
-type as <code>true</code>.)</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>If the result is expected to be a factor then the conditions for type safety
-are strict and may be made stricter in future.</p>
+    <p>For `average_bearing`, the bearing bisecting the two bearings.</p>
+<p>For `average_bearing_n`, the average bearing of the bearing.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>average_bearing</span>(<span class='fl'>0</span>, <span class='fl'>90</span>)</div><div class='output co'>#&gt; [1] 45</div><div class='input'><span class='fu'>average_bearing</span>(<span class='fl'>0</span>, <span class='fl'>270</span>)</div><div class='output co'>#&gt; [1] 315</div><div class='input'><span class='fu'>average_bearing</span>(<span class='fl'>90</span>, <span class='fl'>180</span>)</div><div class='output co'>#&gt; [1] 135</div><div class='input'>
+<span class='fu'>average_bearing</span>(<span class='fl'>0</span>, <span class='fl'>180</span>)</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='fu'>average_bearing</span>(<span class='fl'>0</span>, <span class='fl'>180</span>, <span class='kw'>average_of_opposite</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; [1] 3</div><div class='input'><span class='fu'>average_bearing</span>(<span class='fl'>0</span>, <span class='fl'>180</span>, <span class='kw'>average_of_opposite</span> <span class='kw'>=</span> <span class='st'>"left"</span>)</div><div class='output co'>#&gt; [1] 270</div><div class='input'>
+<span class='fu'>average_bearing_n</span>(<span class='fl'>1</span>:<span class='fl'>179</span>)</div><div class='output co'>#&gt; [1] 90</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#source">Source</a></li>
-
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
