@@ -5,19 +5,19 @@
 \alias{\%<->\%}
 \title{Swap assignment}
 \usage{
-x \%<->\% y
+x \%<->\% value
 }
 \arguments{
-\item{x, y}{Objects whose values are to be reassigned by swapping.}
+\item{x, value}{Objects whose values are to be reassigned by swapping.}
 }
 \value{
 \code{NULL} invisibly. Called for its side-effect: the values
-of \code{x} and \code{y} are swapped. So
-\preformatted{x \%<->\% y} 
+of \code{x} and \code{value} are swapped. So
+\preformatted{x \%<->\% value} 
 is equivalent to
 \preformatted{temp <- x
-x <- y
-y <- temp
+x <- value
+value <- temp
 rm(temp)}
 }
 \description{
