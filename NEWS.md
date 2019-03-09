@@ -4,6 +4,7 @@
   - `dir2`, (Windows only) a much faster version of `dir()`
   - `Mode`, statistical mode.
   - `samp`, a 'safe' version of `sample`.
+  - `replace_pattern_in` to find-and-replace on a pattern in all files in a directory
 
 * Enhancements
   - `drop_empty_cols` should now be faster, especially when there are few empty columns.
@@ -11,6 +12,7 @@
   - `weight2rows` is now faster for default arguments, by using the `rep(x, w)` trick
     used in `tidyr::uncount`.
   - `mutate_ntile` now works for a variable with `DT` 
+  - `find_pattern_in` now accepts `file_contents_ignore_case`.
 
 # hutils 1.3.0
 * Bug fixes:

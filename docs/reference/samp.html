@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Vectorized if — if_else • hutils</title>
+<title>Safer sampler — samp • hutils</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,13 +30,11 @@
 
 
 
-<meta property="og:title" content="Vectorized if — if_else" />
+<meta property="og:title" content="Safer sampler — samp" />
 
-<meta property="og:description" content="Lightweight dplyr::if_else with the virtues and vices that come from such an approach.
-Attempts to replicate dplyr::if_else but written in base R for faster compile time.
-hutils::if_else should be faster than dplyr::if_else &amp;#8230; when it works, 
-but will not work on lists or on factors. 
-Additional attributes may be dropped." />
+<meta property="og:description" content="Present since hutils v1.4.0. 
+Same as sample, but avoiding the behaviour when 
+length(x) == 1L." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -109,72 +107,65 @@ Additional attributes may be dropped." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Vectorized if</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hughparsonage/hutils/blob/master/R/if_else.R'><code>R/if_else.R</code></a></small>
-    <div class="hidden name"><code>if_else.Rd</code></div>
+    <h1>Safer sampler</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hughparsonage/hutils/blob/master/R/samp.R'><code>R/samp.R</code></a></small>
+    <div class="hidden name"><code>samp.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Lightweight <code><a href='https://dplyr.tidyverse.org/reference/if_else.html'>dplyr::if_else</a></code> with the virtues and vices that come from such an approach.
-Attempts to replicate <code><a href='https://dplyr.tidyverse.org/reference/if_else.html'>dplyr::if_else</a></code> but written in base R for faster compile time.
-<code>hutils::if_else</code> should be faster than <code><a href='https://dplyr.tidyverse.org/reference/if_else.html'>dplyr::if_else</a></code> &#8230; when it works, 
-but will not work on lists or on factors. 
-Additional attributes may be dropped.</p>
+    <p>Present since <code>hutils v1.4.0</code>. 
+Same as <code><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></code>, but avoiding the behaviour when 
+<code>length(x) == 1L</code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>if_else</span>(<span class='no'>condition</span>, <span class='no'>true</span>, <span class='no'>false</span>, <span class='kw'>missing</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>samp</span>(<span class='no'>x</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>x</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='no'>size</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>x</span>), <span class='kw'>loud</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>prob</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>condition</th>
-      <td><p>Logical vector.</p></td>
+      <th>x</th>
+      <td><p>A vector.</p></td>
     </tr>
     <tr>
-      <th>true, false</th>
-      <td><p>Where condition is <code>TRUE</code>/<code>FALSE</code>, use the corresponding<code>true</code>/<code>no</code> value.
-They must have the same <code><a href='https://www.rdocumentation.org/packages/base/topics/typeof'>typeof</a></code> as each other and be the same length as <code>condition</code> or length-one.</p></td>
+      <th>size</th>
+      <td><p>A non-negative integer, the number of items to return.</p></td>
     </tr>
     <tr>
-      <th>missing</th>
-      <td><p>If condition is <code>NA</code>, use the corresponding <code>na</code> value. Like<code>true</code> and<code>false</code>, must
-be of the same type and have the same length as condition, unless it has length one.</p></td>
+      <th>replace</th>
+      <td><p>Should the sampling be done with replacement? Defaults to <code>TRUE</code> if 
+<code>size &gt; length(x)</code>, with a message.</p></td>
+    </tr>
+    <tr>
+      <th>loud</th>
+      <td><p>If <code>TRUE</code>, the default, any behaviour known to be different from 
+<code><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></code> is flagged with a message.</p></td>
+    </tr>
+    <tr>
+      <th>prob</th>
+      <td><p>As in <code><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></code>.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Original code but obviously heavily inspired by <a href='https://CRAN.R-project.org/package=dplyr'>https://CRAN.R-project.org/package=dplyr</a>.</p>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>samp</span>(<span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] 2 4 1 3 5</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>)</div><div class='output co'>#&gt; [1] 5 1 4 3 2</div><div class='input'>
+<span class='fu'>samp</span>(<span class='fl'>1</span>:<span class='fl'>5</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>)  <span class='co'># no error</span></div><div class='output co'>#&gt; <span class='message'>Using `replace = TRUE`.</span></div><div class='output co'>#&gt;  [1]  3 NA  3 NA  3 NA NA NA NA NA</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/conditions'>tryCatch</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>),
+         <span class='kw'>error</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>e</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>e</span>$<span class='no'>m</span>))</div><div class='output co'>#&gt; [1] "cannot take a sample larger than the population when 'replace = FALSE'"</div><div class='input'>
+<span class='fu'>samp</span>(<span class='fl'>5</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>Using `replace = TRUE`.</span></div><div class='output co'>#&gt; <span class='message'>`length(x) = 1`, so returning `rep.int(x, 3)`.</span></div><div class='output co'>#&gt; [1] 5 5 5</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>5</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; [1] 3 1 4</div><div class='input'>
 
-    <p>Where <code>condition</code> is <code>TRUE</code>, the corresponding value in <code>true</code>; 
-where <code>condition</code> is <code>FALSE</code>, the corresponding value in <code>false</code>.
-Where <code>condition</code> is <code>NA</code>, then the corresponding value in <code>na</code> -- 
-unless <code>na</code> is <code>NULL</code> (the default) in which case the value will be <code>NA</code> (with the same
-type as <code>true</code>.)</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>If the result is expected to be a factor then the conditions for type safety
-are strict and may be made stricter in future.</p>
-    
-
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#source">Source</a></li>
-
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-          </ul>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
