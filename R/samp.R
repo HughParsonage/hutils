@@ -69,7 +69,7 @@ samp <- function(x,
     }
     return(rep.int(x, size))
   }
-  x[sample.int(size, replace = replace, prob = prob)]
+  x[sample.int(length(x), size, replace = replace, prob = prob)]
 }
 
 # Don't -- not yet worth it

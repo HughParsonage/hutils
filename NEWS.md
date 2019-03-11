@@ -1,3 +1,8 @@
+
+# hutils 1.4.1
+* Bug fixes:
+  - `samp` works with size > length.
+
 # hutils 1.4.0
 * New functions:
   - `%<->%` To swap values between objects
