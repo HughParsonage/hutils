@@ -20,7 +20,7 @@
     used in `tidyr::uncount`.
   - `mutate_ntile` now works for a variable with `DT` 
   - `find_pattern_in` now accepts `file_contents_ignore_case`.
-  - `find_pattern_in` may 
+  - `find_pattern_in` no longer complains about `perl`, `fixed` conflicts.
 
 # hutils 1.3.0
 * Bug fixes:
