@@ -1,4 +1,5 @@
 #' Provide a file
+#' @description Present since \code{hutils v1.5.0}. 
 #' @param path A string. The path to a filename that requires existence.
 #' @return \code{path} for success. Or the empty string \code{character(1)} if failures.
 #' @export provide.file
