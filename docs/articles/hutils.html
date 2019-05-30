@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hutils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.1</span>
       </span>
     </div>
 
@@ -74,7 +74,7 @@
       <h1>Hutils</h1>
                         <h4 class="author">Hugh Parsonage</h4>
             
-            <h4 class="date">2019-03-10</h4>
+            <h4 class="date">2019-05-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/hughparsonage/hutils/blob/master/vignettes/hutils.Rmd"><code>vignettes/hutils.Rmd</code></a></small>
       <div class="hidden name"><code>hutils.Rmd</code></div>
@@ -91,31 +91,36 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(knitr)</a>
 <a class="sourceLine" id="cb1-2" title="2">suggested_packages &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"geosphere"</span>, <span class="st">"nycflights13"</span>, <span class="st">"dplyr"</span>, <span class="st">"ggplot2"</span>, <span class="st">"microbenchmark"</span>)</a>
 <a class="sourceLine" id="cb1-3" title="3">opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">eval =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/all">all</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">vapply</a></span>(suggested_packages, requireNamespace, <span class="dt">quietly =</span> <span class="ot">TRUE</span>, <span class="dt">FUN.VALUE =</span> <span class="ot">FALSE</span>)))</a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/conditions">tryCatch</a></span>({</a>
-<a class="sourceLine" id="cb2-2" title="2">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(geosphere)</a>
-<a class="sourceLine" id="cb2-3" title="3">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(nycflights13)</a>
-<a class="sourceLine" id="cb2-4" title="4">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr, <span class="dt">warn.conflicts =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb2-5" title="5">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb2-6" title="6">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(microbenchmark)</a>
-<a class="sourceLine" id="cb2-7" title="7">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(data.table, <span class="dt">warn.conflicts =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb2-8" title="8">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
-<a class="sourceLine" id="cb2-9" title="9">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(hutils, <span class="dt">warn.conflicts =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb2-10" title="10">}, </a>
-<a class="sourceLine" id="cb2-11" title="11"><span class="co"># requireNamespace does not detect errors like</span></a>
-<a class="sourceLine" id="cb2-12" title="12"><span class="co"># package ‘dplyr’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version</span></a>
-<a class="sourceLine" id="cb2-13" title="13"><span class="dt">error =</span> <span class="cf">function</span>(e) {</a>
-<a class="sourceLine" id="cb2-14" title="14">  opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">eval =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb2-15" title="15">})</a>
-<a class="sourceLine" id="cb2-16" title="16"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">digits =</span> <span class="dv">4</span>)</a></code></pre></div>
+<pre><code>## Registered S3 methods overwritten by 'ggplot2':
+##   method         from 
+##   [.quosures     rlang
+##   c.quosures     rlang
+##   print.quosures rlang</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/conditions">tryCatch</a></span>({</a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(geosphere)</a>
+<a class="sourceLine" id="cb3-3" title="3">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(nycflights13)</a>
+<a class="sourceLine" id="cb3-4" title="4">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr, <span class="dt">warn.conflicts =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-5" title="5">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb3-6" title="6">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(microbenchmark)</a>
+<a class="sourceLine" id="cb3-7" title="7">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(data.table, <span class="dt">warn.conflicts =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-8" title="8">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb3-9" title="9">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(hutils, <span class="dt">warn.conflicts =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-10" title="10">}, </a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="co"># requireNamespace does not detect errors like</span></a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="co"># package ‘dplyr’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version</span></a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="dt">error =</span> <span class="cf">function</span>(e) {</a>
+<a class="sourceLine" id="cb3-14" title="14">  opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">eval =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-15" title="15">})</a>
+<a class="sourceLine" id="cb3-16" title="16"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">digits =</span> <span class="dv">4</span>)</a></code></pre></div>
 <div id="aliases" class="section level2">
 <h2 class="hasAnchor">
 <a href="#aliases" class="anchor"></a>Aliases</h2>
 <p>These are simple additions to <code>magrittr</code>‘s aliases, including: capitalized forms of <code>and</code> and <code>or</code> that invoke <code>&amp;&amp;</code> and <code>||</code> (the ’long-form’ logical operators) and <code>nor</code> / <code>neither</code> functions.</p>
 <p>The main motivation is to make the source code easier to indent. I occasionally find such source code easier to use.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/aliases.html">OR</a></span>(<span class="kw"><a href="../reference/aliases.html">OR</a></span>(<span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb3-2" title="2">      <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/stop">stop</a></span>(<span class="st">"Never happens"</span>)),  <span class="co">## short-circuits</span></a>
-<a class="sourceLine" id="cb3-3" title="3">   <span class="kw"><a href="../reference/aliases.html">AND</a></span>(<span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb3-4" title="4">       <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/stop">stop</a></span>(<span class="st">"Never happens"</span>)))  </a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/aliases.html">OR</a></span>(<span class="kw"><a href="../reference/aliases.html">OR</a></span>(<span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb4-2" title="2">      <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/stop">stop</a></span>(<span class="st">"Never happens"</span>)),  <span class="co">## short-circuits</span></a>
+<a class="sourceLine" id="cb4-3" title="3">   <span class="kw"><a href="../reference/aliases.html">AND</a></span>(<span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb4-4" title="4">       <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/stop">stop</a></span>(<span class="st">"Never happens"</span>)))  </a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p><code>nor</code> (or <code>neither</code> which is identical) returns <code>TRUE</code> if and only if both arguments are <code>FALSE</code>.</p>
 </div>
@@ -132,95 +137,95 @@
 <code><a href="../reference/coalesce.html">hutils::coalesce</a></code> short-circuits on its first argument; if there are no <code>NA</code>s in <code>x</code> then <code>x</code> is returned, even if the other vectors are the wrong length or type.</li>
 </ol>
 <p>In addition, <code><a href="../reference/if_else.html">hutils::if_else</a></code> is generally faster than <code><a href="https://dplyr.tidyverse.org/reference/if_else.html">dplyr::if_else</a></code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">my_check &lt;-<span class="st"> </span><span class="cf">function</span>(values) {</a>
-<a class="sourceLine" id="cb5-2" title="2">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/all">all</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">vapply</a></span>(values[<span class="op">-</span><span class="dv">1</span>], <span class="cf">function</span>(x) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/identical">identical</a></span>(values[[<span class="dv">1</span>]], x), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/logical">logical</a></span>(<span class="dv">1</span>)))</a>
-<a class="sourceLine" id="cb5-3" title="3">}</a>
-<a class="sourceLine" id="cb5-4" title="4"></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb5-6" title="6">cnd &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-7" title="7">yes &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-8" title="8">no &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-9" title="9">na &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-10" title="10"></a>
-<a class="sourceLine" id="cb5-11" title="11"><span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span>(cnd, yes, no, na),</a>
-<a class="sourceLine" id="cb5-12" title="12">               <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/hutils/topics/if_else">if_else</a></span>(cnd, yes, no, na),</a>
-<a class="sourceLine" id="cb5-13" title="13">               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-14" title="14"><span class="st">  </span>print</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">my_check &lt;-<span class="st"> </span><span class="cf">function</span>(values) {</a>
+<a class="sourceLine" id="cb6-2" title="2">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/all">all</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">vapply</a></span>(values[<span class="op">-</span><span class="dv">1</span>], <span class="cf">function</span>(x) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/identical">identical</a></span>(values[[<span class="dv">1</span>]], x), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/logical">logical</a></span>(<span class="dv">1</span>)))</a>
+<a class="sourceLine" id="cb6-3" title="3">}</a>
+<a class="sourceLine" id="cb6-4" title="4"></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb6-6" title="6">cnd &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb6-7" title="7">yes &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb6-8" title="8">no &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb6-9" title="9">na &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb6-10" title="10"></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span>(cnd, yes, no, na),</a>
+<a class="sourceLine" id="cb6-12" title="12">               <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/hutils/topics/if_else">if_else</a></span>(cnd, yes, no, na),</a>
+<a class="sourceLine" id="cb6-13" title="13">               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-14" title="14"><span class="st">  </span>print</a></code></pre></div>
 <pre><code>## Unit: milliseconds
-##    expr   min    lq  mean median     uq   max neval cld
-##   dplyr 5.230 5.983 8.821  7.439 10.402 25.34   100   b
-##  hutils 1.871 1.993 3.038  2.562  2.663 11.52   100  a</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">cnd &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb7-2" title="2">yes &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(letters, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb7-3" title="3">no &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb7-4" title="4">na &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(letters, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb7-5" title="5"></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span>(cnd, yes, no, na),</a>
-<a class="sourceLine" id="cb7-7" title="7">               <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/hutils/topics/if_else">if_else</a></span>(cnd, yes, no, na),</a>
-<a class="sourceLine" id="cb7-8" title="8">               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="st">  </span>print</a></code></pre></div>
+##    expr   min    lq   mean median     uq    max neval cld
+##   dplyr 6.287 7.711 10.606  7.839 12.216 81.457   100   b
+##  hutils 2.196 2.539  2.702  2.658  2.716  9.447   100  a</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">cnd &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb8-2" title="2">yes &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(letters, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb8-3" title="3">no &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(letters, <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb8-4" title="4">na &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(letters, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb8-5" title="5"></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span>(cnd, yes, no, na),</a>
+<a class="sourceLine" id="cb8-7" title="7">               <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/hutils/topics/if_else">if_else</a></span>(cnd, yes, no, na),</a>
+<a class="sourceLine" id="cb8-8" title="8">               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="st">  </span>print</a></code></pre></div>
 <pre><code>## Unit: milliseconds
-##    expr   min    lq  mean median     uq    max neval cld
-##   dplyr 4.563 5.891 8.681  6.204 11.971  16.88   100   b
-##  hutils 1.177 1.475 3.700  1.529  1.587 134.43   100  a</code></pre>
+##    expr   min    lq   mean median    uq    max neval cld
+##   dplyr 6.189 6.513 12.010  6.654 6.757 144.32   100   b
+##  hutils 1.482 1.663  2.317  1.693 1.731  12.65   100  a</code></pre>
 <p>This speed advantage also appears to be true of <code>coalesce</code>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb9-2" title="2">A &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb9-3" title="3">B &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb9-4" title="4">C &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb9-5" title="5"></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/coalesce.html">coalesce</a></span>(x, A, B, C),</a>
-<a class="sourceLine" id="cb9-7" title="7">               <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/hutils/topics/coalesce">coalesce</a></span>(x, A, B, C),</a>
-<a class="sourceLine" id="cb9-8" title="8">               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-9" title="9"><span class="st">  </span>print</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb10-2" title="2">A &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb10-3" title="3">B &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb10-4" title="4">C &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb10-5" title="5"></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/coalesce.html">coalesce</a></span>(x, A, B, C),</a>
+<a class="sourceLine" id="cb10-7" title="7">               <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/hutils/topics/coalesce">coalesce</a></span>(x, A, B, C),</a>
+<a class="sourceLine" id="cb10-8" title="8">               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="st">  </span>print</a></code></pre></div>
 <pre><code>## Unit: milliseconds
-##    expr   min    lq  mean median    uq   max neval cld
-##   dplyr 2.381 2.966 5.035  3.011 8.738 13.42   100   b
-##  hutils 1.034 1.379 2.552  1.417 1.483 12.41   100  a</code></pre>
+##    expr   min    lq  mean median    uq     max neval cld
+##   dplyr 2.819 2.874 4.067  2.905 2.961   9.651   100   a
+##  hutils 1.176 1.311 3.189  1.335 1.375 139.582   100   a</code></pre>
 <p>especially during short-circuits:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb11-2" title="2"></a>
-<a class="sourceLine" id="cb11-3" title="3"><span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/coalesce.html">coalesce</a></span>(x, A, B, C),</a>
-<a class="sourceLine" id="cb11-4" title="4">               <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/hutils/topics/coalesce">coalesce</a></span>(x, A, B, C),</a>
-<a class="sourceLine" id="cb11-5" title="5">               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-6" title="6"><span class="st">  </span>print</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb12-2" title="2"></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/coalesce.html">coalesce</a></span>(x, A, B, C),</a>
+<a class="sourceLine" id="cb12-4" title="4">               <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/hutils/topics/coalesce">coalesce</a></span>(x, A, B, C),</a>
+<a class="sourceLine" id="cb12-5" title="5">               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="st">  </span>print</a></code></pre></div>
 <pre><code>## Unit: microseconds
-##    expr    min     lq    mean  median      uq     max neval cld
-##   dplyr 2251.3 2797.9 5743.19 2890.50 9274.85 38926.7   100   b
-##  hutils   58.7   61.6   77.17   70.85   84.15   183.6   100  a</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb13-2" title="2">A &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb13-3" title="3"></a>
-<a class="sourceLine" id="cb13-4" title="4"><span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/coalesce.html">coalesce</a></span>(x, A, B, C),</a>
-<a class="sourceLine" id="cb13-5" title="5">               <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/hutils/topics/coalesce">coalesce</a></span>(x, A, B, C),</a>
-<a class="sourceLine" id="cb13-6" title="6">               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-7" title="7"><span class="st">  </span>print</a></code></pre></div>
+##    expr    min      lq    mean median   uq  max neval cld
+##   dplyr 2170.2 2310.40 3008.85 2340.9 2367 8152   100   b
+##  hutils   58.9   60.75   72.43   72.8   81  122   100  a</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters, <span class="ot">NA</span>), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb14-2" title="2">A &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(letters), <span class="dt">size =</span> <span class="fl">100e3</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb14-3" title="3"></a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="kw">microbenchmark</span>(<span class="dt">dplyr =</span>  dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/coalesce.html">coalesce</a></span>(x, A, B, C),</a>
+<a class="sourceLine" id="cb14-5" title="5">               <span class="dt">hutils =</span> hutils<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/hutils/topics/coalesce">coalesce</a></span>(x, A, B, C),</a>
+<a class="sourceLine" id="cb14-6" title="6">               <span class="dt">check =</span> my_check) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-7" title="7"><span class="st">  </span>print</a></code></pre></div>
 <pre><code>## Unit: microseconds
-##    expr    min     lq mean median     uq    max neval cld
-##   dplyr 2407.7 2933.8 4957 2976.6 3423.5  14218   100   a
-##  hutils  555.4  807.8 2871  824.2  882.7 134429   100   a</code></pre>
+##    expr    min     lq mean median     uq   max neval cld
+##   dplyr 2444.9 2515.9 3480 2563.0 2623.3 10113   100   b
+##  hutils  693.5  800.7 1079  833.3  857.4  7163   100  a</code></pre>
 </div>
 <div id="drop-columns" class="section level2">
 <h2 class="hasAnchor">
 <a href="#drop-columns" class="anchor"></a>Drop columns</h2>
 <p>To drop a column from a <code>data.table</code>, you set it to <code>NULL</code></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">A =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">B =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">C =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb15-2" title="2">DT[, A <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="ot">NULL</span>]</a></code></pre></div>
-<p>There’s nothing wrong with this, but I’ve found the following a useful alias, especially in a <code>magrittr</code> pipe.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">A =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">B =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">C =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb16-2" title="2">DT <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/drop_col.html">drop_col</a></span>(<span class="st">"A"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/drop_col.html">drop_col</a></span>(<span class="st">"B"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb16-2" title="2">DT[, A <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="ot">NULL</span>]</a></code></pre></div>
+<p>There’s nothing wrong with this, but I’ve found the following a useful alias, especially in a <code>magrittr</code> pipe.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">A =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">B =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">C =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb17-2" title="2">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/drop_col.html">drop_col</a></span>(<span class="st">"A"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/drop_col.html">drop_col</a></span>(<span class="st">"B"</span>)</a></code></pre></div>
 <pre><code>##    C
 ## 1: 1
 ## 2: 2
 ## 3: 3
 ## 4: 4
 ## 5: 5</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># or</span></a>
-<a class="sourceLine" id="cb18-2" title="2">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">A =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">B =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">C =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb18-3" title="3">DT <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb18-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/drop_col.html">drop_cols</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"A"</span>, <span class="st">"B"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="co"># or</span></a>
+<a class="sourceLine" id="cb19-2" title="2">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">A =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">B =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">C =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb19-3" title="3">DT <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/drop_col.html">drop_cols</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"A"</span>, <span class="st">"B"</span>))</a></code></pre></div>
 <pre><code>##    C
 ## 1: 1
 ## 2: 2
@@ -229,11 +234,11 @@
 ## 5: 5</code></pre>
 <p>These functions simple invoke the canonical form, so won’t be any faster.</p>
 <p>Additionally, one can drop columns by a regular expression using <code>drop_colr</code>:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">flights &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(flights)</a>
-<a class="sourceLine" id="cb20-2" title="2"></a>
-<a class="sourceLine" id="cb20-3" title="3">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb20-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/drop_colr.html">drop_colr</a></span>(<span class="st">"time"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb20-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/drop_colr.html">drop_colr</a></span>(<span class="st">"arr(?!_delay)"</span>, <span class="dt">perl =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">flights &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(flights)</a>
+<a class="sourceLine" id="cb21-2" title="2"></a>
+<a class="sourceLine" id="cb21-3" title="3">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/drop_colr.html">drop_colr</a></span>(<span class="st">"time"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/drop_colr.html">drop_colr</a></span>(<span class="st">"arr(?!_delay)"</span>, <span class="dt">perl =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>##         year month day dep_delay arr_delay flight tailnum origin dest
 ##      1: 2013     1   1         2        11   1545  N14228    EWR  IAH
 ##      2: 2013     1   1         4        20   1714  N24211    LGA  IAH
@@ -264,9 +269,9 @@
 <a href="#drop_constant_cols" class="anchor"></a><code>drop_constant_cols</code>
 </h2>
 <p>When a table is filtered, the filtrate is often redundant.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-2" title="2"><span class="st">  </span>.[origin <span class="op">==</span><span class="st"> "JFK"</span>] <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-3" title="3"><span class="st">  </span>drop_constant_cols</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="st">  </span>.[origin <span class="op">==</span><span class="st"> "JFK"</span>] <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="st">  </span>drop_constant_cols</a></code></pre></div>
 <pre><code>##         month day dep_time sched_dep_time dep_delay arr_time
 ##      1:     1   1      542            540         2      923
 ##      2:     1   1      544            545        -1     1004
@@ -309,9 +314,9 @@
 <a href="#drop_empty_cols" class="anchor"></a><code>drop_empty_cols</code>
 </h2>
 <p>This function drops columns in which all the values are <code>NA</code>.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">planes <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-2" title="2"><span class="st">  </span>as.data.table <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-3" title="3"><span class="st">  </span>.[<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/complete.cases">complete.cases</a></span>(.)]</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">planes <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-2" title="2"><span class="st">  </span>as.data.table <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-3" title="3"><span class="st">  </span>.[<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/complete.cases">complete.cases</a></span>(.)]</a></code></pre></div>
 <pre><code>##       tailnum year                    type                  manufacturer
 ##    1:  N10156 2004 Fixed wing multi engine                       EMBRAER
 ##    2:  N102UW 1998 Fixed wing multi engine              AIRBUS INDUSTRIE
@@ -336,11 +341,11 @@
 ## 3297:   717-200       2   100    NA Turbo-fan
 ## 3298:     MD-88       2   142    NA Turbo-jet
 ## 3299:     MD-88       2   142    NA Turbo-jet</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">planes <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb26-2" title="2"><span class="st">  </span>as.data.table <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb26-3" title="3"><span class="st">  </span>.[<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/complete.cases">complete.cases</a></span>(.)] <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb26-4" title="4"><span class="st">  </span><span class="co"># drops speed</span></a>
-<a class="sourceLine" id="cb26-5" title="5"><span class="st">  </span>drop_empty_cols</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">planes <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-2" title="2"><span class="st">  </span>as.data.table <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-3" title="3"><span class="st">  </span>.[<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/complete.cases">complete.cases</a></span>(.)] <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-4" title="4"><span class="st">  </span><span class="co"># drops speed</span></a>
+<a class="sourceLine" id="cb27-5" title="5"><span class="st">  </span>drop_empty_cols</a></code></pre></div>
 <pre><code>##       tailnum year                    type                  manufacturer
 ##    1:  N10156 2004 Fixed wing multi engine                       EMBRAER
 ##    2:  N102UW 1998 Fixed wing multi engine              AIRBUS INDUSTRIE
@@ -371,9 +376,9 @@
 <a href="#duplicated_rows" class="anchor"></a><code>duplicated_rows</code>
 </h2>
 <p>There are many useful functions for detecting duplicates in R. However, in interactive use, I often want to not merely see which values are duplicated, but also compare them to the original. This is especially true when I am comparing duplicates across a <em>subset</em> of columns in a a <code>data.table</code>.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb28-2" title="2"><span class="st">  </span><span class="co"># only the 'second' of the duplicates is returned</span></a>
-<a class="sourceLine" id="cb28-3" title="3"><span class="st">  </span>.[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/duplicated">duplicated</a></span>(., <span class="dt">by =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"origin"</span>, <span class="st">"dest"</span>))]  </a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb29-2" title="2"><span class="st">  </span><span class="co"># only the 'second' of the duplicates is returned</span></a>
+<a class="sourceLine" id="cb29-3" title="3"><span class="st">  </span>.[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/duplicated">duplicated</a></span>(., <span class="dt">by =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"origin"</span>, <span class="st">"dest"</span>))]  </a></code></pre></div>
 <pre><code>##         year month day dep_time sched_dep_time dep_delay arr_time
 ##      1: 2013     1   1      600            600         0      837
 ##      2: 2013     1   1      607            607         0      858
@@ -410,10 +415,10 @@
 ## 336550:       NA      764   12     10 2013-09-30 12:00:00
 ## 336551:       NA      419   11     59 2013-09-30 11:00:00
 ## 336552:       NA      431    8     40 2013-09-30 08:00:00</code></pre>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb30-2" title="2"><span class="st">  </span><span class="co"># Both rows are returned and (by default)</span></a>
-<a class="sourceLine" id="cb30-3" title="3"><span class="st">  </span><span class="co"># duplicates are presented adjacently</span></a>
-<a class="sourceLine" id="cb30-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/duplicated_rows.html">duplicated_rows</a></span>(<span class="dt">by =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"origin"</span>, <span class="st">"dest"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-2" title="2"><span class="st">  </span><span class="co"># Both rows are returned and (by default)</span></a>
+<a class="sourceLine" id="cb31-3" title="3"><span class="st">  </span><span class="co"># duplicates are presented adjacently</span></a>
+<a class="sourceLine" id="cb31-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/duplicated_rows.html">duplicated_rows</a></span>(<span class="dt">by =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"origin"</span>, <span class="st">"dest"</span>))</a></code></pre></div>
 <pre><code>##         year month day dep_time sched_dep_time dep_delay arr_time
 ##      1: 2013     1   1     1315           1317        -2     1413
 ##      2: 2013     1   1     1655           1621        34     1804
@@ -456,26 +461,26 @@
 <a href="#haversine-distance" class="anchor"></a>Haversine distance</h2>
 <p>To emphasize the miscellany of this package, I now present <code>haversine_distance</code> which simply returns the distance between two points on the Earth, given their latitude and longitude.</p>
 <p>I prefer this to other packages’ implementations. Although the <code>geosphere</code> package can do a lot more than calculate distances between points, I find the interface for <code>distHaversine</code> unfortunate as it cannot be easily used inside a <code>data.frame</code>. In addition, I’ve found the arguments clearer in <code><a href="../reference/haversine_distance.html">hutils::haversine_distance</a></code> rather than trying to remember whether to use <code>byrow</code> inside the <code>matrix</code> function while passing to <code>distHaversine</code>.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">DT1 &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">lat_orig =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="fl">1e5</span>, <span class="dv">-80</span>, <span class="dv">80</span>),</a>
-<a class="sourceLine" id="cb32-2" title="2">                  <span class="dt">lon_orig =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="fl">1e5</span>, <span class="dv">-179</span>, <span class="dv">179</span>),</a>
-<a class="sourceLine" id="cb32-3" title="3">                  <span class="dt">lat_dest =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="fl">1e5</span>, <span class="dv">-80</span>, <span class="dv">80</span>),</a>
-<a class="sourceLine" id="cb32-4" title="4">                  <span class="dt">lon_dest =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="fl">1e5</span>, <span class="dv">-179</span>, <span class="dv">179</span>))</a>
-<a class="sourceLine" id="cb32-5" title="5"></a>
-<a class="sourceLine" id="cb32-6" title="6">DT2 &lt;-<span class="st"> </span><span class="kw">copy</span>(DT1)</a>
-<a class="sourceLine" id="cb32-7" title="7"></a>
-<a class="sourceLine" id="cb32-8" title="8"><span class="kw">microbenchmark</span>(DT1[, <span class="dt">distance :=</span> <span class="kw"><a href="../reference/haversine_distance.html">haversine_distance</a></span>(lat_orig, lon_orig,</a>
-<a class="sourceLine" id="cb32-9" title="9">                                                    lat_dest, lon_dest)],</a>
-<a class="sourceLine" id="cb32-10" title="10">               </a>
-<a class="sourceLine" id="cb32-11" title="11">               DT2[, <span class="dt">distance :=</span> <span class="kw">distHaversine</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(lon_orig, lat_orig),</a>
-<a class="sourceLine" id="cb32-12" title="12">                                               <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(lon_orig, lat_orig))])</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">DT1 &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">lat_orig =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="fl">1e5</span>, <span class="dv">-80</span>, <span class="dv">80</span>),</a>
+<a class="sourceLine" id="cb33-2" title="2">                  <span class="dt">lon_orig =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="fl">1e5</span>, <span class="dv">-179</span>, <span class="dv">179</span>),</a>
+<a class="sourceLine" id="cb33-3" title="3">                  <span class="dt">lat_dest =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="fl">1e5</span>, <span class="dv">-80</span>, <span class="dv">80</span>),</a>
+<a class="sourceLine" id="cb33-4" title="4">                  <span class="dt">lon_dest =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="fl">1e5</span>, <span class="dv">-179</span>, <span class="dv">179</span>))</a>
+<a class="sourceLine" id="cb33-5" title="5"></a>
+<a class="sourceLine" id="cb33-6" title="6">DT2 &lt;-<span class="st"> </span><span class="kw">copy</span>(DT1)</a>
+<a class="sourceLine" id="cb33-7" title="7"></a>
+<a class="sourceLine" id="cb33-8" title="8"><span class="kw">microbenchmark</span>(DT1[, <span class="dt">distance :=</span> <span class="kw"><a href="../reference/haversine_distance.html">haversine_distance</a></span>(lat_orig, lon_orig,</a>
+<a class="sourceLine" id="cb33-9" title="9">                                                    lat_dest, lon_dest)],</a>
+<a class="sourceLine" id="cb33-10" title="10">               </a>
+<a class="sourceLine" id="cb33-11" title="11">               DT2[, <span class="dt">distance :=</span> <span class="kw">distHaversine</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(lon_orig, lat_orig),</a>
+<a class="sourceLine" id="cb33-12" title="12">                                               <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(lon_orig, lat_orig))])</a></code></pre></div>
 <pre><code>## Unit: milliseconds
 ##                                                                                             expr
 ##           DT1[, `:=`(distance, haversine_distance(lat_orig, lon_orig, lat_dest,      lon_dest))]
 ##  DT2[, `:=`(distance, distHaversine(cbind(lon_orig, lat_orig),      cbind(lon_orig, lat_orig)))]
-##    min    lq  mean median    uq   max neval cld
-##  21.16 21.58 24.69  21.74 22.21  50.4   100  a 
-##  39.25 40.12 55.55  54.23 63.26 209.8   100   b</code></pre>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rm">rm</a></span>(DT1, DT2)</a></code></pre></div>
+##    min    lq  mean median   uq   max neval cld
+##  21.05 21.26 23.61  21.58 21.7 175.9   100  a 
+##  37.58 38.72 48.10  48.12 52.5 193.9   100   b</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rm">rm</a></span>(DT1, DT2)</a></code></pre></div>
 </div>
 <div id="mutate_other" class="section level2">
 <h2 class="hasAnchor">
@@ -483,14 +488,14 @@
 </h2>
 <p>There may be occasions where a categorical variable in a <code>data.table</code> may need to modified to reduce the number of distinct categories. For example, you may want to plot a chart with a set number of facets, or ensure the smooth operation of <code>randomForest</code>, which accepts no more than 32 levels in a feature.</p>
 <p><code>mutate_other</code> keeps the <em>n</em> most common categories and changes the other categories to <code>Other</code>.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb35-2" title="2">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">Fruit =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"apple"</span>, <span class="st">"pear"</span>, <span class="st">"orange"</span>, <span class="st">"tomato"</span>, <span class="st">"eggplant"</span>),</a>
-<a class="sourceLine" id="cb35-3" title="3">                                <span class="dt">size =</span> <span class="dv">20</span>,</a>
-<a class="sourceLine" id="cb35-4" title="4">                                <span class="dt">prob =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.45</span>, <span class="fl">0.25</span>, <span class="fl">0.15</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>),</a>
-<a class="sourceLine" id="cb35-5" title="5">                                <span class="dt">replace =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb35-6" title="6">                 <span class="dt">Price =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Poisson">rpois</a></span>(<span class="dv">20</span>, <span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb35-7" title="7"></a>
-<a class="sourceLine" id="cb35-8" title="8"><span class="kw">kable</span>(<span class="kw"><a href="../reference/mutate_other.html">mutate_other</a></span>(DT, <span class="st">"Fruit"</span>, <span class="dt">n =</span> <span class="dv">3</span>)[])</a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb36-2" title="2">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">Fruit =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"apple"</span>, <span class="st">"pear"</span>, <span class="st">"orange"</span>, <span class="st">"tomato"</span>, <span class="st">"eggplant"</span>),</a>
+<a class="sourceLine" id="cb36-3" title="3">                                <span class="dt">size =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb36-4" title="4">                                <span class="dt">prob =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.45</span>, <span class="fl">0.25</span>, <span class="fl">0.15</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>),</a>
+<a class="sourceLine" id="cb36-5" title="5">                                <span class="dt">replace =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb36-6" title="6">                 <span class="dt">Price =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Poisson">rpois</a></span>(<span class="dv">20</span>, <span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb36-7" title="7"></a>
+<a class="sourceLine" id="cb36-8" title="8"><span class="kw">kable</span>(<span class="kw"><a href="../reference/mutate_other.html">mutate_other</a></span>(DT, <span class="st">"Fruit"</span>, <span class="dt">n =</span> <span class="dv">3</span>)[])</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Fruit</th>
@@ -602,14 +607,14 @@
 <a href="#ein-and-enotin" class="anchor"></a><code>%ein%</code> and <code>%enotin%</code>
 </h3>
 <p>The functions <code>%ein%</code> and <code>%enotin%</code> are motivated by a different sort of problem. Consider the following statement:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">iris &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(iris)</a>
-<a class="sourceLine" id="cb36-2" title="2">iris[Species <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"setosa"</span>, <span class="st">"versicolour"</span>)] <span class="op">%$%</span></a>
-<a class="sourceLine" id="cb36-3" title="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(Sepal.Length <span class="op">/</span><span class="st"> </span>Sepal.Width)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">iris &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(iris)</a>
+<a class="sourceLine" id="cb37-2" title="2">iris[Species <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"setosa"</span>, <span class="st">"versicolour"</span>)] <span class="op">%$%</span></a>
+<a class="sourceLine" id="cb37-3" title="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(Sepal.Length <span class="op">/</span><span class="st"> </span>Sepal.Width)</a></code></pre></div>
 <pre><code>## [1] 1.47</code></pre>
 <p>On the face of it, this appears to give the average ratio of <em>Iris setosa</em> and <em>Iris versicolour</em> irises. However, it only gives the average ratio of <em>setosa</em> irises, as the correct spelling is <em>Iris versicolor</em> not <em>-our</em>. This particular error is easy to make, (in fact when I wrote this vignette, the first hit of Google for <code>iris dataset</code> made the same spelling error), but it’s easy to imagine similar mistakes, such as mistaking the capitalization of a value. The functions <code>%ein%</code> and <code>%enotin%</code> strive to reduce the occurrence of this mistake. The functions operate exactly the same as <code>%in%</code> and <code>%enotin%</code> but error if any of the table of values to be matched against is not present in any of the values:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">iris &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(iris)</a>
-<a class="sourceLine" id="cb38-2" title="2">iris[Species <span class="op">%ein%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"setosa"</span>, <span class="st">"versicolour"</span>)] <span class="op">%$%</span></a>
-<a class="sourceLine" id="cb38-3" title="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(Sepal.Length <span class="op">/</span><span class="st"> </span>Sepal.Width)</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">iris &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(iris)</a>
+<a class="sourceLine" id="cb39-2" title="2">iris[Species <span class="op">%ein%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"setosa"</span>, <span class="st">"versicolour"</span>)] <span class="op">%$%</span></a>
+<a class="sourceLine" id="cb39-3" title="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(Sepal.Length <span class="op">/</span><span class="st"> </span>Sepal.Width)</a></code></pre></div>
 <pre><code>## Error: `rhs` contained versicolour, but this value was not found in `lhs = Species`. All values of `rhs` must be in `lhs`. Ensure you have specified `rhs` correctly.</code></pre>
 <p>The <code>e</code> stands for ‘exists’; <em>i.e.</em> they should be read as “exists and in” and “exists and not in”.</p>
 </div>
@@ -618,12 +623,12 @@
 <a href="#pin" class="anchor"></a><code>%pin%</code>
 </h3>
 <p>This performs a partial match (<em>i.e</em> <code>grepl</code>) but with a possibly more readable or intuitive syntax</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/identical">identical</a></span>(iris[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">grep</a></span>(<span class="st">"v"</span>, Species)],</a>
-<a class="sourceLine" id="cb40-2" title="2">          iris[Species <span class="op">%pin%</span><span class="st"> "v"</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/identical">identical</a></span>(iris[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">grep</a></span>(<span class="st">"v"</span>, Species)],</a>
+<a class="sourceLine" id="cb41-2" title="2">          iris[Species <span class="op">%pin%</span><span class="st"> "v"</span>])</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>If the RHS has more than one element, the matching is done on alternation (<em>i.e.</em> OR):</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1">iris[Species <span class="op">%pin%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"ver"</span>, <span class="st">"vir"</span>)] <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb42-2" title="2"><span class="st">  </span>head</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1">iris[Species <span class="op">%pin%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"ver"</span>, <span class="st">"vir"</span>)] <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb43-2" title="2"><span class="st">  </span>head</a></code></pre></div>
 <pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
 ## 1:          7.0         3.2          4.7         1.4 versicolor
 ## 2:          6.4         3.2          4.5         1.5 versicolor
@@ -644,10 +649,10 @@
 <a href="#select_which" class="anchor"></a><code>select_which</code>
 </h3>
 <p>This provides a similar role to <code><a href="https://dplyr.tidyverse.org/reference/select_all.html">dplyr::select_if</a></code> but was originally part of <code>package:grattan</code> so has a different name. It simply returns the columns whose <em>values</em> return <code>TRUE</code> when <code>Which</code> is applied. Additional columns (which may or not may satisfy <code>Which</code>) may be included by using <code>.and.dots</code>. (To remove columns, you can use <code>drop_col</code>).</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,</a>
-<a class="sourceLine" id="cb44-2" title="2">                 <span class="dt">y =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>],</a>
-<a class="sourceLine" id="cb44-3" title="3">                 <span class="dt">AB =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="ot">NA</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>))</a>
-<a class="sourceLine" id="cb44-4" title="4"><span class="kw"><a href="../reference/select_which.html">select_which</a></span>(DT, anyNA, <span class="dt">.and.dots =</span> <span class="st">"y"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb45-2" title="2">                 <span class="dt">y =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>],</a>
+<a class="sourceLine" id="cb45-3" title="3">                 <span class="dt">AB =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="ot">NA</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>))</a>
+<a class="sourceLine" id="cb45-4" title="4"><span class="kw"><a href="../reference/select_which.html">select_which</a></span>(DT, anyNA, <span class="dt">.and.dots =</span> <span class="st">"y"</span>)</a></code></pre></div>
 <pre><code>##       AB y
 ## 1:    NA a
 ## 2:  TRUE b
@@ -676,20 +681,20 @@
 <a href="#auc" class="anchor"></a><code>auc</code>
 </h3>
 <p>The area under the <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">(ROC) curve</a> gives a single value to measure the tradeoff between true positives and false positives.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1">dt &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">y =</span> <span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>), </a>
-<a class="sourceLine" id="cb46-2" title="2">                 <span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">100</span>))</a>
-<a class="sourceLine" id="cb46-3" title="3">dt[, pred <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> .SD), <span class="dt">newdata =</span> .SD)]</a>
-<a class="sourceLine" id="cb46-4" title="4"></a>
-<a class="sourceLine" id="cb46-5" title="5">dt[, <span class="kw"><a href="../reference/auc.html">auc</a></span>(y, pred)]</a></code></pre></div>
-<pre><code>## [1] 0.533</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1">dt &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">y =</span> <span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>), </a>
+<a class="sourceLine" id="cb47-2" title="2">                 <span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb47-3" title="3">dt[, pred <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> .SD), <span class="dt">newdata =</span> .SD)]</a>
+<a class="sourceLine" id="cb47-4" title="4"></a>
+<a class="sourceLine" id="cb47-5" title="5">dt[, <span class="kw"><a href="../reference/auc.html">auc</a></span>(y, pred)]</a></code></pre></div>
+<pre><code>## [1] 0.577</code></pre>
 </div>
 <div id="select_grep" class="section level3">
 <h3 class="hasAnchor">
 <a href="#select_grep" class="anchor"></a><code>select_grep</code>
 </h3>
 <p>To select columns matching a regular expression:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb48-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/select_grep.html">select_grep</a></span>(<span class="st">"arr"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb49-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/select_grep.html">select_grep</a></span>(<span class="st">"arr"</span>)</a></code></pre></div>
 <pre><code>##         arr_time sched_arr_time arr_delay carrier
 ##      1:      830            819        11      UA
 ##      2:      850            830        20      UA
@@ -703,8 +708,8 @@
 ## 336775:       NA           1344        NA      MQ
 ## 336776:       NA           1020        NA      MQ</code></pre>
 <p>You can use the additional arguments <code>.and</code> and <code>.but.not</code> to override the patterns.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb50-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/select_grep.html">select_grep</a></span>(<span class="st">"arr"</span>, <span class="dt">.and =</span> <span class="st">"year"</span>, <span class="dt">.but.not =</span> <span class="st">"arr_time"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb51-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/select_grep.html">select_grep</a></span>(<span class="st">"arr"</span>, <span class="dt">.and =</span> <span class="st">"year"</span>, <span class="dt">.but.not =</span> <span class="st">"arr_time"</span>)</a></code></pre></div>
 <pre><code>##         year sched_arr_time arr_delay carrier
 ##      1: 2013            819        11      UA
 ##      2: 2013            830        20      UA
@@ -727,8 +732,8 @@
 <a href="#rq" class="anchor"></a><code>RQ</code>
 </h3>
 <p>This is simply a shorthand to test whether a package needs installing. The package name need not be quoted, for convenience.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="kw"><a href="../reference/RQ.html">RQ</a></span>(dplyr, <span class="st">"dplyr must be installed"</span>)</a>
-<a class="sourceLine" id="cb52-2" title="2"><span class="kw"><a href="../reference/RQ.html">RQ</a></span>(<span class="st">"dplyr"</span>, <span class="st">"dplyr needs installing"</span>, <span class="st">"dplyr installed."</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1"><span class="kw"><a href="../reference/RQ.html">RQ</a></span>(dplyr, <span class="st">"dplyr must be installed"</span>)</a>
+<a class="sourceLine" id="cb53-2" title="2"><span class="kw"><a href="../reference/RQ.html">RQ</a></span>(<span class="st">"dplyr"</span>, <span class="st">"dplyr needs installing"</span>, <span class="st">"dplyr installed."</span>)</a></code></pre></div>
 <pre><code>## [1] "dplyr installed."</code></pre>
 </div>
 <div id="ahull" class="section level3">
@@ -736,51 +741,51 @@
 <a href="#ahull" class="anchor"></a><code>ahull</code>
 </h3>
 <p>This locates the biggest rectangle beneath a curve:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw">ggplot</span>(<span class="kw">data.table</span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="fl">0.1</span>, <span class="dv">0</span>))) <span class="op">+</span></a>
-<a class="sourceLine" id="cb54-2" title="2"><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(x, y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb54-3" title="3"><span class="st">  </span><span class="kw">geom_rect</span>(<span class="dt">data =</span> <span class="kw"><a href="../reference/ahull.html">ahull</a></span>(, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="fl">0.1</span>, <span class="dv">0</span>)),</a>
-<a class="sourceLine" id="cb54-4" title="4">            <span class="kw">aes</span>(<span class="dt">xmin =</span> xmin,</a>
-<a class="sourceLine" id="cb54-5" title="5">                <span class="dt">xmax =</span> xmax,</a>
-<a class="sourceLine" id="cb54-6" title="6">                <span class="dt">ymin =</span> ymin,</a>
-<a class="sourceLine" id="cb54-7" title="7">                <span class="dt">ymax =</span> ymax),</a>
-<a class="sourceLine" id="cb54-8" title="8">            <span class="dt">color =</span> <span class="st">"red"</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1"><span class="kw">ggplot</span>(<span class="kw">data.table</span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="fl">0.1</span>, <span class="dv">0</span>))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb55-2" title="2"><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(x, y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb55-3" title="3"><span class="st">  </span><span class="kw">geom_rect</span>(<span class="dt">data =</span> <span class="kw"><a href="../reference/ahull.html">ahull</a></span>(, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="fl">0.1</span>, <span class="dv">0</span>)),</a>
+<a class="sourceLine" id="cb55-4" title="4">            <span class="kw">aes</span>(<span class="dt">xmin =</span> xmin,</a>
+<a class="sourceLine" id="cb55-5" title="5">                <span class="dt">xmax =</span> xmax,</a>
+<a class="sourceLine" id="cb55-6" title="6">                <span class="dt">ymin =</span> ymin,</a>
+<a class="sourceLine" id="cb55-7" title="7">                <span class="dt">ymax =</span> ymax),</a>
+<a class="sourceLine" id="cb55-8" title="8">            <span class="dt">color =</span> <span class="st">"red"</span>) </a></code></pre></div>
 <p><img src="hutils_files/figure-html/ahull-1-1.png" width="700"></p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">101</span>)</a>
-<a class="sourceLine" id="cb55-2" title="2">ahull_dt &lt;-</a>
-<a class="sourceLine" id="cb55-3" title="3"><span class="st">  </span><span class="kw">data.table</span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>) <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,</a>
-<a class="sourceLine" id="cb55-4" title="4">             <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cumsum">cumsum</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">101</span>, <span class="fl">0.05</span>)))</a>
-<a class="sourceLine" id="cb55-5" title="5"><span class="kw">ggplot</span>(ahull_dt) <span class="op">+</span></a>
-<a class="sourceLine" id="cb55-6" title="6"><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(x, y)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb55-7" title="7"><span class="st">  </span><span class="kw">geom_rect</span>(<span class="dt">data =</span> <span class="kw"><a href="../reference/ahull.html">ahull</a></span>(ahull_dt), </a>
-<a class="sourceLine" id="cb55-8" title="8">            <span class="kw">aes</span>(<span class="dt">xmin =</span> xmin, </a>
-<a class="sourceLine" id="cb55-9" title="9">                <span class="dt">xmax =</span> xmax, </a>
-<a class="sourceLine" id="cb55-10" title="10">                <span class="dt">ymin =</span> ymin, </a>
-<a class="sourceLine" id="cb55-11" title="11">                <span class="dt">ymax =</span> ymax), </a>
-<a class="sourceLine" id="cb55-12" title="12">            <span class="dt">color =</span> <span class="st">"red"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb55-13" title="13"><span class="st">  </span><span class="kw">geom_rect</span>(<span class="dt">data =</span> <span class="kw"><a href="../reference/ahull.html">ahull</a></span>(ahull_dt,</a>
-<a class="sourceLine" id="cb55-14" title="14">                         <span class="dt">incl_negative =</span> <span class="ot">TRUE</span>), </a>
-<a class="sourceLine" id="cb55-15" title="15">            <span class="kw">aes</span>(<span class="dt">xmin =</span> xmin, </a>
-<a class="sourceLine" id="cb55-16" title="16">                <span class="dt">xmax =</span> xmax, </a>
-<a class="sourceLine" id="cb55-17" title="17">                <span class="dt">ymin =</span> ymin, </a>
-<a class="sourceLine" id="cb55-18" title="18">                <span class="dt">ymax =</span> ymax), </a>
-<a class="sourceLine" id="cb55-19" title="19">            <span class="dt">color =</span> <span class="st">"blue"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb55-20" title="20"><span class="st">  </span><span class="kw">geom_rect</span>(<span class="dt">data =</span> <span class="kw"><a href="../reference/ahull.html">ahull</a></span>(ahull_dt,</a>
-<a class="sourceLine" id="cb55-21" title="21">                         <span class="dt">incl_negative =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb55-22" title="22">                         <span class="dt">minH =</span> <span class="dv">4</span>), </a>
-<a class="sourceLine" id="cb55-23" title="23">            <span class="kw">aes</span>(<span class="dt">xmin =</span> xmin, </a>
-<a class="sourceLine" id="cb55-24" title="24">                <span class="dt">xmax =</span> xmax, </a>
-<a class="sourceLine" id="cb55-25" title="25">                <span class="dt">ymin =</span> ymin, </a>
-<a class="sourceLine" id="cb55-26" title="26">                <span class="dt">ymax =</span> ymax), </a>
-<a class="sourceLine" id="cb55-27" title="27">            <span class="dt">color =</span> <span class="st">"green"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb55-28" title="28"><span class="st">  </span><span class="kw">geom_rect</span>(<span class="dt">data =</span> <span class="kw"><a href="../reference/ahull.html">ahull</a></span>(ahull_dt,</a>
-<a class="sourceLine" id="cb55-29" title="29">                         <span class="dt">incl_negative =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb55-30" title="30">                         <span class="dt">minW =</span> <span class="fl">0.25</span>), </a>
-<a class="sourceLine" id="cb55-31" title="31">            <span class="kw">aes</span>(<span class="dt">xmin =</span> xmin, </a>
-<a class="sourceLine" id="cb55-32" title="32">                <span class="dt">xmax =</span> xmax, </a>
-<a class="sourceLine" id="cb55-33" title="33">                <span class="dt">ymin =</span> ymin, </a>
-<a class="sourceLine" id="cb55-34" title="34">                <span class="dt">ymax =</span> ymax), </a>
-<a class="sourceLine" id="cb55-35" title="35">            <span class="dt">color =</span> <span class="st">"white"</span>,</a>
-<a class="sourceLine" id="cb55-36" title="36">            <span class="dt">fill =</span> <span class="ot">NA</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">101</span>)</a>
+<a class="sourceLine" id="cb56-2" title="2">ahull_dt &lt;-</a>
+<a class="sourceLine" id="cb56-3" title="3"><span class="st">  </span><span class="kw">data.table</span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>) <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,</a>
+<a class="sourceLine" id="cb56-4" title="4">             <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cumsum">cumsum</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">101</span>, <span class="fl">0.05</span>)))</a>
+<a class="sourceLine" id="cb56-5" title="5"><span class="kw">ggplot</span>(ahull_dt) <span class="op">+</span></a>
+<a class="sourceLine" id="cb56-6" title="6"><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(x, y)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb56-7" title="7"><span class="st">  </span><span class="kw">geom_rect</span>(<span class="dt">data =</span> <span class="kw"><a href="../reference/ahull.html">ahull</a></span>(ahull_dt), </a>
+<a class="sourceLine" id="cb56-8" title="8">            <span class="kw">aes</span>(<span class="dt">xmin =</span> xmin, </a>
+<a class="sourceLine" id="cb56-9" title="9">                <span class="dt">xmax =</span> xmax, </a>
+<a class="sourceLine" id="cb56-10" title="10">                <span class="dt">ymin =</span> ymin, </a>
+<a class="sourceLine" id="cb56-11" title="11">                <span class="dt">ymax =</span> ymax), </a>
+<a class="sourceLine" id="cb56-12" title="12">            <span class="dt">color =</span> <span class="st">"red"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb56-13" title="13"><span class="st">  </span><span class="kw">geom_rect</span>(<span class="dt">data =</span> <span class="kw"><a href="../reference/ahull.html">ahull</a></span>(ahull_dt,</a>
+<a class="sourceLine" id="cb56-14" title="14">                         <span class="dt">incl_negative =</span> <span class="ot">TRUE</span>), </a>
+<a class="sourceLine" id="cb56-15" title="15">            <span class="kw">aes</span>(<span class="dt">xmin =</span> xmin, </a>
+<a class="sourceLine" id="cb56-16" title="16">                <span class="dt">xmax =</span> xmax, </a>
+<a class="sourceLine" id="cb56-17" title="17">                <span class="dt">ymin =</span> ymin, </a>
+<a class="sourceLine" id="cb56-18" title="18">                <span class="dt">ymax =</span> ymax), </a>
+<a class="sourceLine" id="cb56-19" title="19">            <span class="dt">color =</span> <span class="st">"blue"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb56-20" title="20"><span class="st">  </span><span class="kw">geom_rect</span>(<span class="dt">data =</span> <span class="kw"><a href="../reference/ahull.html">ahull</a></span>(ahull_dt,</a>
+<a class="sourceLine" id="cb56-21" title="21">                         <span class="dt">incl_negative =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb56-22" title="22">                         <span class="dt">minH =</span> <span class="dv">4</span>), </a>
+<a class="sourceLine" id="cb56-23" title="23">            <span class="kw">aes</span>(<span class="dt">xmin =</span> xmin, </a>
+<a class="sourceLine" id="cb56-24" title="24">                <span class="dt">xmax =</span> xmax, </a>
+<a class="sourceLine" id="cb56-25" title="25">                <span class="dt">ymin =</span> ymin, </a>
+<a class="sourceLine" id="cb56-26" title="26">                <span class="dt">ymax =</span> ymax), </a>
+<a class="sourceLine" id="cb56-27" title="27">            <span class="dt">color =</span> <span class="st">"green"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb56-28" title="28"><span class="st">  </span><span class="kw">geom_rect</span>(<span class="dt">data =</span> <span class="kw"><a href="../reference/ahull.html">ahull</a></span>(ahull_dt,</a>
+<a class="sourceLine" id="cb56-29" title="29">                         <span class="dt">incl_negative =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb56-30" title="30">                         <span class="dt">minW =</span> <span class="fl">0.25</span>), </a>
+<a class="sourceLine" id="cb56-31" title="31">            <span class="kw">aes</span>(<span class="dt">xmin =</span> xmin, </a>
+<a class="sourceLine" id="cb56-32" title="32">                <span class="dt">xmax =</span> xmax, </a>
+<a class="sourceLine" id="cb56-33" title="33">                <span class="dt">ymin =</span> ymin, </a>
+<a class="sourceLine" id="cb56-34" title="34">                <span class="dt">ymax =</span> ymax), </a>
+<a class="sourceLine" id="cb56-35" title="35">            <span class="dt">color =</span> <span class="st">"white"</span>,</a>
+<a class="sourceLine" id="cb56-36" title="36">            <span class="dt">fill =</span> <span class="ot">NA</span>)</a></code></pre></div>
 <p><img src="hutils_files/figure-html/ahull-demos-1.png" width="768"></p>
 </div>
 </div>
@@ -792,11 +797,11 @@
 <a href="#weighted_quantile" class="anchor"></a><code>weighted_quantile</code>
 </h3>
 <p>Simply a version of <code>quantile</code> supporting weighted values:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb56-2" title="2">w &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span>, <span class="dv">5</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">2</span>, <span class="dv">5</span>))</a>
-<a class="sourceLine" id="cb56-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/quantile">quantile</a></span>(x, <span class="dt">prob =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>), <span class="dt">names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb57-2" title="2">w &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span>, <span class="dv">5</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">2</span>, <span class="dv">5</span>))</a>
+<a class="sourceLine" id="cb57-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/quantile">quantile</a></span>(x, <span class="dt">prob =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>), <span class="dt">names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <pre><code>## [1] 3.25 7.75</code></pre>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="kw"><a href="../reference/weighted_quantile.html">weighted_quantile</a></span>(x, w, <span class="dt">p =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="kw"><a href="../reference/weighted_quantile.html">weighted_quantile</a></span>(x, w, <span class="dt">p =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</a></code></pre></div>
 <pre><code>## [1] 4 9</code></pre>
 </div>
 <div id="mutate_ntile" class="section level3">
@@ -804,10 +809,10 @@
 <a href="#mutate_ntile" class="anchor"></a><code>mutate_ntile</code>
 </h3>
 <p>To add a column of ntiles (say, for later summarizing):</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb60-2" title="2"><span class="st">  </span>as.data.table <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb60-3" title="3"><span class="st">  </span>.[, .(year, month, day, origin, dest, distance)] <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb60-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/mutate_ntile.html">mutate_ntile</a></span>(distance, <span class="dt">n =</span> 5L)</a></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb61-2" title="2"><span class="st">  </span>as.data.table <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb61-3" title="3"><span class="st">  </span>.[, .(year, month, day, origin, dest, distance)] <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb61-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/mutate_ntile.html">mutate_ntile</a></span>(distance, <span class="dt">n =</span> 5L)</a></code></pre></div>
 <pre><code>##         year month day origin dest distance distanceQuintile
 ##      1: 2013     1   1    EWR  IAH     1400                4
 ##      2: 2013     1   1    LGA  IAH     1416                4
@@ -821,10 +826,10 @@
 ## 336775: 2013     9  30    LGA  CLE      419                1
 ## 336776: 2013     9  30    LGA  RDU      431                2</code></pre>
 <p>You can use non-standard evaluation (as above) or you can quote the <code>col</code> argument. Use <code>character.only = TRUE</code> to ensure column is only interpreted as character.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb62-2" title="2"><span class="st">  </span>as.data.table <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb62-3" title="3"><span class="st">  </span>.[, .(year, month, day, origin, dest, distance)] <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb62-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/mutate_ntile.html">mutate_ntile</a></span>(distance, <span class="dt">n =</span> 5L)</a></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb63-2" title="2"><span class="st">  </span>as.data.table <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb63-3" title="3"><span class="st">  </span>.[, .(year, month, day, origin, dest, distance)] <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb63-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/mutate_ntile.html">mutate_ntile</a></span>(distance, <span class="dt">n =</span> 5L)</a></code></pre></div>
 <pre><code>##         year month day origin dest distance distanceQuintile
 ##      1: 2013     1   1    EWR  IAH     1400                4
 ##      2: 2013     1   1    LGA  IAH     1416                4
@@ -837,13 +842,13 @@
 ## 336774: 2013     9  30    LGA  BNA      764                3
 ## 336775: 2013     9  30    LGA  CLE      419                1
 ## 336776: 2013     9  30    LGA  RDU      431                2</code></pre>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb64-2" title="2"><span class="st">  </span>as.data.table <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb64-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/mutate_ntile.html">mutate_ntile</a></span>(<span class="st">"distance"</span>,</a>
-<a class="sourceLine" id="cb64-4" title="4">               <span class="dt">n =</span> 5L,</a>
-<a class="sourceLine" id="cb64-5" title="5">               <span class="dt">character.only =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb64-6" title="6"><span class="st">  </span>.[, dep_delay <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/coalesce.html">coalesce</a></span>(dep_delay, <span class="dv">0</span>)] <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb64-7" title="7"><span class="st">  </span>.[, .(<span class="dt">avgDelay =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(dep_delay)), keyby =<span class="st"> "distanceQuintile"</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb65-2" title="2"><span class="st">  </span>as.data.table <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb65-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/mutate_ntile.html">mutate_ntile</a></span>(<span class="st">"distance"</span>,</a>
+<a class="sourceLine" id="cb65-4" title="4">               <span class="dt">n =</span> 5L,</a>
+<a class="sourceLine" id="cb65-5" title="5">               <span class="dt">character.only =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb65-6" title="6"><span class="st">  </span>.[, dep_delay <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw"><a href="../reference/coalesce.html">coalesce</a></span>(dep_delay, <span class="dv">0</span>)] <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb65-7" title="7"><span class="st">  </span>.[, .(<span class="dt">avgDelay =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(dep_delay)), keyby =<span class="st"> "distanceQuintile"</span>]</a></code></pre></div>
 <pre><code>##    distanceQuintile avgDelay
 ## 1:                1    12.88
 ## 2:                2    12.97
@@ -856,8 +861,8 @@
 <a href="#longest_affix" class="anchor"></a><code>longest_affix</code>
 </h3>
 <p>Trim common affixes can be useful during data cleaning:</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="kw"><a href="../reference/longest_affix.html">trim_common_affixes</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"CurrentHousingCosts(weekly)"</span>,</a>
-<a class="sourceLine" id="cb66-2" title="2">                      <span class="st">"CurrentFuelCosts(weekly)"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1"><span class="kw"><a href="../reference/longest_affix.html">trim_common_affixes</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"CurrentHousingCosts(weekly)"</span>,</a>
+<a class="sourceLine" id="cb67-2" title="2">                      <span class="st">"CurrentFuelCosts(weekly)"</span>))</a></code></pre></div>
 <pre><code>## [1] "Housing" "Fuel"</code></pre>
 </div>
 </div>
@@ -870,10 +875,10 @@
 <a href="#section" class="anchor"></a><code>%&lt;-&gt;%</code>
 </h3>
 <p>Referred to as <code>swap</code> in the documentation. Used to swap values between object names</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">a &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb68-2" title="2">b &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb68-3" title="3">a <span class="op">%&lt;-&gt;%</span><span class="st"> </span>b</a>
-<a class="sourceLine" id="cb68-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/identical">identical</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(a, b), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1">a &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb69-2" title="2">b &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb69-3" title="3">a <span class="op">%&lt;-&gt;%</span><span class="st"> </span>b</a>
+<a class="sourceLine" id="cb69-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/identical">identical</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(a, b), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
 <div id="average_bearing" class="section level3">
@@ -881,9 +886,9 @@
 <a href="#average_bearing" class="anchor"></a><code>average_bearing</code>
 </h3>
 <p>Determine the average bearing of vectors. Slightly more difficult than simply the average modulo 360 since its the most acute sector is desired.</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1"><span class="kw"><a href="../reference/average_bearing.html">average_bearing</a></span>(<span class="dv">0</span>, <span class="dv">270</span>)  <span class="co"># NW</span></a></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1"><span class="kw"><a href="../reference/average_bearing.html">average_bearing</a></span>(<span class="dv">0</span>, <span class="dv">270</span>)  <span class="co"># NW</span></a></code></pre></div>
 <pre><code>## [1] 315</code></pre>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">270</span>))          <span class="co"># SE (i.e. wrong)</span></a></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">270</span>))          <span class="co"># SE (i.e. wrong)</span></a></code></pre></div>
 <pre><code>## [1] 135</code></pre>
 </div>
 <div id="dir2" class="section level3">
@@ -897,7 +902,7 @@
 <a href="#mode" class="anchor"></a><code>Mode</code>
 </h3>
 <p>The statistical mode; the most common element.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1"><span class="kw"><a href="../reference/Mode.html">Mode</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1"><span class="kw"><a href="../reference/Mode.html">Mode</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</a></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 </div>
 <div id="replace_pattern_in" class="section level3">
@@ -911,24 +916,24 @@
 <a href="#samp" class="anchor"></a><code>samp</code>
 </h3>
 <p>A safer version of <code>sample</code>. I use it because I found the following behaviour of sample surprising.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb76-2" title="2">                 <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb76-3" title="3">DT[, .(<span class="dt">Base =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(.BY[[<span class="st">"x"</span>]]<span class="op">:</span>.BY[[<span class="st">"y"</span>]])), keyby =<span class="st"> </span>.(x, y)]</a></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1">DT &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">x =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb77-2" title="2">                 <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb77-3" title="3">DT[, .(<span class="dt">Base =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(.BY[[<span class="st">"x"</span>]]<span class="op">:</span>.BY[[<span class="st">"y"</span>]])), keyby =<span class="st"> </span>.(x, y)]</a></code></pre></div>
 <pre><code>##    x y Base
 ## 1: 2 3    2
 ## 2: 2 3    3
-## 3: 3 4    4
-## 4: 3 4    3
-## 5: 5 5    5
+## 3: 3 4    3
+## 4: 3 4    4
+## 5: 5 5    3
 ## 6: 5 5    1
-## 7: 5 5    3
+## 7: 5 5    5
 ## 8: 5 5    4
 ## 9: 5 5    2</code></pre>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1">DT[, .(<span class="dt">Base =</span> <span class="kw"><a href="../reference/samp.html">samp</a></span>(.BY[[<span class="st">"x"</span>]]<span class="op">:</span>.BY[[<span class="st">"y"</span>]])), keyby =<span class="st"> </span>.(x, y)]</a></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1">DT[, .(<span class="dt">Base =</span> <span class="kw"><a href="../reference/samp.html">samp</a></span>(.BY[[<span class="st">"x"</span>]]<span class="op">:</span>.BY[[<span class="st">"y"</span>]])), keyby =<span class="st"> </span>.(x, y)]</a></code></pre></div>
 <pre><code>## `length(x) = 1`, so returning `rep.int(x, 1)`.</code></pre>
 <pre><code>##    x y Base
-## 1: 2 3    3
-## 2: 2 3    2
+## 1: 2 3    2
+## 2: 2 3    3
 ## 3: 3 4    3
 ## 4: 3 4    4
 ## 5: 5 5    5</code></pre>

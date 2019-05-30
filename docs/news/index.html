@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hutils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.1</span>
       </span>
     </div>
 
@@ -106,26 +106,44 @@
       <small>Source: <a href='https://github.com/hughparsonage/hutils/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="hutils-141" class="section level1">
+<h1 class="page-header">
+<a href="#hutils-141" class="anchor"></a>hutils 1.4.1<small> Unreleased </small>
+</h1>
+<ul>
+<li>Bug fixes:
+<ul>
+<li>
+<code>samp</code> works with size &gt; length.</li>
+</ul>
+</li>
+<li>New functions
+<ul>
+<li>
+<code>provide.file</code> To ensure a file (including its directory) exists.</li>
+</ul>
+</li>
+<li>Enhancements:
+<ul>
+<li>
+<code>provide.dir</code> returns the directory requested on success.</li>
+</ul>
+</li>
+</ul>
+</div>
     <div id="hutils-140" class="section level1">
 <h1 class="page-header">
-<a href="#hutils-140" class="anchor"></a>hutils 1.4.0<small> Unreleased </small>
+<a href="#hutils-140" class="anchor"></a>hutils 1.4.0<small> 2019-03-09 </small>
 </h1>
 <ul>
 <li>New functions:
 <ul>
-<li>
-<code>%&lt;-&gt;%</code> To swap values between objects</li>
-<li>
-<code>average_bearing</code>, the bearing bisecting two vectors</li>
-<li>
-<code>dir2</code>, (Windows only) a much faster version of <code><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir()</a></code>
-</li>
-<li>
-<code>Mode</code>, statistical mode</li>
-<li>
-<code>replace_pattern_in</code> to find-and-replace on a pattern in all files in a directory</li>
-<li>
-<code>samp</code>, a ‘safe’ version of <code>sample</code>.</li>
+<li><p><code>%&lt;-&gt;%</code> To swap values between objects</p></li>
+<li><p><code>average_bearing</code>, the bearing bisecting two vectors</p></li>
+<li><p><code>dir2</code>, (Windows only) a much faster version of <code><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir()</a></code></p></li>
+<li><p><code>Mode</code>, statistical mode</p></li>
+<li><p><code>replace_pattern_in</code> to find-and-replace on a pattern in all files in a directory</p></li>
+<li><p><code>samp</code>, a ‘safe’ version of <code>sample</code>.</p></li>
 </ul>
 </li>
 <li>Enhancements
@@ -142,7 +160,7 @@
 <li>
 <code>find_pattern_in</code> now accepts <code>file_contents_ignore_case</code>.</li>
 <li>
-<code>find_pattern_in</code> may</li>
+<code>find_pattern_in</code> no longer complains about <code>perl</code>, <code>fixed</code> conflicts.</li>
 </ul>
 </li>
 </ul>
@@ -188,7 +206,8 @@
 <a href="#hutils-120" class="anchor"></a>hutils 1.2.0<small> 2018-08-20 </small>
 </h1>
 <ul>
-<li>New functions:
+<li>
+<p>New functions:</p>
 <ul>
 <li>
 <code><a href="../reference/RQ.html">RQ(p, yes, no)</a></code> short for <code>if (!requireNamespace("p", quietly = TRUE)) yes else no</code>.</li>
@@ -201,7 +220,8 @@
 </ul>
 </li>
 <li><p><code>drop_grep</code> is an alias for <code>drop_colr</code>.</p></li>
-<li>Minor changes:
+<li>
+<p>Minor changes:</p>
 <ul>
 <li>
 <code>if_else</code> reports a clearer error message when <code>length(condition) == 1</code>.</li>
@@ -349,6 +369,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#hutils-141">1.4.1</a></li>
         <li><a href="#hutils-140">1.4.0</a></li>
         <li><a href="#hutils-130">1.3.0</a></li>
         <li><a href="#hutils-120">1.2.0</a></li>
