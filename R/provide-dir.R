@@ -2,10 +2,12 @@
 #' @description Provide directory. Create directory only if it does not exist.
 #' @param path Path to create.
 #' @param ... Passed to \code{dir.create}.
+#' @return \code{path} for success. Or the empty string \code{character(1)} if failures.
 #' @export 
 
 provide.dir <- function(path, ...) {
-  if (!dir.exists(path)) {
-    dir.create(path, recursive = TRUE, ...)
+  if (dir.exists(path) || dir.create(path, recursive = TRUE, ...)) {
+    return(path)
   }
+  ""
 }
