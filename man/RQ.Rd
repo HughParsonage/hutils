@@ -4,7 +4,7 @@
 \alias{RQ}
 \title{Shorthand for \code{requireNamespace}}
 \usage{
-RQ(pkg, yes, no)
+RQ(pkg, yes = NULL, no = NULL)
 }
 \arguments{
 \item{pkg}{Package to test whether the package is not yet installed.}
@@ -16,6 +16,8 @@ RQ(pkg, yes, no)
 \description{
 Present since \code{hutils v1.2.0}. Alias for \code{if (!requireNamespace(pkg, quietly = TRUE))} \emph{yes} \code{else} \emph{no}.
 Typical use-case would be \code{RQ(pkg, install.packages("pkg"))].}
+
+Default values for \code{yes} and \code{no} from \code{hutils v1.5.0}.
 
 This function is not recommended for use in scripts as it is a bit cryptic; its 
 use-case is for bash scripts and the like where calls like this would otherwise
