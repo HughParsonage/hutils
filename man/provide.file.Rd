@@ -13,5 +13,5 @@ provide.file(path)
 \code{path} for success. Or the empty string \code{character(1)} if failures.
 }
 \description{
-Provide a file
+Present since \code{hutils v1.5.0}.
 }
