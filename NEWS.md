@@ -1,5 +1,5 @@
 
-# hutils 1.4.1
+# hutils 1.5.0
 * Bug fixes:
   - `samp` works with size > length.
 
