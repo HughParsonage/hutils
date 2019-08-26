@@ -273,7 +273,21 @@ mutate_ntile <- function(DT,
     stop("`anyNA(x)` is TRUE.")
   }
   
-  as.integer(n * {seq_along(x) - 1L} / length(x) + 1L)
+  
+  
+  # n * seq_along(x) overflows unless:
+  if (n < .Machine$integer.max / length(x)) {
+    n <- as.integer(n)
+    as.integer(n * (seq_along(x) - 1L) %/% length(x) + 1L)
+  }
+  lengthx0 <- length(x) - 1L  # 0:lengthx0 faster than seq_along(x) - 1
+  o <- {as.double(n) * {0:lengthx0}} / length(x) + 1
+  if (n < .Machine$integer.max) {
+    return(as.integer(o))
+  } else {
+    return(o)
+  }
+  
 }
 
 definitely_sorted <- function(ddt, nom, check_na, keyddt = key(ddt), keyby = NULL) {
