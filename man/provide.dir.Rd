@@ -12,7 +12,7 @@ provide.dir(path, ...)
 \item{...}{Passed to \code{dir.create}.}
 }
 \value{
-\code{path} for success. Or the empty string \code{character(1)} if failures.
+\code{path} on success, the empty string \code{character(1)} on failure.
 }
 \description{
 Provide directory. Create directory only if it does not exist.

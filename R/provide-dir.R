@@ -2,7 +2,7 @@
 #' @description Provide directory. Create directory only if it does not exist.
 #' @param path Path to create.
 #' @param ... Passed to \code{dir.create}.
-#' @return \code{path} for success. Or the empty string \code{character(1)} if failures.
+#' @return \code{path} on success, the empty string \code{character(1)} on failure.
 #' @export 
 
 provide.dir <- function(path, ...) {
