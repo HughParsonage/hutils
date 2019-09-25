@@ -16,6 +16,6 @@ provide.file <- function(path, on_failure = "") {
     return(path)
   } else {
     # If the file creation failed, return the value of on_failure
-    on_failure
+    on_failure  # nocov
   }
 }
