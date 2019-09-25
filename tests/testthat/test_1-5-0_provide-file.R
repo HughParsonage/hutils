@@ -7,8 +7,8 @@ test_that("provide.file works", {
   expect_equal(provide.file(tempf, on_failure = stop("failed")), tempf)
   
   # Should fail
-  expect_equal(provide.file("\\\\A:"), "")
-  expect_error(provide.file("\\\\A:", on_failure = stop("ossif09")),
+  expect_equal(provide.file("/"), "")
+  expect_error(provide.file("/", on_failure = stop("ossif09")),
                regexp = "ossif09")
   
 })
