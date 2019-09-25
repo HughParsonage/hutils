@@ -4,13 +4,15 @@
 \alias{provide.file}
 \title{Provide a file}
 \usage{
-provide.file(path)
+provide.file(path, on_failure = "")
 }
 \arguments{
 \item{path}{A string. The path to a filename that requires existence.}
+
+\item{on_failure}{The return value on failure. By default, an empty string.}
 }
 \value{
-\code{path} for success. Or the empty string \code{character(1)} if failures.
+\code{path} for success. Or \code{on_failure} if the \code{path} cannot be provided.
 }
 \description{
 Present since \code{hutils v1.5.0}.
