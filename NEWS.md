@@ -2,6 +2,7 @@
 # hutils 1.5.0
 * Bug fixes:
   - `samp` works with size > length.
+  - `weighted_ntile` is less susceptible to integer overflow (#36)
 
 * New functions
   - `provide.file` To ensure a file (including its directory) exists.
