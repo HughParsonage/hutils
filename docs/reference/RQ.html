@@ -34,6 +34,7 @@
 
 <meta property="og:description" content="Present since hutils v1.2.0. Alias for if (!requireNamespace(pkg, quietly = TRUE)) yes else no.
 Typical use-case would be RQ(pkg, install.packages(&quot;pkg&quot;))].
+Default values for yes and no from hutils v1.5.0.
 This function is not recommended for use in scripts as it is a bit cryptic; its 
 use-case is for bash scripts and the like where calls like this would otherwise
 be frequent and cloud the message." />
@@ -67,7 +68,7 @@ be frequent and cloud the message." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hutils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
       </span>
     </div>
 
@@ -118,13 +119,14 @@ be frequent and cloud the message." />
     
     <p>Present since <code>hutils v1.2.0</code>. Alias for <code>if (!requireNamespace(pkg, quietly = TRUE))</code> <em>yes</em> <code>else</code> <em>no</em>.
 Typical use-case would be <code>RQ(pkg, install.packages("pkg"))].</code></p>
+<p>Default values for <code>yes</code> and <code>no</code> from <code>hutils v1.5.0</code>.</p>
 <p>This function is not recommended for use in scripts as it is a bit cryptic; its 
 use-case is for bash scripts and the like where calls like this would otherwise
 be frequent and cloud the message.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>RQ</span>(<span class='no'>pkg</span>, <span class='no'>yes</span>, <span class='no'>no</span>)</pre>
+    <pre class="usage"><span class='fu'>RQ</span>(<span class='no'>pkg</span>, <span class='kw'>yes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

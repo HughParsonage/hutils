@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hutils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
       </span>
     </div>
 
@@ -139,12 +139,9 @@
   <span class='fu'><a href='https://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark'>microbenchmark</a></span>(<span class='kw'>base</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unique'>unique</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sign'>sign</a></span>(<span class='fl'>1</span>:<span class='fl'>1e5</span>), <span class='kw'>nmax</span> <span class='kw'>=</span> <span class='fl'>3</span>)) <span class='kw'>==</span> <span class='fl'>1L</span>,
                  <span class='fu'>all_same_sign</span>(<span class='fl'>1</span>:<span class='fl'>1e5</span>))
 }</div><div class='output co'>#&gt; Unit: microseconds
-#&gt;                    expr      min       lq       mean    median        uq
-#&gt;                    base 2011.001 2048.202 2334.93599 2069.9505 2088.8510
-#&gt;  all_same_sign(1:1e+05)   84.400   86.851   95.01697   95.3015  101.3005
-#&gt;        max neval cld
-#&gt;  10507.902   100   b
-#&gt;    130.401   100  a </div><div class='input'># Unit: microseconds
+#&gt;                    expr    min     lq     mean  median     uq    max neval cld
+#&gt;                    base 1989.9 2026.0 2304.361 2039.65 2071.8 9020.1   100   b
+#&gt;  all_same_sign(1:1e+05)   86.3   87.7  100.670   96.25  104.5  173.1   100  a </div><div class='input'># Unit: microseconds
 #                   expr  min   lq mean median   uq  max neval cld
 #                   base 2012 2040 2322   2047 2063 9324   100   b
 # all_same_sign(1:1e+05)   86   86   94     89   93  290   100  a 

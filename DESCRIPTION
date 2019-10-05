@@ -1,8 +1,8 @@
 Package: hutils
 Type: Package
 Title: Miscellaneous R Functions and Aliases
-Version: 1.5.0
-Date: 2019-05-31
+Version: 1.5.1
+Date: 2019-10-05
 Authors@R: c(person("Hugh", "Parsonage", role = c("aut", "cre"), email = "hugh.parsonage@gmail.com"),
              person("Michael", "Frasco", role = "ctb"),
              person("Ben", "Hamner", role = "ctb"))
@@ -15,10 +15,10 @@ Depends: R (>= 3.3.0)
 Imports:
   data.table (< 2.0.0),
   magrittr (< 2.0.0),
-  stats (< 4.0.0),
-  utils (< 4.0.0),
+  stats,
+  utils,
   fastmatch (< 2.0.0),
-  grDevices (< 4.0.0)
+  grDevices
 Suggests:
     testthat (>= 2.1.0),
     datasets,
