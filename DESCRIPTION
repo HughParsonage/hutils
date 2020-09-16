@@ -34,10 +34,11 @@ Suggests:
     ggplot2,
     readr,
     rcheology,
+    rstudioapi,
     survey,
     tibble,
     tidyr,
     withr (>= 2.0.0)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr

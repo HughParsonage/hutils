@@ -1,7 +1,7 @@
 #' Replace string pattern in text file
 #' @param file_contents Character string containing a regular expression to be matched in the 
-#' given character vector. Passed to \code{pattern} in \code{\link[base]{gsub}}.
-#' @param replace The replacement, passed to \code{replacement} in \code{\link[base]{gsub}}.
+#' given character vector. Passed to \code{pattern} in \code{\link[base:grep]{gsub}}.
+#' @param replace The replacement, passed to \code{replacement} in \code{\link[base:grep]{gsub}}.
 #' @param basedir The root of the directory tree in which files will be searched recursively.
 #' @param dir_recursive (logical, default: \code{TRUE}) Search within subdirectories of \code{basedir}?
 #' @param reader A function, akin to \code{base::readLines}, the default, that accepts a filename and returns a character vector.

@@ -7,9 +7,15 @@
 \alias{longest_prefix}
 \title{Longest common prefix/suffix}
 \usage{
-trim_common_affixes(x, .x = NULL, na.rm = TRUE, prefixes = TRUE,
-  suffixes = TRUE, warn_if_no_prefix = TRUE,
-  warn_if_no_suffix = TRUE)
+trim_common_affixes(
+  x,
+  .x = NULL,
+  na.rm = TRUE,
+  prefixes = TRUE,
+  suffixes = TRUE,
+  warn_if_no_prefix = TRUE,
+  warn_if_no_suffix = TRUE
+)
 
 longest_suffix(x, .x = NULL, na.rm = TRUE, warn_if_no_suffix = TRUE)
 

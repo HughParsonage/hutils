@@ -2,14 +2,26 @@
 % Please edit documentation in R/find_pattern.R
 \name{find_pattern_in}
 \alias{find_pattern_in}
+\alias{goto_pattern_in}
 \title{Find string pattern in (text) file}
 \usage{
-find_pattern_in(file_contents, basedir = ".", dir_recursive = TRUE,
-  reader = readLines, include.comments = FALSE, comment.char = NULL,
-  use.OS = FALSE, file_pattern = "\\\\.(R|r)(nw|md)?$",
-  file_contents_perl = TRUE, file_contents_fixed = FALSE,
-  file_contents_ignore_case = FALSE, file.ext = NULL,
-  which_lines = c("first", "all"))
+find_pattern_in(
+  file_contents,
+  basedir = ".",
+  dir_recursive = TRUE,
+  reader = readLines,
+  include.comments = FALSE,
+  comment.char = NULL,
+  use.OS = FALSE,
+  file_pattern = "\\\\.(R|r)(nw|md)?$",
+  file_contents_perl = TRUE,
+  file_contents_fixed = FALSE,
+  file_contents_ignore_case = FALSE,
+  file.ext = NULL,
+  which_lines = c("first", "all")
+)
+
+goto_pattern_in(file_contents, ...)
 }
 \arguments{
 \item{file_contents}{A perl-regular expression as a search query.}
@@ -41,12 +53,18 @@ be interpreted as a \code{fixed} regex?}
 \item{file.ext}{A file extension passed to the operating system if \code{use.OS} is used.}
 
 \item{which_lines}{One of \code{"first"} and \code{"all"}. If \code{"first"} only the first match in any file is returned in the result; if \code{"all"}, all matches are.}
+
+\item{...}{Arguments passed to \code{find_pattern_in}.}
 }
 \value{
 A \code{data.table}, showing the matches per file.
+
+\code{goto_pattern_in} additionally prompts for a row of the returned results.
+Using the \code{rstudioapi}, if available, RStudio will jump to the file 
+and line number.
 }
 \description{
-Find string pattern in (text) file
+\code{goto_pattern_in} present from 1.6.0
 }
 \details{
 For convenience, if \code{file_contents} appears to be a directory

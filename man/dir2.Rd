@@ -4,10 +4,18 @@
 \alias{dir2}
 \title{List many files}
 \usage{
-dir2(path = ".", file_ext = NULL, full.names = TRUE,
-  recursive = TRUE, pattern = NULL, fixed = FALSE, perl = TRUE &&
-  missing(fixed) && !fixed, ignore.case = FALSE, invert = FALSE,
-  .dont_use = FALSE)
+dir2(
+  path = ".",
+  file_ext = NULL,
+  full.names = TRUE,
+  recursive = TRUE,
+  pattern = NULL,
+  fixed = FALSE,
+  perl = TRUE && missing(fixed) && !fixed,
+  ignore.case = FALSE,
+  invert = FALSE,
+  .dont_use = FALSE
+)
 }
 \arguments{
 \item{path}{A string representing the trunk path to search within.}

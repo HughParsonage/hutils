@@ -4,8 +4,15 @@
 \alias{report_error}
 \title{Report errors and warnings}
 \usage{
-report_error(faulty_input, error_condition, requirement, context = NULL,
-  advice, hint = NULL, halt = TRUE)
+report_error(
+  faulty_input,
+  error_condition,
+  requirement,
+  context = NULL,
+  advice,
+  hint = NULL,
+  halt = TRUE
+)
 }
 \arguments{
 \item{faulty_input}{Unquoted function argument that is the cause of the error condition.}

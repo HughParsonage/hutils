@@ -4,8 +4,14 @@
 \alias{any_grepl}
 \title{Does the pattern appear anywhere?}
 \usage{
-any_grepl(x, pattern, perl = TRUE, ignore.case = FALSE,
-  fixed = FALSE, quiet = FALSE)
+any_grepl(
+  x,
+  pattern,
+  perl = TRUE,
+  ignore.case = FALSE,
+  fixed = FALSE,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{x}{A character vector.}

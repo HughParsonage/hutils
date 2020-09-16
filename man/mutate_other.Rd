@@ -4,8 +4,17 @@
 \alias{mutate_other}
 \title{Group infrequent entries into 'Other category'}
 \usage{
-mutate_other(.data, var, n = 5, count, by = NULL, var.weight = NULL,
-  mass = NULL, copy = TRUE, other.category = "Other")
+mutate_other(
+  .data,
+  var,
+  n = 5,
+  count,
+  by = NULL,
+  var.weight = NULL,
+  mass = NULL,
+  copy = TRUE,
+  other.category = "Other"
+)
 }
 \arguments{
 \item{.data}{Data containing variable.}

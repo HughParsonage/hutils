@@ -4,8 +4,14 @@
 \alias{duplicated_rows}
 \title{Return duplicated rows of data.table}
 \usage{
-duplicated_rows(DT, by = names(DT), na.rm = FALSE, order = TRUE,
-  copyDT = TRUE, na.last = FALSE)
+duplicated_rows(
+  DT,
+  by = names(DT),
+  na.rm = FALSE,
+  order = TRUE,
+  copyDT = TRUE,
+  na.last = FALSE
+)
 }
 \arguments{
 \item{DT}{A \code{data.table}.}

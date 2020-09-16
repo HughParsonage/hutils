@@ -4,8 +4,15 @@
 \alias{ahull}
 \title{Maximum area given x and y coordinates}
 \usage{
-ahull(DT, x = DT$x, y = DT$y, minH = 0, minW = 0,
-  maximize = "area", incl_negative = FALSE)
+ahull(
+  DT,
+  x = DT$x,
+  y = DT$y,
+  minH = 0,
+  minW = 0,
+  maximize = "area",
+  incl_negative = FALSE
+)
 }
 \arguments{
 \item{DT, x, y}{Coordinates of a curve containing a rectangle. 

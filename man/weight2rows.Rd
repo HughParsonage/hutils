@@ -4,8 +4,7 @@
 \alias{weight2rows}
 \title{Expand a weighted data frame to an equivalent unweighted}
 \usage{
-weight2rows(DT, weight.var, rows.out = NULL,
-  discard_weight.var = FALSE)
+weight2rows(DT, weight.var, rows.out = NULL, discard_weight.var = FALSE)
 }
 \arguments{
 \item{DT}{A \code{data.table}. Will be converted to one if possible.}

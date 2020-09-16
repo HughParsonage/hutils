@@ -4,17 +4,24 @@
 \alias{replace_pattern_in}
 \title{Replace string pattern in text file}
 \usage{
-replace_pattern_in(file_contents, replace, basedir = ".",
-  dir_recursive = TRUE, reader = readLines,
-  file_pattern = "\\\\.(R|r)(nw|md)?$", file_contents_perl = TRUE,
-  file_contents_fixed = FALSE, file_contents_ignore_case = FALSE,
-  writer = writeLines)
+replace_pattern_in(
+  file_contents,
+  replace,
+  basedir = ".",
+  dir_recursive = TRUE,
+  reader = readLines,
+  file_pattern = "\\\\.(R|r)(nw|md)?$",
+  file_contents_perl = TRUE,
+  file_contents_fixed = FALSE,
+  file_contents_ignore_case = FALSE,
+  writer = writeLines
+)
 }
 \arguments{
 \item{file_contents}{Character string containing a regular expression to be matched in the 
-given character vector. Passed to \code{pattern} in \code{\link[base]{gsub}}.}
+given character vector. Passed to \code{pattern} in \code{\link[base:grep]{gsub}}.}
 
-\item{replace}{The replacement, passed to \code{replacement} in \code{\link[base]{gsub}}.}
+\item{replace}{The replacement, passed to \code{replacement} in \code{\link[base:grep]{gsub}}.}
 
 \item{basedir}{The root of the directory tree in which files will be searched recursively.}
 

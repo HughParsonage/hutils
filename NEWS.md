@@ -1,5 +1,11 @@
 
-# hutils 1.5.1
+## hutils 1.6.0
+
+* New functions
+  - `goto_pattern_in` an enhancement of `find_pattern_in` to jump to a line in
+  RStudio.
+
+## hutils 1.5.1
 * Bug fixes:
   - `weighted_ntile` is less susceptible to integer overflow (#36)
 
@@ -8,7 +14,7 @@
     to avoid issues with CRAN.
 
 
-# hutils 1.5.0
+## hutils 1.5.0
 * Bug fixes:
   - `samp` works with size > length.
 
@@ -18,7 +24,7 @@
 * Enhancements:
   - `provide.dir` returns the directory requested on success.
 
-# hutils 1.4.0
+## hutils 1.4.0
 * New functions:
   - `%<->%` To swap values between objects
   - `average_bearing`, the bearing bisecting two vectors
@@ -38,7 +44,7 @@
   - `find_pattern_in` now accepts `file_contents_ignore_case`.
   - `find_pattern_in` no longer complains about `perl`, `fixed` conflicts.
 
-# hutils 1.3.0
+## hutils 1.3.0
 * Bug fixes:
   - `weight2rows`:
     * no longer reorders the columns in the result
@@ -55,7 +61,7 @@
   - `weight2rows` gains a `rows.out` argument to specify the number of rows in the result.
 
 
-# hutils 1.2.0
+## hutils 1.2.0
 * New functions:
   - `RQ(p, yes, no)` short for `if (!requireNamespace("p", quietly = TRUE)) yes else no`.
   - `isAttached` for conveniently determining whether a namespace is attached
@@ -66,7 +72,7 @@
 * Minor changes:
   - `if_else` reports a clearer error message when `length(condition) == 1`.
 
-# hutils 1.1.1
+## hutils 1.1.1
 * Change of stable test:
     - The only changes were so that the test proceeds when a required package is present. The tests would never have succeeded in cases where they now skip. Consequently the major version number has not been incremented.
     
@@ -75,7 +81,7 @@
 * Enhancement:
     - `find_pattern_in` accepts argument `which_lines` to allow multiple lines per file, not just the first (the default).
 
-# hutils 1.1.0
+## hutils 1.1.0
 * New functions:
     - `auc`: area under the curve given predicted and actual values.
     - `select_grep`: select columns matching a pattern.
@@ -87,12 +93,12 @@
   - `drop_constant_cols` first checks whether the first and second entries are identical before working out the number of unique values.
    
 
-# hutils 1.0.0
+## hutils 1.0.0
 * Stable release:
   - All tests are now marked as major release.
 * New function `%notchin%` for a 'safer' alternative to `%notin%`.
 
-# hutils 0.10.0
+## hutils 0.10.0
 * New function `implies`, logical implies.
 * New function `drop_constant_cols`
 * New function `print_transpose_data_table` for glimpsing data tables by rows
@@ -101,13 +107,13 @@
     - Ensure `drop_empty_cols` retains non-empty columns when duplicate names are used.
     - `coalesce` errors if there is `...` wrongly contains factors.
 
-# hutils 0.9.0
+## hutils 0.9.0
 * Changed `if_else` to reflect dplyr's formals so it can be a drop-in replacement.
 * Fix error for multi-length `missing` value in `if_else` when length-one `condition`.
 * Add vignette
 * Minor performance improvements
 
-# hutils 0.8.0
+## hutils 0.8.0
 
 * Added a `NEWS.md` file to track changes to the package.
 * New functions

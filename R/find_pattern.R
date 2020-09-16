@@ -1,4 +1,6 @@
 #' Find string pattern in (text) file
+#' @description \code{goto_pattern_in} present from 1.6.0
+#' 
 #' @param file_contents A perl-regular expression as a search query.
 #' @param basedir The root of the directory tree in which files will be searched recursively.
 #' @param dir_recursive (logical, default: \code{TRUE}) Search within subdirectories of \code{basedir}?
@@ -16,9 +18,22 @@
 #' @param file_contents_ignore_case (logical, default: \code{FALSE}) As in \code{\link[base]{grep}}.
 #' @param file.ext A file extension passed to the operating system if \code{use.OS} is used.
 #' @param which_lines One of \code{"first"} and \code{"all"}. If \code{"first"} only the first match in any file is returned in the result; if \code{"all"}, all matches are.
+#' 
+#' @param ... Arguments passed to \code{find_pattern_in}.
+#' 
 #' @return A \code{data.table}, showing the matches per file.
+#' 
+#' \code{goto_pattern_in} additionally prompts for a row of the returned results.
+#' Using the \code{rstudioapi}, if available, RStudio will jump to the file 
+#' and line number.
+#' 
 #' @details For convenience, if \code{file_contents} appears to be a directory
 #' and \code{basedir} does not, the arguments are swapped, but with a warning.
+#' 
+#' 
+#' 
+#' 
+#' 
 #' @export
 
 find_pattern_in <- function(file_contents,
@@ -47,11 +62,16 @@ find_pattern_in <- function(file_contents,
             "Do not rely on this behaviour as it may change without notice.")
     file_contents %<->% basedir
   }
-
   
+  reader_was_missing <- missing(reader)
   ..reader <- match.fun(reader)
   .reader <- function(x) {
-    out <- ..reader(x)
+    if (reader_was_missing) {
+      # don't warn on bad newline by default
+      out <- readLines(x, warn = FALSE)
+    } else {
+      out <- ..reader(x)
+    }
     if (!include.comments) {
       if (is.null(comment.char)) {
         comment.char <-
@@ -67,6 +87,7 @@ find_pattern_in <- function(file_contents,
     }
     out
   }
+  
   
   
   if (length(file.ext)) {
@@ -189,6 +210,24 @@ deprecate_windows_finder <- function() {
   if (identical(.Platform$OS.type,
                 "windows")) .Deprecated("hutilsInteractive::find_pattern_in_windows")
 }
+
+
+#' @rdname find_pattern_in
+#' @export
+goto_pattern_in <- function(file_contents, ...) {
+  if (!is.data.table(file_contents)) {
+    found_patterns <- find_pattern_in(file_contents, ...)
+  }
+  print(found_patterns)
+  RQ("rstudioapi", no = {
+    i <- as.integer(readline(prompt = "Select row number "))
+    file <- found_patterns[i][["file"]]
+    line_no <- found_patterns[i][["line_no"]]
+    rstudioapi::navigateToFile(file = file, line = line_no)
+  })
+  invisible(found_patterns)
+}
+
 #nocov end
 
 

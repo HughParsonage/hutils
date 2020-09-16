@@ -4,8 +4,7 @@
 \alias{samp}
 \title{Safer sampler}
 \usage{
-samp(x, size = length(x), replace = size > length(x), loud = TRUE,
-  prob = NULL)
+samp(x, size = length(x), replace = size > length(x), loud = TRUE, prob = NULL)
 }
 \arguments{
 \item{x}{A vector.}
