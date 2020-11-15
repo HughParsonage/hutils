@@ -205,4 +205,21 @@ test_that("swapped arguments", {
   expect_warning(find_pattern_in(".", "x.*y"))
 })
 
+test_that("Don't warn on bad newline", {
+  tempf <- tempfile()
+  cat("abba", file = tempf)
+  expect_warning(find_pattern_in("b+", basedir = dirname(tempf), reader = readLines))
+  file.remove(tempf)
+})
+
+test_that("file.ext", {
+  tempf <- tempfile(fileext = ".abc")
+  cat("abba", "bbb", "ccc", file = tempf, sep = "\n")
+  DT <- find_pattern_in("b+", dirname(tempf), file.ext = ".abc", which_lines = "all")
+  expect_equal(nrow(DT), 2)
+  DT <- find_pattern_in("xyz", dirname(tempf))
+  expect_equal(nrow(DT), 0)
+  
+})
+
 

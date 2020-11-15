@@ -4,6 +4,7 @@
 * New functions
   - `goto_pattern_in` an enhancement of `find_pattern_in` to jump to a line in
   RStudio.
+  - `prohibit_` functions for argument checking
 
 ## hutils 1.5.1
 * Bug fixes:
