@@ -11,8 +11,5 @@ test_that("prohibit_vector_recycling works", {
 test_that("prohibit_length0_vectors", {
   expect_null(prohibit_unequal_length_vectors(1:5, 1:5))
   expect_error(prohibit_unequal_length_vectors(1:5, 1:6))
-  expect_null(prohibit_length0_vectors(1:5, 1:5))
-  a <- NULL
-  expect_error(prohibit_length0_vectors(1:5, a))
 })
 

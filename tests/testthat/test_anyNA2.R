@@ -6,7 +6,6 @@ test_that(".anyNA2", {
   expect_true(.anyNA2(y))
   expect_true(.anyNA2(y))
   z <- rep_len(letters, 1e5)
-  expect_false()
   expect_false(.anyNA2(z))
   expect_false(.anyNA2(z))
   
