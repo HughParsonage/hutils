@@ -4,9 +4,6 @@
 \alias{prohibit_vector_recycling}
 \alias{prohibit_vector_recycling.MAXLENGTH}
 \title{Prohibit vector recycling}
-\source{
-\url{http://stackoverflow.com/a/9335687/1664978}
-}
 \usage{
 prohibit_vector_recycling(...)
 
