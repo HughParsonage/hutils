@@ -24,7 +24,7 @@ of origin and destination.}
 }
 \value{
 \describe{
-\item{\code{bearing}}{The bearing from \code{_orig} and \code{_dest}.}
+\item{\code{bearing}}{An approximate bearing from \code{_orig} and \code{_dest}.}
 \item{\code{compass2bearing}}{The bearing encoded by the compass input.}
 \item{\code{easterly_component}}{The easterly component of a unit vector
 pointing in the direction provided.}

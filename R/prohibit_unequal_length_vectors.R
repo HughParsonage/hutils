@@ -7,7 +7,15 @@
 prohibit_unequal_length_vectors <- function(...) {
   lengths <- lengths(list(...))
   if (max(lengths) != min(lengths)) {
-    stop("Input vectors must all have the same length.")
+    max.length <- max(lengths)
+    i <- which.max(lengths != max.length)
+    j <- which.max(lengths)
+    dots <- eval(substitute(alist(...)))
+    first_wrong_arg <- as.character(dots[i])
+    max_wrong_arg <- as.character(dots[j])
+    stop("`", first_wrong_arg, "` had length ", lengths[i],
+         ", but the length of `", max_wrong_arg, "` is ", max.length, ". ",
+         "Each vector must have the same length.")
   }
   invisible(NULL)
 }
