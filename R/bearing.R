@@ -47,33 +47,6 @@ bearing <- function(lat_orig, lon_orig, lat_dest, lon_dest) {
 #' @rdname bearing
 #' @export
 compass2bearing <- function(compass) {
-  if (length(compass) > 1) {
-    x <- res <- NULL
-    DT <- setDT(list(x = compass))
-    DT[, res := compass2bearing(x), by = "x"]
-    return(.subset2(DT, "res"))
-  }
-  if (is.na(compass)) {
-    return(NA_real_)
-  }
-  
-  switch(nchar(compass),
-         {
-           c(0, 90, 180, 270)[match(toupper(compass), c("N", "E", "S", "W"))]
-         },
-         {
-           c(45, 135, 225, 315)[match(toupper(compass), c("NE", "SE", "SW", "NW"))]
-         },
-         {
-           b1 <- substr(compass, 0, 1)
-           b2 <- substr(compass, 2, 3)
-           average_bearing(compass2bearing(b1),
-                           compass2bearing(b2))
-         },
-         0)
-}
-
-.compass2bearing <- function(compass) {
   CompassNames <- c("CALM", 
                     "E", "ENE", "ESE",
                     "N",
