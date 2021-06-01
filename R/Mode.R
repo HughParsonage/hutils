@@ -19,7 +19,7 @@ Mode <- function(x) {
       yes <- sum(x, na.rm = TRUE)
       return(c(TRUE, FALSE, NA)[which.max(c(yes, length(x) - yes - nas, nas))])
     } else {
-      if (2L * sum(x) > length(x)) {
+      if (2 * sum(x) > length(x)) {
         return(TRUE)
       } else {
         return(FALSE)
@@ -27,7 +27,20 @@ Mode <- function(x) {
     }
   }
   if (is.integer(x)) {
-    ux <- min(x):max(x)  # if min(x) == max(x), still okay
+    xmin <- min(x)
+    if (is.na(xmin)) {
+      ux <- unique(x)
+    } else {
+      xmax <- max(x)
+      
+      # Avoid creating very large indices
+      # xmax/2 because xmax - xmin may overflow
+      if ((xmax/2 - xmin/2) > length(x)) {
+        ux <- unique(x)
+      } else {
+        ux <- xmin:xmax
+      }
+    }
     return(ux[which.max(tabulate(match(x, ux)))])
   }
   ux <- unique(x)

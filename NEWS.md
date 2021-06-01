@@ -1,4 +1,9 @@
 
+## hutils 1.7.0
+
+* `Mode` is now less clever and more speedy for sparse integer inputs
+
+
 ## hutils 1.6.0
 
 * New functions
