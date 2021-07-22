@@ -1,4 +1,11 @@
 
+## hutils 1.7.1
+
+* Technically breaking change:
+  - `test_1-3-0_weighted_ntile.R` has been modified to skip a test which relied on
+     old behaviour of package survey. I have not accompanied this with a major 
+     version change.
+
 ## hutils 1.7.0
 
 * `Mode` is now less clever and more speedy for sparse integer inputs

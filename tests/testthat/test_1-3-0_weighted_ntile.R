@@ -25,8 +25,9 @@ test_that("weighted_ntiles on integers", {
 })
 
 
-test_that("weighted_ntile agrees with svyquantile", {
+test_that("weighted_ntile agrees with svyquantile (pre 4.0)", {
   skip_if_not_installed("survey")
+  skip_if(packageVersion("survey") >= "4.1")  # survey changed
   skip_if_not_installed("dplyr")
   skip_if_not_installed("tibble")
   library(survey)
