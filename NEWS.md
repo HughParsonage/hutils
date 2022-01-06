@@ -1,3 +1,7 @@
+## hutils 1.8.0
+
+* New functions
+  - `seq_nrow(x) = seq_len(nrow(x))` for abbreviation
 
 ## hutils 1.7.1
 
