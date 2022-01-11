@@ -8,6 +8,18 @@
 #' 
 
 drop_empty_cols <- function(DT, copy = FALSE) {
+  if (hutilscpp_has_allNA()) {
+    empty <- hutilscpp::allNA
+  } else {
+    empty <- function(x) {
+      is.na(x[1]) &&
+        if (is.logical(x)) {
+          all(x, na.rm = TRUE) && !any(x, na.rm = TRUE)
+        } else {
+          all(is.na(x), na.rm = TRUE)
+        }
+    }
+  }
   if (is.data.table(DT)) {
     if (copy) {
       out <- copy(DT)
@@ -15,14 +27,14 @@ drop_empty_cols <- function(DT, copy = FALSE) {
       out <- DT
     }
     
-    empty <- function(x) {
-      anyNA(x) &&
-        if (is.logical(x)) {
-          all(x, na.rm = TRUE) && !any(x, na.rm = TRUE)
-        } else {
-          all(is.na(x), na.rm = TRUE)
-        }
-    }
+    # empty <- function(x) {
+    #   anyNA(x) &&
+    #     if (is.logical(x)) {
+    #       all(x, na.rm = TRUE) && !any(x, na.rm = TRUE)
+    #     } else {
+    #       all(is.na(x), na.rm = TRUE)
+    #     }
+    # }
     
     isEmpty <- vapply(out, empty, logical(1), USE.NAMES = FALSE)
     
@@ -43,7 +55,7 @@ drop_empty_cols <- function(DT, copy = FALSE) {
               "Either ensure `DT` is a data.table or assert `copy = TRUE`.")
     }
     
-    isEmpty <- vapply(DT, function(x) anyNA(x) && all(is.na(x)), logical(1), USE.NAMES = FALSE)
+    isEmpty <- vapply(DT, empty, FUN.VALUE = NA, USE.NAMES = FALSE)
     if (any(isEmpty)) {
       non_empty_cols <- which(!isEmpty)
       out <- DT[, non_empty_cols, drop = FALSE]
@@ -54,4 +66,10 @@ drop_empty_cols <- function(DT, copy = FALSE) {
   }
   
   out[]
+}
+
+hutilscpp_has_allNA <- function(mock = getOption("hutils.test_no_hutilscpp")) {
+  is.null(mock) &&
+    requireNamespace("hutilscpp", quietly = TRUE) &&
+    "allNA" %in% getNamespaceExports("hutilscpp")
 }
