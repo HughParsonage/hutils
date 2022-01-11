@@ -2,6 +2,10 @@
 
 * New functions
   - `seq_nrow(x) = seq_len(nrow(x))` for abbreviation
+  
+* Performance:
+  - `drop_empty_cols` uses `is.na(x[1])` rather than `anyNA(x)` for higher 
+    performance on non-empty columns and `hutilscpp` if available
 
 ## hutils 1.7.1
 
