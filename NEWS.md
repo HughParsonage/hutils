@@ -3,6 +3,9 @@
 * New functions
   - `seq_nrow(x) = seq_len(nrow(x))` for abbreviation
   
+* Enhancements:
+  - `if_else` now supports `raw` output
+  
 * Performance:
   - `drop_empty_cols` uses `is.na(x[1])` rather than `anyNA(x)` for higher 
     performance on non-empty columns and `hutilscpp` if available
