@@ -124,8 +124,9 @@ if_else <- function(condition, true, false, missing = NULL) {
 
   Type <- typeof(yes)
   
-  if (Type != "logical" && Type != "integer" && Type != "double" && Type != "character") {
-    stop("typeof(true) == ", Type, ". The only permitted types are logical, integer, double, and character.")
+  if (Type != "logical" && Type != "integer" && Type != "double" && Type != "character" &&
+      Type != "raw") {
+    stop("typeof(true) == ", Type, ". The only permitted types are raw, logical, integer, double, and character.")
   }
   
   if (na_not_used) {
@@ -157,7 +158,8 @@ if_else <- function(condition, true, false, missing = NULL) {
                      "logical" = NA,
                      "integer" = NA_integer_,
                      "double" = NA_real_,
-                     "character" = NA_character_)
+                     "character" = NA_character_,
+                     "raw" = raw(1L))
   
   
   
