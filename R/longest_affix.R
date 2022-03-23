@@ -102,6 +102,11 @@ longest_suffix <- function(x, .x = NULL, na.rm = TRUE,
   x1 <- x[1]
   nchar1 <- nchar(x1)
   if (nchar1 <= 1L) {
+    if (nchar1 == 1L) {
+      if (all(endsWith(x, x1), na.rm = TRUE)) {
+        return(x1)
+      }
+    }
     if (warn_if_no_suffix) {
       warning("No common suffix.")
     }
@@ -154,6 +159,11 @@ longest_prefix <- function(x, .x = NULL, na.rm = TRUE,
   x1 <- x[1L]
   nchar1 <- nchar(x1)
   if (nchar1 <= 1L) {
+    if (nchar1 == 1L) {
+      if (all(startsWith(x, x1), na.rm = TRUE)) {
+        return(x1)
+      }
+    }
     if (warn_if_no_prefix) {
       warning("No common prefix.")
     }
