@@ -22,10 +22,11 @@ fst_columns <- function(file.fst) {
 #' @rdname fst_columns
 #' @export
 fst_nrow <- function(file.fst) {
-  fst::metadata_fst(file_fst(file.fst))[["nrOfRows", exact = TRUE]]
+  fst::metadata_fst(file.fst)[["nrOfRows", exact = TRUE]]
 }
 
 
+# nocov start
 assert_file_readable <- function(file.ext, vname) {
   if (length(file.ext) != 1) {
     stop("`length(", vname, ") = ", length(file.ext), "` but must be length-one.")
@@ -44,3 +45,4 @@ assert_file_readable <- function(file.ext, vname) {
          "exists but was not readable.")
   }
 }
+# nocov end

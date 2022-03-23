@@ -25,6 +25,7 @@ Suggests:
     desc,
     dplyr,
     digest,
+    fst,
     Hmisc,
     hutilscpp,
     microbenchmark,
