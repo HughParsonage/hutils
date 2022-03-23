@@ -10,7 +10,7 @@ test_that("find_pattern_in", {
   skip_on_cran()
   current_wd <- getwd()
   tempdir <- tempdir()
-  skip_if(length(dir(tempdir, pattern = "\\.R$")))
+  skip_if(length(dir(tempdir, pattern = "\\.R$")) != 0)
   for (x in letters) {
     writeLines(x, file.path(tempdir, paste0(x, ".R")))
   }
@@ -30,7 +30,7 @@ test_that("File extension", {
   skip_on_cran()
   current_wd <- getwd()
   tempdir <- tempdir()
-  skip_if(length(dir(tempdir, pattern = "\\.(zzy|R)$")))
+  skip_if(length(dir(tempdir, pattern = "\\.(zzy|R)$")) != 0)
   for (x in LETTERS) {
     writeLines(x, file.path(tempdir, paste0(x, ".zzy")))
   }
@@ -48,7 +48,7 @@ test_that("Other file extensions", {
   skip_if_not(identical(.Platform$OS, "windows"))
   current_wd <- getwd()
   tempdir <- tempdir()
-  skip_if(length(dir(tempdir, pattern = "\\.(zfy|R)$")))
+  skip_if(length(dir(tempdir, pattern = "\\.(zfy|R)$")) != 0)
   for (x in letters) {
     writeLines(x, file.path(tempdir, paste0(x, ".zfy")))
   }
@@ -89,7 +89,7 @@ test_that("Add coverage", {
   skip_on_cran()
   current_wd <- getwd()
   tempdir <- tempdir()
-  skip_if(length(dir(tempdir, pattern = "\\.(wfy|R)$")))
+  skip_if(length(dir(tempdir, pattern = "\\.(wfy|R)$")) != 0)
   for (x in letters) {
     writeLines(x, file.path(tempdir, paste0(x, ".wfy")))
   }
@@ -110,7 +110,7 @@ test_that("On Windows", {
   current_wd <- getwd()
   temp_dir <- tempfile()
   provide.dir(temp_dir)
-  skip_if(length(dir(temp_dir, pattern = "\\.(zy|R)$")))
+  skip_if(length(dir(temp_dir, pattern = "\\.(zy|R)$")) != 0)
   for (x in letters) {
     writeLines(x, file.path(temp_dir, paste0(x, ".zy")))
   }
