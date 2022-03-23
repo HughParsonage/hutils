@@ -2,9 +2,12 @@
 % Please edit documentation in R/fst_columns.R
 \name{fst_columns}
 \alias{fst_columns}
+\alias{fst_nrow}
 \title{Utilities for `fst` files}
 \usage{
 fst_columns(file.fst)
+
+fst_nrow(file.fst)
 }
 \arguments{
 \item{file.fst}{Path to file.}
@@ -13,6 +16,7 @@ fst_columns(file.fst)
 Various outputs:
 \describe{
 \item{\code{fst_columns}}{Returns the names of the columns in \code{file.fst}.}
+\item{\code{fst_nrow}}{Returns the number of rows in \code{file.fst}.}
 }
 }
 \description{
