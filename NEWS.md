@@ -1,7 +1,13 @@
 ## hutils 1.8.0
 
+* Bug fixes:
+  - `longest_affix` now correctly returns single character prefixes. (#40) 
+    Thanks to @piosierra for reporting.
+    
+
 * New functions
   - `seq_nrow(x) = seq_len(nrow(x))` for abbreviation
+  - `fst_columns`, `fst_nrow` the names `nrow` of an `fst` file
   
 * Enhancements:
   - `if_else` now supports `raw` output
