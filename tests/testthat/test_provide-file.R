@@ -5,6 +5,7 @@ test_that("provide.file works", {
   # Again for file existence
   expect_equal(provide.file(tempf), tempf)
   expect_equal(provide.file(tempf, on_failure = stop("failed")), tempf)
+  file.remove(tempf)
   
 })
 
