@@ -4,7 +4,7 @@
 \alias{select_which}
 \title{Select columns satisfying a condition}
 \usage{
-select_which(DT, Which, .and.dots = NULL, checkDT = TRUE)
+select_which(DT, Which, .and.dots = NULL, checkDT = TRUE, .and.grep = NULL)
 }
 \arguments{
 \item{DT}{A \code{data.table}.}
@@ -14,6 +14,9 @@ select_which(DT, Which, .and.dots = NULL, checkDT = TRUE)
 \item{.and.dots}{Optional extra columns to include. May be a character vector of \code{names(DT)} or numeric (positions) or logical. If provided, the columns so added (if they do not satisfy \code{Which}) will be after all the columns \code{Which} do so satisfy.}
 
 \item{checkDT}{If \code{TRUE} (the default), an informative error message is provided if \code{DT} is not a \code{data.table}.}
+
+\item{.and.grep}{A character vector of regular expressions to match to the names
+of \code{DT}. The corresponding columns will be included in the result.}
 }
 \value{
 \code{DT} with the selected variables.
