@@ -12,7 +12,7 @@
 
 fst_columns <- function(file.fst) {
   if (!requireNamespace("fst", quietly = TRUE)) {
-    stop("`fst_columns` requires package:fst.")
+    stop("`fst_columns` requires package:fst.") # nocov
   }
   
   assert_file_readable(file.fst, "file.fst")
