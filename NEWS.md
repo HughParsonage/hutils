@@ -1,3 +1,12 @@
+## hutils 1.8.1
+
+* Internal:
+  - Fix class() == "character" infelicity
+
+* Enhancements
+  - `select_which` gains argument `.and.grep`
+  
+
 ## hutils 1.8.0
 
 * Bug fixes:
