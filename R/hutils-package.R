@@ -17,7 +17,7 @@
 #' not include the version in their filename may be modified from version to version 
 #' (though this will be avoided).
 #' 
-#' @import data.table
+#' @rawNamespace import(data.table, except = "%notin%")
 #' @importFrom magrittr %>%
 #' @importFrom magrittr not
 #' @importFrom magrittr and

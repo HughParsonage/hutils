@@ -1,3 +1,8 @@
+## hutilsc 1.8.2
+* Internal
+  - Fix upcoming namespace clash with data.table for `%notin%`
+
+
 ## hutils 1.8.1
 
 * Internal:
