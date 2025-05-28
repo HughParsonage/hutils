@@ -37,13 +37,21 @@ replace_pattern_in <- function(file_contents,
   
   for (file.R in R_files) {
     lines_text <- .reader(file.R)
-    out_lines <- gsub(file_contents,
-                      replace,
-                      lines_text, 
-                      perl = file_contents_perl, 
-                      fixed = file_contents_fixed,
-                      ignore.case = file_contents_ignore_case)
-    .writer(out_lines, file.R)
+    any_g <- 
+      any_grepl(lines_text, 
+                file_contents, 
+                perl = file_contents_perl,
+                fixed = file_contents_fixed, 
+                ignore.case = file_contents_ignore_case)
+    if (any_g) {
+      out_lines <- gsub(file_contents,
+                        replace,
+                        lines_text, 
+                        perl = file_contents_perl, 
+                        fixed = file_contents_fixed,
+                        ignore.case = file_contents_ignore_case)
+      .writer(out_lines, file.R)
+    }
   }
 }
 

@@ -1,4 +1,11 @@
-## hutilsc 1.8.2
+## hutils 1.8.3
+
+* Bug fix:
+  - `find_pattern_in` did not pass its `find_pattern_ignore_case` argument to 
+    the file filter, resulting in false negative results.
+
+
+## hutils 1.8.2
 * Internal
   - Fix upcoming namespace clash with data.table for `%notin%`
 

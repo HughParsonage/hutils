@@ -139,6 +139,7 @@ find_pattern_in <- function(file_contents,
     any(grepl(.pattern,
               x = x,
               perl = file_contents_perl,
+              ignore.case = file_contents_ignore_case,
               fixed = file_contents_fixed))
   }
   
