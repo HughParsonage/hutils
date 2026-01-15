@@ -7,11 +7,12 @@ rm_trailing_empty <- function(x) {
   x
 }
 
-createDigestSha1Tbl <- function(version = c("1.0.0", "1.1.0", "1.2.0", "1.3.0"),
+createDigestSha1Tbl <- function(version = c("1.0.0", "1.1.0", "1.2.0", "1.3.0", "2.0.0"),
                                 return_DT = FALSE) {
   version <- match.arg(version)
   library(data.table)
   DigestSha1 <- function(x) {
+    cat("x = ", x, "\n")
     Lines <- readr::read_lines(x)  # encoding more consistent
     substr(digest::sha1(rm_trailing_empty(Lines)), 0, 8)
   }
@@ -36,6 +37,19 @@ createDigestSha1Tbl <- function(version = c("1.0.0", "1.1.0", "1.2.0", "1.3.0"),
     return(FALSE)
   }
   return(TRUE)
+}
+
+recreate <- function() {
+  versions <- c("1.0.0", "1.1.0", "1.2.0", "1.3.0", "2.0.0")
+  stopifnot(file.exists("DESCRIPTION"), file.exists("tests/testthat/test-backwards-compatibility.R"))
+  setwd("tests/testthat/")
+  for (v in versions) {
+    cat("v = ", v , "\n")
+    DT <- createDigestSha1Tbl(v, return_DT = TRUE)
+    bfile <- paste0("v", gsub(".", "-", v, fixed = TRUE), ".tsv")
+    fwrite(DT, file = file.path("version-sha1s", bfile), sep = "\t")
+  }
+  setwd("../..")
 }
 
 test_that("1.0.0", {
