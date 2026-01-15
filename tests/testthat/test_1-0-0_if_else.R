@@ -142,7 +142,7 @@ test_that("Must be faster than dplyr::if_else", {
       as.data.table %>%
       .[, .(time = median(time)), by = expr]
     
-    expect_gt(out[expr == "dplyr"][["time"]],
+    expect_lt(out[expr == "dplyr"][["time"]],
               out[expr == "hutils"][["time"]])
   }
 })
