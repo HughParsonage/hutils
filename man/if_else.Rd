@@ -28,8 +28,9 @@ type as \code{true}.)
 \description{
 Lightweight \code{dplyr::if_else} with the virtues and vices that come from such an approach.
 Attempts to replicate \code{dplyr::if_else} but written in base R for faster compile time.
-\code{hutils::if_else} should be faster than \code{dplyr::if_else} \dots{} when it works, 
-but will not work on lists or on factors. 
+originally \code{hutils::if_else} was faster than \code{dplyr::if_else} but since \code{dplyr v 1.2.0}
+this is no longer the case,
+nor will \code{hutils::if_else} work on lists or on factors. 
 Additional attributes may be dropped.
 }
 \details{

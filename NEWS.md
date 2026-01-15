@@ -1,3 +1,7 @@
+## hutils 2.0.0
+
+* `dplyr::if_else` is no longer slower than `if_else`.
+
 ## hutils 1.8.3
 
 * Bug fix:
