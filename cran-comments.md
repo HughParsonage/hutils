@@ -1,4 +1,4 @@
-Fix bad class() == "character" 
+Fix for upcoming dplyr release
 
 ## R CMD check results
 0 errors | 0 warnings | 0 note
