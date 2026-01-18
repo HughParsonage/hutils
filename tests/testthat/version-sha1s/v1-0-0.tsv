@@ -17,7 +17,6 @@ cc49cbfd	test_1-0-0_drop_empty_cols.R
 2dff047e	test_1-0-0_ein.R
 a3c4fe4c	test_1-0-0_generate_LaTeX_manual.R
 d818866d	test_1-0-0_haversine_distance.R
-6863ec5f	test_1-0-0_if_else.R
 d95dcb37	test_1-0-0_mutate_other.R
 cfbe8999	test_1-0-0_ngrep.R
 3440e45e	test_1-0-0_notin.R
