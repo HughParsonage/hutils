@@ -17,6 +17,23 @@
 #' @export
 
 `%ein%` <- function(lhs, rhs) {
+  if (is.factor(lhs)) {
+    lhs_levels <- levels(lhs)
+    rhs_factor <- factor(rhs, levels = levels(lhs))
+    if (anyNA(rhs_factor)) {
+      badrhss <- rhs[rhs %notin% lhs]
+      lhs_deparsed <- deparse(substitute(lhs), control = NULL)
+      
+      report_error(faulty_input = rhs,
+                   error_condition = paste0("contained ", badrhss[1], ", ",
+                                            "but this value was not found in `lhs = ", lhs_deparsed, "`."),
+                   requirement = "All values of `rhs` must be in `lhs`.",
+                   advice = "Ensure you have specified `rhs` correctly.")
+    }
+    rhs_mask <- logical(length(levels(lhs)))
+    rhs_mask[as.integer(rhs_factor)] <- TRUE
+    return(rhs_mask[as.integer(lhs)])
+  }
   if (anyNA(fmatch(rhs, lhs))) {
     badrhss <- rhs[rhs %notin% lhs]
     lhs_deparsed <- deparse(substitute(lhs), control = NULL)
@@ -43,4 +60,11 @@
                  advice = "Ensure you have specified `rhs` correctly.")
   }
   lhs %notin% rhs
+}
+
+
+#' @rdname ein
+#' @export
+`%epin%` <- function(lhs, rhs) {
+  
 }

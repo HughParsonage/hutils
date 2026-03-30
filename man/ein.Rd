@@ -3,11 +3,14 @@
 \name{\%ein\%}
 \alias{\%ein\%}
 \alias{\%enotin\%}
+\alias{\%epin\%}
 \title{Exists and (not) in}
 \usage{
 lhs \%ein\% rhs
 
 lhs \%enotin\% rhs
+
+lhs \%epin\% rhs
 }
 \arguments{
 \item{lhs}{Values to be matched}

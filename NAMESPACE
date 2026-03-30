@@ -3,6 +3,7 @@
 export("%<->%")
 export("%ein%")
 export("%enotin%")
+export("%epin%")
 export("%implies%")
 export("%notchin%")
 export("%notin%")

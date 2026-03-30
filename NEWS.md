@@ -1,3 +1,7 @@
+## hutils 2.0.1
+
+* `%ein%` handles factors efficiently
+
 ## hutils 2.0.0
 
 * `dplyr::if_else` is no longer slower than `if_else`.
